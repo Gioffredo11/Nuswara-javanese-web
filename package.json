@@ -13,7 +13,8 @@
     "test": "vitest run",
     "dev:express": "tsx watch src/server/server.ts",
     "start:express": "tsx src/server/server.ts",
-    "db:seed": "npx tsx prisma/seed.ts"
+    "db:seed": "npx tsx prisma/seed.ts",
+    "postinstall": "node scripts/cloudflare-postinstall.mjs"
   },
   "prisma": {
     "seed": "npx tsx prisma/seed.ts"
