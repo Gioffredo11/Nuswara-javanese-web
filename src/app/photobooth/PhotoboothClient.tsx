@@ -28,6 +28,7 @@ import {
   drawBotanicalLeaves,
   UkiranJeparaViewfinderOverlay,
   KlasikMaroonViewfinderOverlay,
+  SugengAmbalWarsaViewfinderOverlay,
 } from '@/components/ui/PhotoboothOverlays';
 
 type FilterType = 'warm' | 'monochrome' | 'cyberpunk';
@@ -37,7 +38,8 @@ type FrameType =
   | 'companion-gatotkaca'
   | 'companion-srikandi'
   | 'ukiran-jepara'
-  | 'klasik-maroon';
+  | 'klasik-maroon'
+  | 'sugeng-ambal-warsa';
 
 export function PhotoboothClient({ autoStart = false }: { autoStart?: boolean } = {}) {
   const [stream, setStream] = useState<MediaStream | null>(null);
@@ -55,6 +57,8 @@ export function PhotoboothClient({ autoStart = false }: { autoStart?: boolean } 
   const [activeFrame, setActiveFrame] = useState<FrameType>('gunungan');
   const [customCoupleText, setCustomCoupleText] = useState('Raden & Ayu');
   const [customHashtagText, setCustomHashtagText] = useState('#NuswaraMoments');
+  const [customWarsaName, setCustomWarsaName] = useState('Sang Sutresna');
+  const [customWarsaGreeting, setCustomWarsaGreeting] = useState('Rahayu Widodo Lestari');
 
   // Strip rendering & sharing
   const [stripUrl, setStripUrl] = useState<string | null>(null);
@@ -218,11 +222,125 @@ export function PhotoboothClient({ autoStart = false }: { autoStart?: boolean } 
     return canvas.toDataURL('image/jpeg');
   }
 
+function drawImageCover(
+  ctx: CanvasRenderingContext2D,
+  img: HTMLImageElement,
+  x: number,
+  y: number,
+  w: number,
+  h: number
+) {
+  const imgRatio = img.width / img.height;
+  const targetRatio = w / h;
+  let sWidth = img.width;
+  let sHeight = img.height;
+  let sx = 0;
+  let sy = 0;
+
+  if (imgRatio > targetRatio) {
+    sWidth = img.height * targetRatio;
+    sx = (img.width - sWidth) / 2;
+  } else {
+    sHeight = img.width / targetRatio;
+    sy = (img.height - sHeight) / 2;
+  }
+
+  ctx.drawImage(img, sx, sy, sWidth, sHeight, x, y, w, h);
+}
+
   // Generate 4-Cut Vertical Strip
   const generateStrip = useCallback(async () => {
     if (photos.length < 4) return;
 
     const stripCanvas = document.createElement('canvas');
+
+    // Sugeng Ambal Warsa Celebration Frame (9:16 aspect ratio at 1152x2048)
+    if (activeFrame === 'sugeng-ambal-warsa') {
+      stripCanvas.width = 1152;
+      stripCanvas.height = 2048;
+      const ctx = stripCanvas.getContext('2d');
+      if (!ctx) return;
+
+      // Base warm parchment background
+      ctx.fillStyle = '#EBDAC2';
+      ctx.fillRect(0, 0, 1152, 2048);
+
+      // Load Photo 1 (Main Portrait Window)
+      const img1 = new Image();
+      img1.src = photos[0];
+      await new Promise((resolve) => {
+        img1.onload = resolve;
+        img1.onerror = resolve;
+      });
+
+      // Load Photo 2 (Tilted Accent Window)
+      const img2 = new Image();
+      img2.src = photos[1] || photos[0];
+      await new Promise((resolve) => {
+        img2.onload = resolve;
+        img2.onerror = resolve;
+      });
+
+      // Load Sugeng Ambal Warsa Frame Overlay
+      const frameImg = new Image();
+      frameImg.src = '/frames/frame-sugeng-ambal-warsa.png';
+      await new Promise((resolve) => {
+        frameImg.onload = resolve;
+        frameImg.onerror = resolve;
+      });
+
+      // Draw Photo 1 in Window 1 (Main vertical ornate frame)
+      ctx.save();
+      ctx.beginPath();
+      ctx.rect(275, 435, 600, 790);
+      ctx.clip();
+      drawImageCover(ctx, img1, 275, 435, 600, 790);
+      ctx.restore();
+
+      // Draw Photo 2 in Window 2 (Tilted landscape ornate frame)
+      ctx.save();
+      ctx.translate(800, 1300);
+      ctx.rotate((-2.5 * Math.PI) / 180);
+      ctx.beginPath();
+      ctx.rect(-240, -180, 480, 360);
+      ctx.clip();
+      drawImageCover(ctx, img2, -240, -180, 480, 360);
+      ctx.restore();
+
+      // Draw Frame PNG Overlay on top
+      ctx.drawImage(frameImg, 0, 0, 1152, 2048);
+
+      // Custom Typography Overlay in bottom maroon cloud
+      ctx.save();
+      ctx.textAlign = 'center';
+      if (customWarsaName) {
+        ctx.fillStyle = '#FEF3C7';
+        ctx.font = 'bold 32px serif';
+        ctx.shadowColor = 'rgba(0, 0, 0, 0.7)';
+        ctx.shadowBlur = 6;
+        ctx.fillText(`✦ ${customWarsaName} ✦`, 576, 1935);
+      }
+      ctx.fillStyle = '#FDE68A';
+      ctx.font = 'italic 24px serif';
+      ctx.shadowColor = 'rgba(0, 0, 0, 0.6)';
+      ctx.shadowBlur = 5;
+      ctx.fillText(customWarsaGreeting || 'Rahayu Widodo Lestari', 576, 1975);
+
+      const dateStr = new Date().toLocaleDateString('id-ID', {
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric',
+      });
+      ctx.fillStyle = '#E2D3B8';
+      ctx.font = '16px monospace';
+      ctx.fillText(dateStr, 576, 2008);
+      ctx.restore();
+
+      const stripData = stripCanvas.toDataURL('image/png');
+      setStripUrl(stripData);
+      return;
+    }
+
     // Vertical 4-cut dimensions: 800 width x 2400 height
     stripCanvas.width = 800;
     stripCanvas.height = 2400;
@@ -408,13 +526,30 @@ export function PhotoboothClient({ autoStart = false }: { autoStart?: boolean } 
 
     const stripData = stripCanvas.toDataURL('image/png');
     setStripUrl(stripData);
-  }, [photos, activeFilter, activeFrame, customCoupleText, customHashtagText]);
+  }, [
+    photos,
+    activeFilter,
+    activeFrame,
+    customCoupleText,
+    customHashtagText,
+    customWarsaName,
+    customWarsaGreeting,
+  ]);
 
   useEffect(() => {
     if (photos.length === 4) {
       generateStrip();
     }
-  }, [photos, activeFilter, activeFrame, customCoupleText, customHashtagText, generateStrip]);
+  }, [
+    photos,
+    activeFilter,
+    activeFrame,
+    customCoupleText,
+    customHashtagText,
+    customWarsaName,
+    customWarsaGreeting,
+    generateStrip,
+  ]);
 
   // Handle Download Strip
   const handleDownloadStrip = () => {
@@ -524,6 +659,11 @@ export function PhotoboothClient({ autoStart = false }: { autoStart?: boolean } 
               <KlasikMaroonViewfinderOverlay
                 coupleText={customCoupleText}
                 hashtagText={customHashtagText}
+              />
+            )}
+            {activeFrame === 'sugeng-ambal-warsa' && (
+              <SugengAmbalWarsaViewfinderOverlay
+                birthdayName={customWarsaName}
               />
             )}
 
@@ -711,6 +851,17 @@ export function PhotoboothClient({ autoStart = false }: { autoStart?: boolean } 
                   <span>Klasik Maroon</span>
                   <span className="text-[10px] bg-amber-200/80 text-amber-900 px-1 py-0.5 rounded font-mono">NEW</span>
                 </button>
+                <button
+                  onClick={() => setActiveFrame('sugeng-ambal-warsa')}
+                  className={`p-2.5 rounded-lg border text-xs text-left transition-all flex items-center justify-between ${
+                    activeFrame === 'sugeng-ambal-warsa'
+                      ? 'border-amber-900 bg-amber-50 text-amber-950 font-semibold ring-1 ring-amber-600/30'
+                      : 'border-stone-200 hover:border-stone-400 bg-stone-50 text-stone-700'
+                  }`}
+                >
+                  <span>Ambal Warsa</span>
+                  <span className="text-[10px] bg-amber-200/80 text-amber-900 px-1 py-0.5 rounded font-mono">NEW</span>
+                </button>
               </div>
 
               {/* Customizer for Klasik Maroon */}
@@ -748,6 +899,42 @@ export function PhotoboothClient({ autoStart = false }: { autoStart?: boolean } 
                   </div>
                 </div>
               )}
+
+              {/* Customizer for Sugeng Ambal Warsa */}
+              {activeFrame === 'sugeng-ambal-warsa' && (
+                <div className="mt-3 p-3 bg-amber-50/60 rounded-xl border border-amber-200/70 space-y-2 animate-in fade-in duration-200">
+                  <div className="flex items-center gap-1.5 text-xs font-semibold text-amber-950">
+                    <Sparkles className="w-3.5 h-3.5 text-amber-700" />
+                    <span>Kustomisasi Teks Sugeng Ambal Warsa</span>
+                  </div>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+                    <div>
+                      <label className="text-[11px] text-stone-600 font-medium block mb-1">
+                        Nama yang Berulang Tahun
+                      </label>
+                      <input
+                        type="text"
+                        value={customWarsaName}
+                        onChange={(e) => setCustomWarsaName(e.target.value)}
+                        placeholder="e.g. Sang Sutresna / Raden Mas"
+                        className="w-full px-2.5 py-1.5 bg-white border border-stone-300 rounded text-stone-900 text-xs focus:ring-1 focus:ring-amber-600 focus:outline-none"
+                      />
+                    </div>
+                    <div>
+                      <label className="text-[11px] text-stone-600 font-medium block mb-1">
+                        Doa & Ucapan Rahayu
+                      </label>
+                      <input
+                        type="text"
+                        value={customWarsaGreeting}
+                        onChange={(e) => setCustomWarsaGreeting(e.target.value)}
+                        placeholder="e.g. Rahayu Widodo Lestari"
+                        className="w-full px-2.5 py-1.5 bg-white border border-stone-300 rounded text-stone-900 text-xs focus:ring-1 focus:ring-amber-600 focus:outline-none"
+                      />
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </div>
@@ -760,7 +947,7 @@ export function PhotoboothClient({ autoStart = false }: { autoStart?: boolean } 
                 Preview Photo Strip 4-Cut
               </span>
               <span className="text-[11px] font-mono text-stone-400">
-                Format 1:3 Vertikal
+                {activeFrame === 'sugeng-ambal-warsa' ? 'Format 9:16 Ambal Warsa' : 'Format 1:3 Vertikal'}
               </span>
             </div>
 

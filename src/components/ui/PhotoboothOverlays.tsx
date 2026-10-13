@@ -194,3 +194,30 @@ export function KlasikMaroonViewfinderOverlay({
     </div>
   );
 }
+
+/**
+ * Viewfinder overlay for Sugeng Ambal Warsa (Javanese Birthday Celebration)
+ */
+export function SugengAmbalWarsaViewfinderOverlay({
+  birthdayName = 'Sang Sutresna',
+}: {
+  birthdayName?: string;
+}) {
+  return (
+    <div className="absolute inset-0 pointer-events-none z-20 flex items-center justify-center overflow-hidden">
+      <img
+        src="/frames/frame-sugeng-ambal-warsa.png"
+        alt="Bingkai Sugeng Ambal Warsa"
+        className="w-full h-full object-contain pointer-events-none drop-shadow-2xl select-none"
+      />
+      {birthdayName && (
+        <div className="absolute bottom-[4.2%] left-1/2 -translate-x-1/2 text-center pointer-events-none w-3/4">
+          <span className="text-[11px] sm:text-xs font-serif italic text-amber-200 font-bold tracking-wider drop-shadow-md block truncate">
+            ✦ {birthdayName} ✦
+          </span>
+        </div>
+      )}
+    </div>
+  );
+}
+
