@@ -1,36 +1,103 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# NUSWARA — Menelusuri Jejak, Merawat Suara
 
-## Getting Started
+> Platform kurasi dan eksplorasi digital sejarah peradaban Jawa Tengah, filsafat pakeliran wayang kulit, serta kearifan adiluhung Nusantara untuk generasi masa depan.
 
-First, run the development server:
+[![Next.js](https://img.shields.io/badge/Next.js-16-black?style=flat&logo=next.js)](https://nextjs.org/)
+[![React](https://img.shields.io/badge/React-19-blue?style=flat&logo=react)](https://react.dev/)
+[![TailwindCSS](https://img.shields.io/badge/TailwindCSS-v4-38bdf8?style=flat&logo=tailwind-css)](https://tailwindcss.com/)
+[![License](https://img.shields.io/badge/License-MIT-amber.svg)](LICENSE)
+
+---
+
+## 🌟 Fitur Unggulan
+
+1. **Warisan Tokoh & Ksatria Jawa (`/tokoh` & `/tokoh/[slug]`)**
+   - Kartu Foto Identitas Kearsipan (*Archival ID Cards*) resmi pahlawan nasional asal Jawa (R.A. Kartini, Pangeran Diponegoro, Ki Hadjar Dewantara, Jenderal Soedirman, K.H. Ahmad Dahlan, Nyi Ageng Serang).
+   - Pop-up modal dossier interaktif dengan biografi mendalam, linimasa rekam jejak, dan fakta kearsipan unik.
+   - Halaman artikel biografi lengkap dan terkurasi.
+
+2. **Kilas Sejarah Tiga Era Peradaban (`/sejarah` & `/sejarah/[slug]`)**
+   - Era Keagungan Candi Hindu-Buddha (Mataram Kuno).
+   - Akulturasi Wayang Kulit & Filosofi Islam (Kesultanan Demak & Mataram Islam).
+   - Pergerakan Nasional & Ksatria Modern.
+
+3. **Wayangpedia & Lakon Hub (`/wayangpedia` & `/lakon`)**
+   - Katalog interaktif tokoh-tokoh wayang kulit Purwa dengan silsilah keluarga, senjata pusaka, dan visualisasi 3D.
+   - Pilihan lakon cerita klasik wayang beserta kuis interaktif.
+
+4. **Javanese Oracle (Weton Matcher) (`/oracle`)**
+   - Kalkulator weton Jawa interaktif dengan visualisasi roulette berputar untuk mencocokkan karakter wayang dan aura kepribadian.
+
+5. **Manifestasi Piwulang Luhur Jawa (`/manifestasi`)**
+   - Kartu tarot/orakel harian berdasarkan ajaran falsafah Jawa kuno (misal: *Memayu Hayuning Bawana*, *Mikul Dhuwur Mendhem Jero*).
+   - Kartu 9:16 resolusi tinggi yang dapat diunduh untuk Instagram Story / WhatsApp status.
+
+6. **Web Photobooth 4-Cut (`/photobooth`)**
+   - Photobooth digital 4-cut dengan filter vintage (Sepia, B&W, Cyberpunk) dan frame budaya khas (Klasik Maroon, Ukiran Jepara).
+
+---
+
+## 🚀 Menjalankan Secara Lokal
+
+### Prasyarat
+- Node.js 18+ atau 20+
+- npm / pnpm / yarn
+
+### Instalasi & Dev Server
 
 ```bash
+# Clone repositori
+git clone https://github.com/Gioffredo11/Nuswara-javanese-web.git
+cd Nuswara-javanese-web
+
+# Install dependencies
+npm install
+
+# Setup environment variables
+cp .env.example .env
+
+# Jalankan server Next.js
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+
+# (Opsional) Jalankan API Express backend pendukung
+npm run dev:express
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Buka [http://localhost:3000](http://localhost:3000) di browser Anda.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## ☁️ Panduan Deploy ke Cloudflare Pages
 
-## Learn More
+Proyek ini telah siap dihubungkan langsung ke **Cloudflare Pages** melalui repositori GitHub `Gioffredo11/Nuswara-javanese-web`:
 
-To learn more about Next.js, take a look at the following resources:
+### Langkah Deploy via Cloudflare Dashboard (Direkomendasikan):
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1. Masuk ke [Cloudflare Dashboard](https://dash.cloudflare.com/).
+2. Buka menu **Workers & Pages** > **Create application** > pilih tab **Pages**.
+3. Pilih **Connect to Git** dan hubungkan akun GitHub Anda.
+4. Pilih repositori: **`Gioffredo11/Nuswara-javanese-web`**.
+5. Konfigurasi build setting:
+   - **Framework preset**: `Next.js`
+   - **Build command**: `npx @cloudflare/next-on-pages` (atau `npm run build`)
+   - **Build output directory**: `.vercel/output/static`
+   - **Root directory**: `/`
+6. Tambahkan Environment Variable di tab **Environment Variables**:
+   - `NODE_VERSION`: `20`
+   - `NEXT_PUBLIC_APP_URL`: URL Cloudflare Pages Anda (misal `https://nuswara-javanese-web.pages.dev`)
+7. Klik **Save and Deploy**. Cloudflare Pages akan otomatis mem-build dan mempublikasikan web Anda secara global di jaringan edge Cloudflare.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+## 🛠️ Tech Stack
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- **Framework**: Next.js 16 (App Router, Turbopack)
+- **UI & Styling**: React 19, Tailwind CSS v4, Lucide Icons, Three.js
+- **Testing**: Vitest
+- **Database ORM**: Prisma
+- **Deployment Target**: Cloudflare Pages / Vercel
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
+## 📄 Lisensi
+Hak Cipta © 2026 NUSWARA Project.
