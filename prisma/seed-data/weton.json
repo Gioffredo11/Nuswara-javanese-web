@@ -1,0 +1,562 @@
+[
+  {
+    "dayName": "Minggu",
+    "pasaran": "Legi",
+    "neptu": 10,
+    "name": "Minggu Legi",
+    "auraTitle": "The Harmonious Empath",
+    "summary": "Karakter dermawan, berjiwa lapang dada, mudah beradaptasi di segala kalangan, dan memiliki ketenangan batin yang memikat.",
+    "characterSlug": "yudhistira",
+    "matchReason": "Selaras dengan energi welas asih dan kejujuran nurani Puntadewa yang menolak permusuhan.",
+    "compatibilityAdvice": "Jaga ketegasan sikap agar kebaikan hatimu tidak disalahgunakan orang lain.",
+    "traits": [
+      { "trait": "Dermawan", "description": "Suka berbagi tanpa mengharap sanjungan", "kind": "STRENGTH" },
+      { "trait": "Terlalu Sungkan", "description": "Sulit berkata tidak saat dimintai tolong", "kind": "CHALLENGE" },
+      { "trait": "Elemen Air Sunyi", "description": "Membawa kedamaian di tengah perdebatan", "kind": "ELEMENT" }
+    ]
+  },
+  {
+    "dayName": "Minggu",
+    "pasaran": "Pahing",
+    "neptu": 14,
+    "name": "Minggu Pahing",
+    "auraTitle": "The Radiant Visionary",
+    "summary": "Penuh karisma wibawa, berjiwa ksatria mandiri, berani mengambil risiko besar demi cita-cita mulia.",
+    "characterSlug": "karna",
+    "matchReason": "Memiliki pendar energi matahari seperti Adipati Karna yang dermawan dan teguh pendirian.",
+    "compatibilityAdvice": "Kendalikan gengsi dan harga diri agar tidak terjerumus dalam komitmen yang membebani sukma.",
+    "traits": [
+      { "trait": "Karisma Menyala", "description": "Mampu menggerakkan orang dengan wibawa alami", "kind": "STRENGTH" },
+      { "trait": "Gengsi Tinggi", "description": "Enggan menunjukkan kerapuhan di depan umum", "kind": "CHALLENGE" },
+      { "trait": "Elemen Surya", "description": "Menghangatkan dan memberi arah tujuan", "kind": "ELEMENT" }
+    ]
+  },
+  {
+    "dayName": "Minggu",
+    "pasaran": "Pon",
+    "neptu": 12,
+    "name": "Minggu Pon",
+    "auraTitle": "The Steadfast Guardian",
+    "summary": "Teguh memegang komitmen, berhati baja dalam menghadapi badai, dan selalu menjadi tameng bagi orang terkasih.",
+    "characterSlug": "bima",
+    "matchReason": "Karakter kokoh tak tergoyahkan selaras dengan ketulusan dan ketegasan Raden Werkudara.",
+    "compatibilityAdvice": "Belajarlah mengekspresikan empati dengan lebih lembut agar orang lain tidak salah paham.",
+    "traits": [
+      { "trait": "Keteguhan Baja", "description": "Pantang berkhianat pada janji", "kind": "STRENGTH" },
+      { "trait": "Kaku Berkompromi", "description": "Cenderung keras kepala saat meyakini sesuatu", "kind": "CHALLENGE" },
+      { "trait": "Elemen Karang Bumi", "description": "Pilar pertahanan terkuat keluarga", "kind": "ELEMENT" }
+    ]
+  },
+  {
+    "dayName": "Minggu",
+    "pasaran": "Wage",
+    "neptu": 9,
+    "name": "Minggu Wage",
+    "auraTitle": "The Quiet Observer",
+    "summary": "Cermat meneliti keadaan sebelum bertindak, analitis, menyukai kerapian, dan mampu menemukan solusi dari detail kecil.",
+    "characterSlug": "nakula",
+    "matchReason": "Kecermatan logistik dan ketelitian observasi selaras dengan Raden Nakula.",
+    "compatibilityAdvice": "Jangan biarkan overthinking menunda momentum emas untuk melangkah maju.",
+    "traits": [
+      { "trait": "Ketelitian Tajam", "description": "Piawai melihat risiko yang luput dari mata orang lain", "kind": "STRENGTH" },
+      { "trait": "Terlalu Cemas", "description": "Sering menganalisis skenario terburuk secara berlebihan", "kind": "CHALLENGE" },
+      { "trait": "Elemen Embun Pagi", "description": "Menyejukkan suasana dengan kejernihan logika", "kind": "ELEMENT" }
+    ]
+  },
+  {
+    "dayName": "Minggu",
+    "pasaran": "Kliwon",
+    "neptu": 13,
+    "name": "Minggu Kliwon",
+    "auraTitle": "The Intuitive Sage",
+    "summary": "Memiliki kepekaan firasat tajam, ramah bertutur, serta mampu menghubungkan berbagai sudut pandang menjadi harmoni.",
+    "characterSlug": "sadewa",
+    "matchReason": "Intuisi batin dan penglihatan bijak yang merefleksikan karakter Raden Sadewa sang peramal takdir.",
+    "compatibilityAdvice": "Percayalah pada kata hatimu dan luangkan waktu untuk meditasi hening.",
+    "traits": [
+      { "trait": "Intuisi Firasat", "description": "Peka membaca getaran niat tersembunyi sesama", "kind": "STRENGTH" },
+      { "trait": "Mudah Terbawa Suasana", "description": "Cepat menyerap energi negatif lingkungan", "kind": "CHALLENGE" },
+      { "trait": "Elemen Angin Lembah", "description": "Mengalir fleksibel menyentuh setiap jiwa", "kind": "ELEMENT" }
+    ]
+  },
+  {
+    "dayName": "Senin",
+    "pasaran": "Legi",
+    "neptu": 9,
+    "name": "Senin Legi",
+    "auraTitle": "The Eloquent Diplomat",
+    "summary": "Pintar merangkai kata, ramah bersahaja, dermawan, dan piawai mencairkan ketegangan dalam pergaulan.",
+    "characterSlug": "petruk",
+    "matchReason": "Kecerdikan humor dan kelapangan dada Kanthong Bolong yang gemar berbagi keceriaan.",
+    "compatibilityAdvice": "Tetap fokus menyelesaikan target utama di samping membantu urusan orang lain.",
+    "traits": [
+      { "trait": "Komunikator Ulung", "description": "Mampu menjelaskan hal rumit secara renyah dan jenaka", "kind": "STRENGTH" },
+      { "trait": "Cepat Bosan", "description": "Kurang sabar pada pekerjaan yang monoton berulang", "kind": "CHALLENGE" },
+      { "trait": "Elemen Semilir Angin", "description": "Mencerahkan ruang dan mengusir kekakuan", "kind": "ELEMENT" }
+    ]
+  },
+  {
+    "dayName": "Senin",
+    "pasaran": "Pahing",
+    "neptu": 13,
+    "name": "Senin Pahing",
+    "auraTitle": "The Resilient Crusader",
+    "summary": "Tahan banting menghadapi badai cobaan, pantang menyerah sebelum tuntas, dan berdedikasi tinggi membela martabat keluarga.",
+    "characterSlug": "gatotkaca",
+    "matchReason": "Daya tahan baja dan loyalitas pengorbanan Raden Gatotkaca sang benteng udara.",
+    "compatibilityAdvice": "Ikhlaskan masa lalu dan jangan memendam kepahitan terlalu lama dalam dada.",
+    "traits": [
+      { "trait": "Daya Juang Ekstrem", "description": "Makin ditekan keadaan makin bersinar daya juangnya", "kind": "STRENGTH" },
+      { "trait": "Pendendam Tersembunyi", "description": "Sukar melupakan luka kata-kata orang lain", "kind": "CHALLENGE" },
+      { "trait": "Elemen Petir Malam", "description": "Melesat cepat menembus kemustahilan", "kind": "ELEMENT" }
+    ]
+  },
+  {
+    "dayName": "Senin",
+    "pasaran": "Pon",
+    "neptu": 11,
+    "name": "Senin Pon",
+    "auraTitle": "The Compassionate Leader",
+    "summary": "Penuh welas asih, santun beretika, gemar mengayomi kaum lemah, dan membawa keteduhan di manapun berpijak.",
+    "characterSlug": "semar",
+    "matchReason": "Kearifan pamomong Kyai Semar yang senantiasa menyejukkan hati yang gundah.",
+    "compatibilityAdvice": "Berani bersikap tegas pada batas-batas pribadi agar energimu tidak terkuras habis.",
+    "traits": [
+      { "trait": "Pengayom Sejati", "description": "Tempat bersandar yang menenangkan bagi sahabat", "kind": "STRENGTH" },
+      { "trait": "Kurang Asertif", "description": "Sering mengalah demi menghindari gesekan", "kind": "CHALLENGE" },
+      { "trait": "Elemen Pohon Beringin", "description": "Menyediakan keteduhan dan perlindungan moral", "kind": "ELEMENT" }
+    ]
+  },
+  {
+    "dayName": "Senin",
+    "pasaran": "Wage",
+    "neptu": 8,
+    "name": "Senin Wage",
+    "auraTitle": "The Meticulous Strategist",
+    "summary": "Sangat teliti dalam langkah hidup, menjunjung tinggi kehati-hatian, sederhana, dan jujur tanpa kepalsuan.",
+    "characterSlug": "gareng",
+    "matchReason": "Ajaran kewaspadaan Nala Gareng: melangkah hati-hati dan tidak mengambil hak orang lain.",
+    "compatibilityAdvice": "Jangan ragu mencoba hal baru; kegagalan adalah guru terbaik untuk bertumbuh.",
+    "traits": [
+      { "trait": "Kewaspadaan Batin", "description": "Sangat cermat menimbang resiko sebelum memutuskan", "kind": "STRENGTH" },
+      { "trait": "Pesimisme Awal", "description": "Cenderung ragu mencoba peluang di luar zona nyaman", "kind": "CHALLENGE" },
+      { "trait": "Elemen Tanah Lempung", "description": "Subur dan mengikat fondasi dengan erat", "kind": "ELEMENT" }
+    ]
+  },
+  {
+    "dayName": "Senin",
+    "pasaran": "Kliwon",
+    "neptu": 12,
+    "name": "Senin Kliwon",
+    "auraTitle": "The Noble Sentinel",
+    "summary": "Menjunjung tinggi etika leluhur, berjiwa pengabdi yang tulus, berbakti kepada orang tua, dan cinta damai.",
+    "characterSlug": "yudhistira",
+    "matchReason": "Kemurnian nurani dan kepatuhan moral Prabu Puntadewa dalam menegakkan dharma.",
+    "compatibilityAdvice": "Kembangkan keyakinan bahwa kebaikanmu berharga dan layak dihormati.",
+    "traits": [
+      { "trait": "Integritas Etis", "description": "Tak tergoyahkan oleh godaan kecurangan instan", "kind": "STRENGTH" },
+      { "trait": "Terlalu Cepat Percaya", "description": "Kerap mengira semua orang memiliki ketulusan yang sama", "kind": "CHALLENGE" },
+      { "trait": "Elemen Cermin Bening", "description": "Memantulkan kejujuran hati nurani murni", "kind": "ELEMENT" }
+    ]
+  },
+  {
+    "dayName": "Selasa",
+    "pasaran": "Legi",
+    "neptu": 8,
+    "name": "Selasa Legi",
+    "auraTitle": "The Bold Maverick",
+    "summary": "Kritis terhadap kepalsuan sosial, pemberani, berjiwa mandiri, dan berani menyuarakan kebenaran apa adanya.",
+    "characterSlug": "bagong",
+    "matchReason": "Keberanian bersuara blak-blakan Bagong dalam menentang kemunafikan para bangsawan.",
+    "compatibilityAdvice": "Pilih kata dan intonasi yang bijak saat melayangkan kritik agar pesanmu diterima.",
+    "traits": [
+      { "trait": "Kejujuran Spontan", "description": "Anti basa-basi palsu dan konsisten membela fakta", "kind": "STRENGTH" },
+      { "trait": "Gampang Tersulut", "description": "Emosional saat melihat ketidakadilan yang terang-terangan", "kind": "CHALLENGE" },
+      { "trait": "Elemen Api Unggun", "description": "Membakar kepalsuan dan menerangi ruang gelap", "kind": "ELEMENT" }
+    ]
+  },
+  {
+    "dayName": "Selasa",
+    "pasaran": "Pahing",
+    "neptu": 12,
+    "name": "Selasa Pahing",
+    "auraTitle": "The Brave Trailblazer",
+    "summary": "Pemberani, mendobrak batas stereotip konvensional, percaya diri tinggi, dan tangkas menguasai keahlian baru.",
+    "characterSlug": "srikandi",
+    "matchReason": "Semangat emansipasi dan keberanian tempur Dewi Srikandi di medan pertempuran.",
+    "compatibilityAdvice": "Seimbangkan ambisi besar dengan kesabaran mendengar masukan tim.",
+    "traits": [
+      { "trait": "Inisiatif Mandiri", "description": "Berani memulai sebelum orang lain melangkah", "kind": "STRENGTH" },
+      { "trait": "Cepat Tergesa", "description": "Kadang melompati tahapan persiapan karena ingin lekas tuntas", "kind": "CHALLENGE" },
+      { "trait": "Elemen Busur Panah", "description": "Lurus melesat menuju sasaran tanpa ragu", "kind": "ELEMENT" }
+    ]
+  },
+  {
+    "dayName": "Selasa",
+    "pasaran": "Pon",
+    "neptu": 10,
+    "name": "Selasa Pon",
+    "auraTitle": "The Grounded Champion",
+    "summary": "Kokoh berpijak pada prinsip, setia pada kawan dan janji, berhati hangat di balik tampilan yang tegas.",
+    "characterSlug": "bima",
+    "matchReason": "Kesetiaan mutlak dan ketegasan prinsip ksatria Jodhipati.",
+    "compatibilityAdvice": "Ekspresikan apresiasi secara verbal kepada orang terdekat yang mendampingimu.",
+    "traits": [
+      { "trait": "Kesetiaan Nyata", "description": "Selalu hadir saat sahabat berada dalam titik terendah", "kind": "STRENGTH" },
+      { "trait": "Tertutup", "description": "Menyimpan beban batin seorang diri tanpa mau merepotkan", "kind": "CHALLENGE" },
+      { "trait": "Elemen Besi Tempa", "description": "Kokoh menyangga peradaban", "kind": "ELEMENT" }
+    ]
+  },
+  {
+    "dayName": "Selasa",
+    "pasaran": "Wage",
+    "neptu": 7,
+    "name": "Selasa Wage",
+    "auraTitle": "The Agile Strategist",
+    "summary": "Cepat tanggap membaca perubahan situasi, hemat, telaten merawat apa yang dimiliki, dan berjiwa pengamat ulung.",
+    "characterSlug": "nakula",
+    "matchReason": "Kecerdasan adaptif dan manajemen sumber daya ksatria Sawojajar.",
+    "compatibilityAdvice": "Jangan ragu berinvestasi pada pengembangan diri demi masa depan yang lebih luas.",
+    "traits": [
+      { "trait": "Keluwesan Logistik", "description": "Piawai memaksimalkan sumber daya terbatas menjadi efektif", "kind": "STRENGTH" },
+      { "trait": "Terlalu Berhemat", "description": "Kadang pelit pada kebutuhan diri sendiri", "kind": "CHALLENGE" },
+      { "trait": "Elemen Daun Beringin", "description": "Menangkap setiap hembusan angin perubahan", "kind": "ELEMENT" }
+    ]
+  },
+  {
+    "dayName": "Selasa",
+    "pasaran": "Kliwon",
+    "neptu": 11,
+    "name": "Selasa Kliwon",
+    "auraTitle": "The Mystical Sentinel",
+    "summary": "Kharismatik dengan daya tarik batin yang sulit ditebak, teguh pendirian, dan memiliki aura kepemimpinan alami.",
+    "characterSlug": "arjuna",
+    "matchReason": "Daya pikat pesona batin dan ketenangan meditasi Janaka.",
+    "compatibilityAdvice": "Buka komunikasi lebih hangat agar orang lain tidak merasa terintimidasi oleh auramu.",
+    "traits": [
+      { "trait": "Kharisma Memikat", "description": "Memiliki daya tarik spiritual yang menawan", "kind": "STRENGTH" },
+      { "trait": "Misterius", "description": "Sukar dipahami isi hatinya oleh orang terdekat", "kind": "CHALLENGE" },
+      { "trait": "Elemen Kabut Puncak", "description": "Menenangkan namun menyembunyikan puncak tertinggi", "kind": "ELEMENT" }
+    ]
+  },
+  {
+    "dayName": "Rabu",
+    "pasaran": "Legi",
+    "neptu": 12,
+    "name": "Rabu Legi",
+    "auraTitle": "The Wise Architect",
+    "summary": "Mampu merancang rencana jangka panjang dengan visi luas, adil, menghargai ilmu pengetahuan, dan santun.",
+    "characterSlug": "arjuna",
+    "matchReason": "Fokus cipta bening dan pencapaian ilmu pengetahuan Begawan Ciptaning.",
+    "compatibilityAdvice": "Sinergikan teori matang dengan eksekusi nyata di lapangan.",
+    "traits": [
+      { "trait": "Visi Terstruktur", "description": "Mampu melihat 10 langkah ke depan dengan matang", "kind": "STRENGTH" },
+      { "trait": "Perfeksionis", "description": "Mudah gelisah bila hasil kerja tidak presisi sempurna", "kind": "CHALLENGE" },
+      { "trait": "Elemen Bintang Kartika", "description": "Penunjuk arah bagi para pelayar malam", "kind": "ELEMENT" }
+    ]
+  },
+  {
+    "dayName": "Rabu",
+    "pasaran": "Pahing",
+    "neptu": 16,
+    "name": "Rabu Pahing",
+    "auraTitle": "The Inspiring Pioneer",
+    "summary": "Enerjik, pembawa optimisme, tidak mudah goyah oleh kritik, dan mampu menggerakkan komunitas besar ke arah kemajuan.",
+    "characterSlug": "gatotkaca",
+    "matchReason": "Daya magis dan kepemimpinan berani Gatotkaca di garis terdepan pertahanan.",
+    "compatibilityAdvice": "Luangkan waktu istirahat secara rutin agar energimu tidak burnout mendadak.",
+    "traits": [
+      { "trait": "Inspirasi Positif", "description": "Menyulut api antusiasme pada mereka yang putus asa", "kind": "STRENGTH" },
+      { "trait": "Keras Tekad", "description": "Kadang memaksakan target melampaui batas fisik tim", "kind": "CHALLENGE" },
+      { "trait": "Elemen Mentari Pagi", "description": "Menghidupkan seluruh sendi kehidupan", "kind": "ELEMENT" }
+    ]
+  },
+  {
+    "dayName": "Rabu",
+    "pasaran": "Pon",
+    "neptu": 14,
+    "name": "Rabu Pon",
+    "auraTitle": "The Calm Strategist",
+    "summary": "Tenang, berwibawa, fokus tajam, tidak mudah terprovokasi provokasi lawan, dan selalu berorientasi pada hasil akhir.",
+    "characterSlug": "arjuna",
+    "matchReason": "Karakter Dananjaya yang membidik titik hitam tanpa terganggu gemuruh badai.",
+    "compatibilityAdvice": "Tunjukkan apresiasi hangat pada proses rekan kerjamu.",
+    "traits": [
+      { "trait": "Konsentrasi Absolut", "description": "Mampu bekerja dengan fokus tinggi di tengah hiruk-pikuk", "kind": "STRENGTH" },
+      { "trait": "Dingin Emosional", "description": "Tampak berjarak bila belum mengenal akrab", "kind": "CHALLENGE" },
+      { "trait": "Elemen Danau Pegunungan", "description": "Tenang di permukaan, dalam tak terduga di bawahnya", "kind": "ELEMENT" }
+    ]
+  },
+  {
+    "dayName": "Rabu",
+    "pasaran": "Wage",
+    "neptu": 11,
+    "name": "Rabu Wage",
+    "auraTitle": "The Patient Builder",
+    "summary": "Sabar membangun reputasi batu demi batu, setia pada janji, bersahaja, dan menghargai kerja keras orang lain.",
+    "characterSlug": "yudhistira",
+    "matchReason": "Kesabaran dan keikhlasan Samiaji dalam merawat keraton dan rakyatnya.",
+    "compatibilityAdvice": "Beranilah menegosiasikan imbalan yang setara dengan kontribusi besarmu.",
+    "traits": [
+      { "trait": "Daya Tahan Kerja", "description": "Konsisten tanpa mengeluh menyelesaikan proyek panjang", "kind": "STRENGTH" },
+      { "trait": "Rendah Hati Berlebihan", "description": "Sering mengecilkan pencapaian pribadi di depan orang lain", "kind": "CHALLENGE" },
+      { "trait": "Elemen Pondasi Batu", "description": "Menopang seluruh struktur agar tegak kokoh", "kind": "ELEMENT" }
+    ]
+  },
+  {
+    "dayName": "Rabu",
+    "pasaran": "Kliwon",
+    "neptu": 15,
+    "name": "Rabu Kliwon",
+    "auraTitle": "The Deep Thinker",
+    "summary": "Berpikir mendalam, suka merenung dan mencari hikmah di balik peristiwa, berjiwa filosofis, dan peka terhadap makna hidup.",
+    "characterSlug": "semar",
+    "matchReason": "Kedalaman ilmu kasampurnan dan kearifan adiluhung Batara Ismaya.",
+    "compatibilityAdvice": "Terjemahkan gagasan filosofis ke dalam aksi nyata yang konkret bagi masyarakat.",
+    "traits": [
+      { "trait": "Kedalaman Refleksi", "description": "Mampu melihat hikmah tersembunyi di balik kegagalan", "kind": "STRENGTH" },
+      { "trait": "Suka Menyendiri", "description": "Sering menarik diri dari keramaian bila lelah mental", "kind": "CHALLENGE" },
+      { "trait": "Elemen Langit Senja", "description": "Mengajak seluruh makhluk untuk berkontemplasi", "kind": "ELEMENT" }
+    ]
+  },
+  {
+    "dayName": "Kamis",
+    "pasaran": "Legi",
+    "neptu": 13,
+    "name": "Kamis Legi",
+    "auraTitle": "The Generous Ruler",
+    "summary": "Dermawan luar biasa, adil, senantiasa menempatkan kepentingan bersama di atas ego, dan berwibawa menyejukkan.",
+    "characterSlug": "karna",
+    "matchReason": "Kedudukan mulia Adipati Karna yang tak pernah menolak permintaan sedekah siapapun.",
+    "compatibilityAdvice": "Cermatlah dalam memilah siapa yang benar-benar membutuhkan bantuanmu.",
+    "traits": [
+      { "trait": "Kedermawanan Tulus", "description": "Tangan terbuka menolong tanpa memandang bulu", "kind": "STRENGTH" },
+      { "trait": "Gampang Diperdaya", "description": "Mudah luluh oleh cerita sedih yang dibuat-buat", "kind": "CHALLENGE" },
+      { "trait": "Elemen Sungai Emas", "description": "Mengalirkan berkah kemakmuran ke penjuru negeri", "kind": "ELEMENT" }
+    ]
+  },
+  {
+    "dayName": "Kamis",
+    "pasaran": "Pahing",
+    "neptu": 17,
+    "name": "Kamis Pahing",
+    "auraTitle": "The Fearless Titan",
+    "summary": "Memiliki kekuatan tekad raksasa, percaya diri absolut, mampu mendobrak rintangan sekeras karang, dan jujur tanpa kompromi.",
+    "characterSlug": "bima",
+    "matchReason": "Energi dahsyat Werkudara sang penakluk samudra dan peremuk kezaliman.",
+    "compatibilityAdvice": "Kombinasikan ketegasan dengan diplomasi agar tidak melukai perasaan kawan seperjuangan.",
+    "traits": [
+      { "trait": "Tekad Tak Tertembus", "description": "Tidak ada rintangan yang mampu mematahkan semangatnya", "kind": "STRENGTH" },
+      { "trait": "Temperamen Cepat", "description": "Bisa meledak bila melihat kepalsuan dan ketidakjujuran", "kind": "CHALLENGE" },
+      { "trait": "Elemen Gunung Berapi", "description": "Dahsyat, berwibawa, dan menyuburkan peradaban", "kind": "ELEMENT" }
+    ]
+  },
+  {
+    "dayName": "Kamis",
+    "pasaran": "Pon",
+    "neptu": 15,
+    "name": "Kamis Pon",
+    "auraTitle": "The Magnetic Leader",
+    "summary": "Penuh pesona kepemimpinan yang membuat orang merasa aman, cerdas mengorganisir kelompok, dan berjiwa pelindung.",
+    "characterSlug": "gatotkaca",
+    "matchReason": "Karisma kepahlawanan Tetuka yang dicintai rakyat dan ditakuti musuh.",
+    "compatibilityAdvice": "Delegasikan tanggung jawab agar kamu tidak menanggung seluruh beban organisasi.",
+    "traits": [
+      { "trait": "Kepemimpinan Mengayomi", "description": "Mampu menyatukan berbagai perbedaan faksi", "kind": "STRENGTH" },
+      { "trait": "Beban Tanggung Jawab", "description": "Merasa bersalah bila ada anggota tim yang tertinggal", "kind": "CHALLENGE" },
+      { "trait": "Elemen Perisai Baja", "description": "Pelindung andalan di saat genting", "kind": "ELEMENT" }
+    ]
+  },
+  {
+    "dayName": "Kamis",
+    "pasaran": "Wage",
+    "neptu": 12,
+    "name": "Kamis Wage",
+    "auraTitle": "The Steadfast Thinker",
+    "summary": "Kritis namun tetap santun, selalu memikirkan solusi logis, cermat mengelola risiko, dan setia pada nilai luhur.",
+    "characterSlug": "gareng",
+    "matchReason": "Kearifan Nala Gareng dalam mengingatkan bahaya dengan tutur humor santun.",
+    "compatibilityAdvice": "Beranilah mengambil keputusan meski informasi belum 100% lengkap.",
+    "traits": [
+      { "trait": "Analisis Berbobot", "description": "Memberikan pertimbangan matang yang realistis", "kind": "STRENGTH" },
+      { "trait": "Kekhawatiran Berlebih", "description": "Terlalu lama menimbang hal-hal kecil", "kind": "CHALLENGE" },
+      { "trait": "Elemen Timbangan Adil", "description": "Menakar segala perkara dengan presisi batin", "kind": "ELEMENT" }
+    ]
+  },
+  {
+    "dayName": "Kamis",
+    "pasaran": "Kliwon",
+    "neptu": 16,
+    "name": "Kamis Kliwon",
+    "auraTitle": "The Spiritual Guide",
+    "summary": "Membimbing dengan teladan tindakan, berjiwa luhur, berkarisma spiritual kuat, dan mampu memberi ketenangan jiwa bagi sesama.",
+    "characterSlug": "semar",
+    "matchReason": "Kedudukan Semar sebagai pamomong sejati jagad pakeliran.",
+    "compatibilityAdvice": "Tetap rawat kesehatan fisik di tengah kesibukan mengurus kebutuhan spiritual sesama.",
+    "traits": [
+      { "trait": "Kebijaksanaan Luhur", "description": "Nasihatnya menembus hati sanubari terdalam", "kind": "STRENGTH" },
+      { "trait": "Cenderung Menanggung Duka", "description": "Menyerap kesedihan orang lain ke dalam batin sendiri", "kind": "CHALLENGE" },
+      { "trait": "Elemen Cahaya Rembulan", "description": "Menerangi malam pekat dengan kelembutan suci", "kind": "ELEMENT" }
+    ]
+  },
+  {
+    "dayName": "Jumat",
+    "pasaran": "Legi",
+    "neptu": 11,
+    "name": "Jumat Legi",
+    "auraTitle": "The Pure Heart",
+    "summary": "Tulus, tidak menyimpan dendam, selalu melihat sisi terbaik manusia, ramah, dan disayangi banyak kalangan.",
+    "characterSlug": "yudhistira",
+    "matchReason": "Karakter berdarah putih Puntadewa yang tidak pernah ternoda kebencian.",
+    "compatibilityAdvice": "Tegakkan batas tegas agar ketulusanmu tidak dimanfaatkan oknum tak bertanggung jawab.",
+    "traits": [
+      { "trait": "Kemurnian Niat", "description": "Bekerja tulus tanpa pamrih politis", "kind": "STRENGTH" },
+      { "trait": "Polos", "description": "Kurang waspada terhadap intrik musuh dalam selimut", "kind": "CHALLENGE" },
+      { "trait": "Elemen Mata Air Suci", "description": "Membersihkan keruh dan menyegarkan dahaga jiwa", "kind": "ELEMENT" }
+    ]
+  },
+  {
+    "dayName": "Jumat",
+    "pasaran": "Pahing",
+    "neptu": 15,
+    "name": "Jumat Pahing",
+    "auraTitle": "The Fiery Warrior",
+    "summary": "Penuh gairah perjuangan, tidak betah berdiam diri saat melihat ketidakadilan, berani tampil di garda depan.",
+    "characterSlug": "srikandi",
+    "matchReason": "Semangat membara Dewi Srikandi dalam menuntut keadilan dan membela kehormatan nusa.",
+    "compatibilityAdvice": "Kelola ritme emosi agar energi juangmu bertahan dalam jangka panjang.",
+    "traits": [
+      { "trait": "Semangat Tak Padam", "description": "Selalu siap bertempur membela yang terzalimi", "kind": "STRENGTH" },
+      { "trait": "Impulsif", "description": "Bisa bertindak spontan saat tersulut amarah moral", "kind": "CHALLENGE" },
+      { "trait": "Elemen Obor Kemenangan", "description": "Menyalakan keberanian seluruh barisan", "kind": "ELEMENT" }
+    ]
+  },
+  {
+    "dayName": "Jumat",
+    "pasaran": "Pon",
+    "neptu": 13,
+    "name": "Jumat Pon",
+    "auraTitle": "The Silent Ace",
+    "summary": "Bekerja dalam hening dengan hasil gemilang, berwibawa santun, tenang, dan memiliki kepekaan rasa tingkat tinggi.",
+    "characterSlug": "arjuna",
+    "matchReason": "Prinsip Ciptaning Janaka: hening dalam laku, tuntas dalam bidikan panah.",
+    "compatibilityAdvice": "Sampaikan apresiasi dan progresmu agar lingkungan memahami dedikasimu.",
+    "traits": [
+      { "trait": "Ketelitian Senyap", "description": "Menyelesaikan misi rumit tanpa membuat gaduh", "kind": "STRENGTH" },
+      { "trait": "Sukar Terbuka", "description": "Menyimpan seluruh unek-unek dalam keheningan batin", "kind": "CHALLENGE" },
+      { "trait": "Elemen Panah Pasopati", "description": "Senyap meluncur tepat menembus sasaran", "kind": "ELEMENT" }
+    ]
+  },
+  {
+    "dayName": "Jumat",
+    "pasaran": "Wage",
+    "neptu": 10,
+    "name": "Jumat Wage",
+    "auraTitle": "The Humble Sage",
+    "summary": "Suka menolong tanpa pamer, kesederhanaannya adalah kekuatan terbesarnya, ramah, dan disukai rakyat jelata.",
+    "characterSlug": "petruk",
+    "matchReason": "Kesederhanaan filosofi Kanthong Bolong yang memandang harta duniawi sebagai titipan.",
+    "compatibilityAdvice": "Yakini bahwa karyamu berkelas dan layak mendapatkan apresiasi setimpal.",
+    "traits": [
+      { "trait": "Kerendahan Hati", "description": "Tetap bersahaja meski berada di puncak keberhasilan", "kind": "STRENGTH" },
+      { "trait": "Kurang Percaya Diri", "description": "Kadang merasa orang lain jauh lebih hebat dari dirinya", "kind": "CHALLENGE" },
+      { "trait": "Elemen Bambu Kuning", "description": "Lentur tertiup angin namun berakar kokoh", "kind": "ELEMENT" }
+    ]
+  },
+  {
+    "dayName": "Jumat",
+    "pasaran": "Kliwon",
+    "neptu": 14,
+    "name": "Jumat Kliwon",
+    "auraTitle": "The Cosmic Seer",
+    "summary": "Intuisi spiritual yang sangat kuat, peka terhadap getaran semesta, bijak, dan mampu membimbing di masa transisi sulit.",
+    "characterSlug": "sadewa",
+    "matchReason": "Kemampuan ruwatan Sudamala Raden Sadewa yang membersihkan kutukan angkara.",
+    "compatibilityAdvice": "Jaga kejernihan batin dari prasangka buruk agar firasatmu tetap murni.",
+    "traits": [
+      { "trait": "Kepekaan Semesta", "description": "Mampu membaca pertanda zaman dan arah takdir", "kind": "STRENGTH" },
+      { "trait": "Sensitivitas Batin", "description": "Sangat terpengaruh oleh atmosfer emosional sekitar", "kind": "CHALLENGE" },
+      { "trait": "Elemen Telaga Kahyangan", "description": "Menyimpan rahasia takdir yang menenangkan sukma", "kind": "ELEMENT" }
+    ]
+  },
+  {
+    "dayName": "Sabtu",
+    "pasaran": "Legi",
+    "neptu": 14,
+    "name": "Sabtu Legi",
+    "auraTitle": "The Cheerful Healer",
+    "summary": "Mampu mengubah suasana muram menjadi riang dengan canda berbobot, cerdas berdiplomasi, dan berhati dermawan.",
+    "characterSlug": "petruk",
+    "matchReason": "Keceriaan Petruk yang menyembuhkan keresahan para ksatria dengan senyuman tulus.",
+    "compatibilityAdvice": "Perhatikan batasan privasi saat bercanda agar tidak menyinggung orang lain.",
+    "traits": [
+      { "trait": "Penghibur Alami", "description": "Mampu mencairkan kebekuan ruang paling tegang sekalipun", "kind": "STRENGTH" },
+      { "trait": "Menutupi Kesedihan", "description": "Sering tertawa keras untuk menyembunyikan duka pribadi", "kind": "CHALLENGE" },
+      { "trait": "Elemen Pelangi Pasca Hujan", "description": "Membawa harapan baru setelah badai reda", "kind": "ELEMENT" }
+    ]
+  },
+  {
+    "dayName": "Sabtu",
+    "pasaran": "Pahing",
+    "neptu": 18,
+    "name": "Sabtu Pahing",
+    "auraTitle": "The Unstoppable Force",
+    "summary": "Neptu tertinggi dalam kalender Jawa (18): kemauan keras baja, daya juang mutlak, integritas tiada dua, dan berwibawa agung.",
+    "characterSlug": "bima",
+    "matchReason": "Kekuatan mutlak Bratasena sang ksatria penembus samudra dan peruntuh kezaliman.",
+    "compatibilityAdvice": "Latih kelembutan hati dan kelonggaran maaf kepada mereka yang bersalah kepadamu.",
+    "traits": [
+      { "trait": "Kekuatan Mutlak", "description": "Daya tahan dan determinasi tertinggi tanpa batas menyerah", "kind": "STRENGTH" },
+      { "trait": "Keras Luar Biasa", "description": "Sangat sulit melunakkan keputusannya bila sudah terucap", "kind": "CHALLENGE" },
+      { "trait": "Elemen Karang Samudra Selatan", "description": "Tak pernah pecah oleh jutaan hantaman ombak", "kind": "ELEMENT" }
+    ]
+  },
+  {
+    "dayName": "Sabtu",
+    "pasaran": "Pon",
+    "neptu": 16,
+    "name": "Sabtu Pon",
+    "auraTitle": "The Loyal Protector",
+    "summary": "Setia sampai akhir kepada sahabat dan keluarga, tidak akan pernah berkhianat, berani mengambil risiko keselamatan diri.",
+    "characterSlug": "gatotkaca",
+    "matchReason": "Sumpah kesetiaan dan pengorbanan Raden Gatotkaca demi keselamatan ksatria Pandawa.",
+    "compatibilityAdvice": "Ingatlah bahwa dirimu juga berhak bahagia dan beristirahat dengan damai.",
+    "traits": [
+      { "trait": "Loyalitas Abadi", "description": "Pemberani yang bersedia menjadi benteng bagi orang tercinta", "kind": "STRENGTH" },
+      { "trait": "Pengorbanan Berlebih", "description": "Kerap mengabaikan keselamatan diri demi menyelamatkan kawan", "kind": "CHALLENGE" },
+      { "trait": "Elemen Sayap Angkasa", "description": "Menaungi negeri dari ancaman mara bahaya", "kind": "ELEMENT" }
+    ]
+  },
+  {
+    "dayName": "Sabtu",
+    "pasaran": "Wage",
+    "neptu": 13,
+    "name": "Sabtu Wage",
+    "auraTitle": "The Independent Craft",
+    "summary": "Mandiri, tidak bergantung pada pujian orang lain, tekun berkarya dalam sunyi, dan menjunjung tinggi kehormatan profesi.",
+    "characterSlug": "nakula",
+    "matchReason": "Keahlian teknik ksatria Sawojajar yang bekerja tekun di belakang layar.",
+    "compatibilityAdvice": "Perluas jejaring sosial agar karya hebatmu dikenal dan memberi dampak lebih luas.",
+    "traits": [
+      { "trait": "Kemandirian Eksekusi", "description": "Mampu menyelesaikan pekerjaan rumit tanpa perlu diawasi", "kind": "STRENGTH" },
+      { "trait": "Keras Kepala Mandiri", "description": "Enggan meminta pertolongan meski sedang kewalahan", "kind": "CHALLENGE" },
+      { "trait": "Elemen Besi Tempa Hitam", "description": "Menyimpan ketajaman murni tanpa kilau berlebihan", "kind": "ELEMENT" }
+    ]
+  },
+  {
+    "dayName": "Sabtu",
+    "pasaran": "Kliwon",
+    "neptu": 17,
+    "name": "Sabtu Kliwon",
+    "auraTitle": "The Majestic Pillar",
+    "summary": "Pilar penopang yang berwibawa tinggi, teguh dalam saat genting, berjiwa ksatria pelindung, dan menjunjung harga diri dinasti.",
+    "characterSlug": "duryodana",
+    "matchReason": "Karakter kepemimpinan megah Prabu Duryodana yang royal menjaga kehormatan sekutunya.",
+    "compatibilityAdvice": "Buka mata terhadap kritik yang membangun dan jangan biarkan amarah membutakan akal sehat.",
+    "traits": [
+      { "trait": "Wibawa Agung", "description": "Kehadirannya menggetarkan dan memancarkan aura pemimpin", "kind": "STRENGTH" },
+      { "trait": "Obsesi Kehormatan", "description": "Sangat sensitif bila harga dirinya disinggung", "kind": "CHALLENGE" },
+      { "trait": "Elemen Singgasana Emas", "description": "Megah berwibawa menopang tatanan kerajaan", "kind": "ELEMENT" }
+    ]
+  }
+]

@@ -1,0 +1,31 @@
+[
+  {
+    "slug": "pandawa",
+    "name": "Pandawa Lima",
+    "description": "Lima ksatria bersaudara penegak dharma dan kebajikan dari Keraton Amarta.",
+    "source": "Mahabharata Jawa Purwa (Serat Pustakaraja Purwa)",
+    "status": "REVIEWED"
+  },
+  {
+    "slug": "kurawa",
+    "name": "Wangsa Kurawa",
+    "description": "Seratus bersaudara dari Astina yang dipimpin Prabu Duryodana.",
+    "source": "Mahabharata Jawa Purwa",
+    "status": "REVIEWED"
+  },
+  {
+    "slug": "punokawan",
+    "name": "Punokawan",
+    "description": "Empat serangkai pamomong khas Jawa yang tidak ada dalam versi India. Membawa kearifan rakyat dan kritik sosial.",
+    "source": "Karya asli pujangga Jawa (Sunan Kalijaga / Empu Panuluh)",
+    "status": "REVIEWED",
+    "variantNote": "Tokoh asli mitologi Jawa (bukan dari Mahabharata Vyasa)"
+  },
+  {
+    "slug": "kesatria-dewa",
+    "name": "Kesatria & Tokoh Mandiri",
+    "description": "Pahlawan legendaris, prajurit wanita, dan tokoh penentu takdir perang besar.",
+    "source": "Pakeliran Jawa Tengah",
+    "status": "REVIEWED"
+  }
+]

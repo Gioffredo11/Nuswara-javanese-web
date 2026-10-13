@@ -1,0 +1,74 @@
+[
+  {
+    "slug": "pasopati",
+    "name": "Panah Pasopati",
+    "description": "Panah sakti anugerah Batara Guru, berdaya bidik mutlak lambang fokus batin tanpa keraguan.",
+    "origin": "Kahyangan Batara Guru",
+    "power": "Bidikan mutlak, menghancurkan ilusi dan keangkuhan.",
+    "source": "Mahabharata Jawa Purwa",
+    "status": "REVIEWED"
+  },
+  {
+    "slug": "gada-rujakpala",
+    "name": "Gada Rujakpala",
+    "description": "Gada pusaka berbobot raksasa milik Bima, penghancur segala wujud kezaliman.",
+    "origin": "Jodhipati",
+    "power": "Pukulan penghancur bumi, lambang ketegasan hukum tak pandang bulu.",
+    "source": "Mahabharata Jawa Purwa",
+    "status": "REVIEWED"
+  },
+  {
+    "slug": "kuku-pancanaka",
+    "name": "Kuku Pancanaka",
+    "description": "Kuku jempol sakti tajam berkilau milik Werkudara dan Gatotkaca, senjata penembus segala perisai kebatilan.",
+    "origin": "Warisan Resi Mayangkara",
+    "power": "Dapat merobek rintangan sekeras karang dengan ketajaman batin.",
+    "source": "Mahabharata Jawa Purwa",
+    "status": "REVIEWED"
+  },
+  {
+    "slug": "antakusuma",
+    "name": "Rompi Kotang Antakusuma",
+    "description": "Rompi sakti pusaka dewa yang memberikan kemampuan terbang di angkasa tanpa sayap.",
+    "origin": "Kawah Candradimuka",
+    "power": "Terbang secepat kilat dan menembus awan tanpa terhalang gravitasi.",
+    "source": "Pakeliran Jawa Purwa",
+    "status": "REVIEWED"
+  },
+  {
+    "slug": "caping-basunanda",
+    "name": "Caping Basunanda",
+    "description": "Pusaka pelindung Gatotkaca dari terik matahari dan hujan lebat batiniah.",
+    "origin": "Pringgandani",
+    "power": "Perisai cuaca dan pertahanan psikis tak tertembus.",
+    "source": "Pakeliran Jawa Purwa",
+    "status": "REVIEWED"
+  },
+  {
+    "slug": "kalimasada",
+    "name": "Jamus Kalimasada",
+    "description": "Pusaka serat suci lambang kemurnian nurani dan kebenaran hakiki milik Puntadewa.",
+    "origin": "Keraton Amarta",
+    "power": "Mengalirkan kedamaian, kesejahteraan, dan kewibawaan spiritual.",
+    "source": "Serat Jamus Kalimasada",
+    "status": "REVIEWED"
+  },
+  {
+    "slug": "kuntawijayadanu",
+    "name": "Senjata Kuntawijayadanu",
+    "description": "Tombak sakti dewata milik Adipati Karna yang tak pernah meleset satu kali pun.",
+    "origin": "Batara Narada",
+    "power": "Menembus takdir sekali pakai dengan keakuratan mematikan.",
+    "source": "Mahabharata Jawa Purwa",
+    "status": "REVIEWED"
+  },
+  {
+    "slug": "panah-hrusangkali",
+    "name": "Panah Hrusangkali",
+    "description": "Panah sakti milik Dewi Srikandi dengan lesatan angin tajam yang menggetarkan medan laga.",
+    "origin": "Pancalaradya",
+    "power": "Kecepatan bidik beruntun menembus pertahanan lawan.",
+    "source": "Mahabharata Jawa Purwa",
+    "status": "REVIEWED"
+  }
+]

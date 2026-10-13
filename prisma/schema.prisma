@@ -1,0 +1,505 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+enum ContentStatus {
+  DRAFT
+  REVIEWED
+}
+
+enum UserRole {
+  USER
+  ADMIN
+}
+
+enum RelationshipType {
+  PARENT
+  SPOUSE
+  SIBLING
+  TEACHER
+  ALLY
+  RIVAL
+}
+
+enum VisualElementKind {
+  EYE
+  NOSE
+  FACE_SHAPE
+  FACE_COLOR
+  OTHER
+}
+
+enum ShareType {
+  ORACLE
+  MANIFESTATION
+  PHOTO
+}
+
+model User {
+  id                  Int                   @id @default(autoincrement())
+  guestToken          String                @unique
+  email               String?               @unique
+  passwordHash        String?
+  role                UserRole              @default(USER)
+  oracleResults       OracleResult[]
+  dailyManifestations DailyManifestation[]
+  createdAt           DateTime              @default(now())
+  updatedAt           DateTime              @updatedAt
+
+  @@map("users")
+}
+
+model CharacterCategory {
+  id          Int           @id @default(autoincrement())
+  slug        String        @unique
+  name        String
+  description String        @db.Text
+  source      String?
+  status      ContentStatus @default(DRAFT)
+  variantNote String?       @db.Text
+  characters  Character[]
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+
+  @@index([status])
+  @@map("character_categories")
+}
+
+model Character {
+  id                   Int                      @id @default(autoincrement())
+  slug                 String                   @unique
+  name                 String
+  javaneseName         String?
+  title                String?
+  categoryId           Int
+  category             CharacterCategory        @relation(fields: [categoryId], references: [id])
+  shortDescription     String                   @db.Text
+  personality          Json?
+  uniqueFacts          String?                  @db.Text
+  storySummary         String?                  @db.Text
+  lineArtKey           String?
+  traitTags            Json?
+  neptuAffinity        Int?
+  kingdom              String?
+  generationLevel      Int                      @default(1)
+  order                Int                      @default(0)
+  source               String?
+  status               ContentStatus            @default(DRAFT)
+  variantNote          String?                  @db.Text
+
+  relationshipsFrom    CharacterRelationship[]  @relation("RelFrom")
+  relationshipsTo      CharacterRelationship[]  @relation("RelTo")
+  weapons              CharacterWeapon[]
+  stories              StoryCharacter[]
+  philosophies         CharacterPhilosophy[]
+  primaryPhilosophies  Philosophy[]             @relation("PrimaryChar")
+  wetonRules           WetonCharacterRule[]
+  oracleResults        OracleResult[]
+  manifestations       ManifestationCharacter[]
+  batikPatterns        BatikRelatedCharacter[]
+  visualElements       VisualElement[]
+
+  createdAt            DateTime                 @default(now())
+  updatedAt            DateTime                 @updatedAt
+
+  @@index([categoryId])
+  @@index([status])
+  @@fulltext([name, shortDescription])
+  @@map("characters")
+}
+
+model CharacterRelationship {
+  id        Int              @id @default(autoincrement())
+  fromId    Int
+  toId      Int
+  type      RelationshipType
+  note      String?          @db.Text
+
+  from      Character        @relation("RelFrom", fields: [fromId], references: [id], onDelete: Cascade)
+  to        Character        @relation("RelTo", fields: [toId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime         @default(now())
+  updatedAt DateTime         @updatedAt
+
+  @@unique([fromId, toId, type])
+  @@index([fromId])
+  @@index([toId])
+  @@map("character_relationships")
+}
+
+model Weapon {
+  id          Int               @id @default(autoincrement())
+  slug        String            @unique
+  name        String
+  description String            @db.Text
+  origin      String?
+  power       String?           @db.Text
+  source      String?
+  status      ContentStatus     @default(DRAFT)
+  variantNote String?           @db.Text
+  characters  CharacterWeapon[]
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
+
+  @@index([status])
+  @@map("weapons")
+}
+
+model CharacterWeapon {
+  id          Int       @id @default(autoincrement())
+  characterId Int
+  weaponId    Int
+  character   Character @relation(fields: [characterId], references: [id], onDelete: Cascade)
+  weapon      Weapon    @relation(fields: [weaponId], references: [id], onDelete: Cascade)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@unique([characterId, weaponId])
+  @@index([characterId])
+  @@index([weaponId])
+  @@map("character_weapons")
+}
+
+model Philosophy {
+  id                   Int                   @id @default(autoincrement())
+  slug                 String                @unique
+  title                String
+  textJawa             String
+  meaning              String                @db.Text // Konteks budaya
+  modernInterpretation String                @db.Text // Interpretasi modern
+  primaryCharacterId   Int?
+  primaryCharacter     Character?            @relation("PrimaryChar", fields: [primaryCharacterId], references: [id], onDelete: SetNull)
+  source               String?
+  status               ContentStatus         @default(DRAFT)
+  variantNote          String?               @db.Text
+  category             String                @default("KEARIFAN")
+
+  characters           CharacterPhilosophy[]
+  stories              Story[]
+  manifestations       DailyManifestation[]
+
+  createdAt            DateTime              @default(now())
+  updatedAt            DateTime              @updatedAt
+
+  @@index([primaryCharacterId])
+  @@index([status])
+  @@map("philosophies")
+}
+
+model CharacterPhilosophy {
+  id           Int        @id @default(autoincrement())
+  characterId  Int
+  philosophyId Int
+  character    Character  @relation(fields: [characterId], references: [id], onDelete: Cascade)
+  philosophy   Philosophy @relation(fields: [philosophyId], references: [id], onDelete: Cascade)
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+
+  @@unique([characterId, philosophyId])
+  @@index([characterId])
+  @@index([philosophyId])
+  @@map("character_philosophies")
+}
+
+model Story {
+  id           Int              @id @default(autoincrement())
+  slug         String           @unique
+  title        String
+  summary      String           @db.Text
+  coverKey     String?
+  philosophyId Int?
+  philosophy   Philosophy?      @relation(fields: [philosophyId], references: [id], onDelete: SetNull)
+  theme        String           @default("Kepahlawanan")
+  source       String?
+  status       ContentStatus    @default(DRAFT)
+  variantNote  String?          @db.Text
+
+  chapters     StoryChapter[]
+  characters   StoryCharacter[]
+
+  createdAt    DateTime         @default(now())
+  updatedAt    DateTime         @updatedAt
+
+  @@index([philosophyId])
+  @@index([status])
+  @@map("stories")
+}
+
+model StoryCharacter {
+  id          Int       @id @default(autoincrement())
+  storyId     Int
+  characterId Int
+  role        String    @default("PROTAGONIST")
+  story       Story     @relation(fields: [storyId], references: [id], onDelete: Cascade)
+  character   Character @relation(fields: [characterId], references: [id], onDelete: Cascade)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@unique([storyId, characterId])
+  @@index([storyId])
+  @@index([characterId])
+  @@map("story_characters")
+}
+
+model StoryChapter {
+  id                   Int          @id @default(autoincrement())
+  storyId              Int
+  order                Int
+  title                String
+  subtitle             String?
+  summary              String?      @db.Text
+  estimatedReadSeconds Int          @default(120)
+  story                Story        @relation(fields: [storyId], references: [id], onDelete: Cascade)
+  scenes               StoryScene[]
+  createdAt            DateTime     @default(now())
+  updatedAt            DateTime     @updatedAt
+
+  @@unique([storyId, order])
+  @@index([storyId])
+  @@map("story_chapters")
+}
+
+model StoryScene {
+  id              Int          @id @default(autoincrement())
+  chapterId       Int
+  order           Int
+  narration       String       @db.Text
+  speakerName     String?
+  illustrationKey String?
+  culturalNote    String?      @db.Text
+  metadata        Json?
+  chapter         StoryChapter @relation(fields: [chapterId], references: [id], onDelete: Cascade)
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime     @updatedAt
+
+  @@unique([chapterId, order])
+  @@index([chapterId])
+  @@map("story_scenes")
+}
+
+model BatikPattern {
+  id                Int                     @id @default(autoincrement())
+  slug              String                  @unique
+  name              String
+  originRegion      String                  @default("Jawa Tengah")
+  shortHistory      String                  @db.Text
+  philosophy        String                  @db.Text
+  usage             String                  @db.Text
+  vectorKey         String?
+  colorPalette      Json?
+  source            String?
+  status            ContentStatus           @default(DRAFT)
+  variantNote       String?                 @db.Text
+  relatedCharacters BatikRelatedCharacter[]
+  createdAt         DateTime                @default(now())
+  updatedAt         DateTime                @updatedAt
+
+  @@index([status])
+  @@map("batik_patterns")
+}
+
+model BatikRelatedCharacter {
+  id             Int          @id @default(autoincrement())
+  batikPatternId Int
+  characterId    Int
+  batikPattern   BatikPattern @relation(fields: [batikPatternId], references: [id], onDelete: Cascade)
+  character      Character    @relation(fields: [characterId], references: [id], onDelete: Cascade)
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+
+  @@unique([batikPatternId, characterId])
+  @@index([batikPatternId])
+  @@index([characterId])
+  @@map("batik_related_characters")
+}
+
+model VisualElement {
+  id          Int               @id @default(autoincrement())
+  slug        String            @unique
+  kind        VisualElementKind
+  name        String
+  meaning     String            @db.Text
+  characterId Int?
+  character   Character?        @relation(fields: [characterId], references: [id], onDelete: SetNull)
+  source      String?
+  status      ContentStatus     @default(DRAFT)
+  variantNote String?           @db.Text
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
+
+  @@index([kind])
+  @@index([characterId])
+  @@index([status])
+  @@map("visual_elements")
+}
+
+model Weton {
+  id           Int                  @id @default(autoincrement())
+  dayName      String // Minggu, Senin, Selasa, Rabu, Kamis, Jumat, Sabtu
+  pasaran      String // Legi, Pahing, Pon, Wage, Kliwon
+  neptu        Int
+  name         String // e.g. "Rabu Pon"
+  auraTitle    String?
+  summary      String?              @db.Text
+  traits       WetonTrait[]
+  rules        WetonCharacterRule[]
+  oracleResults OracleResult[]
+  createdAt    DateTime             @default(now())
+  updatedAt    DateTime             @updatedAt
+
+  @@unique([dayName, pasaran])
+  @@map("weton")
+}
+
+model WetonTrait {
+  id          Int      @id @default(autoincrement())
+  wetonId     Int
+  trait       String
+  description String   @db.Text
+  kind        String // STRENGTH, CHALLENGE, ELEMENT
+  weton       Weton    @relation(fields: [wetonId], references: [id], onDelete: Cascade)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([wetonId])
+  @@map("weton_traits")
+}
+
+model WetonCharacterRule {
+  id                  Int       @id @default(autoincrement())
+  wetonId             Int
+  characterId         Int
+  matchReason         String    @db.Text
+  compatibilityAdvice String    @db.Text
+  priority            Int       @default(0)
+  weton               Weton     @relation(fields: [wetonId], references: [id], onDelete: Cascade)
+  character           Character @relation(fields: [characterId], references: [id], onDelete: Cascade)
+  createdAt           DateTime  @default(now())
+  updatedAt           DateTime  @updatedAt
+
+  @@unique([wetonId, characterId])
+  @@index([wetonId])
+  @@index([characterId])
+  @@map("weton_character_rules")
+}
+
+model OracleResult {
+  id          Int        @id @default(autoincrement())
+  userId      Int
+  name        String
+  birthDate   DateTime
+  wetonId     Int
+  characterId Int
+  resultJson  Json
+  shareLinkId Int?
+  user        User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  weton       Weton      @relation(fields: [wetonId], references: [id], onDelete: Cascade)
+  character   Character  @relation(fields: [characterId], references: [id], onDelete: Cascade)
+  shareLink   ShareLink? @relation(fields: [shareLinkId], references: [id], onDelete: SetNull)
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+
+  @@index([userId])
+  @@index([wetonId])
+  @@index([characterId])
+  @@index([shareLinkId])
+  @@map("oracle_results")
+}
+
+model DailyManifestation {
+  id           Int                      @id @default(autoincrement())
+  userId       Int
+  localDate    String // YYYY-MM-DD (WIB date)
+  philosophyId Int
+  user         User                     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  philosophy   Philosophy               @relation(fields: [philosophyId], references: [id], onDelete: Cascade)
+  characters   ManifestationCharacter[]
+  createdAt    DateTime                 @default(now())
+  updatedAt    DateTime                 @updatedAt
+
+  @@unique([userId, localDate])
+  @@index([userId])
+  @@index([philosophyId])
+  @@map("daily_manifestations")
+}
+
+model ManifestationCharacter {
+  id                   Int                @id @default(autoincrement())
+  dailyManifestationId Int
+  characterId          Int
+  dailyManifestation   DailyManifestation @relation(fields: [dailyManifestationId], references: [id], onDelete: Cascade)
+  character            Character          @relation(fields: [characterId], references: [id], onDelete: Cascade)
+  createdAt            DateTime           @default(now())
+  updatedAt            DateTime           @updatedAt
+
+  @@unique([dailyManifestationId, characterId])
+  @@index([dailyManifestationId])
+  @@index([characterId])
+  @@map("manifestation_characters")
+}
+
+model PhotoboothFrame {
+  id        Int      @id @default(autoincrement())
+  slug      String   @unique
+  name      String
+  assetKey  String
+  config    Json?
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([isActive])
+  @@map("photobooth_frames")
+}
+
+model PhotoboothFilter {
+  id        Int      @id @default(autoincrement())
+  slug      String   @unique
+  name      String
+  assetKey  String
+  config    Json?
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([isActive])
+  @@map("photobooth_filters")
+}
+
+model ShareLink {
+  id            Int            @id @default(autoincrement())
+  shortCode     String         @unique
+  type          ShareType
+  referenceId   String?
+  snapshotData  Json?
+  photoAssets   PhotoAsset[]
+  oracleResults OracleResult[]
+  expiresAt     DateTime?
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+
+  @@index([type])
+  @@index([expiresAt])
+  @@map("share_links")
+}
+
+model PhotoAsset {
+  id          Int       @id @default(autoincrement())
+  shareLinkId Int
+  storageKey  String
+  mimeType    String
+  sizeBytes   Int
+  expiresAt   DateTime
+  shareLink   ShareLink @relation(fields: [shareLinkId], references: [id], onDelete: Cascade)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@index([shareLinkId])
+  @@index([expiresAt])
+  @@map("photo_assets")
+}

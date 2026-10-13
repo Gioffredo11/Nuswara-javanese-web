@@ -1,0 +1,83 @@
+[
+  {
+    "slug": "mata-liyepan",
+    "kind": "EYE",
+    "name": "Mata Liyepan (Sipit Halus)",
+    "meaning": "Bentuk mata sayu menyipit halus. Menandakan watak ksatria yang sabar, berbudi luhur, berdarah ningrat, dan mampu mengendalikan hawa nafsu secara halus.",
+    "characterSlug": "arjuna",
+    "source": "Pakeliran Gagrag Surakarta (Tatah Sungging)",
+    "status": "REVIEWED"
+  },
+  {
+    "slug": "mata-thelengan",
+    "kind": "EYE",
+    "name": "Mata Thelengan (Bulat Gagah)",
+    "meaning": "Bentuk mata bulat terbuka lebar dan tegas. Menandakan watak ksatria perkasa yang berani, lugas, tegas, tidak kenal takut, dan sigap bertindak.",
+    "characterSlug": "bima",
+    "source": "Pakeliran Gagrag Surakarta (Tatah Sungging)",
+    "status": "REVIEWED"
+  },
+  {
+    "slug": "mata-kelapan",
+    "kind": "EYE",
+    "name": "Mata Kelapan (Tajam Liar)",
+    "meaning": "Mata tajam dengan sudut menukik. Menandakan watak agresif, ambisius tinggi, atau bergejolak emosi keras.",
+    "characterSlug": "duryodana",
+    "source": "Pakeliran Gagrag Surakarta",
+    "status": "REVIEWED"
+  },
+  {
+    "slug": "hidung-wali-miring",
+    "kind": "NOSE",
+    "name": "Hidung Wali Miring (Runcing Anggun)",
+    "meaning": "Bentuk hidung mancung runcing menyerupai mata pisau wali. Menggambarkan kehalusan budi, ketajaman batin, dan martabat tinggi.",
+    "characterSlug": "arjuna",
+    "source": "Pedoman Seni Kriya Wayang Kulit",
+    "status": "REVIEWED"
+  },
+  {
+    "slug": "hidung-pelokan",
+    "kind": "NOSE",
+    "name": "Hidung Pelokan (Bulat Besar)",
+    "meaning": "Bentuk hidung bulat bersahaja laksana biji mangga. Menggambarkan watak merakyat, jujur tanpa pretensi, humoris, dan setia.",
+    "characterSlug": "petruk",
+    "source": "Pedoman Seni Kriya Wayang Kulit",
+    "status": "REVIEWED"
+  },
+  {
+    "slug": "sungging-wajah-ireng",
+    "kind": "FACE_COLOR",
+    "name": "Sungging Wajah Ireng (Hitam)",
+    "meaning": "Warna wajah hitam pekat melambangkan ketenangan jiwa yang telah mencapai kedalaman batin, keteguhan hati tak tergoyahkan, dan keluhuran ilmu kasampurnan.",
+    "characterSlug": "semar",
+    "source": "Filosofi Sungging Wayang Kulit Jawa",
+    "status": "REVIEWED"
+  },
+  {
+    "slug": "sungging-wajah-abang",
+    "kind": "FACE_COLOR",
+    "name": "Sungging Wajah Abang (Merah)",
+    "meaning": "Warna wajah merah darah melambangkan keberanian menyala, kemarahan terhadap ketidakadilan, gejolak nafsu amarah, atau sifat pantang mundur.",
+    "characterSlug": "duryodana",
+    "source": "Filosofi Sungging Wayang Kulit Jawa",
+    "status": "REVIEWED"
+  },
+  {
+    "slug": "sungging-wajah-prada",
+    "kind": "FACE_COLOR",
+    "name": "Sungging Wajah Prada (Emas)",
+    "meaning": "Warna wajah kuning keemasan melambangkan keagungan martabat, kebangsawanan sejati, keindahan raga, dan karisma kepemimpinan luhur.",
+    "characterSlug": "gatotkaca",
+    "source": "Filosofi Sungging Wayang Kulit Jawa",
+    "status": "REVIEWED"
+  },
+  {
+    "slug": "sungging-wajah-pethak",
+    "kind": "FACE_COLOR",
+    "name": "Sungging Wajah Pethak (Putih)",
+    "meaning": "Warna wajah putih mulus melambangkan kesucian niat, ketulusan hati yang tanpa pamrih, kejujuran tanpa cacat, dan kesucian spiritual.",
+    "characterSlug": "yudhistira",
+    "source": "Filosofi Sungging Wayang Kulit Jawa",
+    "status": "REVIEWED"
+  }
+]

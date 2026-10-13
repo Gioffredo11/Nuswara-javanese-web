@@ -1,0 +1,349 @@
+/* ==========================================================================
+   WAYANG 3D BOOK CARDS - CSS 3D ENGINE
+   Inspired by ThreeUI BestsellerBooks Runtime (book.css)
+   Preserves 3D perspective, layered paper fan, embossed spine, and open/close physics.
+   ========================================================================== */
+
+.shader-frame {
+  position: relative;
+  width: 100%;
+  height: 480px;
+  border-radius: 1rem;
+  overflow: hidden;
+  background: #181513;
+  box-shadow: 0 20px 45px -15px rgba(24, 18, 10, 0.4);
+}
+
+@media (max-width: 640px) {
+  .shader-frame {
+    height: 380px;
+  }
+}
+
+/* 3D Book Stage */
+.wayang-book-stage {
+  perspective: 1800px;
+  perspective-origin: 50% 45%;
+  width: 100%;
+  min-height: 440px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem 0.5rem;
+  position: relative;
+}
+
+/* Book Master Container */
+.wayang-book {
+  position: relative;
+  width: 250px;
+  height: 360px;
+  transform-style: preserve-3d;
+  font-family: inherit;
+  --book-depth: 34px;
+  --book-unit: 2.5px;
+  --ease: cubic-bezier(0.2, 0.78, 0.2, 1);
+  transition: transform 600ms var(--ease);
+  cursor: pointer;
+  user-select: none;
+}
+
+/* Default closed tilt */
+.wayang-book[data-open="false"] {
+  transform: rotateY(-22deg) rotateX(6deg);
+}
+
+/* Hover preview tilt (unopened to slightly opening) */
+.wayang-book[data-open="false"]:hover {
+  transform: rotateY(-12deg) rotateX(3deg) translateZ(12px);
+}
+
+/* Fully opened or active */
+.wayang-book[data-open="true"] {
+  transform: rotateY(-6deg) rotateX(2deg) translateZ(16px);
+}
+
+/* Soft contact shadow */
+.wayang-book-shadow {
+  position: absolute;
+  inset: 5% -6% -4% 6%;
+  background: #140d07;
+  filter: blur(20px);
+  opacity: 0.45;
+  border-radius: 8px;
+  transform: translate3d(16px, 32px, -50px);
+  transition: transform 600ms var(--ease), opacity 600ms var(--ease);
+  pointer-events: none;
+}
+
+.wayang-book:hover .wayang-book-shadow {
+  transform: translate3d(24px, 38px, -55px);
+  opacity: 0.55;
+}
+
+/* Book Back Cover */
+.wayang-book-back {
+  position: absolute;
+  inset: 0;
+  border-radius: 4px 8px 8px 4px;
+  background: var(--cover-bg, #2e1d14);
+  border: 1.5px solid rgba(190, 150, 90, 0.35);
+  transform: translateZ(calc(var(--book-depth) * -0.5));
+  box-shadow: 0 16px 28px rgba(20, 13, 7, 0.35);
+}
+
+/* Book Spine */
+.wayang-book-spine {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: var(--book-depth);
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  writing-mode: vertical-rl;
+  font-family: var(--font-cinzel), Georgia, serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #f7eed7;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+  border: 1.5px solid rgba(190, 150, 90, 0.4);
+  background: linear-gradient(90deg, rgba(0, 0, 0, 0.45), transparent 28%, rgba(255, 255, 255, 0.15) 65%, rgba(0, 0, 0, 0.5)),
+              var(--cover-bg, #2e1d14);
+  transform-origin: left center;
+  transform: translateZ(calc(var(--book-depth) * 0.5)) rotateY(90deg);
+  border-radius: 3px 0 0 3px;
+}
+
+/* Page Block (Thickness / Paper Edge) */
+.wayang-page-block {
+  position: absolute;
+  inset: 2% 2% 2% 4%;
+  transform-style: preserve-3d;
+  transform: translateZ(calc(var(--book-depth) * 0.4));
+  background: linear-gradient(90deg, #d3c4a6, #f7efe0 12%, #ebe1cd);
+  border: 1px solid #c9b999;
+  border-radius: 2px 5px 5px 2px;
+}
+
+/* Realistic 3D Paper Edges */
+.wayang-paper-edge {
+  position: absolute;
+  display: block;
+  transform-origin: left center;
+}
+
+.wayang-paper-fore {
+  left: 100%;
+  top: 0;
+  width: calc(var(--book-depth) * 0.82);
+  height: 100%;
+  background: repeating-linear-gradient(90deg, #c7b693 0 1px, #f4ecd8 1px 3px);
+  transform: rotateY(90deg);
+}
+
+.wayang-paper-top,
+.wayang-paper-bottom {
+  left: 0;
+  width: 100%;
+  height: calc(var(--book-depth) * 0.82);
+  background: repeating-linear-gradient(0deg, #c4b28f 0 1px, #f4ecd8 1px 3px);
+}
+
+.wayang-paper-top {
+  top: 0;
+  transform-origin: center top;
+  transform: rotateX(-90deg);
+}
+
+.wayang-paper-bottom {
+  top: 100%;
+  transform-origin: center top;
+  transform: rotateX(-90deg);
+}
+
+/* Interior Manuscript / Title Page revealed inside */
+.wayang-title-page {
+  position: absolute;
+  inset: 0;
+  padding: 1.25rem 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background: #faf5ea;
+  background-image: radial-gradient(rgba(140, 100, 50, 0.08) 1px, transparent 0);
+  background-size: 16px 16px;
+  border: 1px solid #d4c29e;
+  border-radius: 2px 6px 6px 2px;
+  color: #2b1f13;
+  overflow: hidden;
+}
+
+/* Fanned Pages Effect (Layered paper when opening) */
+.wayang-page-fan {
+  position: absolute;
+  inset: 2% 2.2% 2% 4%;
+  pointer-events: none;
+  transform-style: preserve-3d;
+}
+
+.wayang-page-fan i {
+  position: absolute;
+  inset: 0;
+  display: block;
+  border: 1px solid #c9b99a;
+  background: linear-gradient(90deg, #d3c29f, #faf4e6 14%, #eee4ce);
+  transform-origin: left center;
+  transform: translateZ(calc(var(--book-depth) * 0.42));
+  border-radius: 2px 5px 5px 2px;
+  transition: transform 900ms var(--ease);
+}
+
+/* Front Cover */
+.wayang-front-cover {
+  position: absolute;
+  inset: 0;
+  border-radius: 4px 8px 8px 4px;
+  transform-style: preserve-3d;
+  transform: translateZ(calc(var(--book-depth) * 0.5));
+  transform-origin: left center;
+  transition: transform 900ms var(--ease);
+}
+
+/* Cover Face (Exterior) */
+.wayang-cover-face {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  backface-visibility: hidden;
+  background: var(--cover-bg, #2e1d14);
+  border: 1.5px solid var(--cover-border, rgba(200, 160, 100, 0.45));
+  box-shadow: inset -10px 0 20px rgba(0, 0, 0, 0.35), inset 3px 0 10px rgba(255, 255, 255, 0.12);
+  transform: translateZ(1px);
+  padding: 1.25rem 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+}
+
+/* Cover Lining (Inner texture of the front cover) */
+.wayang-cover-lining {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  backface-visibility: hidden;
+  background: repeating-linear-gradient(45deg, #c4ad83 0 1px, #e7dcbf 1px 6px);
+  border: 5px solid var(--cover-bg, #2e1d14);
+  transform: rotateY(180deg) translateZ(1px);
+}
+
+/* Hover / Active Open Physics */
+/* In idle: closed */
+.wayang-book[data-open="false"] .wayang-front-cover {
+  transform: translateZ(calc(var(--book-depth) * 0.5)) rotateY(0deg);
+}
+
+/* On hover when unopened: gently opens slightly to entice visitor! */
+.wayang-book[data-open="false"]:hover .wayang-front-cover {
+  transform: translateZ(calc(var(--book-depth) * 0.5)) rotateY(-40deg);
+}
+
+.wayang-book[data-open="false"]:hover .wayang-page-fan i:nth-child(1) {
+  transform: translateZ(calc(var(--book-depth) * 0.42)) rotateY(-4deg);
+}
+.wayang-book[data-open="false"]:hover .wayang-page-fan i:nth-child(2) {
+  transform: translateZ(calc(var(--book-depth) * 0.44)) rotateY(-9deg);
+}
+.wayang-book[data-open="false"]:hover .wayang-page-fan i:nth-child(3) {
+  transform: translateZ(calc(var(--book-depth) * 0.46)) rotateY(-15deg);
+}
+.wayang-book[data-open="false"]:hover .wayang-page-fan i:nth-child(4) {
+  transform: translateZ(calc(var(--book-depth) * 0.48)) rotateY(-22deg);
+}
+
+/* When state is opened (data-open="true"): full glorious book opening! */
+.wayang-book[data-open="true"] .wayang-front-cover {
+  transform: translateZ(calc(var(--book-depth) * 0.5)) rotateY(-78deg);
+}
+
+.wayang-book[data-open="true"] .wayang-page-fan i:nth-child(1) {
+  transform: translateZ(calc(var(--book-depth) * 0.42)) rotateY(-7deg);
+}
+.wayang-book[data-open="true"] .wayang-page-fan i:nth-child(2) {
+  transform: translateZ(calc(var(--book-depth) * 0.44)) rotateY(-16deg);
+}
+.wayang-book[data-open="true"] .wayang-page-fan i:nth-child(3) {
+  transform: translateZ(calc(var(--book-depth) * 0.46)) rotateY(-26deg);
+}
+.wayang-book[data-open="true"] .wayang-page-fan i:nth-child(4) {
+  transform: translateZ(calc(var(--book-depth) * 0.48)) rotateY(-38deg);
+}
+
+/* Actively opening and entering profile transition */
+.wayang-book[data-opening="true"] {
+  transform: rotateY(-8deg) rotateX(1deg) translateZ(28px) scale(1.03) !important;
+  cursor: wait;
+}
+
+.wayang-book[data-opening="true"] .wayang-front-cover {
+  transform: translateZ(calc(var(--book-depth) * 0.5)) rotateY(-88deg) !important;
+  transition: transform 800ms var(--ease);
+}
+
+.wayang-book[data-opening="true"] .wayang-page-fan i:nth-child(1) {
+  transform: translateZ(calc(var(--book-depth) * 0.42)) rotateY(-9deg) !important;
+  transition: transform 800ms var(--ease);
+}
+.wayang-book[data-opening="true"] .wayang-page-fan i:nth-child(2) {
+  transform: translateZ(calc(var(--book-depth) * 0.44)) rotateY(-20deg) !important;
+  transition: transform 800ms var(--ease);
+}
+.wayang-book[data-opening="true"] .wayang-page-fan i:nth-child(3) {
+  transform: translateZ(calc(var(--book-depth) * 0.46)) rotateY(-32deg) !important;
+  transition: transform 800ms var(--ease);
+}
+.wayang-book[data-opening="true"] .wayang-page-fan i:nth-child(4) {
+  transform: translateZ(calc(var(--book-depth) * 0.48)) rotateY(-46deg) !important;
+  transition: transform 800ms var(--ease);
+}
+
+/* Golden Aura Animation when opening */
+@keyframes bookOpeningGlow {
+  0% {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1.04);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1.08);
+  }
+}
+
+.wayang-book-glow {
+  position: absolute;
+  inset: -14px;
+  background: radial-gradient(circle, rgba(234, 179, 8, 0.28) 0%, rgba(180, 83, 9, 0.12) 50%, transparent 75%);
+  border-radius: 18px;
+  animation: bookOpeningGlow 800ms ease-out forwards;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  .wayang-book,
+  .wayang-front-cover,
+  .wayang-page-fan i,
+  .wayang-book-shadow {
+    transition: none !important;
+    transform: none !important;
+  }
+}

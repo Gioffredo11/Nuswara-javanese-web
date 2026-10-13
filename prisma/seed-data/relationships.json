@@ -1,0 +1,92 @@
+[
+  {
+    "fromSlug": "yudhistira",
+    "toSlug": "bima",
+    "type": "SIBLING",
+    "note": "Saudara kandung seibu (Dewi Kunti), kakak tertua dan adik kedua Pandawa."
+  },
+  {
+    "fromSlug": "bima",
+    "toSlug": "arjuna",
+    "type": "SIBLING",
+    "note": "Saudara kandung seibu (Dewi Kunti), pilar kekuatan fisik dan ketenangan rasa Pandawa."
+  },
+  {
+    "fromSlug": "arjuna",
+    "toSlug": "nakula",
+    "type": "SIBLING",
+    "note": "Saudara seayah pelindung adik kembar."
+  },
+  {
+    "fromSlug": "nakula",
+    "toSlug": "sadewa",
+    "type": "SIBLING",
+    "note": "Saudara kembar putra Dewi Madrim."
+  },
+  {
+    "fromSlug": "bima",
+    "toSlug": "gatotkaca",
+    "type": "PARENT",
+    "note": "Bima adalah ayah kandung Gatotkaca dari perkawinan dengan Dewi Arimbi."
+  },
+  {
+    "fromSlug": "arjuna",
+    "toSlug": "srikandi",
+    "type": "SPOUSE",
+    "note": "Pasangan ksatria panah dan mitra setia strategi perang pertahanan Amarta."
+  },
+  {
+    "fromSlug": "arjuna",
+    "toSlug": "srikandi",
+    "type": "TEACHER",
+    "note": "Arjuna mengajarkan olah rasa dan kemahiran memanah tingkat tinggi kepada Srikandi."
+  },
+  {
+    "fromSlug": "karna",
+    "toSlug": "arjuna",
+    "type": "RIVAL",
+    "note": "Saudara seibu (Dewi Kunti) yang bertarung di medan Kurusetra demi sumpah kesetiaan masing-masing."
+  },
+  {
+    "fromSlug": "duryodana",
+    "toSlug": "karna",
+    "type": "ALLY",
+    "note": "Sekutu dan sahabat sejati yang saling menghormati dan mengangkat martabat."
+  },
+  {
+    "fromSlug": "semar",
+    "toSlug": "gareng",
+    "type": "PARENT",
+    "note": "Semar adalah pamomong sekaligus ayah angkat Nala Gareng."
+  },
+  {
+    "fromSlug": "semar",
+    "toSlug": "petruk",
+    "type": "PARENT",
+    "note": "Semar adalah pamomong sekaligus ayah angkat Petruk."
+  },
+  {
+    "fromSlug": "semar",
+    "toSlug": "bagong",
+    "type": "PARENT",
+    "note": "Semar menghidupkan bayangannya sendiri menjadi Bagong sang bungsu."
+  },
+  {
+    "fromSlug": "gareng",
+    "toSlug": "petruk",
+    "type": "SIBLING",
+    "note": "Kakak beradik punokawan pamomong para ksatria."
+  },
+  {
+    "fromSlug": "petruk",
+    "toSlug": "bagong",
+    "type": "SIBLING",
+    "note": "Saudara punokawan pembawa keceriaan dan kritik sosial."
+  },
+  {
+    "fromSlug": "semar",
+    "toSlug": "arjuna",
+    "type": "TEACHER",
+    "note": "Semar adalah pamomong spiritual dan pembimbing batin Arjuna."
+  }
+]

@@ -1,0 +1,518 @@
+[
+  {
+    "slug": "bima-suci",
+    "title": "Bima Suci: Menyelami Samudra Sejati",
+    "summary": "Perjalanan spiritual Raden Werkudara mencari Tirta Perwitasari ke dasar samudra bergolak. Melampaui intrik Astina, mengalahkan naga keraguan, hingga bertemu Dewa Ruci yang menyingkap hakikat kasampurnan hidup.",
+    "coverKey": "cover-bima-suci",
+    "philosophySlug": "urip-iku-urup",
+    "theme": "Pencarian Jati Diri & Kasampurnan Batin",
+    "source": "Serat Dewaruci karya Yasadipura I & Kidung Subasita",
+    "status": "REVIEWED",
+    "characters": [
+      { "characterSlug": "bima", "role": "PROTAGONIST" },
+      { "characterSlug": "semar", "role": "GUIDE" },
+      { "characterSlug": "arjuna", "role": "ALLY" }
+    ],
+    "chapters": [
+      {
+        "order": 1,
+        "title": "Titah Sang Guru Durna",
+        "subtitle": "Ujian Kepatuhan Batin Tanpa Sumpah Palsu",
+        "summary": "Resi Durna dihasut Sengkuni untuk mencelakakan Werkudara dengan memerintahkannya mencari air suci Tirta Perwitasari di Hutan Tikbrasara dan Gunung Reksamuka.",
+        "estimatedReadSeconds": 180,
+        "scenes": [
+          {
+            "order": 1,
+            "narration": "Di bale agung keraton Astina yang hening beraroma dupa candana, Resi Durna menatap tajam murid kesayangannya, Werkudara. Di balik tirai, Patih Sengkuni tersenyum culas membayangkan ajal sang ksatria gagah perkasa. Durna bersabda dengan nada berat: 'Anakku Werkudara, jika engkau ingin merengkuh sari pati ilmu kasampurnan sejati, carilah Tirta Perwitasari—air penghidupan abadi yang bersemayam di belantara angker Hutan Tikbrasara.'",
+            "speakerName": "Resi Durna",
+            "culturalNote": "Konsep 'Guru Susrusa' dalam etika Jawa kuno: kepatuhan murid terhadap guru diletakkan sebagai tangga spiritual tertinggi. Niat buruk sang guru justru diubah oleh kemurnian niat sang murid menjadi berkah pencerahan.",
+            "metadata": { "location": "Pendapa Astina", "mood": "Tegang & Khidmat" }
+          },
+          {
+            "order": 2,
+            "narration": "Para kadang Pandawa—Prabu Puntadewa, Arjuna, Nakula, dan Sadewa—meratap menahan langkah Werkudara. Mereka tahu belantara itu dihuni raksasa buas Rukmuka dan Rukmakala yang tak pernah membiarkan manusia lewat hidup-hidup. Namun Werkudara berdiri tegak laksana tugu karang: 'Kakang Prabu dan dinda Arjuna, ksatria pantang mundur sejengkal pun dari sabda guru. Jika aku mati dalam menunaikan titah suci, itu adalah kematian yang terhormat!'",
+            "speakerName": "Bima",
+            "culturalNote": "Sifat Werkudara yang lugas, tidak pernah menggunakan bahasa krama inggil selain kepada gurunya dan Dewa Ruci, menandakan kemurnian hati tanpa topeng kepalsuan politik.",
+            "metadata": { "location": "Ksatrian Jodhipati", "mood": "Heroik & Penuh Tekad" }
+          },
+          {
+            "order": 3,
+            "narration": "Di Hutan Tikbrasara, dua raksasa penunggu hutan menyerang Werkudara membabi buta. Dengan Kuku Pancanaka yang berkilat tajam, Werkudara menumbangkan keduanya. Seketika jasad raksasa itu sirna dan berubah wujud menjadi Batara Indra dan Batara Bayu yang melayang ke angkasa. Sang dewa tersenyum: 'Werkudara, Tirta Perwitasari bukanlah benda wadag di puncak gunung. Kembalilah pada gurumu!' Namun Durna yang terkejut melihat muridnya masih hidup justru memberi titah yang jauh lebih mengerikan: carilah di dasar Samudra Minangkalbu!",
+            "speakerName": "Narator",
+            "culturalNote": "Raksasa Rukmuka dan Rukmakala melambangkan nafsu kemewahan (kamukten) dan nafsu makan/duniawi yang harus dibinasakan sebelum melangkah ke alam rohani.",
+            "metadata": { "location": "Hutan Tikbrasara", "mood": "Magis & Berwibawa" }
+          }
+        ]
+      },
+      {
+        "order": 2,
+        "title": "Samudra Minangkalbu & Naga Nabawarna",
+        "subtitle": "Pertempuran Melawan Keraguan dan Hawa Nafsu",
+        "summary": "Bima tiba di tepi Samudra Minangkalbu. Tanpa ragu ia menceburkan diri ke dalam gulungan ombak raksasa dan bertarung melawan naga laut ganas.",
+        "estimatedReadSeconds": 210,
+        "scenes": [
+          {
+            "order": 1,
+            "narration": "Deru gelombang Samudra Minangkalbu bergemuruh memekakkan telinga, membanting karang-karang hitam setinggi pohon kelapa. Langit kelam pekat tanpa bintang. Semar Badranaya yang setia mengiringi langkah Werkudara memegang ujung kain sang ksatria: 'Gusti Werkudara, laut ini tiada bertepi, dalamnya tak terukur oleh akal wadag. Apa yang Gusti cari di dalam kegelapan pekat ini?' Werkudara menoleh dan menjawab lirih namun mantap: 'Kyai Semar, jika aku takut mati, maka aku tak pantas hidup sebagai ksatria penegak kebenaran.'",
+            "speakerName": "Semar & Bima",
+            "culturalNote": "Samudra Minangkalbu adalah metafora 'samudra pikiran dan batin' (minang = tenang/hening, kalbu = sanubari). Menyelami laut berarti menyelami kedalaman alam bawah sadar manusia.",
+            "metadata": { "location": "Pesisir Samudra Minangkalbu", "mood": "Megah & Mencekam" }
+          },
+          {
+            "order": 2,
+            "narration": "Tubuh raksasa Werkudara meluncur menembus dinginnya air laut dalam. Dari dasar palung yang gelap gulita, melesat Naga Nabawarna—monster laut berlidah bisa yang membelit tubuh Werkudara erat-erat hingga tulang-belulangnya berderit. Nafas Werkudara menipis, penglihatannya meredup dalam cengkeraman maut. Namun di puncak kepasrahannya, batinnya mengingat keagungan Gusti Ingkang Murbeng Dumadi. Dengan segenap daya rohani yang tersisa, ia menghunjamkan Kuku Pancanaka tepat ke hulu leher sang naga.",
+            "speakerName": "Narator",
+            "culturalNote": "Naga Nabawarna berlambang 'nafsu hawa' yang beraneka warna (naba = naga/sembilan, warna = ragam nafsu). Penaklukan naga adalah simbol kemenangan batin atas ego pribadi.",
+            "metadata": { "location": "Dasar Palung Samudra", "mood": "Klimaks Pertarungan" }
+          },
+          {
+            "order": 3,
+            "narration": "Darah sang naga bercampur dengan garam air laut, dan seketika wujud ganas itu lenyap tanpa bekas. Seluruh ombak samudra mereda seketika menjadi permukaan cermin kaca yang teramat jernih. Werkudara merasa tubuhnya melayang ringan, tiada rasa dingin, tiada rasa lapar, tiada lagi ketakutan akan kematian.",
+            "speakerName": "Narator",
+            "culturalNote": "Keheningan setelah perang batin adalah maqam 'heneng-hening-henang': kondisi kesadaran hening di mana manusia siap menerima limpahan hikmah ilahiah.",
+            "metadata": { "location": "Keheningan Samudra", "mood": "Transendental" }
+          }
+        ]
+      },
+      {
+        "order": 3,
+        "title": "Manunggaling Kawula Gusti",
+        "subtitle": "Pertemuan dengan Dewa Ruci Sang Sukma Sejati",
+        "summary": "Werkudara bertemu sosok dewa mungil yang persis menyerupai dirinya. Masuk ke dalam telinga kirinya, ia menyaksikan hakikat semesta dan kesempurnaan hidup sejati.",
+        "estimatedReadSeconds": 240,
+        "scenes": [
+          {
+            "order": 1,
+            "narration": "Di tengah hamparan samudra yang hening laksana cermin suci, berdirilah sesosok makhluk kecil bercahaya gemerlap keemasan, tingginya hanya setelapak tangan anak bayi, namun wajah dan busananya persis menyerupai Werkudara. Sosok itu tersenyum teduh: 'Selamat datang, Werkudara anakku. Akulah Dewa Ruci, sejatinya sukmamu sendiri yang selama ini engkau cari ke mana-mana.' Werkudara bersujud gemetar melihat keagungan yang begitu damai.",
+            "speakerName": "Dewa Ruci",
+            "culturalNote": "Dewa Ruci adalah personifikasi dari Diri Sejati / Atman / Percikan Ilahi di dalam jiwa manusia. Pencarian keluar berakhir saat manusia berani menengok ke dalam diri sendiri.",
+            "metadata": { "location": "Cahaya Suci Samudra", "mood": "Haru & Spiritual" }
+          },
+          {
+            "order": 2,
+            "narration": "Dewa Ruci bersabda: 'Masuklah engkau ke dalam telinga kiriku!' Werkudara tertegun: 'Paduka berbadan kerdil secuil jagung, sedangkan tubuhku sebesar bukit anakan. Bagaimana mungkin aku dapat masuk ke lubang telingamu?' Sang Dewa tersenyum: 'Besar mana dirimu dengan seluruh jagad raya ini? Jangan mengukur alam rohani dengan timbangan daging wadagmu.' Dengan rasa pasrah mutlak, Werkudara melangkah—dan keajaiban terjadi, tubuhnya melesap ringan bagai asap menembus telinga sang dewata.",
+            "speakerName": "Dewa Ruci & Bima",
+            "culturalNote": "Pintu masuk telinga melambangkan indra pendengaran batin (tampa sasmita), kepekaan menangkap isyarat gaib ketuhanan melalui kerendahan hati.",
+            "metadata": { "location": "Gerbang Sukma", "mood": "Ajaib & Agung" }
+          },
+          {
+            "order": 3,
+            "narration": "Di dalam tubuh Dewa Ruci, Werkudara menyaksikan bentangan tak berhingga: cahaya empat rupa—hitam (amarah), merah (amarah/lawwamah), kuning (supiyah), dan putih (mutmainnah). Di pusat segala cahaya, bersinar 'Pramana'—cahaya intan kemilau tanpa bayang-bayang. Werkudara merasakan kebahagiaan sejati hingga enggan kembali ke dunia fana. Dewa Ruci menepuk pundaknya: 'Kembalilah ke marcapada, Werkudara. Kesempurnaan batin ini bukanlah untuk lari dari tugas ksatria, melainkan bekalmu untuk mengabdi, menegakkan keadilan, dan menjadi pelindung bagi sesama.' Werkudara membuka matanya di daratan dengan jiwa yang lahir kembali.",
+            "speakerName": "Dewa Ruci",
+            "culturalNote": "Puncak filosofi 'Urip Iku Urup' dan 'Manunggaling Kawula Gusti': spiritualitas Jawa tidak mengajarkan pelarian dari dunia, melainkan keterlibatan aktif di dunia dengan batin yang telah tercerahkan.",
+            "metadata": { "location": "Alam Kasampurnan", "mood": "Pencerahan Tertinggi" }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "gatotkaca-gugur",
+    "title": "Gatotkaca Gugur: Benteng di Balik Awan",
+    "summary": "Malam ke-14 perang akbar Bharatayuda. Kala langit Kurusetra terbelah oleh sihir kelam, ksatria Pringgandani berotot kawat balung wesi terbang memecah gelap dan mengorbankan jiwanya demi melindungi pamannya, Arjuna.",
+    "coverKey": "cover-gatotkaca-gugur",
+    "philosophySlug": "mikul-dhuwur-mendhem-jero",
+    "theme": "Loyalitas & Pengorbanan Ksatria Tertinggi",
+    "source": "Kakawin Bharatayuddha karya Mpu Sedah & Wayang Purwa Jawa",
+    "status": "REVIEWED",
+    "characters": [
+      { "characterSlug": "gatotkaca", "role": "PROTAGONIST" },
+      { "characterSlug": "karna", "role": "ANTAGONIST" },
+      { "characterSlug": "arjuna", "role": "ALLY" },
+      { "characterSlug": "duryodana", "role": "ANTAGONIST" }
+    ],
+    "chapters": [
+      {
+        "order": 1,
+        "title": "Bara Perang Malam Kurusetra",
+        "subtitle": "Kala Aturan Ksatria Dilanggar Keputusasaan",
+        "summary": "Pasukan Kurawa melanggar larangan bertempur di malam hari. Prajurit Pandawa terdesak hebat oleh serbuan raksasa dan kegelapan gulita.",
+        "estimatedReadSeconds": 170,
+        "scenes": [
+          {
+            "order": 1,
+            "narration": "Malam ke-14 Bharatayuda seharusnya menjadi masa gencatan senjata sesuai hukum perang ksatria purba. Namun Prabu Duryodana, dibakar amarah atas gugurnya Jayadratha di sore hari, memerintahkan senapati Kurawa melancarkan serangan malam secara licik. Ribuan obor dinyalakan, panah api menghujani perkemahan Pandawa bagai komet maut. Barisan prajurit Amarta porak-poranda dalam kegelapan pekat yang membingungkan kawan dan lawan.",
+            "speakerName": "Narator",
+            "culturalNote": "Perang malam melanggar kode etik 'Dharmayuddha'. Ketiadaan etika melahirkan kehancuran moral yang memicu tindakan ekstrem dari kedua belah pihak.",
+            "metadata": { "location": "Tegal Kurusetra", "mood": "Kelam & Panik" }
+          },
+          {
+            "order": 2,
+            "narration": "Sri Kresna yang menjadi kusir kereta Arjuna memandang langit malam yang pekat. Ia menoleh ke arah Raden Gatotkaca yang berdiri gagah di samping Werkudara: 'Anakku Gatotkaca, malam ini pandangan manusia fana tertutup kabut kegelapan. Hanya engkau, satria Pringgandani yang mewarisi darah bangsa dirgantara, yang sanggup melihat menembus awan dan membalikkan badai perang ini!'",
+            "speakerName": "Sri Kresna",
+            "culturalNote": "Sri Kresna sebagai titisan Wisnu memahami garis takdir kosmis: pengorbanan Gatotkaca adalah kunci strategis demi keselamatan Arjuna dari pusaka maut Adipati Karna.",
+            "metadata": { "location": "Perkemahan Pandawa", "mood": "Genting & Khidmat" }
+          },
+          {
+            "order": 3,
+            "narration": "Gatotkaca merapatkan ikat pinggang pusaka dan mengenakan Rompi Kotang Antakusuma. Matanya menyala penuh tekad: 'Uwa Prabu Kresna, Rama Werkudara, restuilah hamba. Demi kehormatan darah Pandawa dan keselamatan paman Arjuna, jangankan luka sayatan, remuknya tulang-belulangku di angkasa akan kupersembahkan!' Dengan raungan laksana guruh membelah bumi, Gatotkaca melesat tegak lurus menembus lapisan awan Kurusetra.",
+            "speakerName": "Gatotkaca",
+            "culturalNote": "Nilai luhur kepatuhan dan kebaktian anak kepada orang tua dan paman (mikul dhuwur mendhem jero), mengangkat martabat keluarga di atas keselamatan jiwa sendiri.",
+            "metadata": { "location": "Pintu Keluar Perkemahan", "mood": "Menggetarkan Jiwa" }
+          }
+        ]
+      },
+      {
+        "order": 2,
+        "title": "Badai Brajamusti di Angkasa",
+        "subtitle": "Ksatria Pringgandani Mengguncang Bumi Astina",
+        "summary": "Gatotkaca menguasai ruang udara Kurusetra, menjatuhkan teror psikologis pada bala tentara Kurawa hingga Adipati Karna terdesak ke sudut jurang.",
+        "estimatedReadSeconds": 200,
+        "scenes": [
+          {
+            "order": 1,
+            "narration": "Di balik gumpalan awan mendung, Gatotkaca mengerahkan Aji Narantaka dan Brajamusti. Ia menciptakan ilusi optik ribuan bayangan raksasa terbang yang menghujani bumi dengan batu karang dan sambaran petir. Pasukan Kurawa lari tunggang-langgang ketakutan mengira para dewata murka turun dari kahyangan. Teriakan kemenangan bergema di kubu Pandawa saat Gatotkaca menyambar kereta-kereta tempur musuh bagai elang menerkam mangsa.",
+            "speakerName": "Narator",
+            "culturalNote": "Gatotkaca melambangkan keunggulan pertahanan udara nusantara purba yang berpadu dengan ketajaman kecerdikan taktis.",
+            "metadata": { "location": "Langit Kurusetra", "mood": "Megah & Heroik" }
+          },
+          {
+            "order": 2,
+            "narration": "Prabu Duryodana gemetar mencengkeram jubah Adipati Karna: 'Karna! Sahabatku! Lihatlah langit di atas kita! Jika anak Bima itu tidak engkau binasakan malam ini, sebelum fajar menyingsing Kurawa sudah musnah tak tersisa! Gunakan senjatamu! Gunakan Pusaka Kuntawijayadanu sekarang juga!'",
+            "speakerName": "Duryodana",
+            "culturalNote": "Duryodana mewakili kepanikan penguasa zalim yang rela memaksa sahabat terbaiknya membuang kartu truf terpenting demi menyelamatkan takhtanya.",
+            "metadata": { "location": "Kereta Tempur Kurawa", "mood": "Histeris & Penuh Desakan" }
+          },
+          {
+            "order": 3,
+            "narration": "Hati Adipati Karna tercabik bagai diiris sembilu. Senjata Kuntawijayadanu adalah anugerah Batara Narada yang hanya memiliki khasiat satu kali bidikan seumur hidup. Sejak puluhan tahun, pusaka itu ia simpan rapat-rapat khusus untuk menghadapi musuh bebuyutannya: Arjuna. Menggunakannya untuk Gatotkaca berarti membuang jaminan kemenangannya atas Arjuna esok hari. Namun sumpah setianya pada Duryodana mengikat lehernya erat-erat.",
+            "speakerName": "Narator",
+            "culturalNote": "Tragedi eksistensial Karna: terperangkap antara takdir persaudaraan sedarah dan utang budi kesetiaan politik yang membelenggu integritasnya.",
+            "metadata": { "location": "Garis Depan Astina", "mood": "Dilematis & Tragis" }
+          }
+        ]
+      },
+      {
+        "order": 3,
+        "title": "Kilatan Kunta & Gugurnya Sang Pahlawan",
+        "subtitle": "Pengorbanan Abadi yang Mematahkan Takdir Maut Arjuna",
+        "summary": "Karna melepaskan pusaka Kunta. Gatotkaca gugur di angkasa, namun ia menjatuhkan jasad raksasanya menghancurkan kereta musuh dengan senyum kebanggaan.",
+        "estimatedReadSeconds": 230,
+        "scenes": [
+          {
+            "order": 1,
+            "narration": "Dengan geraman pedih, Karna menarik busurnya dan melepaskan Pusaka Kuntawijayadanu. Tombak sakti itu melesat laksana meteor emas bercahaya membutakan mata, mendesis membelah angkasa mencari sasaran. Di balik awan, arwah Kalabendana—paman Gatotkaca yang dahulu tak sengaja tewas olehnya—menyambut ujung tombak itu seraya berbisik: 'Anakku Gatotkaca, sudah genap janjimu pada bumi pertiwi. Mari ikut paman pulang ke keabadian.'",
+            "speakerName": "Narator",
+            "culturalNote": "Konsep 'Karma Phala' dan penebusan dosa dalam wayang: kematian Gatotkaca sekaligus merupakan rekonsiliasi kasih sayang keluarga dengan pamannya di alam kelanggengan.",
+            "metadata": { "location": "Lapisan Awan Tertinggi", "mood": "Mencekam & Sakral" }
+          },
+          {
+            "order": 2,
+            "narration": "Mata tombak Kunta menembus pusar Gatotkaca—satu-satunya titik kelemahan tubuh bajanya. Rasa sakit meremukkan raganya, namun saat darah mengalir deras, sang ksatria memandang ke bawah dan melihat kereta perang Adipati Karna dan Duryodana. Gatotkaca tidak menjatuhkan diri sembarangan. Dengan segenap sisa napas dan ajian terakhirnya, ia memperbesar tubuhnya menjadi raksasa sebesar bukit dan mengarahkan jatuhnya tepat ke atas barisan balatentara Kurawa!",
+            "speakerName": "Narator",
+            "culturalNote": "Kematian aktif, bukan pasif: bahkan dalam detik-detik hembusan napas terakhir, seorang ksatria sejati masih memikirkan kontribusi terbesar bagi barisannya.",
+            "metadata": { "location": "Angkasa Menuju Bumi", "mood": "Puncak Heroik" }
+          },
+          {
+            "order": 3,
+            "narration": "GELUDUK! Dentuman dahsyat mengguncang tanah Kurusetra kala jasad raksasa Gatotkaca menimpa barisan kereta Kurawa, menumpas satu divisi prajurit musuh seketika. Di perkemahan Pandawa, Werkudara meraung memeluk jasad putranya yang tersenyum damai. Arjuna bersujud tersedu-sedu menyadari keponakannya telah menjadi perisai hidup bagi nyawanya. Gugurnya Gatotkaca mencabut pusaka maut Karna selamanya, membuka jalan bagi kemenangan moral Pandawa.",
+            "speakerName": "Narator",
+            "culturalNote": "Filosofi 'Gugur Minangka Pahlawan': tubuh fana hancur luluh, namun nama dan budi luhur abadi mengharumkan sejarah nusantara sepanjang zaman.",
+            "metadata": { "location": "Kurusetra Pagi Hari", "mood": "Duka Mendalam & Keagungan" }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "srikandi-belajar-memanah",
+    "title": "Srikandi Belajar Memanah: Mendobrak Batas",
+    "summary": "Kisah keberanian Dewi Srikandi menolak kekangan peran pasif keputrian keraton feodal. Menuntut ilmu memanah kepada Arjuna di Padepokan Madukara, membuktikan ketajaman cipta perempuan di garda terdepan peradaban.",
+    "coverKey": "cover-srikandi-memanah",
+    "philosophySlug": "ngluruk-tanpa-bala",
+    "theme": "Emansipasi & Keberanian Belajar Ksatria Putri",
+    "source": "Lakon Carangan Wayang Purwa Jawa & Serat Srikandi Maguru",
+    "status": "REVIEWED",
+    "characters": [
+      { "characterSlug": "srikandi", "role": "PROTAGONIST" },
+      { "characterSlug": "arjuna", "role": "TEACHER" }
+    ],
+    "chapters": [
+      {
+        "order": 1,
+        "title": "Padepokan Madukara",
+        "subtitle": "Langkah Pertama Menolak Bilik Keputrian",
+        "summary": "Dewi Srikandi menolak takdir pasif wanita bangsawan zaman itu dan menempuh perjalanan jauh ke Madukara demi menuntut ilmu bela negara.",
+        "estimatedReadSeconds": 160,
+        "scenes": [
+          {
+            "order": 1,
+            "narration": "Di keraton Cempalareja yang megah, para emban dan sesepuh istana mengingatkan putri Prabu Drupada itu agar tekun menenun kain sutra dan merias paras di bilik keputrian. Namun Dewi Srikandi menepis aturan kolot itu. Mengenakan pakaian ringkas prajurit pengelana dan menyandang busur kayu, ia melangkah mantap keluar gerbang keraton: 'Bila musuh menyerbu tanah airku, tenunan sutra tak akan sanggup menahan ujung pedang musuh. Aku ingin menjaga tanah kelahiranku dengan tanganku sendiri!'",
+            "speakerName": "Srikandi",
+            "culturalNote": "Karakter Srikandi adalah arketipe emansipasi perempuan Nusantara yang telah ada ratusan tahun sebelum istilah modern lahir: mandiri, tegas, dan berintegritas tinggi.",
+            "metadata": { "location": "Gerbang Keraton Cempalareja", "mood": "Tegas & Menginspirasi" }
+          },
+          {
+            "order": 2,
+            "narration": "Tiba di Padepokan Madukara, Srikandi mendapati Raden Arjuna sedang duduk bersila di bawah rindangnya pohon beringin kembar, mengawasi para cantrik berlatih. Srikandi berdiri tegak tanpa membungkuk ragu: 'Raden Arjuna, seluruh jagad raya mengenalmu sebagai pembidik terbaik tanpa tanding. Ajarkan aku ilmu memanah Gandiwa itu, bukan sebagai putri raja manja, melainkan sebagai murid yang siap berdarah-darah!'",
+            "speakerName": "Srikandi",
+            "culturalNote": "Keberanian bersuara di depan otoritas mencerminkan watak ksatria sejati yang memandang kehormatan lahir dari kesungguhan usaha, bukan gelar darah biru semata.",
+            "metadata": { "location": "Plataran Madukara", "mood": "Lugas & Penuh Tekad" }
+          },
+          {
+            "order": 3,
+            "narration": "Arjuna tersenyum mengamati sorot mata Srikandi yang berkobar bersih tanpa kepura-puraan. Sang ksatria panengah Pandawa menyerahkan busur kayu jati yang berat: 'Banyak orang mengira memanah adalah soal kekuatan otot bisep menarik tali busur. Itu keliru, Dyah Srikandi. Menarik busur adalah menundukkan getaran amarah, membidik adalah menyatukan cipta-rasa-karsa, dan melepaskan anak panah adalah puncak kepasrahan pada kehendak Hyang Widhi.'",
+            "speakerName": "Arjuna",
+            "culturalNote": "Pendidikan bela diri dalam falsafah Jawa berakar pada 'olah batin' dan laku hening, di mana ketenangan jiwa menentukan presisi tindakan lahiriah.",
+            "metadata": { "location": "Taman Hening Madukara", "mood": "Filosofis & Damai" }
+          }
+        ]
+      },
+      {
+        "order": 2,
+        "title": "Olah Batin Gandiwa",
+        "subtitle": "Bidikan Tanpa Ragu di Hutan Madukara",
+        "summary": "Hari demi hari Srikandi melatih jarinya yang terluka hingga kapalan, memusatkan fokus batin hingga mampu membidik sehelai daun kering yang melayang ditiup badai.",
+        "estimatedReadSeconds": 190,
+        "scenes": [
+          {
+            "order": 1,
+            "narration": "Jari-jemari Srikandi melepuh berdarah tergores gesekan tali busur berulang kali. Keringat membasahi dahi dan punggungnya di bawah terik mentari Madukara. Saat ia hampir putus asa karena sasaran patung jerami selalu luput dua jengkal, Arjuna meletakkan sehelai daun kering di telapak tangannya: 'Bila pikiranmu masih sibuk memikirkan cibiran orang di keraton, bidikanmu akan selalu meleset. Kosongkan cangkir batinmu, jadilah bagian dari angin itu sendiri.'",
+            "speakerName": "Arjuna",
+            "culturalNote": "Proses belajar 'Tapa Brata' dalam seni memanah: menepis ekspektasi sosial dan prasangka diri untuk mencapai kematangan keterampilan paripurna.",
+            "metadata": { "location": "Arena Latihan Madukara", "mood": "Tekun & Menguras Tenaga" }
+          },
+          {
+            "order": 2,
+            "narration": "Srikandi menarik napas panjang, menutup matanya sejenak, lalu mendengarkan desau angin lembah. Riuh rendah dunia fana sirna. Kala angin kencang meniup sehelai daun layu terbang berputar-putar di udara, dengan gerakan kilat yang anggun, Srikandi menarik anak panah Hrusangkali. SYUUUT! Tali busur berdentang bening. Anak panah menembus tepat di tangkai daun yang melayang, menancapkannya erat pada sebatang pohon beringin sejauh seratus langkah.",
+            "speakerName": "Narator",
+            "culturalNote": "Pencapaian 'Curiga Manjing Warangka': peleburan instrumen alat dan jiwa sang ksatria hingga tindakan fisik bergerak secara intuitif dan sempurna.",
+            "metadata": { "location": "Lembah Madukara", "mood": "Klimaks Keberhasilan" }
+          },
+          {
+            "order": 3,
+            "narration": "Arjuna mengangguk penuh takjub dan rasa hormat yang mendalam: 'Dyah Srikandi, engkau bukan lagi sekadar murid. Engkau adalah ksatria panah yang kelak akan menjadi senapati agung pengawal benteng kehormatan peradaban nusantara!' Srikandi membungkuk khidmat, tersenyum bangga atas jerih payah yang telah mematahkan segala keraguan.",
+            "speakerName": "Arjuna",
+            "culturalNote": "Pengakuan kompetensi berbasis meritokrasi sejati: gender lebur di hadapan dedikasi, integritas, dan keunggulan budi pekerti.",
+            "metadata": { "location": "Padepokan Madukara", "mood": "Bangga & Penuh Harapan" }
+          }
+        ]
+      },
+      {
+        "order": 3,
+        "title": "Senapati Garda Depan",
+        "subtitle": "Pembuktian Nyata di Medan Pengabdian",
+        "summary": "Kala gerombolan perusuh mengancam ketenteraman rakyat desa sekitar, Dewi Srikandi memimpin pasukan pengawal dan membuktikan keahliannya melindungi kaum lemah.",
+        "estimatedReadSeconds": 180,
+        "scenes": [
+          {
+            "order": 1,
+            "narration": "Warta kilat mengabarkan gerombolan penyamun Hutan Roban menjarah lumbung padi rakyat desa sekitar Madukara. Tanpa menunggu titah prajurit pria, Dewi Srikandi memacu kudanya memimpin sekelompok laskar wanita penunggang kuda. Dengan bidikan beruntun yang jitu tanpa menumpahkan darah yang tak perlu, ia melumpuhkan busur dan senjata para perusuh dari jarak jauh, membuat pimpinan gerombolan bersujud menyerah tanpa syarat.",
+            "speakerName": "Narator",
+            "culturalNote": "Semboyan 'Ngluruk Tanpa Bala, Menang Tanpa Ngasorake': menang perang tanpa merendahkan martabat musuh dan meminimalkan pertumpahan darah demi memulihkan kedamaian sosial.",
+            "metadata": { "location": "Batas Desa Wanatirta", "mood": "Aksi Cepat & Adil" }
+          },
+          {
+            "order": 2,
+            "narration": "Rakyat desa menyambut Dewi Srikandi dengan taburan bunga melati dan sujud syukur. Di hadapan rakyat jelata, Srikandi berpesan dengan senyum hangat: 'Jangan pernah merasa dirimu lemah hanya karena orang lain meremehkan kodratmu. Jika tekad di kalbumu lurus menyala, engkau sanggup melindungi apa pun yang engkau cintai di bumi ini.' Namanya harum terukir sebagai teladan ksatria putri sepanjang masa.",
+            "speakerName": "Srikandi",
+            "culturalNote": "Kekuasaan dan kemahiran sejati selalu bermuara pada perlindungan rakyat kecil (wong cilik), esensi utama ajaran kepemimpinan Jawa purwa.",
+            "metadata": { "location": "Balai Desa Wanatirta", "mood": "Haru & Mengayomi" }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "karna-tanding",
+    "title": "Karna Tanding: Dilema Sumpah & Darah",
+    "summary": "Tragedi agung dua saudara seibu di padang Kurusetra. Adipati Karna yang terikat utang budi pada Duryodana berhadapan dengan adiknya sendiri, Raden Arjuna, dalam perang suci yang membedah makna kehormatan ksatria sejati.",
+    "coverKey": "cover-karna-tanding",
+    "philosophySlug": "sura-dira-jayaningrat",
+    "theme": "Dilema Moral & Kesetiaan Janji Ksatria",
+    "source": "Kakawin Bharatayuddha & Serat Tripama karya Mangkunegara IV",
+    "status": "REVIEWED",
+    "characters": [
+      { "characterSlug": "karna", "role": "PROTAGONIST" },
+      { "characterSlug": "arjuna", "role": "ANTAGONIST" },
+      { "characterSlug": "duryodana", "role": "ALLY" }
+    ],
+    "chapters": [
+      {
+        "order": 1,
+        "title": "Air Mata Dewi Kunti di Tepian Gangga",
+        "subtitle": "Kala Rahasia Darah Terbuka Sebelum Perang",
+        "summary": "Menjelang Bharatayuda, Dewi Kunti mendatangi Karna di tepian sungai memohon agar sang putra sulung bergabung dengan adik-adiknya, Pandawa.",
+        "estimatedReadSeconds": 200,
+        "scenes": [
+          {
+            "order": 1,
+            "narration": "Kala matahari senja memerah di ufuk barat Bengawan Gangga, Adipati Karna sedang bersujud menunaikan sembahyang surya. Tiba-tiba sesosok wanita tua berpakaian berkabung mendekatinya dengan air mata berderai. Wanita itu adalah Dewi Kunti, ibunda para Pandawa, yang memeluk pundak Karna seraya menangis tersedu: 'Anakku Basukarna... maafkan ibumu yang dahulu membuangmu ke sungai saat engkau masih bayi. Pandawa lima adalah adik-adik kandungmu sedarah! Bergabunglah bersama kami, engkau berhak dinobatkan sebagai Raja Amarta tertua!'",
+            "speakerName": "Dewi Kunti",
+            "culturalNote": "Pertemuan Kunti dan Karna adalah salah satu babak paling mengharu-biru dalam wiracarita dunia: pertentangan antara ikatan darah biologis versus ikatan moral etis.",
+            "metadata": { "location": "Tepian Bengawan Gangga", "mood": "Tragis & Mengharukan" }
+          },
+          {
+            "order": 2,
+            "narration": "Karna memejamkan mata menahan gejolak pedih yang meremukkan dadanya. Ia membelai tangan ibunya dengan takzim: 'Kanjeng Ibu, dahulu saat aku dihina sebagai anak kusir rendahan di gelanggang Astina, Pandawa menertawakanku. Hanya Duryodana yang merangkulku, memberiku takhta Adipati Awangga, dan memulihkan harga diriku sebagai manusia. Jika kini saat Duryodana di ambang kehancuran aku meninggalkannya demi kemewahan takhta Pandawa, maka seluruh sejarah akan meludahiku sebagai pengkhianat hina tanpa budi pekerti!'",
+            "speakerName": "Karna",
+            "culturalNote": "Ajaran Serat Tripama: Karna menjadi teladan watak 'lelabuhan ksatria' yang rela mati demi membalas budi dan menepati janji pada orang yang telah mengangkat derajatnya.",
+            "metadata": { "location": "Pesisir Gangga Senja Hari", "mood": "Khidmat & Tegas" }
+          },
+          {
+            "order": 3,
+            "narration": "Namun demi mengeringkan air mata ibunya, Karna mengulurkan janji suci: 'Ibu, aku berjanji tidak akan membunuh Puntadewa, Bima, Nakula, maupun Sadewa. Aku hanya akan bertanding melawan Arjuna. Dengan demikian, apa pun hasil perang esok hari, anakmu akan tetap berjumlah lima orang.' Kunti memeluk Karna erat-erat dalam kepasrahan takdir yang teramat getir.",
+            "speakerName": "Karna & Kunti",
+            "culturalNote": "Janji agung Karna menunjukkan keluhuran budi: ia melindungi empat adiknya dari maut, meski tahu taruhannya adalah nyawanya sendiri di hadapan Arjuna.",
+            "metadata": { "location": "Kala Rembulan Naik", "mood": "Pahit & Luhur" }
+          }
+        ]
+      },
+      {
+        "order": 2,
+        "title": "Duel Kereta Surya vs Kereta Wisnu",
+        "subtitle": "Dua Panah Sakti Membelah Langit Kurusetra",
+        "summary": "Hari ke-17 Bharatayuda. Kereta perang Karna berhadapan langsung dengan kereta perang Arjuna dalam duel penentuan nasib Bharatayuda.",
+        "estimatedReadSeconds": 220,
+        "scenes": [
+          {
+            "order": 1,
+            "narration": "Kereta perang Adipati Karna dikusiri oleh Prabu Salya, sedangkan kereta Kyai Jaladara milik Arjuna dikusiri oleh Sri Kresna. Kedua kereta saling berkejaran di medan laga berdebu laksana dua badai topan yang bertabrakan. Ribuan panah meluncur dari busur Wijayadanu milik Karna dan busur Gandiwa milik Arjuna, saling bertumbukan di udara memercikkan api gemerlap yang memukau jutaan prajurit kedua kubu.",
+            "speakerName": "Narator",
+            "culturalNote": "Pertarungan Karna vs Arjuna adalah alegori kosmis pertarungan antara dua kekuatan seimbang: matahari (Surya) dan angin/petir (Indra) yang saling menguji ketajaman batin.",
+            "metadata": { "location": "Tengah Kurusetra", "mood": "Megah & Berbahaya" }
+          },
+          {
+            "order": 2,
+            "narration": "Karna menarik anak panah Kyai Ardhadadali yang berwujud ular sakti Arimbi. Panah melesat membidik leher Arjuna! Namun Sri Kresna dengan cekatan menginjak pedal kereta ke bawah, membuat kereta melesak sejengkal ke dalam lumpur sehingga anak panah sakti itu hanya mengenai mahkota gelung Arjuna hingga terlempar ke tanah. Arjuna terkesiap menyadari betapa saktinya sang adipati Awangga.",
+            "speakerName": "Narator",
+            "culturalNote": "Peran Kresna sebagai kusir kosmis: manusia membutuhkan 'daya hikmah ilahiah' untuk terhindar dari marabahaya hawa nafsu yang mematikan.",
+            "metadata": { "location": "Kubangan Kurusetra", "mood": "Detik-detik Kritis" }
+          },
+          {
+            "order": 3,
+            "narration": "Roda kereta perang Karna tiba-tiba terperosok ke dalam lubang kutukan tanah Kurusetra. Karna melompat turun berusaha mengangkat roda keretanya sendiri seraya berteriak: 'Arjuna, tahan panahmu! Tunggu hingga roda keretaku terangkat kembali, itulah etika ksatria!' Namun Kresna mengingatkan Arjuna akan segala derita yang dialami Pandawa dan Dewi Drupada di masa lalu: 'Lepaskan panah Pasopati sekarang, Arjuna! Demi keadilan semesta raya!'",
+            "speakerName": "Kresna & Karna",
+            "culturalNote": "Kutukan tanah yang menimpa Karna melambangkan bahwa betapa pun mulianya loyalitas pribadi seseorang, jika ia berdiri di kubu kezaliman (Kurawa), hukum semesta tetap akan menuntut pertanggungjawaban.",
+            "metadata": { "location": "Tanah Berlumpur", "mood": "Puncak Tragedi" }
+          }
+        ]
+      },
+      {
+        "order": 3,
+        "title": "Moksa Sang Ksatria Dermawan",
+        "subtitle": "Mahkota Kehormatan yang Tak Pernah Pudar",
+        "summary": "Panah Pasopati menyudahi hidup Karna. Arwah sang ksatria surya disambut dewata sebagai lambang kedermawanan dan kehormatan abadi.",
+        "estimatedReadSeconds": 210,
+        "scenes": [
+          {
+            "order": 1,
+            "narration": "Dengan air mata berlinang, Arjuna menarik tali busur Gandiwa dan melepaskan Panah Pasopati. Kilatan cahaya suci melesat memenggal leher sang ksatria Awangga. Tubuh Karna roboh perlahan ke pelukan bumi pertiwi. Sebelum napasnya terputus, ia menatap langit senja dan tersenyum tulus: 'Telah kutepati sumpah setiaku pada sahabatku... dan telah kupenuhi janjiku pada ibuku.'",
+            "speakerName": "Karna",
+            "culturalNote": "Kematian Karna dianggap sebagai 'Moksa Ksatria': jiwa yang terbebas dari karma duniawi karena menjalani takdir swadharma dengan ketulusan mutlak.",
+            "metadata": { "location": "Pusat Kurusetra", "mood": "Hening & Sakral" }
+          },
+          {
+            "order": 2,
+            "narration": "Kala Dewi Kunti berlari memeluk jasad Karna di depan kelima Pandawa dan membongkar bahwa Karna adalah kakak kandung sulung mereka, Pandawa lima tersungkur menangis meratapi kepergian saudara mereka yang agung. Prabu Puntadewa bersumpah mengadakan upacara penghormatan jenazah terbesar dalam sejarah kerajaan Amarta untuk menghormati sang ksatria surya dermawan yang tak pernah menolak permintaan siapa pun semasa hidupnya.",
+            "speakerName": "Narator",
+            "culturalNote": "Penyesalan Pandawa menegaskan pesan moral: perang saudara hanya menyisakan air mata, dan kehormatan sejati melampaui sekat menang atau kalah dalam politik kekuasaan.",
+            "metadata": { "location": "Perkemahan Duka", "mood": "Haru & Penebusan" }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "semar-mbangun-kayangan",
+    "title": "Semar Mbangun Kayangan: Suara Hati Rakyat Kecil",
+    "summary": "Kala penguasa terlena kemewahan takhta dan melupakan derita rakyat, Kyai Lurah Semar beserta Punokawan mengumumkan niat membangun kayangan baru. Satir adiluhung budaya Jawa tentang pembangunan batin dan kemakmuran rakyat jelata.",
+    "coverKey": "cover-semar-kayangan",
+    "philosophySlug": "memayu-hayuning-bawana",
+    "theme": "Kritik Sosial, Spiritualitas & Kesejahteraan Rakyat",
+    "source": "Lakon Carangan Pakeliran Wayang Purwa Jawa",
+    "status": "REVIEWED",
+    "characters": [
+      { "characterSlug": "semar", "role": "PROTAGONIST" },
+      { "characterSlug": "gareng", "role": "ALLY" },
+      { "characterSlug": "petruk", "role": "ALLY" },
+      { "characterSlug": "bagong", "role": "ALLY" },
+      { "characterSlug": "arjuna", "role": "ALLY" }
+    ],
+    "chapters": [
+      {
+        "order": 1,
+        "title": "Gundah Gulana Karangtumaritis",
+        "subtitle": "Kala Wong Cilik Menatap Kemarau Moral Pemimpin",
+        "summary": "Semar masygul melihat bencana wabah dan kemiskinan melanda negeri karena para pejabat dan ksatria sibuk memperebutkan kekuasaan dan prestise duniawi.",
+        "estimatedReadSeconds": 180,
+        "scenes": [
+          {
+            "order": 1,
+            "narration": "Di padepokan sederhana Karangtumaritis, Kyai Lurah Semar Badranaya duduk bertafakur di bale bambu. Asap rokok klobotnya mengepul perlahan ke udara sore. Nala Gareng yang kakinya pincang dan tangannya ceko, Petruk yang hidungnya panjang bersiul usil, serta Bagong yang bermata bundar dan bertubuh gempal duduk melingkar mengelilingi sang ayah. Tanah kering kerontang, sawah rakyat puso, dan kabar dari keraton Amarta serta Astina hanya berisi perdebatan kosong para petinggi negara mengenai proyek istana megah.",
+            "speakerName": "Narator",
+            "culturalNote": "Karangtumaritis adalah metafora basis kehidupan rakyat jelata (wong cilik) di pedesaan nusantara: bersahaja, tulus, namun peka terhadap kebobrokan moral para elite politik.",
+            "metadata": { "location": "Dusun Karangtumaritis", "mood": "Hangat & Reflektif" }
+          },
+          {
+            "order": 2,
+            "narration": "Bagong menyeletuk sambil menggaruk kepalanya: 'Bapak Semar, para pembesar di kota sana sibuk pesta pora pakai uang upeti, tapi giliran rakyat lapar disuruh sabar dan puasa melulu. Apa dewa di langit sudah pikun sampai lupa ngurus keadilan?' Gareng menyikut perut adiknya: 'Hush, Bagong! Jangan sembarangan nyap-nyap, nanti ditangkap prajurit ronda!' Petruk tertawa getir: 'Biar saja, Kang Gareng. Kalau kebenaran dilarang diomongkan, lama-lama perut rakyat yang bakal bicara!'",
+            "speakerName": "Bagong, Gareng, & Petruk",
+            "culturalNote": "Gaya humor Punokawan adalah mekanisme katarsis dan kritik sosial khas Jawa: menyampaikan kebenaran pahit melalui bungkus lelucon cerdas yang tak terbantahkan.",
+            "metadata": { "location": "Pelataran Bambu", "mood": "Kocak & Kritis" }
+          },
+          {
+            "order": 3,
+            "narration": "Semar tersenyum teduh lalu berdehem panjang: 'Anak-anakku... rusaknya tatanan jagad bukan karena dewa kekurangan emas permata di kahyangan, melainkan karena para pemimpin kehilangan nurani dan rasa malu. Mereka membangun istana marmer, tapi menelantarkan batin rakyatnya. Maka dengarkan sabdaku: mulai besok pagi, kita akan mbangun kayangan sendiri di bumi ini!' Ketiga anaknya terperanjat heran: 'Hah?! Membangun kayangan?! Pakai uang dari mana, Pak?'",
+            "speakerName": "Semar",
+            "culturalNote": "Gagasan 'Mbangun Kayangan' bukan proyek arsitektur fisik, melainkan pembangunan kesadaran etis dan pemulihan keadilan sosial bagi martabat kemanusiaan.",
+            "metadata": { "location": "Karangtumaritis", "mood": "Penuh Kejutan & Mulia" }
+          }
+        ]
+      },
+      {
+        "order": 2,
+        "title": "Kepanikan Para Pembesar",
+        "subtitle": "Kecurigaan Keraton atas Gerakan Rakyat Jelata",
+        "summary": "Kabar bahwa Semar hendak membangun kayangan sampai ke telinga para raja dan petinggi Amarta. Mereka salah paham dan mengira Semar hendak melakukan makar.",
+        "estimatedReadSeconds": 200,
+        "scenes": [
+          {
+            "order": 1,
+            "narration": "Warta bahwa Semar hendak mendirikan kayangan tandingan menggegerkan paseban agung Amarta. Prabu Puntadewa bingung, sedangkan Raden Arjuna merasa tersinggung: 'Bagaimana mungkin seorang lurah desa hina berani membangun kayangan menandingi kemegahan istana Amarta dan kahyangan Jonggringsaloka? Apakah Kyai Semar sudah kerasukan nafsu angkara murka?' Arjuna memacu keretanya menuju Karangtumaritis untuk melarang niat sang pamomong.",
+            "speakerName": "Narator",
+            "culturalNote": "Kepanikan elite kekuasaan saat rakyat jelata mulai bergerak menuntut perubahan: sering kali penguasa curiga terhadap niat baik yang tidak sejalan dengan hegemoni mereka.",
+            "metadata": { "location": "Paseban Amarta", "mood": "Tegang & Prasangka" }
+          },
+          {
+            "order": 2,
+            "narration": "Di batas desa Karangtumaritis, Arjuna menghadang Semar dengan wajah kaku: 'Kyai Semar! Urungkan niatmu mendirikan kayangan itu! Itu adalah perbuatan lancang yang menodai wibawa para dewa dan ratu gusti!' Semar menatap Arjuna dengan mata berair kasih sayang: 'Raden Arjuna... momonganku sejak kecil... kapankah terakhir kali Raden turun ke sawah melihat rakyat yang kelaparan? Mengapa Raden begitu takut pada kayangan yang hendak kami bangun, padahal kami tidak meminta sekeping pun koin emas dari kas keratonmu?'",
+            "speakerName": "Arjuna & Semar",
+            "culturalNote": "Dialog kritis antara pembimbing batin dan penguasa muda: kekuasaan sejati tidak diukur dari kemegahan seremonial, melainkan kepekaan empati terhadap derita kawula.",
+            "metadata": { "location": "Batas Hutan Karangtumaritis", "mood": "Menyentuh Kalbu" }
+          },
+          {
+            "order": 3,
+            "narration": "Kala Arjuna bersikeras dan hendak menarik busur Gandiwa untuk menghentikan langkah Semar, tubuh tua Semar mendadak bersinar menyilaukan mata bagai seribu matahari terbit bersamaan. Wujudnya menjelma agung menjadi Batara Ismaya—dewa tertua penguasa marcapada yang menjadi abang kandung Batara Guru! Arjuna tersungkur gemetar menjatuhkan busurnya, menyadari kebodohan dan kesombongannya di hadapan sang pamomong sejati.",
+            "speakerName": "Narator",
+            "culturalNote": "Epifani / penyingkapan jati diri: rakyat jelata yang diremehkan sesungguhnya adalah pemilik kedaulatan moral tertinggi di tanah air (Suara Rakyat Suara Tuhan).",
+            "metadata": { "location": "Padang Karangtumaritis", "mood": "Megah & Menggetarkan" }
+          }
+        ]
+      },
+      {
+        "order": 3,
+        "title": "Kayangan Batin & Pulihnya Kemakmuran",
+        "subtitle": "Kala Nurani Pemimpin Menyatu dengan Hati Rakyat",
+        "summary": "Semar membeberkan bahwa kayangan sejati adalah hati yang bersih dan kebijakan yang memuliakan rakyat. Pandawa tersadar dan negeri kembali makmur gemah ripah loh jinawi.",
+        "estimatedReadSeconds": 190,
+        "scenes": [
+          {
+            "order": 1,
+            "narration": "Batara Ismaya merangkul Arjuna yang bersujud terisak: 'Bangkitlah, anakku Raden Janaka. Ketahuilah, kayangan yang kumaksud bukanlah istana emas bertatah intan berlian di puncak awan. Mbangun kayangan adalah membersihkan hati para ksatria dari kerak keserakahan, menegakkan hukum yang adil tanpa pandang bulu, dan memastikan lumbung padi rakyat kecil terisi penuh tanpa tangisan kelaparan.'",
+            "speakerName": "Semar / Batara Ismaya",
+            "culturalNote": "Hakikat filosofis 'Memayu Hayuning Bawana': pembangunan fisik hanyalah cangkang kosong tanpa dijiwai oleh keadilan sosial dan kebersihan integritas moral pemimpin.",
+            "metadata": { "location": "Karangtumaritis", "mood": "Pencerahan & Haru" }
+          },
+          {
+            "order": 2,
+            "narration": "Arjuna dan para Pandawa bersumpah di hadapan Punokawan untuk memangkas kemewahan pesta istana, turun ke sawah-sawah membagi pupuk dan bibit, serta membuka pintu keraton lebar-lebar bagi keluh kesah rakyat miskin. Seketika hujan lebat yang berkah mengguyur tanah Jawa yang tandus, tanaman menghijau lebat, wabah penyakit sirna, dan negeri Amarta kembali meraih zaman keemasan: gemah ripah loh jinawi, tata tentrem kerta raharja.",
+            "speakerName": "Narator",
+            "culturalNote": "Harmonisasi kosmis dalam tradisi Jawa: ketika pemimpin bertindak adil dan mengasihi rakyatnya, alam semesta akan merespons dengan kesuburan dan kedamaian.",
+            "metadata": { "location": "Bumi Amarta", "mood": "Kemenangan Sejati" }
+          }
+        ]
+      }
+    ]
+  }
+]

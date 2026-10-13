@@ -1,0 +1,54 @@
+[
+  {
+    "slug": "parang-rusak",
+    "name": "Motif Parang Rusak",
+    "originRegion": "Surakarta & Yogyakarta",
+    "shortHistory": "Diciptakan oleh Sultan Agung Hanyakrakusuma saat bertapa di pesisir Pantai Selatan Jawa, terinspirasi oleh ombak laut yang tak henti-hentinya memecah tebing karang.",
+    "philosophy": "Garis diagonal miring menyerupai leter S melambangkan semangat pantang menyerah, keteguhan hati mengarungi ombak kehidupan, dan kesinambungan perjuangan tanpa putus.",
+    "usage": "Dahulu merupakan batik larangan (awisan dalem) yang hanya boleh dikenakan oleh raja dan ksatria keraton.",
+    "vectorKey": "batik-parang-rusak",
+    "colorPalette": ["#1c1917", "#d97706", "#f5f5f4"],
+    "source": "Katalog Batik Keraton Surakarta Hadiningrat",
+    "status": "REVIEWED",
+    "relatedCharacterSlugs": ["bima", "gatotkaca"]
+  },
+  {
+    "slug": "kawung",
+    "name": "Motif Kawung",
+    "originRegion": "Jawa Tengah (Mataram)",
+    "shortHistory": "Salah satu motif batik tertua di Jawa, telah terpahat pada relief candi-candi abad ke-9 dan berkembang pesat pada era Kesultanan Mataram Islam.",
+    "philosophy": "Pola empat elips simetris menyerupai buah kolang-kaling yang berpusat pada satu titik, melambangkan kiblat papat lima pancer, kesucian hati nurani, keadilan, dan pengendalian diri sempurna.",
+    "usage": "Sering dikenakan oleh para tetua adat, abdi dalem berhati luhur, dan dalam laku tirakat reflektif.",
+    "vectorKey": "batik-kawung",
+    "colorPalette": ["#44403c", "#e7e5e4", "#78350f"],
+    "source": "Serat Rupa Batik Jawa",
+    "status": "REVIEWED",
+    "relatedCharacterSlugs": ["semar", "yudhistira"]
+  },
+  {
+    "slug": "sido-mukti",
+    "name": "Motif Sido Mukti",
+    "originRegion": "Surakarta Hadiningrat",
+    "shortHistory": "Dikembangkan di lingkungan Keraton Surakarta sebagai busana agung upacara sakral temu manten.",
+    "philosophy": "'Sido' berarti terus-menerus terwujud, dan 'Mukti' berarti kemuliaan lahir batin. Ornamen meru dan garuda melambangkan doa pengharapan masa depan yang makmur dan tenteram.",
+    "usage": "Busana wajib mempelai pengantin adat Jawa pada prosesi ijab dan panggih sebagai doa abadi mengarungi bahtera rumah tangga.",
+    "vectorKey": "batik-sido-mukti",
+    "colorPalette": ["#57534e", "#ca8a04", "#fafaf9"],
+    "source": "Adat Pernikahan Gagrag Surakarta",
+    "status": "REVIEWED",
+    "relatedCharacterSlugs": ["arjuna", "srikandi"]
+  },
+  {
+    "slug": "truntum",
+    "name": "Motif Truntum",
+    "originRegion": "Surakarta",
+    "shortHistory": "Diciptakan oleh Kanjeng Ratu Beruk (Permaisuri PB III) saat merenung menatap hamparan bintang di malam sunyi.",
+    "philosophy": "Bunga-bunga kecil bertaburan laksana bintang malam melambangkan cinta tanpa syarat yang bersemi kembali (tumaruntum) setelah duka.",
+    "usage": "Dikenakan oleh orang tua pengantin sebagai simbol pemberian restu cinta tulus bagi generasi penerus.",
+    "vectorKey": "batik-truntum",
+    "colorPalette": ["#292524", "#facc15", "#e2e8f0"],
+    "source": "Sejarah Batik Klasik Surakarta",
+    "status": "REVIEWED",
+    "relatedCharacterSlugs": ["yudhistira"]
+  }
+]

@@ -1,0 +1,335 @@
+/* ==========================================================================
+   JAWA EPIC — Animated Top Dock Command Bar Theme
+   Custom styling and theme tokens for ThreeUI AnimatedTopDock in Jawa Epic
+   ========================================================================== */
+
+/* Outer wrapper reset - make sure ThreeUI card background never leaks into navbar */
+.animated-top-dock-component.atd-modern--jawa,
+.atd-modern--jawa {
+  --atd-top: 10px;
+  --atd-bar-height: 48px;
+  --atd-bar-pad-y: 4px;
+  --atd-bar-pad-x: 6px;
+  --atd-bar-lead: 14px;
+  --atd-bar-trail: 6px;
+  --atd-item-height: 32px;
+  --atd-item-pad: 9px;
+  --atd-label: 12px;
+  --atd-icon: 13.5px;
+  --atd-gap: 5px;
+  --atd-brand: 13.5px;
+  --atd-mark: 28px;
+  --atd-action-height: 32px;
+  position: relative;
+  width: max-content;
+  max-width: 100%;
+  margin: 0 auto;
+  background: transparent !important;
+  box-shadow: none !important;
+  border: none !important;
+  overflow: visible !important;
+  display: block !important;
+}
+
+/* Warm candlelight aurora glow behind the command bar capsule */
+.atd-modern--jawa .atd-modern__aurora {
+  position: absolute;
+  top: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(880px, 92vw);
+  height: 64px;
+  border-radius: 9999px;
+  pointer-events: none;
+  background:
+    radial-gradient(54% 60% at 24% 40%, rgba(245, 158, 11, 0.26), transparent 70%),
+    radial-gradient(42% 52% at 76% 25%, rgba(217, 119, 6, 0.20), transparent 72%),
+    radial-gradient(36% 44% at 50% 15%, rgba(180, 83, 9, 0.16), transparent 74%),
+    radial-gradient(30% 36% at 50% 20%, rgba(254, 243, 199, 0.10), transparent 78%);
+  filter: blur(14px);
+  z-index: 1;
+}
+
+/* The floating Command Bar container — Pure Capsule Shape */
+.atd-modern--jawa .atd-modern__bar {
+  position: relative;
+  top: 0;
+  left: auto;
+  transform: none;
+  margin: 0 auto;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: clamp(8px, 1.2vw, 20px);
+  width: max-content;
+  max-width: min(1240px, calc(100vw - 28px));
+  height: var(--atd-bar-height);
+  padding: var(--atd-bar-pad-y) var(--atd-bar-trail) var(--atd-bar-pad-y) var(--atd-bar-lead);
+  border: 1px solid rgba(245, 158, 11, 0.28);
+  border-radius: 9999px; /* Tumpul di semua sisi (atas, bawah, kanan, kiri) seperti kapsul */
+  background: linear-gradient(180deg, rgba(32, 13, 7, 0.95), rgba(16, 6, 3, 0.98));
+  box-shadow: 
+    0 16px 38px -12px rgba(10, 4, 2, 0.92), 
+    0 0 20px -6px rgba(245, 158, 11, 0.18), 
+    inset 0 1px 0 rgba(251, 191, 36, 0.32);
+  backdrop-filter: blur(24px) saturate(160%);
+  -webkit-backdrop-filter: blur(24px) saturate(160%);
+  overflow: visible;
+}
+
+/* Subtle Batik Parang watermark inside the pill */
+.atd-modern--jawa .atd-modern__bar-bg {
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  pointer-events: none;
+  opacity: 0.18;
+  background-image: url('/images/batik-parang.png');
+  background-size: 120px 120px;
+  background-repeat: repeat;
+  mix-blend-mode: overlay;
+  overflow: hidden;
+}
+
+/* Brand Lockup */
+.atd-modern--jawa .atd-modern__brand {
+  position: relative;
+  z-index: 2;
+  display: inline-flex;
+  flex: none;
+  gap: 8px;
+  align-items: center;
+  text-decoration: none;
+  color: #fffbeb;
+  outline: none;
+}
+
+.atd-modern--jawa .atd-modern__mark {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--atd-mark);
+  height: var(--atd-mark);
+  border-radius: 50%;
+  border: 1px solid rgba(251, 191, 36, 0.45);
+  background: radial-gradient(circle at 35% 35%, #5a2210, #220b05);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(251, 191, 36, 0.3);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.atd-modern--jawa .atd-modern__brand:hover .atd-modern__mark {
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(245, 158, 11, 0.35), inset 0 1px 0 rgba(251, 191, 36, 0.45);
+}
+
+.atd-modern--jawa .atd-modern__word {
+  font-family: var(--font-cinzel), serif;
+  font-size: var(--atd-brand);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: #fffbeb;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+}
+
+/* Center Proximity Spring Dock */
+.atd-modern--jawa .atd-modern__dock {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex: none;
+  gap: 3px;
+  align-items: center;
+  justify-content: center;
+  height: var(--atd-item-height);
+}
+
+/* Dock Items */
+.atd-modern--jawa .atd-modern__item {
+  display: inline-flex;
+  flex: none;
+  gap: var(--atd-gap);
+  align-items: center;
+  justify-content: center;
+  height: var(--atd-item-height);
+  padding: 0 var(--atd-item-pad);
+  border: 1px solid transparent;
+  border-radius: 9999px;
+  color: rgba(254, 243, 199, 0.78);
+  background: transparent;
+  font-family: var(--font-sans), sans-serif;
+  font-size: var(--atd-label);
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+  outline: none;
+  transform-origin: 50% 50%;
+  will-change: width, transform;
+  cursor: pointer;
+  transition: color 0.16s, border-color 0.18s, background 0.18s, box-shadow 0.18s;
+}
+
+/* Proximity Near & Hover State — Does not collide with navbar border */
+.atd-modern--jawa .atd-modern__item[data-dock-near="true"],
+.atd-modern--jawa .atd-modern__item:hover,
+.atd-modern--jawa .atd-modern__item:focus-visible {
+  color: #fffbeb;
+  border-color: rgba(245, 158, 11, 0.35);
+  background: rgba(245, 158, 11, 0.14);
+  box-shadow: 0 4px 14px -4px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(251, 191, 36, 0.22);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+/* Active Pressed State (Current section / route) */
+.atd-modern--jawa .atd-modern__item[aria-pressed="true"] {
+  color: #1a0904;
+  font-weight: 700;
+  border-color: rgba(254, 243, 199, 0.6);
+  background: linear-gradient(180deg, #fcd34d, #d97706);
+  box-shadow: 
+    0 6px 14px -4px rgba(245, 158, 11, 0.8), 
+    inset 0 -1px rgba(0, 0, 0, 0.2), 
+    inset 0 1px rgba(255, 255, 255, 0.45);
+}
+
+.atd-modern--jawa .atd-modern__icon {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: var(--atd-icon);
+  height: var(--atd-icon);
+  opacity: 0.8;
+  transition: opacity 0.16s, transform 0.16s;
+}
+
+.atd-modern--jawa .atd-modern__item[data-dock-near="true"] .atd-modern__icon,
+.atd-modern--jawa .atd-modern__item[aria-pressed="true"] .atd-modern__icon,
+.atd-modern--jawa .atd-modern__item:hover .atd-modern__icon {
+  opacity: 1;
+}
+
+/* Actions group */
+.atd-modern--jawa .atd-modern__actions {
+  position: relative;
+  z-index: 2;
+  display: inline-flex;
+  flex: none;
+  gap: 6px;
+  align-items: center;
+}
+
+/* Ghost Button */
+.atd-modern--jawa .atd-modern__ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  height: var(--atd-action-height);
+  padding: 0 11px;
+  border: 1px solid rgba(245, 158, 11, 0.25);
+  border-radius: 9999px;
+  background: rgba(45, 18, 9, 0.55);
+  color: #fde68a;
+  font-family: var(--font-sans), sans-serif;
+  font-size: var(--atd-label);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  transition: color 0.16s, background 0.16s, border-color 0.16s, transform 0.16s;
+  cursor: pointer;
+  outline: none;
+  white-space: nowrap;
+}
+
+.atd-modern--jawa .atd-modern__ghost:hover {
+  color: #ffffff;
+  background: rgba(245, 158, 11, 0.2);
+  border-color: rgba(245, 158, 11, 0.5);
+  transform: translateY(-0.5px);
+}
+
+/* Hero Prominent "Cek Wetonmu" Button */
+.atd-modern--jawa .atd-modern__weton-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  height: var(--atd-action-height);
+  padding: 0 13px;
+  border: 1px solid rgba(254, 243, 199, 0.75);
+  border-radius: 9999px;
+  background: linear-gradient(180deg, #F59E0B, #B45309);
+  color: #140703;
+  font-family: var(--font-sans), sans-serif;
+  font-size: var(--atd-label);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  box-shadow: 
+    0 4px 16px -2px rgba(245, 158, 11, 0.65), 
+    0 0 12px rgba(245, 158, 11, 0.35), 
+    inset 0 1px 0 rgba(255, 255, 255, 0.5);
+  transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+  cursor: pointer;
+  outline: none;
+  white-space: nowrap;
+}
+
+.atd-modern--jawa .atd-modern__weton-cta:hover {
+  transform: translateY(-0.5px) scale(1.03);
+  box-shadow: 
+    0 6px 22px -2px rgba(245, 158, 11, 0.9), 
+    0 0 18px rgba(245, 158, 11, 0.55), 
+    inset 0 1px 0 rgba(255, 255, 255, 0.6);
+  background: linear-gradient(180deg, #FBBF24, #D97706);
+}
+
+/* Circular Yellow Photobooth CTA Button at the end of the navbar */
+.atd-modern--jawa .atd-modern__cta,
+.atd-modern--jawa .atd-modern__circle-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--atd-action-height);
+  height: var(--atd-action-height);
+  padding: 0;
+  border: 1px solid rgba(254, 243, 199, 0.6);
+  border-radius: 50%;
+  color: #1a0904;
+  background: linear-gradient(180deg, #fbbf24, #d97706);
+  box-shadow: 
+    0 4px 14px -2px rgba(245, 158, 11, 0.8), 
+    inset 0 1px 0 rgba(255, 255, 255, 0.5), 
+    inset 0 -1px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.2s ease;
+  cursor: pointer;
+  outline: none;
+  flex: none;
+}
+
+.atd-modern--jawa .atd-modern__cta:hover,
+.atd-modern--jawa .atd-modern__circle-cta:hover {
+  box-shadow: 0 6px 18px -2px rgba(245, 158, 11, 0.95), inset 0 1px 0 rgba(255, 255, 255, 0.6);
+  transform: scale(1.08);
+}
+
+.atd-modern--jawa .atd-modern__cta:active,
+.atd-modern--jawa .atd-modern__circle-cta:active {
+  transform: scale(0.95);
+}
+
+/* Mobile Drawer */
+.atd-modern--jawa .atd-mobile-drawer {
+  position: absolute;
+  top: calc(var(--atd-bar-height) + 10px);
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(440px, calc(100vw - 24px));
+  border: 1px solid rgba(245, 158, 11, 0.28);
+  border-radius: 20px;
+  background: linear-gradient(180deg, rgba(38, 16, 9, 0.97), rgba(22, 9, 4, 0.98));
+  box-shadow: 0 24px 60px -16px rgba(0, 0, 0, 0.96), 0 0 25px rgba(245, 158, 11, 0.15);
+  backdrop-filter: blur(28px);
+  -webkit-backdrop-filter: blur(28px);
+  padding: 14px;
+  z-index: 30;
+  overflow: hidden;
+}
