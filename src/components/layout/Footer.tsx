@@ -89,8 +89,8 @@ export function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/#monumen" className="hover:text-[#F4DE9B] transition-colors">
-                  Monumen Keabadian Candi
+                <Link href="/tempat-sakral" className="hover:text-[#F4DE9B] transition-colors">
+                  Monumen Keabadian & Situs Sakral
                 </Link>
               </li>
             </ul>

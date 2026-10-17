@@ -53,6 +53,30 @@
   - WCAG AA text contrast verification
   - Craftsmanship & Production readiness report
 
+## Phase 5: Revert AI Character Cards to Native Javanese Museum Heritage Architecture
+- [x] Task 10: Revert & Polish `TokohIdentitySection.tsx` to authentic Archival Dossier Modal
+- [x] Task 11: Revert & Polish `src/app/tokoh/[slug]/page.tsx` to native archival identity card hero
+- [x] Task 12: Revert & Polish `src/app/wayangpedia/[slug]/page.tsx` to native 2-column museum showcase
+- [x] Task 13: Clean up `src/app/family-tree/FamilyTreeClient.tsx`: direct link to `/wayangpedia/[slug]`
+- [x] Task 14: Delete AI showcase files and clean up unused imports in `src/app/page.tsx`
+- [x] Task 15: Run TypeScript verification and test suite
+
+## Phase 6: Pixel-Perfect Hero Alignment to reference_hero.png & Transparent Wayang
+- [x] Task 16: Prepare pristine background plate and transparent Wayang assets with zero background noise (`hero-nuswara-reference.jpg`, `wayang-figure-transparent.png`).
+- [x] Task 17: Redesign Hero section in `src/app/page.tsx` to match `reference_hero.png` 1:1 (Title Case CTA, accurate serif typography, remove black boxes/extra indicators, exact exhibition bar).
+- [x] Task 18: Align `Navbar.tsx` navigation bar with `reference_hero.png` (exact 6 links, active gold underline, responsive drawer).
+- [x] Task 19: Verify responsive reflow on mobile/tablet (`antislop-layoutmobile`) and contrast checks (`antislop-human`).
+
+## Phase 7: Central Javanese Culinary Heritage Articles & Exploration Page
+- [x] Task 20: Implement rich culinary data model and comprehensive Central Javanese food articles in `src/data/kulinerArticles.ts`.
+- [x] Task 21: Create complementary editorial culinary images for dishes using `generate_image` and place in `public/images/editorial/`.
+- [x] Task 22: Build `src/app/kuliner/page.tsx` (comprehensive culinary page with category filters, regional tags, and article cards).
+- [x] Task 23: Build `src/app/kuliner/[slug]/page.tsx` (editorial article detail page with cultural history, philosophy, recipes, and heritage hubs).
+- [x] Task 24: Add culinary exploration CTA button and card links in `src/app/page.tsx` (`#kuliner`).
+- [x] Task 25: Ensure `src/components/layout/Navbar.tsx` activates the Kuliner tab on `/kuliner` and `/kuliner/[slug]`.
+- [x] Task 26: Run TypeScript checks and verify responsive layout and contrast.
+
 ## Checkpoint: Final Delivery
-- [x] All tests passing
-- [x] Complete Delivery Gate report prepared
+- [x] All tests passing and build succeeds (`npx tsc --noEmit` and HTTP 200 verified)
+- [x] Landing page matches reference_hero.png 1:1 with pure transparency and zero black box artifacts
+- [x] Culinary articles and exploration page completed and verified

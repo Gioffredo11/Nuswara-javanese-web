@@ -129,6 +129,7 @@ export default async function SejarahArticleDetailPage({
                 alt={article.heroImageAlt}
                 fill
                 priority
+                sizes="(max-width: 896px) 100vw, 896px"
                 className="object-cover"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-[#0D0C0A]/80 via-transparent to-transparent pointer-events-none" />

@@ -12,22 +12,20 @@ export function Navbar() {
   const [activeSection, setActiveSection] = useState<string>('beranda');
   const [isScrolled, setIsScrolled] = useState(false);
 
-  // Primary Navigation Links including Javanese Oracle and Photobooth
+  // Primary Navigation Links matching reference_hero.png 1:1
   const primaryNavLinks = [
     { sectionId: 'beranda', label: 'Beranda' },
-    { sectionId: 'tokoh', label: 'Tokoh' },
     { sectionId: 'sejarah', label: 'Sejarah' },
+    { sectionId: 'tokoh', label: 'Tokoh' },
     { sectionId: 'budaya', label: 'Budaya' },
     { sectionId: 'kuliner', label: 'Kuliner' },
     { sectionId: 'monumen', label: 'Tempat Sakral' },
-    { sectionId: 'oracle', label: 'Javanese Oracle' },
-    { sectionId: 'photobooth', label: 'Photobooth' },
   ];
 
   const allMobileNavLinks = [
     { sectionId: 'beranda', label: 'Beranda (Pameran)', icon: Compass },
-    { sectionId: 'tokoh', label: 'Tokoh & Pahlawan', icon: Compass },
     { sectionId: 'sejarah', label: 'Sejarah Jawa Tengah', icon: BookOpen },
+    { sectionId: 'tokoh', label: 'Tokoh & Pahlawan', icon: Compass },
     { sectionId: 'budaya', label: 'Budaya & Wayangpedia', icon: BookOpen },
     { sectionId: 'family-tree', label: 'Silsilah Purwa', icon: GitFork },
     { sectionId: 'batik', label: 'Batik & Ragam Rupa', icon: Layers },
@@ -160,6 +158,8 @@ export function Navbar() {
     if (sectionId === 'lakon' && pathname.startsWith('/lakon')) return true;
     if (sectionId === 'batik' && pathname.startsWith('/ragam-rupa')) return true;
     if (sectionId === 'sejarah' && pathname.startsWith('/sejarah')) return true;
+    if (sectionId === 'kuliner' && pathname.startsWith('/kuliner')) return true;
+    if (sectionId === 'monumen' && (pathname.startsWith('/tempat-sakral') || pathname.startsWith('/monumen'))) return true;
     if (pathname === '/') {
       return activeSection === sectionId;
     }

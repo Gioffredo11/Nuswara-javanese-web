@@ -119,6 +119,7 @@ export default async function TokohDetailPage({
                     alt={`Potret arsip bersejarah ${tokoh.name}`}
                     fill
                     priority
+                    sizes="(max-width: 640px) 240px, 288px"
                     className="object-cover contrast-105"
                   />
                   {/* Ornate Photo Mounting Corners */}
@@ -379,6 +380,7 @@ export default async function TokohDetailPage({
                           src={other.photoUrl}
                           alt={other.name}
                           fill
+                          sizes="48px"
                           className="object-cover"
                         />
                       </div>

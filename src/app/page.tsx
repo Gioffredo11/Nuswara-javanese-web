@@ -8,6 +8,7 @@ import {
   GatotkacaSvg,
   BatikKawungPatternSvg,
   BatikParangPatternSvg,
+  GoldenDustMotes,
 } from '@/components/ui/WayangVectors';
 import {
   ArrowRight,
@@ -147,60 +148,63 @@ export function HomePage({ defaultSection }: HomePageProps = {}) {
   };
 
   return (
-    <div id="beranda" className="flex flex-col min-h-screen relative bg-[#0D0C0A] text-[#F5EFE6]">
+    <div id="beranda" className="flex flex-col min-h-screen relative bg-[#0D0C0A] text-[#F5EFE6] overflow-x-hidden">
       {/* =========================================================================
           0. CINEMATIC HERO SECTION: NUSWARA MUSEUM DIGITAL JAWA TENGAH
-          (Faithfully matches Visual Reference Photo 1:1)
+          (Faithfully matches Visual Reference Photo reference_hero.png 1:1)
           ========================================================================= */}
       <section className="relative overflow-hidden min-h-screen flex flex-col justify-between pt-24 sm:pt-28 pb-6">
-        {/* Background Landscape Atmosphere (Merapi & Ancient Temples) */}
+        {/* Background Landscape Atmosphere (Punthuk Setumbu, Merapi & Borobudur Dawn with Wayang) */}
         <div className="absolute inset-0 pointer-events-none z-0">
           <Image
-            src="/images/editorial/hero-nuswara.jpg"
-            alt="Misty landscape of Mount Merapi and Borobudur temples Central Java"
+            src="/images/editorial/hero-nuswara-reference.jpg"
+            alt="Misty landscape of Mount Merapi and Borobudur temples Central Java with noble Wayang silhouette"
             fill
             priority
-            className="object-cover object-center filter brightness-[0.70] contrast-[1.08]"
+            sizes="100vw"
+            className="object-cover object-[78%_center] md:object-center filter brightness-[0.98] contrast-[1.04]"
           />
           {/* Controlled dark gradient overlay matching reference photo lighting */}
-          <div className="absolute inset-0 bg-gradient-to-r from-[#0D0C0A]/92 via-[#0D0C0A]/55 to-transparent" />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#0D0C0A]/85 via-transparent to-[#0D0C0A]/50" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#0D0C0A]/95 via-[#0D0C0A]/50 to-transparent pointer-events-none md:via-[#0D0C0A]/25" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#0D0C0A] via-transparent to-[#0D0C0A]/50 pointer-events-none" />
         </div>
 
+        {/* Ambient Golden Sparks & Floating Dust Motes */}
+        <GoldenDustMotes className="absolute inset-0 pointer-events-none z-10 opacity-50 animate-dust-particle-1" />
 
-        {/* Left: Asymmetrical Editorial Typography matching Reference Photo */}
+        {/* Left: Asymmetrical Editorial Typography matching reference_hero.png 1:1 */}
         <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 relative z-20 w-full my-auto py-12 lg:py-16">
           <ScrollReveal direction="up" distance={30} delay={100}>
             <div className="max-w-2xl lg:max-w-3xl space-y-6 md:space-y-8 text-left">
               {/* Eyebrow: Horizontal Gold Line + Category */}
               <div className="flex items-center gap-3">
-                <span className="w-8 h-[1px] bg-[#B99A60]" aria-hidden="true" />
-                <span className="text-xs sm:text-[13px] font-mono uppercase tracking-[0.25em] text-[#B99A60] font-medium">
+                <span className="w-8 h-[1px] bg-[#C5A063]" aria-hidden="true" />
+                <span className="text-[11px] sm:text-xs font-mono uppercase tracking-[0.25em] text-[#C5A063] font-medium">
                   MUSEUM DIGITAL JAWA TENGAH
                 </span>
               </div>
 
               {/* Classical Serif Title */}
-              <h1 className="font-royal text-6xl sm:text-7xl md:text-8xl lg:text-[7.5rem] xl:text-[8.5rem] font-normal tracking-[0.08em] text-[#F0E6D4] leading-none select-none">
+              <h1 className="font-royal text-6xl sm:text-7xl md:text-8xl lg:text-[7.5rem] xl:text-[8.5rem] font-normal tracking-[0.06em] text-[#F0E6D4] leading-none select-none">
                 NUSWARA
               </h1>
 
               {/* Subtitle & Literary Lead */}
-              <div className="space-y-3 max-w-xl">
-                <p className="font-editorial text-2xl sm:text-3xl md:text-4xl text-[#F0E6D4] leading-snug font-normal tracking-wide">
+              <div className="space-y-3.5 max-w-xl">
+                <p className="font-editorial text-2xl sm:text-3xl md:text-[2.25rem] text-[#F0E6D4] leading-snug font-normal tracking-wide">
                   Menelusuri Jejak, Merawat Warisan.
                 </p>
-                <p className="font-sans text-sm sm:text-base md:text-lg text-[#B9B0A3] leading-relaxed font-light">
+                <p className="font-sans text-sm sm:text-base md:text-lg text-[#A9A195] leading-relaxed font-light">
                   Jawa Tengah bukan sekadar tempat. Ia adalah cerita dan warisan yang terus hidup.
                 </p>
               </div>
 
-              {/* Primary Antique Gold CTA Button (Matching Photo) */}
-              <div className="pt-2 sm:pt-4">
+              {/* Primary Antique Gold CTA Button (Matches Reference Photo 1:1, Title Case) */}
+              <div className="pt-2 sm:pt-4 flex items-center">
                 <button
                   type="button"
                   onClick={() => scrollToSection('sejarah')}
-                  className="px-8 py-4 bg-[#B99A60] hover:bg-[#C9A96E] text-[#100D0A] font-medium text-xs sm:text-sm tracking-wider uppercase transition-colors shadow-2xl flex items-center gap-3 cursor-pointer group"
+                  className="px-8 py-3.5 sm:py-4 bg-[#C5A063] hover:bg-[#D4AF37] text-[#140F0A] font-medium text-xs sm:text-sm tracking-wide transition-all duration-300 shadow-xl flex items-center gap-3 cursor-pointer group"
                 >
                   <span>Jelajahi Jawa Tengah</span>
                   <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
@@ -210,19 +214,19 @@ export function HomePage({ defaultSection }: HomePageProps = {}) {
           </ScrollReveal>
         </div>
 
-        {/* Bottom Metadata Exhibition Bar (Matches Visual Reference Photo 1:1) */}
+        {/* Bottom Metadata Exhibition Bar (Matches reference_hero.png 1:1) */}
         <div className="relative z-20 w-full px-6 sm:px-10 lg:px-16 pb-6 pt-4">
-          <div className="max-w-7xl mx-auto flex items-center justify-between text-[11px] font-mono tracking-[0.25em] text-[#8E8271] uppercase select-none">
+          <div className="max-w-7xl mx-auto flex items-center justify-between text-[11px] font-mono tracking-[0.25em] text-[#8E8474] uppercase select-none">
             <span className="text-left">PAMERAN BUDAYA • 2026</span>
 
             <button
               type="button"
               onClick={() => scrollToSection('sejarah')}
-              className="flex flex-col items-center gap-1 text-center text-[#8E8271] hover:text-[#ECC47E] transition-colors cursor-pointer group"
+              className="flex flex-col items-center gap-1 text-center text-[#8E8474] hover:text-[#ECC47E] transition-colors cursor-pointer group"
               title="Gulir ke bawah untuk menelusuri"
             >
-              <span>GULIR UNTUK MENELUSURI</span>
-              <span className="text-sm text-[#B99A60] transition-transform group-hover:translate-y-1">↓</span>
+              <span className="text-[10px] sm:text-[11px] font-mono tracking-[0.25em]">GULIR UNTUK MENELUSURI</span>
+              <span className="text-xs text-[#C5A063] transition-transform group-hover:translate-y-1">↓</span>
             </button>
 
             <span className="text-right">MERAPI • BOROBUDUR</span>
@@ -232,9 +236,10 @@ export function HomePage({ defaultSection }: HomePageProps = {}) {
 
       {/* =========================================================================
           EDITORIAL STATEMENT BANNER: "Warisan bukan hanya masa lalu..."
+          (Matches Reference Photo with 5 Cultural Exploration Pillars)
           ========================================================================= */}
-      <section className="bg-[#12100D] border-y border-[#C59B53]/25 py-12 sm:py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="bg-gradient-to-r from-[#120D1B] via-[#1A1224] to-[#120D1B] border-y border-[#C5A36A]/25 py-12 sm:py-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
           <ScrollReveal direction="up" distance={35}>
             <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
               <div className="md:col-span-7">
@@ -245,9 +250,9 @@ export function HomePage({ defaultSection }: HomePageProps = {}) {
                   </span>
                 </h2>
               </div>
-              <div className="md:col-span-5 space-y-4 text-sm text-[#A89F91] leading-relaxed border-t md:border-t-0 md:border-l border-[#C59B53]/25 pt-6 md:pt-0 md:pl-8">
+              <div className="md:col-span-5 space-y-4 text-sm text-[#B9B0A3] leading-relaxed border-t md:border-t-0 md:border-l border-[#C5A36A]/25 pt-6 md:pt-0 md:pl-8">
                 <p>
-                  Kearifan Jawa tidak diciptakan untuk dipajang di lemari kaca museum. Ia diwariskan lewat tutur tembang, ketukan cempala dalang di atas kelir, dan nilai-nilai welas asih yang membimbing laku hidup kita sehari-hari.
+                  Dari lereng gunung hingga ruang keraton, dari kisah para tokoh hingga rasa di meja makan, NUSWARA mengajakmu mengenal Jawa Tengah melalui hal-hal yang membentuk jiwa dan kesehariannya.
                 </p>
                 <div className="flex items-center gap-3 text-xs font-mono text-[#ECC47E]">
                   <span>MEMAYU HAYUNING BAWANA</span>
@@ -255,6 +260,31 @@ export function HomePage({ defaultSection }: HomePageProps = {}) {
                   <span>SANGKAN PARANING DUMADI</span>
                 </div>
               </div>
+            </div>
+          </ScrollReveal>
+
+          {/* 5 Cultural Category Quick-Jump Navigation Tabs */}
+          <ScrollReveal direction="up" distance={25} delay={150}>
+            <div className="flex flex-wrap items-center justify-start sm:justify-center gap-2.5 sm:gap-4 pt-4 border-t border-[#C5A36A]/20">
+              {[
+                { number: '01', label: 'Jejak Sejarah', target: 'sejarah' },
+                { number: '02', label: 'Tokoh & Pemikiran', target: 'tokoh' },
+                { number: '03', label: 'Seni & Tradisi', target: 'wayangpedia' },
+                { number: '04', label: 'Rasa & Cerita', target: 'kuliner' },
+                { number: '05', label: 'Ruang Sakral', target: 'monumen' },
+              ].map((pill) => (
+                <button
+                  key={pill.number}
+                  type="button"
+                  onClick={() => scrollToSection(pill.target)}
+                  className="px-4 py-2 rounded-full bg-[#181122] hover:bg-[#C5A36A] text-[#B9B0A3] hover:text-[#100D0A] border border-[#C5A36A]/30 transition-all text-xs font-mono uppercase tracking-wider flex items-center gap-2 cursor-pointer shadow-md group"
+                >
+                  <span className="text-[#ECC47E] group-hover:text-[#100D0A] font-bold">
+                    {pill.number}
+                  </span>
+                  <span>{pill.label}</span>
+                </button>
+              ))}
             </div>
           </ScrollReveal>
         </div>
@@ -274,6 +304,7 @@ export function HomePage({ defaultSection }: HomePageProps = {}) {
                     src="/images/editorial/candi-relief.jpg"
                     alt="Ancient bas-relief carving of Borobudur temple Central Java"
                     fill
+                    sizes="(max-width: 1024px) 100vw, 42vw"
                     className="object-cover hover:scale-105 transition-transform duration-700"
                   />
                 </div>
@@ -416,6 +447,7 @@ export function HomePage({ defaultSection }: HomePageProps = {}) {
                     src="/images/editorial/wayang-kelir.jpg"
                     alt="Wayang kulit performance behind illuminated white screen"
                     fill
+                    sizes="(max-width: 1024px) 100vw, 50vw"
                     className="object-cover filter contrast-[1.1]"
                   />
                   {/* Subtle warm amber glow overlay */}
@@ -574,6 +606,7 @@ export function HomePage({ defaultSection }: HomePageProps = {}) {
                     src="/images/editorial/batik-canting.jpg"
                     alt="Javanese artisan hand writing batik with canting"
                     fill
+                    sizes="(max-width: 1024px) 100vw, 50vw"
                     className="object-cover hover:scale-105 transition-transform duration-700"
                   />
                 </div>
@@ -598,99 +631,185 @@ export function HomePage({ defaultSection }: HomePageProps = {}) {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
           {/* Section Header */}
           <ScrollReveal direction="up" distance={30}>
-            <div className="max-w-3xl space-y-3">
-              <span className="text-xs font-mono uppercase tracking-[0.25em] text-[#ECC47E]">
-                KHAZANAH RASA JAWA TENGAH
-              </span>
-              <h2 className="font-editorial text-3xl sm:text-4xl lg:text-5xl font-bold text-[#F5EFE6] leading-tight">
-                Ingatan yang tinggal di lidah.
-              </h2>
-              <p className="text-sm text-[#A89F91] leading-relaxed">
-                Kekayaan cita rasa warisan yang melintasi dapur keraton hingga kehangatan warung wedangan di sudut kota tua.
-              </p>
+            <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
+              <div className="max-w-3xl space-y-3">
+                <span className="text-xs font-mono uppercase tracking-[0.25em] text-[#ECC47E]">
+                  KHAZANAH RASA JAWA TENGAH
+                </span>
+                <h2 className="font-editorial text-3xl sm:text-4xl lg:text-5xl font-bold text-[#F5EFE6] leading-tight">
+                  Ingatan yang tinggal di lidah.
+                </h2>
+                <p className="text-sm text-[#A89F91] leading-relaxed">
+                  Kekayaan cita rasa warisan yang melintasi dapur keraton hingga kehangatan warung wedangan di sudut kota tua.
+                </p>
+              </div>
+
+              <Link
+                href="/kuliner"
+                className="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-[#18130E] border border-[#C59B53]/50 text-[#ECC47E] hover:bg-[#C59B53] hover:text-[#0D0C0A] transition-all text-xs font-mono uppercase tracking-wider font-semibold shadow-lg group self-start md:self-auto shrink-0"
+              >
+                <span>Jelajahi Cerita Kuliner Lengkap</span>
+                <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+              </Link>
             </div>
           </ScrollReveal>
 
           {/* Food Cards Grid */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {/* Lumpia Semarang */}
-            <ScrollReveal direction="up" distance={35} delay={100}>
-              <div className="rounded-2xl bg-[#14110E] border border-[#C59B53]/30 overflow-hidden shadow-xl hover:border-[#C59B53] transition-colors group h-full">
-                <div className="relative aspect-[4/3] w-full overflow-hidden">
-                  <Image
-                    src="/images/editorial/kuliner-lumpia.jpg"
-                    alt="Traditional Lumpia Semarang"
-                    fill
-                    className="object-cover group-hover:scale-105 transition-transform duration-500"
-                  />
-                </div>
-                <div className="p-5 space-y-2">
-                  <div className="flex items-center justify-between text-xs font-mono text-[#ECC47E]">
-                    <span>SEMARANG</span>
-                    <span>AKULTURASI PESISIR</span>
+            <ScrollReveal direction="up" distance={35} delay={100} className="h-full flex">
+              <Link
+                href="/kuliner/lumpia-semarang"
+                className="rounded-2xl bg-[#14110E] border border-[#C59B53]/30 overflow-hidden shadow-xl hover:border-[#ECC47E] transition-all group flex flex-col justify-between h-full cursor-pointer hover:-translate-y-1 w-full"
+              >
+                <div>
+                  <div className="relative aspect-[4/3] w-full overflow-hidden bg-[#0D0C0A]">
+                    <Image
+                      src="/images/editorial/kuliner-lumpia.jpg"
+                      alt="Traditional Lumpia Semarang"
+                      fill
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 400px"
+                      className="object-cover group-hover:scale-105 transition-transform duration-500"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#14110E] via-transparent to-transparent opacity-80" />
                   </div>
-                  <h3 className="font-royal text-xl font-bold text-[#F5EFE6]">
-                    Lumpia Semarang
-                  </h3>
-                  <p className="text-xs text-[#A89F91] leading-relaxed">
-                    Perpaduan harmonis rebung manis gurih, daging ayam/udang, daun bawang segar, dan cocolan saus cokelat kental khas pesisir utara Jawa.
-                  </p>
+                  <div className="p-5 space-y-2">
+                    <div className="flex items-center justify-between text-xs font-mono text-[#ECC47E]">
+                      <span>SEMARANG</span>
+                      <span>AKULTURASI PESISIR</span>
+                    </div>
+                    <h3 className="font-royal text-xl font-bold text-[#F5EFE6] group-hover:text-[#ECC47E] transition-colors">
+                      Lumpia Semarang
+                    </h3>
+                    <p className="text-xs text-[#A89F91] leading-relaxed line-clamp-3">
+                      Perpaduan harmonis rebung manis gurih, daging ayam/udang, daun bawang segar, dan cocolan saus cokelat kental khas pesisir utara Jawa.
+                    </p>
+                  </div>
                 </div>
-              </div>
+
+                <div className="px-5 py-3 border-t border-[#C59B53]/20 bg-[#110E0B] flex items-center justify-between text-xs font-mono text-[#ECC47E]">
+                  <span className="text-[#A89F91] flex items-center gap-1">
+                    <Clock className="w-3.5 h-3.5 text-[#C59B53]" />
+                    <span>5 Menit Baca</span>
+                  </span>
+                  <span className="flex items-center gap-1 group-hover:translate-x-1 transition-transform font-semibold">
+                    <span>Baca Artikel</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </span>
+                </div>
+              </Link>
             </ScrollReveal>
 
             {/* Nasi Liwet Solo */}
-            <ScrollReveal direction="up" distance={35} delay={250}>
-              <div className="rounded-2xl bg-[#14110E] border border-[#C59B53]/30 overflow-hidden shadow-xl hover:border-[#C59B53] transition-colors group h-full">
-                <div className="relative aspect-[4/3] w-full overflow-hidden">
-                  <Image
-                    src="/images/editorial/kuliner-liwet.jpg"
-                    alt="Authentic Nasi Liwet Solo"
-                    fill
-                    className="object-cover group-hover:scale-105 transition-transform duration-500"
-                  />
-                </div>
-                <div className="p-5 space-y-2">
-                  <div className="flex items-center justify-between text-xs font-mono text-[#ECC47E]">
-                    <span>SURAKARTA (SOLO)</span>
-                    <span>SAJIAN KERATON</span>
+            <ScrollReveal direction="up" distance={35} delay={250} className="h-full flex">
+              <Link
+                href="/kuliner/nasi-liwet-solo"
+                className="rounded-2xl bg-[#14110E] border border-[#C59B53]/30 overflow-hidden shadow-xl hover:border-[#ECC47E] transition-all group flex flex-col justify-between h-full cursor-pointer hover:-translate-y-1 w-full"
+              >
+                <div>
+                  <div className="relative aspect-[4/3] w-full overflow-hidden bg-[#0D0C0A]">
+                    <Image
+                      src="/images/editorial/kuliner-liwet.jpg"
+                      alt="Authentic Nasi Liwet Solo"
+                      fill
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 400px"
+                      className="object-cover group-hover:scale-105 transition-transform duration-500"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#14110E] via-transparent to-transparent opacity-80" />
                   </div>
-                  <h3 className="font-royal text-xl font-bold text-[#F5EFE6]">
-                    Nasi Liwet Solo
-                  </h3>
-                  <p className="text-xs text-[#A89F91] leading-relaxed">
-                    Beras gurih beraroma santan dan daun salam, disajikan dalam wadah pincuk daun pisang bersama suwiran ayam kampung, sayur labu siam, dan gumpalan areh kelapa lembut.
-                  </p>
+                  <div className="p-5 space-y-2">
+                    <div className="flex items-center justify-between text-xs font-mono text-[#ECC47E]">
+                      <span>SURAKARTA (SOLO)</span>
+                      <span>SAJIAN KERATON</span>
+                    </div>
+                    <h3 className="font-royal text-xl font-bold text-[#F5EFE6] group-hover:text-[#ECC47E] transition-colors">
+                      Nasi Liwet Solo
+                    </h3>
+                    <p className="text-xs text-[#A89F91] leading-relaxed line-clamp-3">
+                      Beras gurih beraroma santan dan daun salam, disajikan dalam wadah pincuk daun pisang bersama suwiran ayam kampung, sayur labu siam, dan gumpalan areh kelapa lembut.
+                    </p>
+                  </div>
                 </div>
-              </div>
+
+                <div className="px-5 py-3 border-t border-[#C59B53]/20 bg-[#110E0B] flex items-center justify-between text-xs font-mono text-[#ECC47E]">
+                  <span className="text-[#A89F91] flex items-center gap-1">
+                    <Clock className="w-3.5 h-3.5 text-[#C59B53]" />
+                    <span>6 Menit Baca</span>
+                  </span>
+                  <span className="flex items-center gap-1 group-hover:translate-x-1 transition-transform font-semibold">
+                    <span>Baca Artikel</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </span>
+                </div>
+              </Link>
             </ScrollReveal>
 
             {/* Tempe Mendoan Banyumas */}
-            <ScrollReveal direction="up" distance={35} delay={400}>
-              <div className="rounded-2xl bg-[#14110E] border border-[#C59B53]/30 overflow-hidden shadow-xl hover:border-[#C59B53] transition-colors group h-full">
-                <div className="relative aspect-[4/3] w-full overflow-hidden">
-                  <Image
-                    src="/images/editorial/kuliner-mendoan.jpg"
-                    alt="Hot Tempe Mendoan Banyumas"
-                    fill
-                    className="object-cover group-hover:scale-105 transition-transform duration-500"
-                  />
-                </div>
-                <div className="p-5 space-y-2">
-                  <div className="flex items-center justify-between text-xs font-mono text-[#ECC47E]">
-                    <span>BANYUMAS</span>
-                    <span>HANGAT MERAKYAT</span>
+            <ScrollReveal direction="up" distance={35} delay={400} className="h-full flex">
+              <Link
+                href="/kuliner/tempe-mendoan-banyumas"
+                className="rounded-2xl bg-[#14110E] border border-[#C59B53]/30 overflow-hidden shadow-xl hover:border-[#ECC47E] transition-all group flex flex-col justify-between h-full cursor-pointer hover:-translate-y-1 w-full"
+              >
+                <div>
+                  <div className="relative aspect-[4/3] w-full overflow-hidden bg-[#0D0C0A]">
+                    <Image
+                      src="/images/editorial/kuliner-mendoan.jpg"
+                      alt="Hot Tempe Mendoan Banyumas"
+                      fill
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 400px"
+                      className="object-cover group-hover:scale-105 transition-transform duration-500"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#14110E] via-transparent to-transparent opacity-80" />
                   </div>
-                  <h3 className="font-royal text-xl font-bold text-[#F5EFE6]">
-                    Tempe Mendoan Banyumas
-                  </h3>
-                  <p className="text-xs text-[#A89F91] leading-relaxed">
-                    Tempe kedelai tipis dibalut adonan tepung terigu daun bawang yang digoreng setengah matang (mendo), dinikmati selagi panas bersama cocolan sambal kecap cabai rawit pedas.
-                  </p>
+                  <div className="p-5 space-y-2">
+                    <div className="flex items-center justify-between text-xs font-mono text-[#ECC47E]">
+                      <span>BANYUMAS</span>
+                      <span>HANGAT MERAKYAT</span>
+                    </div>
+                    <h3 className="font-royal text-xl font-bold text-[#F5EFE6] group-hover:text-[#ECC47E] transition-colors">
+                      Tempe Mendoan Banyumas
+                    </h3>
+                    <p className="text-xs text-[#A89F91] leading-relaxed line-clamp-3">
+                      Tempe kedelai tipis dibalut adonan tepung terigu daun bawang yang digoreng setengah matang (mendo), dinikmati selagi panas bersama cocolan sambal kecap cabai rawit pedas.
+                    </p>
+                  </div>
                 </div>
-              </div>
+
+                <div className="px-5 py-3 border-t border-[#C59B53]/20 bg-[#110E0B] flex items-center justify-between text-xs font-mono text-[#ECC47E]">
+                  <span className="text-[#A89F91] flex items-center gap-1">
+                    <Clock className="w-3.5 h-3.5 text-[#C59B53]" />
+                    <span>4 Menit Baca</span>
+                  </span>
+                  <span className="flex items-center gap-1 group-hover:translate-x-1 transition-transform font-semibold">
+                    <span>Baca Artikel</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </span>
+                </div>
+              </Link>
             </ScrollReveal>
           </div>
+
+          {/* Secondary Banner for additional culinary articles */}
+          <ScrollReveal direction="up" distance={25} delay={150}>
+            <div className="p-6 rounded-2xl bg-[#14110E] border border-[#C59B53]/30 flex flex-col sm:flex-row items-center justify-between gap-4">
+              <div className="space-y-1 text-center sm:text-left">
+                <span className="text-xs font-mono uppercase tracking-wider text-[#C59B53]">
+                  Masih Banyak Ragam Cita Rasa Lainnya
+                </span>
+                <p className="text-sm text-[#D8C8AD]">
+                  Temukan kisah Soto Kudus Sunan Kudus, Dawet Ayu Banjarnegara, Sate Kere Solo, hingga Garang Asem Pantura.
+                </p>
+              </div>
+
+              <Link
+                href="/kuliner"
+                className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#1D1813] border border-[#C59B53]/40 text-[#ECC47E] hover:bg-[#C59B53] hover:text-[#0D0C0A] transition-all text-xs font-mono font-semibold uppercase tracking-wider shrink-0 group"
+              >
+                <span>Buka Ensiklopedia Kuliner</span>
+                <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
+              </Link>
+            </div>
+          </ScrollReveal>
         </div>
       </section>
 
@@ -699,82 +818,196 @@ export function HomePage({ defaultSection }: HomePageProps = {}) {
           ========================================================================= */}
       <section id="monumen" className="bg-[#0D0C0A] py-20 border-b border-[#C59B53]/20 scroll-mt-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
-          {/* Section Header */}
+          {/* Section Header with Explore Button matching Kuliner section */}
           <ScrollReveal direction="up" distance={30}>
-            <div className="max-w-3xl space-y-3">
-              <span className="text-xs font-mono uppercase tracking-[0.25em] text-[#ECC47E]">
-                MONUMEN KEABADIAN
-              </span>
-              <h2 className="font-editorial text-3xl sm:text-4xl lg:text-5xl font-bold text-[#F5EFE6] leading-tight">
-                Di sini, <br />
-                <span className="italic font-normal text-gold-gradient">waktu terasa hening.</span>
-              </h2>
-              <p className="text-sm text-[#A89F91] leading-relaxed">
-                Mahakarya arsitektur batu andesit yang berdiri tegak menantang abad, mengabadikan renungan batin para leluhur di tanah Jawa.
-              </p>
+            <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
+              <div className="max-w-3xl space-y-3">
+                <span className="text-xs font-mono uppercase tracking-[0.25em] text-[#ECC47E]">
+                  MONUMEN KEABADIAN & RUANG SAKRAL
+                </span>
+                <h2 className="font-editorial text-3xl sm:text-4xl lg:text-5xl font-bold text-[#F5EFE6] leading-tight">
+                  Di sini, <br />
+                  <span className="italic font-normal text-gold-gradient">waktu terasa hening.</span>
+                </h2>
+                <p className="text-sm text-[#A89F91] leading-relaxed">
+                  Mahakarya arsitektur batu andesit dan kayu purba yang berdiri tegak menantang abad, mengabadikan renungan batin serta spiritualitas luhur di tanah Jawa.
+                </p>
+              </div>
+
+              <Link
+                href="/tempat-sakral"
+                className="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-[#18130E] border border-[#C59B53]/50 text-[#ECC47E] hover:bg-[#C59B53] hover:text-[#0D0C0A] transition-all text-xs font-mono uppercase tracking-wider font-semibold shadow-lg group self-start md:self-auto shrink-0 cursor-pointer"
+              >
+                <span>Jelajahi Kisah Tempat Sakral Lengkap</span>
+                <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+              </Link>
             </div>
           </ScrollReveal>
 
-          {/* Monument Cards 2-Columns */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          {/* Monument Cards Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {/* Candi Borobudur */}
-            <ScrollReveal direction="up" distance={40} delay={150}>
-              <div className="rounded-2xl bg-[#14110E] border border-[#C59B53]/35 overflow-hidden shadow-2xl group h-full">
-                <div className="relative aspect-[16/9] w-full overflow-hidden">
-                  <Image
-                    src="/images/editorial/monumen-borobudur.jpg"
-                    alt="Sunrise over Borobudur stupas Central Java"
-                    fill
-                    className="object-cover group-hover:scale-105 transition-transform duration-700"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#14110E] via-transparent to-transparent opacity-80" />
-                </div>
-                <div className="p-6 space-y-2">
-                  <div className="flex items-center justify-between text-xs font-mono text-[#ECC47E]">
-                    <span className="flex items-center gap-1.5">
-                      <MapPin className="w-3.5 h-3.5" />
-                      MAGELANG, JAWA TENGAH
-                    </span>
-                    <span>UNESCO HERITAGE</span>
+            <ScrollReveal direction="up" distance={40} delay={100} className="h-full flex">
+              <Link
+                href="/tempat-sakral/candi-borobudur"
+                className="rounded-2xl bg-[#14110E] border border-[#C59B53]/35 overflow-hidden shadow-2xl group flex flex-col justify-between h-full hover:border-[#ECC47E] hover:-translate-y-1 transition-all duration-300 w-full cursor-pointer"
+              >
+                <div>
+                  <div className="relative aspect-[16/10] w-full overflow-hidden">
+                    <Image
+                      src="/images/editorial/monumen-borobudur.jpg"
+                      alt="Sunrise over Borobudur stupas Central Java"
+                      fill
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
+                      className="object-cover group-hover:scale-105 transition-transform duration-700"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#14110E] via-transparent to-transparent opacity-80" />
                   </div>
-                  <h3 className="font-royal text-2xl font-bold text-[#F5EFE6]">
-                    Candi Borobudur
-                  </h3>
-                  <p className="text-xs sm:text-sm text-[#A89F91] leading-relaxed">
-                    Mahakarya batu andesit abad ke-8 di lembah Kedu. Menjulang bertingkat melambangkan tahapan kesadaran spiritual manusia: dari hawa nafsu duniawi (Kamadhatu), wujud nyata (Rupadhatu), hingga kebebasan murni nirwana (Arupadhatu).
-                  </p>
+                  <div className="p-5 space-y-2.5">
+                    <div className="flex items-center justify-between text-[11px] font-mono text-[#ECC47E]">
+                      <span className="flex items-center gap-1">
+                        <MapPin className="w-3 h-3" />
+                        MAGELANG
+                      </span>
+                      <span>UNESCO HERITAGE</span>
+                    </div>
+                    <h3 className="font-royal text-xl font-bold text-[#F5EFE6] group-hover:text-[#ECC47E] transition-colors">
+                      Candi Borobudur
+                    </h3>
+                    <p className="text-xs text-[#A89F91] leading-relaxed line-clamp-3">
+                      Piramida mandala terbesar di bumi. Menuntun peziarah melintasi tiga alam kesadaran batin: Kamadhatu, Rupadhatu, hingga heningnya Arupadhatu.
+                    </p>
+                  </div>
                 </div>
-              </div>
+
+                <div className="px-5 py-3 border-t border-[#C59B53]/20 bg-[#100D0A] flex items-center justify-between text-[11px] font-mono text-[#ECC47E] group-hover:text-white">
+                  <span>Baca Kisah Spiritual</span>
+                  <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+                </div>
+              </Link>
             </ScrollReveal>
 
             {/* Dataran Tinggi Dieng */}
-            <ScrollReveal direction="up" distance={40} delay={300}>
-              <div className="rounded-2xl bg-[#14110E] border border-[#C59B53]/35 overflow-hidden shadow-2xl group h-full">
-                <div className="relative aspect-[16/9] w-full overflow-hidden">
-                  <Image
-                    src="/images/editorial/monumen-dieng.jpg"
-                    alt="Misty landscape of Dieng Plateau and Candi Arjuna"
-                    fill
-                    className="object-cover group-hover:scale-105 transition-transform duration-700"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#14110E] via-transparent to-transparent opacity-80" />
-                </div>
-                <div className="p-6 space-y-2">
-                  <div className="flex items-center justify-between text-xs font-mono text-[#ECC47E]">
-                    <span className="flex items-center gap-1.5">
-                      <MapPin className="w-3.5 h-3.5" />
-                      WONOSOBO & BANJARNEGARA
-                    </span>
-                    <span>2.093 MDPL</span>
+            <ScrollReveal direction="up" distance={40} delay={200} className="h-full flex">
+              <Link
+                href="/tempat-sakral/dataran-tinggi-dieng"
+                className="rounded-2xl bg-[#14110E] border border-[#C59B53]/35 overflow-hidden shadow-2xl group flex flex-col justify-between h-full hover:border-[#ECC47E] hover:-translate-y-1 transition-all duration-300 w-full cursor-pointer"
+              >
+                <div>
+                  <div className="relative aspect-[16/10] w-full overflow-hidden">
+                    <Image
+                      src="/images/editorial/monumen-dieng.jpg"
+                      alt="Misty landscape of Dieng Plateau and Candi Arjuna"
+                      fill
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
+                      className="object-cover group-hover:scale-105 transition-transform duration-700"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#14110E] via-transparent to-transparent opacity-80" />
                   </div>
-                  <h3 className="font-royal text-2xl font-bold text-[#F5EFE6]">
-                    Dataran Tinggi Dieng
-                  </h3>
-                  <p className="text-xs sm:text-sm text-[#A89F91] leading-relaxed">
-                    &ldquo;Di Hyang&rdquo; atau tempat bersemayamnya para dewata. Kompleks candi Hindu tertua di Jawa Tengah yang berselimut kabut belerang, telaga warna yang mistis, dan keheningan pegunungan yang mengheningkan cipta.
-                  </p>
+                  <div className="p-5 space-y-2.5">
+                    <div className="flex items-center justify-between text-[11px] font-mono text-[#ECC47E]">
+                      <span className="flex items-center gap-1">
+                        <MapPin className="w-3 h-3" />
+                        WONOSOBO
+                      </span>
+                      <span>2.093 MDPL</span>
+                    </div>
+                    <h3 className="font-royal text-xl font-bold text-[#F5EFE6] group-hover:text-[#ECC47E] transition-colors">
+                      Kompleks Dieng
+                    </h3>
+                    <p className="text-xs text-[#A89F91] leading-relaxed line-clamp-3">
+                      &ldquo;Di Hyang&rdquo; atau tempat bersemayam dewata. Gugusan candi Hindu tertua di Jawa Tengah yang berselimut kabut belerang dan keheningan pegunungan.
+                    </p>
+                  </div>
                 </div>
-              </div>
+
+                <div className="px-5 py-3 border-t border-[#C59B53]/20 bg-[#100D0A] flex items-center justify-between text-[11px] font-mono text-[#ECC47E] group-hover:text-white">
+                  <span>Baca Kisah Spiritual</span>
+                  <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+                </div>
+              </Link>
+            </ScrollReveal>
+
+            {/* Candi Cetho */}
+            <ScrollReveal direction="up" distance={40} delay={300} className="h-full flex">
+              <Link
+                href="/tempat-sakral/candi-cetho"
+                className="rounded-2xl bg-[#14110E] border border-[#C59B53]/35 overflow-hidden shadow-2xl group flex flex-col justify-between h-full hover:border-[#ECC47E] hover:-translate-y-1 transition-all duration-300 w-full cursor-pointer"
+              >
+                <div>
+                  <div className="relative aspect-[16/10] w-full overflow-hidden">
+                    <Image
+                      src="/images/editorial/monumen-cetho.jpg"
+                      alt="Candi Bentar gate of Candi Cetho temple on Mount Lawu"
+                      fill
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
+                      className="object-cover group-hover:scale-105 transition-transform duration-700"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#14110E] via-transparent to-transparent opacity-80" />
+                  </div>
+                  <div className="p-5 space-y-2.5">
+                    <div className="flex items-center justify-between text-[11px] font-mono text-[#ECC47E]">
+                      <span className="flex items-center gap-1">
+                        <MapPin className="w-3 h-3" />
+                        KARANGANYAR
+                      </span>
+                      <span>1.496 MDPL</span>
+                    </div>
+                    <h3 className="font-royal text-xl font-bold text-[#F5EFE6] group-hover:text-[#ECC47E] transition-colors">
+                      Candi Cetho
+                    </h3>
+                    <p className="text-xs text-[#A89F91] leading-relaxed line-clamp-3">
+                      Punden berundak 13 teras era Majapahit akhir di lereng Gunung Lawu. Gerbang candi bentar yang menembus kabut langit untuk ruwatan dan pensucian batin.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="px-5 py-3 border-t border-[#C59B53]/20 bg-[#100D0A] flex items-center justify-between text-[11px] font-mono text-[#ECC47E] group-hover:text-white">
+                  <span>Baca Kisah Spiritual</span>
+                  <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+                </div>
+              </Link>
+            </ScrollReveal>
+
+            {/* Masjid Agung Demak */}
+            <ScrollReveal direction="up" distance={40} delay={400} className="h-full flex">
+              <Link
+                href="/tempat-sakral/masjid-agung-demak"
+                className="rounded-2xl bg-[#14110E] border border-[#C59B53]/35 overflow-hidden shadow-2xl group flex flex-col justify-between h-full hover:border-[#ECC47E] hover:-translate-y-1 transition-all duration-300 w-full cursor-pointer"
+              >
+                <div>
+                  <div className="relative aspect-[16/10] w-full overflow-hidden">
+                    <Image
+                      src="/images/editorial/monumen-demak.jpg"
+                      alt="Historic Great Mosque of Demak at twilight"
+                      fill
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
+                      className="object-cover group-hover:scale-105 transition-transform duration-700"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#14110E] via-transparent to-transparent opacity-80" />
+                  </div>
+                  <div className="p-5 space-y-2.5">
+                    <div className="flex items-center justify-between text-[11px] font-mono text-[#ECC47E]">
+                      <span className="flex items-center gap-1">
+                        <MapPin className="w-3 h-3" />
+                        DEMAK
+                      </span>
+                      <span>ERA 1479 M</span>
+                    </div>
+                    <h3 className="font-royal text-xl font-bold text-[#F5EFE6] group-hover:text-[#ECC47E] transition-colors">
+                      Masjid Agung Demak
+                    </h3>
+                    <p className="text-xs text-[#A89F91] leading-relaxed line-clamp-3">
+                      Episentrum spiritualitas Walisongo dengan atap tumpang tiga akulturasi budaya dan tiang mukjizat Soko Tatal karya Sunan Kalijaga.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="px-5 py-3 border-t border-[#C59B53]/20 bg-[#100D0A] flex items-center justify-between text-[11px] font-mono text-[#ECC47E] group-hover:text-white">
+                  <span>Baca Kisah Spiritual</span>
+                  <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+                </div>
+              </Link>
             </ScrollReveal>
           </div>
         </div>

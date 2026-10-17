@@ -28,9 +28,34 @@ NUSWARA is a digital cultural platform dedicated to Central Java's cultural heri
 - [x] Task 8: Run unit/integration tests (`npm test`), endpoint verification (`node test-api.mjs`), and check mobile responsiveness / contrast.
 - [x] Task 9: Execute Antislop Delivery Gate checklist (Hard Gate, Purpose Gate, Quality Locks) and compile final production report.
 
+### Phase 5: Revert AI Character Cards to Native Javanese Museum Heritage Architecture
+- [x] Task 10: Revert & Polish `TokohIdentitySection.tsx` to the authentic Archival Dossier Modal (`BERKAS RESMI IDENTITAS TOKOH`), adhering to royal dark museum theme and antislop guidelines.
+- [x] Task 11: Revert & Polish `src/app/tokoh/[slug]/page.tsx` to native archival identity card hero with photo mounting corners and metadata table.
+- [x] Task 12: Revert & Polish `src/app/wayangpedia/[slug]/page.tsx` to native 2-column museum showcase with authentic Wayang silhouette vectors and cultural metadata.
+- [x] Task 13: Clean up `src/app/family-tree/FamilyTreeClient.tsx`: remove AI showcase modal, link inspector directly to `/wayangpedia/[slug]`.
+- [x] Task 14: Remove unused AI showcase files (`ApexCharacterShowcase.tsx`, `apexShowcaseUtils.ts`, `WayangShowcaseCarousel.tsx`) and clean up imports.
+- [x] Task 15: TypeScript compilation check and test suite verification.
+
+### Phase 6: Pixel-Perfect Hero Alignment to reference_hero.png & Transparent Wayang
+- [x] Task 16: Prepare pristine background plate and transparent Wayang assets with zero background noise.
+- [x] Task 17: Redesign Hero section in `src/app/page.tsx` to match `reference_hero.png` 1:1 (single Title Case CTA, correct serif typography, remove black boxes/extra indicators, exact exhibition bar).
+- [x] Task 18: Align `Navbar.tsx` navigation bar with `reference_hero.png` (clean link set, active gold underline).
+- [x] Task 19: Verify responsive reflow on mobile/tablet (`antislop-layoutmobile`) and contrast checks (`antislop-human`).
+
+### Phase 7: Central Javanese Culinary Heritage Articles & Exploration Page
+- [ ] Task 20: Implement rich culinary data model and comprehensive Central Javanese food articles in `src/data/kulinerArticles.ts`.
+- [ ] Task 21: Create complementary editorial culinary images for dishes using `generate_image`.
+- [ ] Task 22: Build `src/app/kuliner/page.tsx` (comprehensive culinary page with category filters, regional tags, and article cards).
+- [ ] Task 23: Build `src/app/kuliner/[slug]/page.tsx` (editorial article detail page with cultural history, philosophy, recipes, and heritage hubs).
+- [ ] Task 24: Add culinary exploration CTA button and card links in `src/app/page.tsx` (`#kuliner`).
+- [ ] Task 25: Ensure `src/components/layout/Navbar.tsx` activates the Kuliner tab on `/kuliner` and `/kuliner/[slug]`.
+- [ ] Task 26: Run TypeScript checks and verify responsive layout and contrast.
+
 ## Risks and Mitigations
 | Risk | Impact | Mitigation |
 |------|--------|------------|
 | Database disconnection (MySQL on port 3306) | High | Daemon running in background (`task-91`). Verified with `test-api.mjs`. |
 | Em dash regression in copy | High | Use ripgrep to verify zero `—` characters in user-facing copy. |
 | Mobile horizontal scroll | Medium | Inspect grid widths, replace fixed widths with fluid clamps and safe padding. |
+| AI card styling remnants | Medium | Completely remove Apex/gaming card classes and references. |
+| Image background clipping / blending box | High | Use pure 32-bit PNG with true alpha transparency, eliminating any black rectangular boxes. |

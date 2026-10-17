@@ -87,119 +87,209 @@ export function TokohIdentitySection() {
         </ScrollReveal>
       </div>
 
-      {/* Grid of Archival Identity Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 items-stretch">
-        {tokohArticles.map((tokoh, idx) => (
-          <ScrollReveal
-            key={tokoh.slug}
-            direction="up"
-            distance={35}
-            delay={100 + idx * 80}
-            className="flex flex-col h-full"
-          >
+      {/* Asymmetric Editorial Hero & Secondary Showcase */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+        {/* Left: Featured Large Editorial Card (R.A. Kartini) */}
+        {tokohArticles[0] && (
+          <ScrollReveal direction="up" distance={35} className="lg:col-span-6 flex">
             <div
+              onClick={() => setSelectedTokoh(tokohArticles[0])}
+              role="button"
+              tabIndex={0}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault();
+                  setSelectedTokoh(tokohArticles[0]);
+                }
+              }}
+              aria-label={`Buka berkas ${tokohArticles[0].name}`}
+              className="w-full rounded-3xl bg-gradient-to-b from-[#18120B] to-[#110D09] border-2 border-[#C5A36A]/40 hover:border-[#ECC47E] p-6 sm:p-8 flex flex-col justify-between shadow-2xl transition-all duration-300 hover:shadow-[0_20px_45px_rgba(197,163,106,0.22)] cursor-pointer group relative overflow-hidden select-none"
+            >
+              <div className="space-y-6">
+                <div className="flex items-center justify-between border-b border-[#C5A36A]/20 pb-3">
+                  <span className="text-[10px] font-mono tracking-widest text-[#ECC47E] uppercase font-bold">
+                    02 / TOKOH UTAMA · {tokohArticles[0].originCity.toUpperCase()}
+                  </span>
+                  <span className="text-[10px] font-mono text-[#ECC47E] bg-[#22180F] px-2.5 py-0.5 rounded-md border border-[#C5A36A]/30">
+                    {tokohArticles[0].period}
+                  </span>
+                </div>
+
+                <div className="relative aspect-[4/3] sm:aspect-[16/10] w-full rounded-2xl overflow-hidden border border-[#C5A36A]/40 bg-[#0D0B08]">
+                  <Image
+                    src={tokohArticles[0].photoUrl}
+                    alt={tokohArticles[0].name}
+                    fill
+                    sizes="(max-width: 1024px) 100vw, 50vw"
+                    className="object-cover filter contrast-[1.08] sepia-[0.12] group-hover:scale-105 transition-transform duration-700"
+                    priority
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#110D09] via-transparent to-transparent opacity-80" />
+                  <div className="absolute bottom-4 left-4 right-4">
+                    <span className="text-[10px] font-mono uppercase tracking-wider text-[#ECC47E] bg-[#261A10]/90 backdrop-blur-md px-2.5 py-1 rounded-full border border-[#C5A36A]/40 font-semibold inline-block mb-1.5">
+                      {tokohArticles[0].badgeLabel}
+                    </span>
+                    <h3 className="font-royal text-3xl sm:text-4xl font-bold text-[#F5EFE6]">
+                      {tokohArticles[0].name}
+                    </h3>
+                  </div>
+                </div>
+
+                <div className="p-4 rounded-2xl bg-[#1D1610] border border-[#C5A36A]/30 space-y-1.5">
+                  <div className="flex items-center gap-1.5 text-[10px] font-mono text-[#ECC47E] uppercase font-bold">
+                    <Quote className="w-3.5 h-3.5 text-[#C5A36A]" />
+                    <span>Surat & Pemikiran</span>
+                  </div>
+                  <p className="font-editorial italic text-sm text-[#F3E9D8] leading-relaxed">
+                    &ldquo;{tokohArticles[0].quote}&rdquo;
+                  </p>
+                </div>
+
+                <p className="text-xs sm:text-sm text-[#A89F91] leading-relaxed">
+                  {tokohArticles[0].summary}
+                </p>
+              </div>
+
+              <div className="pt-6 mt-6 border-t border-[#C5A36A]/20 flex items-center justify-between">
+                <span className="text-xs font-mono text-[#ECC47E] flex items-center gap-1.5 font-bold">
+                  <span>Buka Berkas & Kisah Lengkap</span>
+                  <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                </span>
+                <span className="text-[11px] font-mono text-[#8E8271]">
+                  KLIK UNTUK DETAIL
+                </span>
+              </div>
+            </div>
+          </ScrollReveal>
+        )}
+
+        {/* Right: Stacked Secondary Tokoh Cards (Pangeran Diponegoro & Ki Hadjar Dewantara) */}
+        <div className="lg:col-span-6 flex flex-col gap-6 justify-between">
+          {tokohArticles.slice(1, 3).map((tokoh, idx) => (
+            <ScrollReveal
+              key={tokoh.slug}
+              direction="up"
+              distance={35}
+              delay={150 + idx * 100}
+              className="flex-1"
+            >
+              <div
+                onClick={() => setSelectedTokoh(tokoh)}
+                role="button"
+                tabIndex={0}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    setSelectedTokoh(tokoh);
+                  }
+                }}
+                aria-label={`Buka berkas ${tokoh.name}`}
+                className="h-full rounded-3xl bg-[#14100C] border-2 border-[#C5A36A]/35 hover:border-[#ECC47E] p-5 sm:p-6 flex flex-col justify-between shadow-xl transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl cursor-pointer group select-none"
+              >
+                <div className="flex flex-col sm:flex-row gap-5 items-start">
+                  <div className="relative w-28 sm:w-32 aspect-[3/4] shrink-0 rounded-2xl overflow-hidden border border-[#C5A36A]/40 bg-[#0D0B08] p-1">
+                    <div className="relative w-full h-full rounded-xl overflow-hidden">
+                      <Image
+                        src={tokoh.photoUrl}
+                        alt={tokoh.name}
+                        fill
+                        sizes="(max-width: 640px) 112px, 128px"
+                        className="object-cover filter contrast-[1.08] sepia-[0.1] group-hover:scale-105 transition-transform duration-500"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="space-y-2 flex-1 min-w-0">
+                    <div className="flex items-center justify-between text-[10px] font-mono text-[#ECC47E]">
+                      <span className="bg-[#24190F] px-2 py-0.5 rounded border border-[#C5A36A]/30">
+                        {tokoh.badgeLabel}
+                      </span>
+                      <span>{tokoh.period}</span>
+                    </div>
+
+                    <h4 className="font-royal text-xl sm:text-2xl font-bold text-[#F5EFE6] group-hover:text-[#ECC47E] transition-colors">
+                      {tokoh.name}
+                    </h4>
+
+                    <p className="text-xs text-[#8E8271] font-editorial italic">
+                      {tokoh.originCity} · {tokoh.honorificTitle}
+                    </p>
+
+                    <p className="text-xs text-[#A89F91] leading-relaxed line-clamp-3 pt-1">
+                      {tokoh.summary}
+                    </p>
+                  </div>
+                </div>
+
+                <div className="pt-4 mt-4 border-t border-[#C5A36A]/20 flex items-center justify-between text-xs font-mono">
+                  <span className="text-[#A89F91] line-clamp-1 italic text-[11px]">
+                    &ldquo;{tokoh.quote}&rdquo;
+                  </span>
+                  <span className="text-[#ECC47E] font-bold shrink-0 ml-2 flex items-center gap-1">
+                    <span>Detail</span>
+                    <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
+                  </span>
+                </div>
+              </div>
+            </ScrollReveal>
+          ))}
+        </div>
+      </div>
+
+      {/* Expandable Section for Remaining Figures */}
+      <div className="pt-2">
+        <div className="flex items-center justify-between pb-4">
+          <span className="text-xs font-mono uppercase tracking-widest text-[#C5A36A]">
+            TOKOH PERGERAKAN LAINNYA
+          </span>
+          <Link
+            href="/tokoh"
+            className="text-xs font-mono text-[#ECC47E] hover:text-white flex items-center gap-1.5 transition-colors"
+          >
+            <span>Buka Seluruh 6 Tokoh di Galeri</span>
+            <ArrowRight className="w-3.5 h-3.5" />
+          </Link>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {tokohArticles.slice(3).map((tokoh) => (
+            <div
+              key={tokoh.slug}
               onClick={() => setSelectedTokoh(tokoh)}
+              role="button"
+              tabIndex={0}
               onKeyDown={(e) => {
                 if (e.key === 'Enter' || e.key === ' ') {
                   e.preventDefault();
                   setSelectedTokoh(tokoh);
                 }
               }}
-              role="button"
-              tabIndex={0}
-              aria-label={`Buka berkas identitas dan riwayat lengkap ${tokoh.name}`}
-              className="group relative rounded-3xl bg-[#14100C] border-2 border-[#C59B53]/35 hover:border-[#ECC47E] p-5 sm:p-6 flex flex-col justify-between shadow-2xl transition-all duration-300 hover:-translate-y-1.5 hover:shadow-[0_20px_40px_rgba(197,155,83,0.18)] cursor-pointer overflow-hidden h-full select-none"
+              aria-label={`Buka berkas ${tokoh.name}`}
+              className="rounded-2xl bg-[#14100C] border border-[#C5A36A]/30 hover:border-[#ECC47E] p-4 flex items-center gap-4 shadow-lg hover:-translate-y-1 transition-all cursor-pointer group"
             >
-              {/* Antique Paper Guilloche Watermark */}
-              <div className="absolute inset-0 bg-radial from-[#C59B53]/10 via-transparent to-transparent opacity-50 pointer-events-none group-hover:opacity-80 transition-opacity" />
-
-              {/* Card Header: Official Identity Badge & Archival Stamp */}
-              <div className="relative z-10 border-b border-[#C59B53]/25 pb-4 mb-5 flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <span className="w-2.5 h-2.5 rounded-full bg-[#ECC47E] animate-pulse" />
-                  <span className="text-[10px] font-mono tracking-widest text-[#B99A60] uppercase font-bold">
-                    KARTU IDENTITAS ARSIP
-                  </span>
-                </div>
-                <span className="text-[10px] font-mono text-[#ECC47E] bg-[#22180F] px-2.5 py-0.5 rounded-md border border-[#C59B53]/30 font-semibold">
-                  {tokoh.idNumber}
-                </span>
+              <div className="relative w-16 aspect-[3/4] shrink-0 rounded-xl overflow-hidden border border-[#C5A36A]/35 bg-[#0D0B08]">
+                <Image
+                  src={tokoh.photoUrl}
+                  alt={tokoh.name}
+                  fill
+                  sizes="64px"
+                  className="object-cover group-hover:scale-105 transition-transform duration-300"
+                />
               </div>
-
-              {/* Card Body: Photo Frame & Key Identification */}
-              <div className="relative z-10 space-y-5 flex-1 flex flex-col justify-between">
-                <div className="flex flex-col sm:flex-row gap-5 items-center sm:items-start">
-                  {/* Archival Passport Photo with Vintage Embossed Frame */}
-                  <div className="relative w-32 sm:w-28 aspect-[3/4] shrink-0 rounded-2xl overflow-hidden border-2 border-[#C59B53]/50 group-hover:border-[#ECC47E] shadow-xl p-1 bg-[#1C1611] transition-colors">
-                    <div className="relative w-full h-full rounded-xl overflow-hidden">
-                      <Image
-                        src={tokoh.photoUrl}
-                        alt={`Potret arsip bersejarah ${tokoh.name}`}
-                        fill
-                        className="object-cover filter contrast-[1.08] sepia-[0.15] group-hover:scale-105 transition-transform duration-500"
-                      />
-                    </div>
-                    {/* Retro Photo Corner Brackets */}
-                    <div className="absolute top-1 left-1 w-2.5 h-2.5 border-t-2 border-l-2 border-[#ECC47E] pointer-events-none" />
-                    <div className="absolute top-1 right-1 w-2.5 h-2.5 border-t-2 border-r-2 border-[#ECC47E] pointer-events-none" />
-                    <div className="absolute bottom-1 left-1 w-2.5 h-2.5 border-b-2 border-l-2 border-[#ECC47E] pointer-events-none" />
-                    <div className="absolute bottom-1 right-1 w-2.5 h-2.5 border-b-2 border-r-2 border-[#ECC47E] pointer-events-none" />
-                  </div>
-
-                  {/* Identification Attributes */}
-                  <div className="space-y-1.5 text-center sm:text-left flex-1 min-w-0">
-                    <span className="text-[10px] font-mono uppercase tracking-wider text-[#ECC47E] bg-[#261A10] px-2.5 py-0.5 rounded-full border border-[#C59B53]/35 font-semibold inline-block">
-                      {tokoh.badgeLabel}
-                    </span>
-
-                    <h3 className="font-royal text-xl sm:text-2xl font-bold text-[#F5EFE6] group-hover:text-[#ECC47E] transition-colors leading-tight">
-                      {tokoh.name}
-                    </h3>
-
-                    <p className="text-xs text-[#A89F91] font-editorial italic line-clamp-1">
-                      {tokoh.honorificTitle}
-                    </p>
-
-                    <div className="pt-2 space-y-1 text-xs font-mono text-[#D8C8AD]">
-                      <div className="flex items-center justify-center sm:justify-start gap-1.5 text-[11px]">
-                        <Calendar className="w-3.5 h-3.5 text-[#B99A60] shrink-0" />
-                        <span>Masa Hidup: {tokoh.period}</span>
-                      </div>
-                      <div className="flex items-center justify-center sm:justify-start gap-1.5 text-[11px] truncate">
-                        <MapPin className="w-3.5 h-3.5 text-[#B99A60] shrink-0" />
-                        <span className="truncate">{tokoh.originCity}</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Semboyan / Quote Box */}
-                <div className="p-3.5 rounded-2xl bg-[#19130D] border border-[#C59B53]/25 space-y-1 group-hover:border-[#C59B53]/60 transition-colors">
-                  <div className="flex items-center gap-1.5 text-[10px] font-mono text-[#ECC47E] uppercase font-bold">
-                    <Quote className="w-3 h-3 text-[#B99A60]" />
-                    <span>Semboyan & Falsafah</span>
-                  </div>
-                  <p className="font-editorial italic text-xs text-[#E2D5C3] leading-relaxed line-clamp-2">
-                    &ldquo;{tokoh.quote}&rdquo;
-                  </p>
-                </div>
-              </div>
-
-              {/* Card Footer: Interactive Call To Action */}
-              <div className="relative z-10 pt-4 mt-5 border-t border-[#C59B53]/20 flex items-center justify-between">
-                <span className="text-[11px] font-mono text-[#A89F91] flex items-center gap-1">
-                  <FileText className="w-3.5 h-3.5 text-[#B99A60]" />
-                  <span>Lihat Berkas Identitas</span>
+              <div className="space-y-1 min-w-0 flex-1">
+                <span className="text-[9px] font-mono uppercase text-[#ECC47E] block truncate">
+                  {tokoh.badgeLabel}
                 </span>
-
-                <div className="inline-flex items-center gap-1 text-xs font-mono font-bold text-[#ECC47E] group-hover:text-white transition-colors">
-                  <span>Buka Detail</span>
-                  <ExternalLink className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-                </div>
+                <h5 className="font-royal text-base font-bold text-[#F5EFE6] group-hover:text-[#ECC47E] truncate">
+                  {tokoh.name}
+                </h5>
+                <p className="text-[11px] text-[#8E8271] truncate">
+                  {tokoh.originCity} · {tokoh.period}
+                </p>
               </div>
             </div>
-          </ScrollReveal>
-        ))}
+          ))}
+        </div>
       </div>
 
       {/* Bottom Banner Linking to All Articles */}
@@ -224,34 +314,38 @@ export function TokohIdentitySection() {
           <ArrowRight className="w-4 h-4" />
         </Link>
       </div>
-
-      {/* ============================================================== */}
-      {/* MODAL DIALOG: DETAIL IDENTITAS & PENJELASAN LENGKAP             */}
-      {/* ============================================================== */}
+      {/* Modal: In-Depth Identity Dossier */}
       {selectedTokoh && (
         <div
+          className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-black/85 backdrop-blur-md animate-in fade-in duration-200"
           role="dialog"
           aria-modal="true"
-          aria-labelledby="tokoh-modal-title"
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 overflow-y-auto animate-fade-in"
+          aria-labelledby="modal-tokoh-title"
+          onClick={() => setSelectedTokoh(null)}
         >
-          {/* Backdrop with heavy blur */}
           <div
-            onClick={() => setSelectedTokoh(null)}
-            className="fixed inset-0 bg-black/85 backdrop-blur-md transition-opacity cursor-pointer"
-          />
-
-          {/* Modal Container */}
-          <div className="relative z-10 w-full max-w-4xl bg-[#14100C] text-[#F5EFE6] rounded-3xl border-2 border-[#C59B53]/60 shadow-[0_25px_60px_rgba(0,0,0,0.95)] max-h-[90vh] flex flex-col overflow-hidden my-auto animate-scale-up">
-            {/* Modal Header */}
-            <div className="p-6 sm:p-8 bg-[#1A140F] border-b border-[#C59B53]/30 flex items-center justify-between shrink-0">
+            className="relative w-full max-w-4xl max-h-[90vh] flex flex-col rounded-3xl bg-[#14100C] border-2 border-[#C59B53]/50 shadow-2xl overflow-hidden animate-in zoom-in-95 duration-200"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Modal Header: Archival Identity Stamp */}
+            <div className="p-5 sm:p-6 bg-[#1A140F] border-b border-[#C59B53]/30 flex items-center justify-between shrink-0">
               <div className="flex items-center gap-3">
-                <span className="w-3 h-3 rounded-full bg-[#ECC47E] animate-ping" />
+                <div className="w-10 h-10 rounded-xl bg-[#241B12] border border-[#C59B53]/50 flex items-center justify-center text-[#ECC47E]">
+                  <FileText className="w-5 h-5 text-[#ECC47E]" />
+                </div>
                 <div>
-                  <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-[#B99A60] font-bold block">
-                    BERKAS RESMI IDENTITAS TOKOH • {selectedTokoh.idNumber}
-                  </span>
-                  <h3 id="tokoh-modal-title" className="font-royal text-2xl sm:text-3xl font-bold text-[#F5EFE6]">
+                  <div className="flex items-center gap-2">
+                    <span className="text-[10px] font-mono tracking-widest uppercase text-[#ECC47E] font-bold">
+                      BERKAS RESMI IDENTITAS TOKOH
+                    </span>
+                    <span className="text-[10px] font-mono text-[#A89F91]">
+                      · {selectedTokoh.idNumber}
+                    </span>
+                  </div>
+                  <h3
+                    id="modal-tokoh-title"
+                    className="font-royal text-lg sm:text-xl font-bold text-[#F5EFE6]"
+                  >
                     {selectedTokoh.name}
                   </h3>
                 </div>
@@ -260,37 +354,44 @@ export function TokohIdentitySection() {
               <button
                 type="button"
                 onClick={() => setSelectedTokoh(null)}
-                aria-label="Tutup berkas identitas"
-                className="w-10 h-10 rounded-full bg-[#241A12] border border-[#C59B53]/40 hover:border-[#ECC47E] text-[#D8C8AD] hover:text-white flex items-center justify-center transition-colors cursor-pointer"
+                aria-label="Tutup berkas arsip"
+                className="w-10 h-10 rounded-full bg-[#241B12] hover:bg-[#332417] border border-[#C59B53]/40 text-[#ECC47E] flex items-center justify-center transition-colors cursor-pointer"
               >
                 <X className="w-5 h-5" />
               </button>
             </div>
 
             {/* Modal Scrollable Body */}
-            <div className="p-6 sm:p-8 overflow-y-auto space-y-8 flex-1 custom-scrollbar">
-              {/* Top Dossier Hero: Photo + Passport Identification Grid */}
-              <div className="grid grid-cols-1 md:grid-cols-12 gap-6 items-start bg-[#18120D] p-5 sm:p-6 rounded-2xl border border-[#C59B53]/25">
-                {/* Photo */}
+            <div className="p-6 sm:p-8 overflow-y-auto space-y-8 flex-1">
+              {/* Top Summary & Identity Photo Grid */}
+              <div className="grid grid-cols-1 md:grid-cols-12 gap-6 items-start">
                 <div className="md:col-span-4 flex flex-col items-center">
-                  <div className="relative aspect-[3/4] w-48 sm:w-52 rounded-2xl overflow-hidden border-2 border-[#ECC47E] shadow-2xl p-1 bg-[#1C1611]">
-                    <div className="relative w-full h-full rounded-xl overflow-hidden">
-                      <Image
-                        src={selectedTokoh.photoUrl}
-                        alt={selectedTokoh.name}
-                        fill
-                        className="object-cover filter contrast-[1.1] sepia-[0.1]"
-                      />
-                    </div>
+                  <div className="relative w-48 sm:w-56 aspect-[3/4] rounded-2xl overflow-hidden border-2 border-[#C59B53] shadow-xl bg-[#0D0B08]">
+                    <Image
+                      src={selectedTokoh.photoUrl}
+                      alt={selectedTokoh.name}
+                      fill
+                      sizes="(max-width: 640px) 192px, 224px"
+                      className="object-cover"
+                    />
+                    <div className="absolute top-2 left-2 w-4 h-4 border-t-2 border-l-2 border-[#ECC47E] pointer-events-none" />
+                    <div className="absolute top-2 right-2 w-4 h-4 border-t-2 border-r-2 border-[#ECC47E] pointer-events-none" />
+                    <div className="absolute bottom-2 left-2 w-4 h-4 border-b-2 border-l-2 border-[#ECC47E] pointer-events-none" />
+                    <div className="absolute bottom-2 right-2 w-4 h-4 border-b-2 border-r-2 border-[#ECC47E] pointer-events-none" />
                   </div>
-                  <span className="text-[9px] font-mono text-[#A89F91] text-center mt-2 uppercase tracking-widest block">
-                    {selectedTokoh.verifiedSealText}
-                  </span>
+
+                  <div className="mt-3 text-center">
+                    <span className="text-[11px] font-mono text-[#DFB873] block font-semibold">
+                      {selectedTokoh.period}
+                    </span>
+                    <span className="text-[10px] font-mono text-[#A89F91]">
+                      {selectedTokoh.originCity}
+                    </span>
+                  </div>
                 </div>
 
-                {/* Identification Table */}
                 <div className="md:col-span-8 space-y-4">
-                  <div className="border-b border-[#C59B53]/20 pb-3">
+                  <div>
                     <span className="text-[10px] font-mono uppercase tracking-wider text-[#ECC47E] bg-[#241A12] px-3 py-1 rounded-full border border-[#C59B53]/35 font-semibold">
                       {selectedTokoh.category}
                     </span>
@@ -339,7 +440,7 @@ export function TokohIdentitySection() {
               <div className="p-5 sm:p-6 rounded-2xl bg-[#1A140F] border border-[#ECC47E]/40 space-y-2 shadow-lg">
                 <div className="flex items-center gap-2 text-xs font-mono text-[#ECC47E] uppercase font-bold">
                   <Quote className="w-4 h-4 text-[#B99A60]" />
-                  <span>Semboyan Luhur & Falsafah Hidup</span>
+                  <span>Semboyan Luhur &amp; Falsafah Hidup</span>
                 </div>
                 <p className="font-editorial italic text-base sm:text-lg text-[#FAF5EB] leading-relaxed">
                   &ldquo;{selectedTokoh.quote}&rdquo;
@@ -350,7 +451,7 @@ export function TokohIdentitySection() {
               <div className="space-y-6">
                 <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-[#ECC47E] font-bold border-b border-[#C59B53]/20 pb-2">
                   <BookOpen className="w-4 h-4 text-[#B99A60]" />
-                  <span>Kilas Riwayat & Intisari Perjuangan</span>
+                  <span>Kilas Riwayat &amp; Intisari Perjuangan</span>
                 </div>
 
                 <div className="space-y-6">
@@ -378,7 +479,7 @@ export function TokohIdentitySection() {
               {/* Key Legacies */}
               <div className="space-y-3 pt-4 border-t border-[#C59B53]/20">
                 <span className="text-xs font-mono uppercase tracking-wider text-[#ECC47E] font-bold block">
-                  🏆 Warisan & Kontribusi Abadi bagi Indonesia
+                  Warisan &amp; Kontribusi Abadi bagi Indonesia
                 </span>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   {selectedTokoh.keyLegacies.map((legacy, lIdx) => (
@@ -397,7 +498,7 @@ export function TokohIdentitySection() {
               {selectedTokoh.funFacts.length > 0 && (
                 <div className="space-y-3 pt-4 border-t border-[#C59B53]/20">
                   <span className="text-xs font-mono uppercase tracking-wider text-[#ECC47E] font-bold block">
-                    ✨ Fakta Unik Bersejarah
+                    Fakta Unik Bersejarah
                   </span>
                   <div className="space-y-2">
                     {selectedTokoh.funFacts.map((fact, fIdx) => (
@@ -419,14 +520,14 @@ export function TokohIdentitySection() {
               <button
                 type="button"
                 onClick={() => setSelectedTokoh(null)}
-                className="px-5 py-2.5 rounded-xl border border-[#C59B53]/40 hover:bg-[#241A12] text-xs font-semibold text-[#D8C8AD] transition-colors cursor-pointer"
+                className="px-5 py-2.5 min-h-[44px] rounded-xl border border-[#C59B53]/40 hover:bg-[#241A12] text-xs font-semibold text-[#D8C8AD] transition-colors cursor-pointer"
               >
                 Tutup Berkas
               </button>
 
               <Link
                 href={`/tokoh/${selectedTokoh.slug}`}
-                className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl bg-[#B99A60] hover:bg-[#C9A96E] text-[#100D0A] font-bold text-xs uppercase tracking-wider transition-all shadow-xl hover:scale-102 cursor-pointer"
+                className="inline-flex items-center gap-2 px-6 py-2.5 min-h-[44px] rounded-xl bg-[#B99A60] hover:bg-[#C9A96E] text-[#100D0A] font-bold text-xs uppercase tracking-wider transition-all shadow-xl hover:scale-102 cursor-pointer"
               >
                 <span>Baca Artikel Penuh {selectedTokoh.name}</span>
                 <ArrowRight className="w-4 h-4" />

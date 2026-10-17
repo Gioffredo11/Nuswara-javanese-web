@@ -542,7 +542,7 @@ export function FamilyTreeClient() {
               <div className="pt-4 border-t border-[#C59B53]/20">
                 <Link
                   href={`/wayangpedia/${selectedNode.slug}`}
-                  className="w-full py-2.5 px-4 bg-[#B99A60] hover:bg-[#C9A96E] text-[#100D0A] text-xs font-semibold uppercase tracking-wider rounded-lg transition-colors flex items-center justify-center gap-2"
+                  className="w-full py-2.5 px-4 bg-[#B99A60] hover:bg-[#C9A96E] text-[#100D0A] text-xs font-semibold uppercase tracking-wider rounded-lg transition-colors flex items-center justify-center gap-2 min-h-[44px]"
                 >
                   <span>Lihat Profil Lengkap</span>
                   <ArrowRight className="w-3.5 h-3.5" />

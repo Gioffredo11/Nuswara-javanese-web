@@ -59,7 +59,7 @@ export default async function CharacterDetailPage({
         <div className="mb-8">
           <Link
             href="/#wayangpedia"
-            className="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-[#A89F91] hover:text-[#ECC47E] transition-colors py-1.5 group"
+            className="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-[#A89F91] hover:text-[#ECC47E] transition-colors py-1.5 group min-h-[44px]"
           >
             <ArrowLeft className="w-4 h-4 text-[#B99A60] transition-transform group-hover:-translate-x-1" />
             <span>Kembali ke Katalog Wayangpedia</span>
@@ -111,13 +111,13 @@ export default async function CharacterDetailPage({
             {/* Lineage Info Card */}
             <div className="bg-[#14110E] rounded-xl border border-[#C59B53]/30 p-5 space-y-3 text-xs shadow-lg">
               <h4 className="font-mono uppercase tracking-widest text-[#ECC47E] font-semibold text-[11px]">
-                Garis Keturunan & Kekerabatan
+                Garis Keturunan &amp; Kekerabatan
               </h4>
               <div className="pt-2 flex items-center justify-between text-xs">
                 <span className="text-[#A89F91]">Neptu Affinity: {character.neptuAffinity || 'Universal'}</span>
                 <Link
                   href="/#family-tree"
-                  className="text-[#ECC47E] hover:text-white font-medium inline-flex items-center gap-1.5 transition-colors"
+                  className="text-[#ECC47E] hover:text-white font-medium inline-flex items-center gap-1.5 transition-colors py-1"
                 >
                   <GitFork className="w-3.5 h-3.5 text-[#B99A60]" />
                   <span>Bagan Silsilah</span>
@@ -154,7 +154,7 @@ export default async function CharacterDetailPage({
               <div className="p-5 rounded-xl bg-[#1A140F] border border-[#B99A60]/40 space-y-2 shadow-lg">
                 <div className="flex items-center gap-2 text-xs font-mono font-semibold text-[#ECC47E] tracking-wider uppercase">
                   <Sparkles className="w-3.5 h-3.5 text-[#B99A60]" />
-                  <span>Fakta Unik & Perspektif Budaya</span>
+                  <span>Fakta Unik &amp; Perspektif Budaya</span>
                 </div>
                 <p className="text-xs sm:text-sm text-[#E2D5C3] italic leading-relaxed font-editorial">
                   &ldquo;{character.uniqueFacts}&rdquo;
@@ -167,45 +167,52 @@ export default async function CharacterDetailPage({
               <div className="p-5 rounded-xl bg-[#14110E] border border-[#C59B53]/30 space-y-3 shadow-lg">
                 <h3 className="font-mono text-xs uppercase tracking-wider text-[#ECC47E] font-semibold flex items-center gap-1.5">
                   <Shield className="w-3.5 h-3.5 text-[#B99A60]" />
-                  <span>Watak & Karakter Batin</span>
+                  <span>Watak &amp; Karakter Batin</span>
                 </h3>
-                <div className="flex flex-wrap gap-2">
+                <div className="flex flex-wrap gap-1.5">
                   {personalities.map((trait: string, idx: number) => (
                     <span
                       key={idx}
-                      className="text-xs font-medium bg-[#1F1811] text-[#F0E6D4] px-3 py-1 rounded-md border border-[#C59B53]/25"
+                      className="text-xs px-2.5 py-1 rounded-md bg-[#241B12] text-[#D8C8AD] border border-[#C59B53]/20"
                     >
                       {trait}
                     </span>
                   ))}
+                  {personalities.length === 0 && (
+                    <span className="text-xs text-[#A89F91] italic">Satria Luhur Utama</span>
+                  )}
                 </div>
               </div>
 
+              {/* Senjata & Aji-aji */}
               <div className="p-5 rounded-xl bg-[#14110E] border border-[#C59B53]/30 space-y-3 shadow-lg">
                 <h3 className="font-mono text-xs uppercase tracking-wider text-[#ECC47E] font-semibold flex items-center gap-1.5">
                   <Zap className="w-3.5 h-3.5 text-[#B99A60]" />
-                  <span>Trait Tags Budaya</span>
+                  <span>Aji-aji &amp; Pusaka Sakti</span>
                 </h3>
-                <div className="flex flex-wrap gap-2">
-                  {character.traitTags.map((tag: string, idx: number) => (
+                <div className="flex flex-wrap gap-1.5">
+                  {character.weapons.map((w) => (
                     <span
-                      key={idx}
-                      className="text-xs font-mono bg-[#1F1811] text-[#ECC47E] px-3 py-1 rounded-md border border-[#C59B53]/35"
+                      key={w.id}
+                      className="text-xs px-2.5 py-1 rounded-md bg-[#241B12] text-[#ECC47E] border border-[#C59B53]/30 font-medium"
                     >
-                      #{tag}
+                      {w.name}
                     </span>
                   ))}
+                  {character.weapons.length === 0 && (
+                    <span className="text-xs text-[#A89F91] italic">Pusaka Kebatinan</span>
+                  )}
                 </div>
               </div>
             </div>
 
-            {/* Pusaka & Senjata */}
+            {/* Deskripsi Senjata Detail */}
             {character.weapons.length > 0 && (
-              <div className="space-y-3">
-                <h3 className="font-royal text-lg font-bold text-[#F0E6D4]">
-                  Senjata & Pusaka Adiluhung
-                </h3>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+              <div className="space-y-3 pt-2">
+                <h4 className="font-mono text-xs uppercase tracking-wider text-[#B99A60] font-semibold">
+                  Rincian Pusaka Utama
+                </h4>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   {character.weapons.map((w) => (
                     <div
                       key={w.id}
@@ -243,14 +250,14 @@ export default async function CharacterDetailPage({
             {character.relationships.length > 0 && (
               <div className="space-y-3 pt-4 border-t border-[#C59B53]/20">
                 <h3 className="font-royal text-lg font-bold text-[#F0E6D4]">
-                  Hubungan Kekerabatan & Rekan
+                  Hubungan Kekerabatan &amp; Rekan
                 </h3>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
                   {character.relationships.map((rel) => (
                     <Link
                       key={rel.id}
                       href={`/wayangpedia/${rel.character.slug}`}
-                      className="p-4 rounded-xl bg-[#14110E] border border-[#C59B53]/25 hover:border-[#ECC47E] transition-all flex items-center justify-between text-xs group shadow-md"
+                      className="p-4 rounded-xl bg-[#14110E] border border-[#C59B53]/25 hover:border-[#ECC47E] transition-all flex items-center justify-between text-xs group shadow-md min-h-[44px]"
                     >
                       <div>
                         <span className="font-royal font-bold text-[#F5EFE6] group-hover:text-[#ECC47E] text-sm">

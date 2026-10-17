@@ -7,13 +7,18 @@
   :root {
     --bg-obsidian: #0d0c0a;
     --bg-espresso: #14110e;
+    --bg-midnight: #100d20;
+    --bg-plum: #24142f;
+    --bg-charcoal-violet: #1c1524;
     --bg-parchment: #f4ede2;
     --text-primary: #f5efe6;
     --text-muted: #a39888;
     --text-dark: #231e17;
-    --gold-main: #c59b53;
+    --gold-main: #c5a36a;
     --gold-light: #ecc47e;
-    --gold-dim: rgba(197, 155, 83, 0.25);
+    --gold-dim: rgba(197, 163, 106, 0.25);
+    --terracotta: #a95845;
+    --lavender-mist: #9b8ab8;
 
     /* Legacy palette mappings */
     --bg-ivory: #0d0c0a;
@@ -33,6 +38,7 @@
     font-feature-settings: "cv02", "cv03", "cv04", "cv11";
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
   }
 }
 
@@ -253,5 +259,95 @@
 .animate-oracle-flash {
   animation: oracleGlowFlash 1.2s ease-out forwards;
 }
+
+/* =========================================================================
+   CINEMATIC JAVANESE MOTION & ATMOSPHERE
+   ========================================================================= */
+
+@keyframes floatWayang {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-8px) rotate(0.4deg);
+  }
+}
+
+.animate-float-wayang {
+  animation: floatWayang 7s ease-in-out infinite;
+}
+
+@keyframes blencongLanternPulse {
+  0%, 100% {
+    opacity: 0.65;
+    transform: scale(1);
+    filter: drop-shadow(0 0 25px rgba(236, 196, 126, 0.35));
+  }
+  50% {
+    opacity: 0.95;
+    transform: scale(1.04);
+    filter: drop-shadow(0 0 50px rgba(245, 158, 11, 0.55));
+  }
+}
+
+.animate-blencong-glow {
+  animation: blencongLanternPulse 4.5s ease-in-out infinite;
+}
+
+@keyframes particleFloat {
+  0% {
+    transform: translateY(0) translateX(0);
+    opacity: 0;
+  }
+  20% {
+    opacity: 0.8;
+  }
+  80% {
+    opacity: 0.7;
+  }
+  100% {
+    transform: translateY(-120px) translateX(25px);
+    opacity: 0;
+  }
+}
+
+.animate-dust-particle-1 {
+  animation: particleFloat 9s ease-in-out infinite;
+}
+.animate-dust-particle-2 {
+  animation: particleFloat 12s ease-in-out infinite 2.5s;
+}
+.animate-dust-particle-3 {
+  animation: particleFloat 8s ease-in-out infinite 4.2s;
+}
+
+/* Glassmorphism & Cultural Accents */
+.glass-plum {
+  background: rgba(36, 20, 47, 0.72);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(197, 163, 106, 0.22);
+}
+
+.glass-midnight {
+  background: rgba(16, 13, 32, 0.82);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1px solid rgba(197, 163, 106, 0.18);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-float-wayang,
+  .animate-blencong-glow,
+  .animate-dust-particle-1,
+  .animate-dust-particle-2,
+  .animate-dust-particle-3,
+  .animate-card-flip,
+  .animate-oracle-card-spin {
+    animation: none !important;
+    transform: none !important;
+  }
+}
+
 
 
