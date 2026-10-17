@@ -1,4 +1,4 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import { Cinzel, Cormorant_Garamond, Plus_Jakarta_Sans } from 'next/font/google';
 import './globals.css';
 import { Navbar } from '@/components/layout/Navbar';
@@ -24,7 +24,13 @@ const plusJakarta = Plus_Jakarta_Sans({
   display: 'swap',
 });
 
+export const viewport: Viewport = {
+  themeColor: '#0D0C0A',
+  colorScheme: 'dark',
+};
+
 export const metadata: Metadata = {
+  metadataBase: new URL(process.env.APP_BASE_URL || 'https://nuswara.id'),
   title: 'NUSWARA: Menelusuri Jejak, Merawat Warisan',
   description:
     'Platform digital pelestarian sejarah Jawa Tengah, wayang kulit adiluhung, dan filosofi Nusantara: Wayangpedia, Silsilah Purwa, Javanese Oracle Weton, Manifestasi Harian, dan Web Photobooth.',
@@ -43,6 +49,18 @@ export const metadata: Metadata = {
     'Photobooth Wayang',
   ],
   authors: [{ name: 'Nuswara Cultural Collective' }],
+  icons: {
+    icon: [
+      { url: '/icon.svg', type: 'image/svg+xml' },
+      { url: '/favicon.ico', sizes: 'any' },
+      { url: '/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
+      { url: '/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
+    ],
+    apple: [
+      { url: '/apple-icon.png', sizes: '180x180', type: 'image/png' },
+    ],
+  },
+  manifest: '/manifest.webmanifest',
   openGraph: {
     title: 'NUSWARA: Menelusuri Jejak, Merawat Warisan',
     description:

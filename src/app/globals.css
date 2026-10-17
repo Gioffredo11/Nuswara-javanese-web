@@ -3,43 +3,68 @@
 @import "../shaders/threeui.css";
 @import "../styles/wayang-dock.css";
 
+/* =========================================================================
+   DESIGN TOKENS — Single source of truth for all colors, radii, and timing
+   These CSS variables are wired to Tailwind v4 via @theme below.
+   NEVER hardcode these hex values in JSX — use the token class instead.
+   ========================================================================= */
 @layer base {
   :root {
-    --bg-obsidian: #0d0c0a;
-    --bg-espresso: #14110e;
-    --bg-midnight: #100d20;
-    --bg-plum: #24142f;
+    /* Backgrounds */
+    --bg-obsidian:        #0d0c0a;
+    --bg-espresso:        #14110e;
+    --bg-midnight:        #100d20;
+    --bg-plum:            #24142f;
     --bg-charcoal-violet: #1c1524;
-    --bg-parchment: #f4ede2;
+    --bg-parchment:       #f4ede2;
+
+    /* Text */
     --text-primary: #f5efe6;
-    --text-muted: #a39888;
-    --text-dark: #231e17;
-    --gold-main: #c5a36a;
+    --text-muted:   #a39888;
+    --text-dark:    #231e17;
+
+    /* Gold accent family */
+    --gold-main:  #c5a36a;
     --gold-light: #ecc47e;
-    --gold-dim: rgba(197, 163, 106, 0.25);
-    --terracotta: #a95845;
+    --gold-deep:  #c59b53;
+    --gold-pale:  #f7e2b8;
+
+    /* Supporting accent */
+    --terracotta:    #a95845;
     --lavender-mist: #9b8ab8;
 
-    /* Legacy palette mappings */
-    --bg-ivory: #0d0c0a;
-    --bg-cream: #14110e;
-    --brown-950: #0a0806;
-    --brown-900: #120e0a;
-    --brown-800: #1a1510;
-    --gold-500: #c59b53;
-    --gold-400: #dfb873;
-    --gold-300: #ecc47e;
-    --gold-200: #f7e2b8;
+    /* Timing */
+    --transition-fast:   150ms;
+    --transition-base:   220ms;
+    --transition-slow:   350ms;
   }
 
   body {
-    background-color: #0d0c0a;
-    color: #f5efe6;
+    background-color: var(--bg-obsidian);
+    color: var(--text-primary);
     font-feature-settings: "cv02", "cv03", "cv04", "cv11";
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     overflow-x: hidden;
   }
+}
+
+/* =========================================================================
+   TAILWIND v4 THEME — Map CSS variables to utility classes
+   Usage: bg-obsidian, text-gold, text-muted, bg-parchment, etc.
+   ========================================================================= */
+@theme {
+  --color-obsidian:        var(--bg-obsidian);
+  --color-espresso:        var(--bg-espresso);
+  --color-parchment:       var(--bg-parchment);
+  --color-gold:            var(--gold-main);
+  --color-gold-light:      var(--gold-light);
+  --color-gold-deep:       var(--gold-deep);
+  --color-gold-pale:       var(--gold-pale);
+  --color-text-primary:    var(--text-primary);
+  --color-text-muted:      var(--text-muted);
+  --color-text-dark:       var(--text-dark);
+  --color-terracotta:      var(--terracotta);
 }
 
 /* Custom Editorial & Royal Classes */
@@ -339,13 +364,16 @@
 @media (prefers-reduced-motion: reduce) {
   .animate-float-wayang,
   .animate-blencong-glow,
+  .animate-pulse-glow,
   .animate-dust-particle-1,
   .animate-dust-particle-2,
   .animate-dust-particle-3,
   .animate-card-flip,
-  .animate-oracle-card-spin {
+  .animate-oracle-card-spin,
+  .animate-oracle-card-spin-decelerate {
     animation: none !important;
     transform: none !important;
+    transition: none !important;
   }
 }
 

@@ -13,34 +13,42 @@ export default function Error({
   reset: () => void;
 }) {
   useEffect(() => {
-    console.error('[Next.js App Error]:', error);
+    // Log to monitoring service in production; console in dev
+    if (process.env.NODE_ENV === 'development') {
+      console.error('[Next.js App Error]:', error);
+    }
   }, [error]);
 
   return (
-    <div className="min-h-[60vh] flex flex-col items-center justify-center p-6 text-center space-y-4">
-      <GununganSvg className="w-16 h-24 text-amber-600/70" />
-      <h2 className="text-xl sm:text-2xl font-serif font-bold text-stone-900">
-        Terjadi Kendala Memuat Halaman
-      </h2>
-      <p className="text-xs sm:text-sm text-stone-600 max-w-md font-sans">
-        Sistem mendeteksi kendala pada halaman ini. Silakan coba lagi atau kembali ke beranda.
-      </p>
-      {error?.message && (
-        <p className="text-[11px] font-mono text-red-600 bg-red-50 p-2 rounded max-w-md border border-red-200">
-          {error.message}
+    <div className="min-h-[60vh] flex flex-col items-center justify-center p-6 text-center space-y-5 bg-[#0D0C0A]">
+      <GununganSvg className="w-16 h-24 text-[#ECC47E]/60 drop-shadow-[0_2px_8px_rgba(236,196,126,0.2)]" />
+
+      <div className="space-y-2 max-w-md">
+        <h2 className="text-xl sm:text-2xl font-editorial font-bold text-[#F0E6D4]">
+          Terjadi kendala memuat halaman
+        </h2>
+        <p className="text-sm text-[#A89F91] leading-relaxed font-sans">
+          Sistem menemukan kendala saat memproses halaman ini. Coba muat ulang — biasanya berhasil.
         </p>
-      )}
+        {/* Only show digest (not message) in production to aid debugging without leaking internals */}
+        {error?.digest && process.env.NODE_ENV !== 'production' && (
+          <p className="text-[11px] font-mono text-[#ECC47E]/60 bg-[#14110E] px-3 py-1.5 rounded-lg border border-[#C59B53]/20 mt-2 inline-block">
+            Kode referensi: {error.digest}
+          </p>
+        )}
+      </div>
+
       <div className="flex items-center gap-3 pt-2">
         <button
           onClick={() => reset()}
-          className="inline-flex items-center gap-2 px-4 py-2 bg-stone-900 text-stone-50 text-xs font-medium rounded-lg hover:bg-stone-800 transition-colors cursor-pointer"
+          className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#C59B53] hover:bg-[#D4AF37] text-[#0D0C0A] text-xs font-semibold rounded-lg transition-colors cursor-pointer shadow-md"
         >
           <RefreshCw className="w-3.5 h-3.5" />
           <span>Coba Lagi</span>
         </button>
         <Link
           href="/"
-          className="inline-flex items-center gap-2 px-4 py-2 bg-stone-200 text-stone-800 text-xs font-medium rounded-lg hover:bg-stone-300 transition-colors"
+          className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#1C1712] hover:bg-[#252018] text-[#ECC47E] text-xs font-medium rounded-lg border border-[#C59B53]/30 transition-colors"
         >
           <ArrowLeft className="w-3.5 h-3.5" />
           <span>Ke Beranda</span>

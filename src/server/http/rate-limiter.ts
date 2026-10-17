@@ -72,6 +72,14 @@ export class InMemoryRateLimiter implements IRateLimiter {
 // Global singleton rate limiter instance
 export const rateLimiter: IRateLimiter = new InMemoryRateLimiter();
 
+// Periodic cleanup every 5 minutes to prevent unbounded Map growth
+if (typeof setInterval !== 'undefined') {
+  setInterval(() => {
+    (rateLimiter as InMemoryRateLimiter).cleanup();
+  }, 5 * 60 * 1000).unref?.(); // .unref() so it doesn't keep the process alive
+}
+
+
 /**
  * Convenience helper to enforce rate limit or throw RateLimitError.
  */
