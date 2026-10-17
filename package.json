@@ -16,7 +16,8 @@
       "db:seed": "npx tsx prisma/seed.ts",
       "postinstall": "node scripts/cloudflare-postinstall.mjs",
       "generate:secrets": "node scripts/generate-secrets.mjs",
-      "generate:favicons": "node scripts/generate-favicons.mjs"
+      "generate:favicons": "node scripts/generate-favicons.mjs",
+      "download:images": "node scripts/download-authentic-images.mjs"
     },
     "prisma": {
       "seed": "npx tsx prisma/seed.ts"

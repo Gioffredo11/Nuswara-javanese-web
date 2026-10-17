@@ -77,11 +77,12 @@ B-K1, B-K2, B-K3, B-K4, B-P3, B-P4, B-P5, D-K1, F-K2, F-K3, F-N2, F-P1, F-P2, F-
 | Prioritas | Aset | Status / Keterangan |
 |-----------|------|---------------------|
 | 🟢 Selesai | **Logo/favicon NUSWARA** | ✅ **Selesai**: Suite lengkap dibuat (SVG vector, multi-res ICO 16/32/48, PNG 32/180/192/512, `manifest.ts`, `layout.tsx` icons metadata). Script generator: `npm run generate:favicons`. |
-| 🔴 Wajib | **Foto Candi Gedong Songo** | `monumen-gedongsongo.jpg` sudah ada di public tapi tidak dipakai di homepage |
-| 🟡 Penting | **Foto Candi Sukuh** | Sama — file ada tapi belum ditampilkan di homepage |
+| 🟢 Selesai | **Foto Monumen & Candi Sejarah** | ✅ **Selesai**: 6 Candi & Tempat Sakral (Borobudur, Dieng, Cetho, Sukuh, Demak, Gedong Songo) diganti 100% foto asli internet dari Wikimedia Commons (0% AI). |
+| 🟢 Selesai | **Foto Tokoh Pahlawan Jawa** | ✅ **Selesai**: 6 Tokoh (R.A. Kartini, Diponegoro, Dewantara, Soedirman, Ahmad Dahlan, Nyi Ageng Serang) menggunakan foto arsip sejarah asli Tropenmuseum Amsterdam, ANRI, dan Perpusnas RI. |
+| 🟢 Selesai | **Foto Artikel Kuliner Khas** | ✅ **Selesai**: 7 Makanan khas (Lumpia, Liwet, Mendoan, Soto Kudus, Dawet Ayu, Sate Kere, Garang Asem) diganti foto kuliner nyata berlisensi CC. |
+| 🟢 Selesai | **Dokumentasi Sumber Gambar** | ✅ **Selesai**: Dokumen `IMAGE_SOURCES.md` mencatat seluruh 22 URL sumber, institusi pengarsip, lisensi, dan verifikasi non-AI. |
 | 🟡 Penting | **Open Graph Image** | `og-image.jpg` 1200×630px untuk sharing media sosial (saat ini pakai foto Borobudur) |
-| 🟢 Nice-to-have | **Ilustrasi wayang custom** | `wayang-figure-transparent.png` ada. Jika mau lebih unik, ilustrasi tangan asli lebih premium |
-| 🟢 Nice-to-have | **Foto artikel kuliner** | Dawet Ayu, Garang Asem, Sate Kere, Soto Kudus sudah ada di `/public/images/editorial/` |
+| 🟢 Diizinkan AI | **Modul Mitologi Interaktif** | Wayangpedia, Silsilah Wayang, Javanese Oracle, dan Daily Manifesto diizinkan menggunakan ilustrasi AI. |
 
 ---
 
