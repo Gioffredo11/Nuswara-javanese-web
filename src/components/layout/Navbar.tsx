@@ -28,7 +28,7 @@ export function Navbar() {
     { sectionId: 'tokoh', label: 'Tokoh & Pahlawan', icon: Compass },
     { sectionId: 'budaya', label: 'Budaya & Wayangpedia', icon: BookOpen },
     { sectionId: 'family-tree', label: 'Silsilah Purwa', icon: GitFork },
-    { sectionId: 'batik', label: 'Batik & Ragam Rupa', icon: Layers },
+    { sectionId: 'ragam-rupa', label: 'Ragam Rupa Wayang', icon: Layers },
     { sectionId: 'kuliner', label: 'Khazanah Kuliner Jawa', icon: Layers },
     { sectionId: 'monumen', label: 'Tempat Sakral & Candi', icon: Compass },
     { sectionId: 'oracle', label: 'Javanese Oracle (Weton)', icon: Sparkles, highlight: true },
@@ -63,7 +63,6 @@ export function Navbar() {
         { id: 'photobooth', target: 'photobooth' },
         { id: 'monumen', target: 'monumen' },
         { id: 'kuliner', target: 'kuliner' },
-        { id: 'batik', target: 'budaya' },
         { id: 'manifestasi', target: 'oracle' },
         { id: 'oracle', target: 'oracle' },
         { id: 'family-tree', target: 'budaya' },
@@ -111,7 +110,7 @@ export function Navbar() {
       router.push('/lakon');
       return;
     }
-    if (sectionId === 'batik') {
+    if (sectionId === 'ragam-rupa' || sectionId === 'batik') {
       router.push('/ragam-rupa');
       return;
     }
@@ -156,7 +155,7 @@ export function Navbar() {
     if (sectionId === 'tokoh' && pathname.startsWith('/tokoh')) return true;
     if (sectionId === 'family-tree' && pathname.startsWith('/family-tree')) return true;
     if (sectionId === 'lakon' && pathname.startsWith('/lakon')) return true;
-    if (sectionId === 'batik' && pathname.startsWith('/ragam-rupa')) return true;
+    if ((sectionId === 'ragam-rupa' || sectionId === 'batik') && pathname.startsWith('/ragam-rupa')) return true;
     if (sectionId === 'sejarah' && pathname.startsWith('/sejarah')) return true;
     if (sectionId === 'kuliner' && pathname.startsWith('/kuliner')) return true;
     if (sectionId === 'monumen' && (pathname.startsWith('/tempat-sakral') || pathname.startsWith('/monumen'))) return true;

@@ -55,8 +55,8 @@ export function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/#batik" className="hover:text-[#F4DE9B] transition-colors">
-                  Seni Batik Canting
+                <Link href="/ragam-rupa" className="hover:text-[#F4DE9B] transition-colors">
+                  Ragam Rupa & Anatomi Wayang
                 </Link>
               </li>
             </ul>
