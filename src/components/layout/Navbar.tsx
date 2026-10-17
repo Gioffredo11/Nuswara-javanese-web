@@ -182,7 +182,7 @@ export function Navbar() {
         <Link
           href="/"
           onClick={handleLogoClick}
-          className="font-royal text-2xl sm:text-3xl tracking-[0.18em] text-[#F0E6D4] hover:text-white transition-colors focus:outline-none"
+          className="font-royal text-2xl sm:text-3xl tracking-[0.18em] text-[#F0E6D4] hover:text-white transition-colors rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C59B53] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0D0C0A]"
         >
           NUSWARA
         </Link>

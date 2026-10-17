@@ -5,19 +5,43 @@ import { apiRouter } from './routes';
 import { guestSessionMiddleware, expressErrorHandler } from './http/express-helpers';
 import { NotFoundError } from './http/errors';
 
+function buildAllowedOrigins(): string[] {
+  const base = process.env.APP_BASE_URL;
+  const extra = process.env.EXTRA_ALLOWED_ORIGINS; // comma-separated optional
+
+  const origins: string[] = [];
+  if (base) origins.push(base);
+  if (extra) origins.push(...extra.split(',').map((o) => o.trim()).filter(Boolean));
+
+  // In development, also allow localhost variants
+  if (process.env.NODE_ENV !== 'production') {
+    origins.push('http://localhost:3000', 'http://localhost:3001', 'http://127.0.0.1:3000');
+  }
+
+  return origins;
+}
+
 export function createApp(): express.Application {
   const app = express();
+  const allowedOrigins = buildAllowedOrigins();
 
-  // Basic security and parsing middlewares
   app.use(
     cors({
-      origin: process.env.APP_BASE_URL || true,
+      origin: (requestOrigin, callback) => {
+        // Allow requests with no origin (e.g. server-to-server, health checks)
+        if (!requestOrigin) return callback(null, true);
+        if (allowedOrigins.includes(requestOrigin)) {
+          return callback(null, true);
+        }
+        callback(new Error(`Origin '${requestOrigin}' tidak diizinkan oleh CORS.`));
+      },
       credentials: true,
     })
   );
   app.use(cookieParser());
-  app.use(express.json({ limit: '10mb' }));
-  app.use(express.urlencoded({ extended: true, limit: '10mb' }));
+  // Reduce body limit: admin endpoints need at most ~500KB for image URLs, not 10MB
+  app.use(express.json({ limit: '500kb' }));
+  app.use(express.urlencoded({ extended: true, limit: '500kb' }));
 
   // Apply guest session automatically across requests
   app.use(guestSessionMiddleware);
