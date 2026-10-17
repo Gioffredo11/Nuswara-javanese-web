@@ -14,7 +14,9 @@
       "dev:express": "tsx watch src/server/server.ts",
       "start:express": "tsx src/server/server.ts",
       "db:seed": "npx tsx prisma/seed.ts",
-      "postinstall": "node scripts/cloudflare-postinstall.mjs"
+      "postinstall": "node scripts/cloudflare-postinstall.mjs",
+      "generate:secrets": "node scripts/generate-secrets.mjs",
+      "generate:favicons": "node scripts/generate-favicons.mjs"
     },
     "prisma": {
       "seed": "npx tsx prisma/seed.ts"

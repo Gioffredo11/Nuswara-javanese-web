@@ -74,9 +74,9 @@ B-K1, B-K2, B-K3, B-K4, B-P3, B-P4, B-P5, D-K1, F-K2, F-K3, F-N2, F-P1, F-P2, F-
 
 ## 4. Aset yang Perlu Kamu Siapkan
 
-| Prioritas | Aset | Keterangan |
-|-----------|------|------------|
-| 🔴 Wajib | **Logo/favicon NUSWARA** | Saat ini tidak ada favicon. Buat SVG/PNG 32×32 + 192×192 + 512×512 |
+| Prioritas | Aset | Status / Keterangan |
+|-----------|------|---------------------|
+| 🟢 Selesai | **Logo/favicon NUSWARA** | ✅ **Selesai**: Suite lengkap dibuat (SVG vector, multi-res ICO 16/32/48, PNG 32/180/192/512, `manifest.ts`, `layout.tsx` icons metadata). Script generator: `npm run generate:favicons`. |
 | 🔴 Wajib | **Foto Candi Gedong Songo** | `monumen-gedongsongo.jpg` sudah ada di public tapi tidak dipakai di homepage |
 | 🟡 Penting | **Foto Candi Sukuh** | Sama — file ada tapi belum ditampilkan di homepage |
 | 🟡 Penting | **Open Graph Image** | `og-image.jpg` 1200×630px untuk sharing media sosial (saat ini pakai foto Borobudur) |
@@ -87,17 +87,23 @@ B-K1, B-K2, B-K3, B-K4, B-P3, B-P4, B-P5, D-K1, F-K2, F-K3, F-N2, F-P1, F-P2, F-
 
 ## 5. Checklist Kesiapan Rilis
 
-### Wajib Kamu Lakukan Sendiri
+### Dilakukan Sendiri di Dashboard Hosting / Terminal Production
 
-- [ ] **Rotate semua secret**: Generate `SESSION_SECRET` baru (48 char random), `ADMIN_PASSWORD` kuat, jangan pakai nilai dari `.env.example`
-- [ ] **Set environment variables** di Vercel/Cloudflare/VPS: `DATABASE_URL`, `SESSION_SECRET`, `ADMIN_EMAIL`, `ADMIN_PASSWORD`, `APP_BASE_URL`
-- [ ] **Koneksi database production**: Pastikan MySQL/MariaDB production bisa diakses dari deployment. Set `DATABASE_URL` ke server production.
-- [ ] **Prisma migration**: Jalankan `npx prisma migrate deploy` di production (bukan `db push`)
-- [ ] **Domain + SSL**: Pastikan HTTPS aktif. `GUEST_COOKIE_OPTIONS.secure = true` sudah berlaku saat `NODE_ENV=production`
-- [ ] **Backup database** sebelum deploy pertama
-- [ ] **Favicon**: Tambahkan ke `public/` dan referensikan di `src/app/layout.tsx`
-- [ ] **Verifikasi CORS**: Setelah deploy, test dari browser bahwa API calls berhasil dari domain production
-- [ ] **Monitor error rate**: Pasang Sentry atau Vercel Analytics setelah rilis
+- [ ] **Rotate semua secret**: Jalankan `npm run generate:secrets` untuk men-generate nilai acak kriptografis baru untuk `SESSION_SECRET` dan `ADMIN_PASSWORD`.
+- [ ] **Set environment variables** di Vercel/Cloudflare/VPS:
+  - `DATABASE_URL`: `mysql://<user>:<password>@<host>:<port>/<dbname>?sslaccept=strict`
+  - `SESSION_SECRET`: Nilai acak dari generator (min. 48 char hex)
+  - `ADMIN_PASSWORD`: Nilai acak kuat dari generator (min. 32 char)
+  - `ADMIN_EMAIL`: Email pengelola (contoh: `admin@nuswara.id`)
+  - `APP_BASE_URL`: URL live domain (contoh: `https://nuswara.vercel.app`)
+  - `NODE_ENV`: `production`
+- [ ] **Koneksi database production**: Pastikan MySQL/MariaDB production mengizinkan koneksi dari hosting.
+- [ ] **Prisma migration**: Jalankan `DATABASE_URL="<prod_url>" npx prisma migrate deploy` sebelum server online (menerapkan migrasi aman tanpa hapus data).
+- [ ] **Domain + SSL**: Pastikan HTTPS aktif (otomatis jika pakai Vercel).
+- [ ] **Backup database** sebelum migrasi pertama.
+- [x] **Favicon**: ✅ Sudah terpasang lengkap di `public/` dan `src/app/` serta terhubung di `layout.tsx` dan `manifest.ts`.
+- [ ] **Verifikasi CORS**: Uji request API dari frontend live domain.
+- [ ] **Monitor error rate**: Pasang Sentry atau Vercel Analytics setelah rilis.
 
 ### Optional tapi Direkomendasikan
 - [ ] Pasang `next-sitemap` untuk generate sitemap.xml otomatis
