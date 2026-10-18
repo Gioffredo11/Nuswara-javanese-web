@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useRef, useEffect } from 'react';
 import Image from 'next/image';
 import { Link } from '@/components/common/Link';
 import { KulinerArticle } from '@/data/kulinerArticles';
@@ -15,6 +15,8 @@ import {
   Flame,
   Award,
   Leaf,
+  X,
+  RotateCcw,
 } from 'lucide-react';
 
 interface KulinerExplorerProps {
@@ -25,6 +27,26 @@ export function KulinerExplorer({ articles }: KulinerExplorerProps) {
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [selectedCity, setSelectedCity] = useState<string>('all');
   const [searchQuery, setSearchQuery] = useState<string>('');
+  const searchInputRef = useRef<HTMLInputElement>(null);
+
+  // Keyboard shortcut: Press "/" to focus search input
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (
+        e.key === '/' &&
+        document.activeElement !== searchInputRef.current &&
+        !(
+          document.activeElement instanceof HTMLInputElement ||
+          document.activeElement instanceof HTMLTextAreaElement
+        )
+      ) {
+        e.preventDefault();
+        searchInputRef.current?.focus();
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
 
   const categories = [
     { id: 'all', label: 'Semua Kategori' },
@@ -103,20 +125,27 @@ export function KulinerExplorer({ articles }: KulinerExplorerProps) {
             <div className="relative flex-1 max-w-lg">
               <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-[#C59B53]" />
               <input
+                ref={searchInputRef}
                 type="text"
                 placeholder="Cari makanan, bumbu rempah, atau kota..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-11 pr-4 py-2.5 rounded-xl bg-[#0D0C0A] border border-[#C59B53]/40 text-[#F5EFE6] placeholder-[#7A6E5D] text-sm focus:outline-none focus:border-[#ECC47E] focus:ring-1 focus:ring-[#ECC47E] transition-all"
+                className="w-full pl-11 pr-20 py-2.5 rounded-xl bg-[#0D0C0A] border border-[#C59B53]/40 text-[#F5EFE6] placeholder-[#7A6E5D] text-sm focus:outline-none focus:border-[#ECC47E] focus:ring-1 focus:ring-[#ECC47E] transition-all"
               />
-              {searchQuery && (
+              {searchQuery ? (
                 <button
                   type="button"
                   onClick={() => setSearchQuery('')}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-xs font-mono text-[#A89F91] hover:text-[#ECC47E] px-2 py-1"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-xs font-mono text-[#ECC47E] hover:text-white px-2 py-1 flex items-center gap-1 cursor-pointer"
+                  title="Hapus pencarian"
                 >
-                  Reset
+                  <X className="w-3.5 h-3.5" />
+                  <span>Reset</span>
                 </button>
+              ) : (
+                <span className="hidden sm:inline-flex items-center absolute right-3.5 top-1/2 -translate-y-1/2 px-1.5 py-0.5 rounded text-[10px] font-mono text-[#ECC47E]/60 border border-[#C59B53]/30 bg-[#14110E] pointer-events-none select-none">
+                  /
+                </span>
               )}
             </div>
 
@@ -175,6 +204,63 @@ export function KulinerExplorer({ articles }: KulinerExplorerProps) {
               );
             })}
           </div>
+
+          {/* Active Filter Dismiss Chips */}
+          {(selectedCategory !== 'all' || selectedCity !== 'all' || searchQuery) && (
+            <div className="flex flex-wrap items-center gap-2 pt-2 border-t border-[#C59B53]/15 text-xs">
+              <span className="text-[11px] font-mono text-[#A89F91]">Filter Aktif:</span>
+              {selectedCategory !== 'all' && (
+                <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#241B12] text-[#ECC47E] border border-[#C59B53]/40 text-[11px] font-mono">
+                  <span>{categories.find((c) => c.id === selectedCategory)?.label}</span>
+                  <button
+                    type="button"
+                    onClick={() => setSelectedCategory('all')}
+                    className="hover:text-white cursor-pointer ml-0.5"
+                    aria-label="Hapus filter kategori"
+                  >
+                    ×
+                  </button>
+                </span>
+              )}
+              {selectedCity !== 'all' && (
+                <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#241B12] text-[#ECC47E] border border-[#C59B53]/40 text-[11px] font-mono">
+                  <span>Wilayah: {selectedCity}</span>
+                  <button
+                    type="button"
+                    onClick={() => setSelectedCity('all')}
+                    className="hover:text-white cursor-pointer ml-0.5"
+                    aria-label="Hapus filter wilayah"
+                  >
+                    ×
+                  </button>
+                </span>
+              )}
+              {searchQuery && (
+                <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#241B12] text-[#ECC47E] border border-[#C59B53]/40 text-[11px] font-mono">
+                  <span>Pencarian: &ldquo;{searchQuery}&rdquo;</span>
+                  <button
+                    type="button"
+                    onClick={() => setSearchQuery('')}
+                    className="hover:text-white cursor-pointer ml-0.5"
+                    aria-label="Hapus kata kunci pencarian"
+                  >
+                    ×
+                  </button>
+                </span>
+              )}
+              <button
+                type="button"
+                onClick={() => {
+                  setSelectedCategory('all');
+                  setSelectedCity('all');
+                  setSearchQuery('');
+                }}
+                className="text-[11px] font-mono text-[#ECC47E] hover:underline cursor-pointer ml-2"
+              >
+                Reset Semua
+              </button>
+            </div>
+          )}
         </div>
       </ScrollReveal>
 
@@ -186,18 +272,51 @@ export function KulinerExplorer({ articles }: KulinerExplorerProps) {
             Kuliner Tidak Ditemukan
           </h3>
           <p className="text-xs sm:text-sm text-[#A89F91] max-w-md mx-auto">
-            Tidak ada makanan atau minuman khas Jawa yang sesuai dengan kata kunci &ldquo;{searchQuery}&rdquo;. Coba reset filter pencarian Anda.
+            Tidak ada makanan atau minuman khas Jawa yang sesuai dengan kata kunci &ldquo;{searchQuery}&rdquo;. Coba jelajahi rekomendasi kategori di bawah ini:
           </p>
-          <button
-            onClick={() => {
-              setSelectedCategory('all');
-              setSelectedCity('all');
-              setSearchQuery('');
-            }}
-            className="px-4 py-2 rounded-xl bg-[#C59B53] text-[#0D0C0A] text-xs font-mono uppercase font-bold tracking-wider hover:bg-[#ECC47E] transition-colors"
-          >
-            Tampilkan Semua Kuliner
-          </button>
+          <div className="flex flex-wrap items-center justify-center gap-2 pt-2">
+            <button
+              onClick={() => {
+                setSelectedCategory('makanan-utama');
+                setSelectedCity('all');
+                setSearchQuery('');
+              }}
+              className="px-3.5 py-1.5 rounded-xl bg-[#1D1813] hover:bg-[#2A2118] border border-[#C59B53]/30 text-[#ECC47E] text-xs font-mono cursor-pointer"
+            >
+              Hidangan Utama
+            </button>
+            <button
+              onClick={() => {
+                setSelectedCategory('kudapan-tradisional');
+                setSelectedCity('all');
+                setSearchQuery('');
+              }}
+              className="px-3.5 py-1.5 rounded-xl bg-[#1D1813] hover:bg-[#2A2118] border border-[#C59B53]/30 text-[#ECC47E] text-xs font-mono cursor-pointer"
+            >
+              Kudapan Tradisional
+            </button>
+            <button
+              onClick={() => {
+                setSelectedCategory('minuman-warisan');
+                setSelectedCity('all');
+                setSearchQuery('');
+              }}
+              className="px-3.5 py-1.5 rounded-xl bg-[#1D1813] hover:bg-[#2A2118] border border-[#C59B53]/30 text-[#ECC47E] text-xs font-mono cursor-pointer"
+            >
+              Minuman Warisan
+            </button>
+            <button
+              onClick={() => {
+                setSelectedCategory('all');
+                setSelectedCity('all');
+                setSearchQuery('');
+              }}
+              className="px-4 py-1.5 rounded-xl bg-[#C59B53] text-[#0D0C0A] text-xs font-mono uppercase font-bold tracking-wider hover:bg-[#ECC47E] transition-colors cursor-pointer flex items-center gap-1.5"
+            >
+              <RotateCcw className="w-3 h-3" />
+              <span>Tampilkan Semua Kuliner</span>
+            </button>
+          </div>
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -211,7 +330,7 @@ export function KulinerExplorer({ articles }: KulinerExplorerProps) {
             >
               <Link
                 href={`/kuliner/${article.slug}`}
-                className="group flex flex-col justify-between w-full rounded-2xl bg-[#14110E] border border-[#C59B53]/30 hover:border-[#ECC47E] transition-all shadow-xl hover:-translate-y-1.5 hover:shadow-2xl overflow-hidden cursor-pointer"
+                className="group flex flex-col justify-between w-full rounded-2xl bg-[#14110E] border border-[#C59B53]/30 hover:border-[#ECC47E] transition-all shadow-xl card-hover-lift overflow-hidden cursor-pointer"
               >
                 <div>
                   {/* Food Image with Category & Region Tag */}

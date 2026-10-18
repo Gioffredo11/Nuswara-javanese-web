@@ -76,7 +76,19 @@
 - [x] Task 25: Ensure `src/components/layout/Navbar.tsx` activates the Kuliner tab on `/kuliner` and `/kuliner/[slug]`.
 - [x] Task 26: Run TypeScript checks and verify responsive layout and contrast.
 
+## Phase 8: UI & UX Enhancements (/ui-ux-pro-max & /ui-styling)
+- [x] Task 27: Add WCAG AA Skip to Main Content link in `src/app/layout.tsx` and attach `id="main-content"`.
+- [x] Task 28: Implement global `ScrollToTop` floating component with circular SVG progress ring and smooth scroll across all pages.
+- [x] Task 29: Upgrade `Navbar.tsx` with desktop quick-access pills for Weton & Photobooth, mobile drawer backdrop overlay, Escape key listener, and body scroll lock.
+- [x] Task 30: Create `ReadingProgressBar.tsx` for real-time editorial scroll tracking and integrate into all article detail pages (`/tempat-sakral/[slug]`, `/kuliner/[slug]`, `/tokoh/[slug]`, `/sejarah/[slug]`).
+- [x] Task 31: Create `ArticleShareBar.tsx` with direct WhatsApp sharing, Twitter/X sharing, and copied link toast feedback.
+- [x] Task 32: Upgrade `TempatSakralExplorer.tsx` and `KulinerExplorer.tsx` with `/` keyboard search shortcut hint, active filter dismiss chips (`×`), empty state recommendation buttons, and `.card-hover-lift` micro-interactions.
+- [x] Task 33: Enhance `OracleForm.tsx` with 1-click historical figure presets (Kartini, Soekarno, Dewantara, Diponegoro) and add WhatsApp share action to `ResultCard.tsx`.
+- [x] Task 34: Verify TypeScript compilation (`npx tsc --noEmit`), unit test suite (49/49 passing), and full production build (64/64 routes).
+
 ## Checkpoint: Final Delivery
 - [x] All tests passing and build succeeds (`npx tsc --noEmit` and HTTP 200 verified)
 - [x] Landing page matches reference_hero.png 1:1 with pure transparency and zero black box artifacts
 - [x] Culinary articles and exploration page completed and verified
+- [x] UI & UX enhancements completed and verified across all pages and interactive features
+

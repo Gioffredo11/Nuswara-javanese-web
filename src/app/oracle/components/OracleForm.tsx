@@ -106,6 +106,36 @@ export function OracleForm({
           )}
         </div>
 
+        {/* Quick Historical Figure Presets */}
+        <div className="p-3 rounded-xl bg-amber-950/30 border border-amber-500/25 space-y-2">
+          <div className="flex items-center justify-between text-[11px] font-sans text-amber-200/90 font-medium">
+            <span className="flex items-center gap-1.5 text-amber-300">
+              <Sparkles className="w-3.5 h-3.5" />
+              <span>Coba Cepat Weton Tokoh Bangsa:</span>
+            </span>
+          </div>
+          <div className="flex flex-wrap gap-1.5">
+            {[
+              { name: 'R.A. Kartini', date: '1879-04-21', label: 'R.A. Kartini (21 Apr 1879)' },
+              { name: 'Ir. Soekarno', date: '1901-06-06', label: 'Soekarno (6 Jun 1901)' },
+              { name: 'Ki Hadjar Dewantara', date: '1889-05-02', label: 'Dewantara (2 Mei 1889)' },
+              { name: 'Pangeran Diponegoro', date: '1785-11-11', label: 'Diponegoro (11 Nov 1785)' },
+            ].map((tokoh) => (
+              <button
+                key={tokoh.name}
+                type="button"
+                onClick={() => {
+                  onNameChange(tokoh.name);
+                  onBirthDateChange(tokoh.date);
+                }}
+                className="px-2.5 py-1 rounded-lg bg-[#220D06] hover:bg-[#34150A] border border-amber-500/35 hover:border-amber-400 text-amber-200 hover:text-white text-[11px] font-sans transition-all cursor-pointer active:scale-95 shadow-xs"
+              >
+                {tokoh.label}
+              </button>
+            ))}
+          </div>
+        </div>
+
         <form onSubmit={onSubmit} className="space-y-5">
           {/* Input Nama */}
           <div className="space-y-1.5">

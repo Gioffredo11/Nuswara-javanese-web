@@ -18,6 +18,8 @@ import {
   Share2,
 } from 'lucide-react';
 import { ScrollReveal } from '@/components/ui/ScrollReveal';
+import { ReadingProgressBar } from '@/components/ui/ReadingProgressBar';
+import { ArticleShareBar } from '@/components/ui/ArticleShareBar';
 
 interface ArticlePageProps {
   params: Promise<{
@@ -80,6 +82,8 @@ export default async function SejarahArticleDetailPage({
 
   return (
     <article className="min-h-screen bg-[#0D0C0A] text-[#F5EFE6] pt-28 sm:pt-32 pb-24 selection:bg-[#C59B53]/30 selection:text-[#ECC47E]">
+      <ReadingProgressBar />
+
       {/* Top Header / Breadcrumb */}
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 mb-8">
         <div className="flex items-center justify-between">
@@ -206,6 +210,15 @@ export default async function SejarahArticleDetailPage({
             </div>
           </ScrollReveal>
         </div>
+
+        {/* Interactive Social & Messaging Share Bar */}
+        <ScrollReveal direction="up" distance={20}>
+          <ArticleShareBar
+            title={`Sejarah Jawa Tengah: ${article.title} (${article.eraPeriod})`}
+            summary={article.shortSummary}
+            categoryLabel={`Era ${article.eraNumber} • ${article.eraPeriod}`}
+          />
+        </ScrollReveal>
 
         {/* Navigation to Prev/Next Eras */}
         <ScrollReveal direction="up" distance={25} delay={100}>

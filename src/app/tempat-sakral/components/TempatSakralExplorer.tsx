@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useRef, useEffect } from 'react';
 import Image from 'next/image';
 import { Link } from '@/components/common/Link';
 import { TempatSakralArticle } from '@/data/tempatSakralArticles';
@@ -15,6 +15,8 @@ import {
   Mountain,
   CheckCircle2,
   Filter,
+  X,
+  RotateCcw,
 } from 'lucide-react';
 
 interface TempatSakralExplorerProps {
@@ -25,6 +27,26 @@ export function TempatSakralExplorer({ articles }: TempatSakralExplorerProps) {
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [selectedCity, setSelectedCity] = useState<string>('all');
   const [searchQuery, setSearchQuery] = useState<string>('');
+  const searchInputRef = useRef<HTMLInputElement>(null);
+
+  // Keyboard shortcut: Press "/" to focus search input
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (
+        e.key === '/' &&
+        document.activeElement !== searchInputRef.current &&
+        !(
+          document.activeElement instanceof HTMLInputElement ||
+          document.activeElement instanceof HTMLTextAreaElement
+        )
+      ) {
+        e.preventDefault();
+        searchInputRef.current?.focus();
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
 
   const categories = [
     { id: 'all', label: 'Semua Situs' },
@@ -98,20 +120,27 @@ export function TempatSakralExplorer({ articles }: TempatSakralExplorerProps) {
             <div className="relative flex-1">
               <Search className="w-5 h-5 absolute left-4 top-1/2 -translate-y-1/2 text-[#ECC47E]" />
               <input
+                ref={searchInputRef}
                 type="text"
                 placeholder="Cari nama candi, situs spiritual, kota, atau filosofi batin..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-12 pr-4 py-3 rounded-xl bg-[#0D0C0A] border border-[#C59B53]/30 text-[#F5EFE6] placeholder-[#A89F91]/60 focus:outline-none focus:border-[#ECC47E] focus:ring-1 focus:ring-[#ECC47E] transition-all text-sm font-sans"
+                className="w-full pl-12 pr-20 py-3 rounded-xl bg-[#0D0C0A] border border-[#C59B53]/30 text-[#F5EFE6] placeholder-[#A89F91]/60 focus:outline-none focus:border-[#ECC47E] focus:ring-1 focus:ring-[#ECC47E] transition-all text-sm font-sans"
               />
-              {searchQuery && (
+              {searchQuery ? (
                 <button
                   type="button"
                   onClick={() => setSearchQuery('')}
-                  className="absolute right-4 top-1/2 -translate-y-1/2 text-xs font-mono text-[#ECC47E] hover:text-white"
+                  className="absolute right-4 top-1/2 -translate-y-1/2 text-xs font-mono text-[#ECC47E] hover:text-white flex items-center gap-1 cursor-pointer"
+                  title="Hapus pencarian"
                 >
-                  Reset
+                  <X className="w-3.5 h-3.5" />
+                  <span>Reset</span>
                 </button>
+              ) : (
+                <span className="hidden sm:inline-flex items-center absolute right-3.5 top-1/2 -translate-y-1/2 px-1.5 py-0.5 rounded text-[10px] font-mono text-[#ECC47E]/60 border border-[#C59B53]/30 bg-[#14110E] pointer-events-none select-none">
+                  /
+                </span>
               )}
             </div>
 
@@ -159,6 +188,63 @@ export function TempatSakralExplorer({ articles }: TempatSakralExplorerProps) {
               );
             })}
           </div>
+
+          {/* Active Filter Dismiss Chips */}
+          {(selectedCategory !== 'all' || selectedCity !== 'all' || searchQuery) && (
+            <div className="flex flex-wrap items-center gap-2 pt-2 border-t border-[#C59B53]/15 text-xs">
+              <span className="text-[11px] font-mono text-[#A89F91]">Filter Aktif:</span>
+              {selectedCategory !== 'all' && (
+                <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#241B12] text-[#ECC47E] border border-[#C59B53]/40 text-[11px] font-mono">
+                  <span>{categories.find((c) => c.id === selectedCategory)?.label}</span>
+                  <button
+                    type="button"
+                    onClick={() => setSelectedCategory('all')}
+                    className="hover:text-white cursor-pointer ml-0.5"
+                    aria-label="Hapus filter kategori"
+                  >
+                    ×
+                  </button>
+                </span>
+              )}
+              {selectedCity !== 'all' && (
+                <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#241B12] text-[#ECC47E] border border-[#C59B53]/40 text-[11px] font-mono">
+                  <span>Wilayah: {selectedCity}</span>
+                  <button
+                    type="button"
+                    onClick={() => setSelectedCity('all')}
+                    className="hover:text-white cursor-pointer ml-0.5"
+                    aria-label="Hapus filter wilayah"
+                  >
+                    ×
+                  </button>
+                </span>
+              )}
+              {searchQuery && (
+                <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#241B12] text-[#ECC47E] border border-[#C59B53]/40 text-[11px] font-mono">
+                  <span>Pencarian: &ldquo;{searchQuery}&rdquo;</span>
+                  <button
+                    type="button"
+                    onClick={() => setSearchQuery('')}
+                    className="hover:text-white cursor-pointer ml-0.5"
+                    aria-label="Hapus kata kunci pencarian"
+                  >
+                    ×
+                  </button>
+                </span>
+              )}
+              <button
+                type="button"
+                onClick={() => {
+                  setSelectedCategory('all');
+                  setSelectedCity('all');
+                  setSearchQuery('');
+                }}
+                className="text-[11px] font-mono text-[#ECC47E] hover:underline cursor-pointer ml-2"
+              >
+                Reset Semua
+              </button>
+            </div>
+          )}
         </div>
       </ScrollReveal>
 
@@ -168,30 +254,67 @@ export function TempatSakralExplorer({ articles }: TempatSakralExplorerProps) {
           Menampilkan <span className="text-[#ECC47E] font-bold">{filteredArticles.length}</span> dari{' '}
           {articles.length} Situs Spiritual
         </div>
-        {(selectedCategory !== 'all' || selectedCity !== 'all' || searchQuery) && (
-          <button
-            type="button"
-            onClick={() => {
-              setSelectedCategory('all');
-              setSelectedCity('all');
-              setSearchQuery('');
-            }}
-            className="text-[#ECC47E] hover:underline cursor-pointer"
-          >
-            Hapus Semua Filter
-          </button>
-        )}
       </div>
 
       {/* Grid of Articles */}
       {filteredArticles.length === 0 ? (
-        <div className="p-12 text-center rounded-2xl bg-[#14110E] border border-[#C59B53]/20 space-y-4">
+        <div className="p-10 sm:p-14 text-center rounded-2xl bg-[#14110E] border border-[#C59B53]/25 space-y-5">
+          <div className="w-12 h-12 rounded-full bg-[#241B12] border border-[#C59B53]/40 flex items-center justify-center mx-auto text-[#ECC47E]">
+            <Compass className="w-6 h-6 animate-pulse" />
+          </div>
           <p className="font-editorial text-2xl text-[#ECC47E]">
             Tidak ada situs sakral yang cocok dengan pencarian Anda.
           </p>
-          <p className="text-sm text-[#A89F91]">
-            Coba gunakan kata kunci yang lebih umum atau atur ulang filter kategori dan kawasan.
+          <p className="text-xs sm:text-sm text-[#A89F91] max-w-md mx-auto">
+            Coba gunakan kata kunci yang lebih umum seperti nama candi, kota, atau jelajahi kategori rekomendasi di bawah ini:
           </p>
+          <div className="flex flex-wrap items-center justify-center gap-2 pt-2">
+            <button
+              type="button"
+              onClick={() => {
+                setSelectedCategory('candi-buddha');
+                setSelectedCity('all');
+                setSearchQuery('');
+              }}
+              className="px-3 py-1.5 rounded-full bg-[#1A140E] hover:bg-[#2A2118] border border-[#C59B53]/30 text-xs font-mono text-[#ECC47E] cursor-pointer"
+            >
+              Candi Buddha
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                setSelectedCategory('candi-hindu');
+                setSelectedCity('all');
+                setSearchQuery('');
+              }}
+              className="px-3 py-1.5 rounded-full bg-[#1A140E] hover:bg-[#2A2118] border border-[#C59B53]/30 text-xs font-mono text-[#ECC47E] cursor-pointer"
+            >
+              Candi Hindu Kuno
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                setSelectedCategory('situs-islam-walisongo');
+                setSelectedCity('all');
+                setSearchQuery('');
+              }}
+              className="px-3 py-1.5 rounded-full bg-[#1A140E] hover:bg-[#2A2118] border border-[#C59B53]/30 text-xs font-mono text-[#ECC47E] cursor-pointer"
+            >
+              Spiritualitas Walisongo
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                setSelectedCategory('all');
+                setSelectedCity('all');
+                setSearchQuery('');
+              }}
+              className="px-3.5 py-1.5 rounded-full bg-[#C59B53] text-[#0D0C0A] text-xs font-mono font-bold cursor-pointer flex items-center gap-1.5"
+            >
+              <RotateCcw className="w-3 h-3" />
+              <span>Tampilkan Semua Situs</span>
+            </button>
+          </div>
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -205,7 +328,7 @@ export function TempatSakralExplorer({ articles }: TempatSakralExplorerProps) {
             >
               <Link
                 href={`/tempat-sakral/${article.slug}`}
-                className="rounded-2xl bg-[#14110E] border border-[#C59B53]/30 overflow-hidden shadow-2xl hover:border-[#ECC47E] transition-all duration-300 group flex flex-col justify-between h-full cursor-pointer hover:-translate-y-1.5 w-full"
+                className="rounded-2xl bg-[#14110E] border border-[#C59B53]/30 overflow-hidden shadow-2xl hover:border-[#ECC47E] transition-all duration-300 card-hover-lift group flex flex-col justify-between h-full cursor-pointer w-full"
               >
                 <div>
                   {/* Hero Image Thumbnail */}

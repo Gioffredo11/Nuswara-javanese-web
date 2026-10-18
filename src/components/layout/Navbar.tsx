@@ -90,8 +90,35 @@ export function Navbar() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, [pathname]);
 
+  // Handle Escape key to close mobile menu
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setMobileMenuOpen(false);
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
+
+  // Prevent background scrolling when mobile drawer is open
+  useEffect(() => {
+    if (mobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [mobileMenuOpen]);
+
+  // Close mobile menu on route change
+  useEffect(() => {
+    setMobileMenuOpen(false);
+  }, [pathname]);
+
   const handleNavClick = (sectionId: string) => {
     setMobileMenuOpen(false);
+
 
     // Direct route targets
     if (sectionId === 'oracle') {
@@ -186,8 +213,8 @@ export function Navbar() {
           NUSWARA
         </Link>
 
-        {/* Right: Desktop Links */}
-        <div className="hidden lg:flex items-center">
+        {/* Right: Desktop Links & Actions */}
+        <div className="hidden lg:flex items-center gap-4 xl:gap-6">
           <nav className="flex items-center gap-4 xl:gap-6.5" aria-label="Navigasi Utama">
             {primaryNavLinks.map((item) => {
               const active = isLinkActive(item.sectionId);
@@ -208,6 +235,36 @@ export function Navbar() {
               );
             })}
           </nav>
+
+          {/* Desktop Interactive Feature Quick Actions */}
+          <div className="flex items-center gap-2 pl-3 border-l border-[#C59B53]/25">
+            <button
+              type="button"
+              onClick={() => handleNavClick('oracle')}
+              className={`px-3 py-1.5 text-xs font-mono rounded-full flex items-center gap-1.5 transition-all cursor-pointer border ${
+                isLinkActive('oracle')
+                  ? 'bg-[#B99A60] text-[#100D0A] font-bold border-[#C59B53] shadow-md'
+                  : 'text-[#ECC47E] hover:text-white bg-[#17130E] hover:bg-[#231A12] border-[#C59B53]/40'
+              }`}
+              title="Javanese Oracle (Weton Matcher)"
+            >
+              <Sparkles className="w-3.5 h-3.5" />
+              <span>Weton</span>
+            </button>
+            <button
+              type="button"
+              onClick={() => handleNavClick('photobooth')}
+              className={`px-3.5 py-1.5 text-xs font-mono font-bold rounded-full flex items-center gap-1.5 transition-all cursor-pointer shadow-sm ${
+                isLinkActive('photobooth')
+                  ? 'bg-[#E5C17D] text-[#100D0A] ring-2 ring-[#ECC47E]'
+                  : 'bg-[#C5A063] hover:bg-[#D4AF37] text-[#100D0A]'
+              }`}
+              title="Web Photobooth 4-Cut"
+            >
+              <Camera className="w-3.5 h-3.5 text-[#100D0A]" />
+              <span>Photobooth</span>
+            </button>
+          </div>
         </div>
 
         {/* Mobile & Tablet Hamburger Toggle */}
@@ -243,11 +300,19 @@ export function Navbar() {
 
       {/* Mobile & Tablet Drawer Menu */}
       {mobileMenuOpen && (
-        <div className="lg:hidden fixed inset-x-4 top-20 bg-[#120F0C]/95 border border-[#C59B53]/35 rounded-2xl p-5 shadow-2xl backdrop-blur-xl animate-in slide-in-from-top-3 duration-200 z-50">
-          <div className="text-[10px] font-mono uppercase tracking-widest text-[#B99A60] pb-2 border-b border-[#C59B53]/20 flex items-center justify-between">
-            <span>MUSEUM DIGITAL JAWA TENGAH</span>
-            <span>NUSWARA</span>
-          </div>
+        <>
+          {/* Backdrop overlay to close on outside tap */}
+          <div
+            className="lg:hidden fixed inset-0 bg-black/75 backdrop-blur-sm z-40 transition-opacity duration-200"
+            onClick={() => setMobileMenuOpen(false)}
+            aria-hidden="true"
+          />
+          <div className="lg:hidden fixed inset-x-4 top-20 bg-[#120F0C]/98 border border-[#C59B53]/35 rounded-2xl p-5 shadow-2xl backdrop-blur-xl animate-in slide-in-from-top-3 duration-200 z-50">
+            <div className="text-[10px] font-mono uppercase tracking-widest text-[#B99A60] pb-2 border-b border-[#C59B53]/20 flex items-center justify-between">
+              <span>MUSEUM DIGITAL JAWA TENGAH</span>
+              <span>NUSWARA</span>
+            </div>
+
 
           <div className="space-y-1 mt-3 max-h-[60vh] overflow-y-auto">
             {allMobileNavLinks.map((item) => {
@@ -297,8 +362,9 @@ export function Navbar() {
             </button>
           </div>
         </div>
-      )}
-    </header>
+      </>
+    )}
+  </header>
   );
 }
 

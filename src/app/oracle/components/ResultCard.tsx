@@ -138,13 +138,13 @@ export function ResultCard({
 
       {/* ACTION BUTTONS ROW: UNDUH, BAGIKAN, HITUNG ULANG */}
       <div className="space-y-3">
-        <div className="grid grid-cols-2 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
           {/* Tombol Unduh */}
           <button
             type="button"
             onClick={onDownload}
             disabled={downloading}
-            className="py-3 px-4 bg-gradient-to-r from-amber-400 via-amber-500 to-amber-400 hover:from-amber-300 hover:to-amber-400 disabled:opacity-60 text-stone-950 font-bold text-xs sm:text-sm rounded-xl shadow-lg border border-amber-300 flex items-center justify-center gap-2 transition-all hover:scale-[1.02] active:scale-98 cursor-pointer"
+            className="py-3 px-3 bg-gradient-to-r from-amber-400 via-amber-500 to-amber-400 hover:from-amber-300 hover:to-amber-400 disabled:opacity-60 text-stone-950 font-bold text-xs rounded-xl shadow-lg border border-amber-300 flex items-center justify-center gap-1.5 transition-all hover:scale-[1.02] active:scale-98 cursor-pointer"
           >
             {downloading ? (
               <>
@@ -154,16 +154,16 @@ export function ResultCard({
             ) : (
               <>
                 <Download className="w-4 h-4 text-stone-950" />
-                <span>Unduh Kartu (PNG)</span>
+                <span>Unduh PNG</span>
               </>
             )}
           </button>
 
-          {/* Tombol Bagikan */}
+          {/* Tombol Bagikan / Salin Tautan */}
           <button
             type="button"
             onClick={onShare}
-            className="py-3 px-4 bg-[#2C1308] hover:bg-[#3D1A0A] text-amber-100 font-bold text-xs sm:text-sm rounded-xl border border-amber-500/50 hover:border-amber-400 flex items-center justify-center gap-2 transition-all hover:scale-[1.02] active:scale-98 cursor-pointer"
+            className="py-3 px-3 bg-[#2C1308] hover:bg-[#3D1A0A] text-amber-100 font-bold text-xs rounded-xl border border-amber-500/50 hover:border-amber-400 flex items-center justify-center gap-1.5 transition-all hover:scale-[1.02] active:scale-98 cursor-pointer"
           >
             {copied ? (
               <>
@@ -173,10 +173,23 @@ export function ResultCard({
             ) : (
               <>
                 <Share2 className="w-4 h-4 text-amber-400" />
-                <span>Bagikan Hasil</span>
+                <span>Salin Tautan</span>
               </>
             )}
           </button>
+
+          {/* Tombol Bagikan ke WhatsApp */}
+          <a
+            href={`https://api.whatsapp.com/send?text=${encodeURIComponent(
+              `✨ Hasil Ramalan Oracle Weton Jawa (NUSWARA):\n\nNama: ${result.visitorName}\nWeton: ${result.wetonName || `${result.hari} ${result.pasaran}`} (Neptu ${result.totalNeptu})\nArketipe Wayang: ${result.character.name} ("${result.character.title}")\n\nCek weton dan temukan tokoh wayang pelindungmu di NUSWARA:\n${typeof window !== 'undefined' ? window.location.origin + (result.shareCode ? `/share/${result.shareCode}` : '/#oracle') : ''}`
+            )}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="py-3 px-3 bg-[#172312] hover:bg-[#223319] text-emerald-200 font-bold text-xs rounded-xl border border-emerald-500/40 hover:border-emerald-400 flex items-center justify-center gap-1.5 transition-all hover:scale-[1.02] active:scale-98"
+            aria-label="Bagikan hasil ke WhatsApp"
+          >
+            <span>WhatsApp ↗</span>
+          </a>
         </div>
 
         {/* Secondary: Pelajari Karakter di Wayangpedia & Hitung Ulang */}

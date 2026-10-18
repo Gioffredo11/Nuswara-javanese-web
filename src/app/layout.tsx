@@ -3,6 +3,7 @@ import { Cinzel, Cormorant_Garamond, Plus_Jakarta_Sans } from 'next/font/google'
 import './globals.css';
 import { Navbar } from '@/components/layout/Navbar';
 import { Footer } from '@/components/layout/Footer';
+import { ScrollToTop } from '@/components/ui/ScrollToTop';
 
 const cinzel = Cinzel({
   subsets: ['latin'],
@@ -81,11 +82,21 @@ export default function RootLayout({
       className={`${cinzel.variable} ${cormorant.variable} ${plusJakarta.variable} scroll-smooth`}
     >
       <body className="min-h-screen flex flex-col bg-[#0D0C0A] text-[#F5EFE6] font-sans selection:bg-[#C59B53]/35 selection:text-[#FFF8EC]">
+        {/* WCAG AA Accessible Skip to Main Content Link */}
+        <a
+          href="#main-content"
+          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 z-[999] px-4 py-2.5 bg-[#C59B53] text-[#0D0C0A] font-bold text-xs rounded-lg shadow-2xl focus:outline-none focus:ring-2 focus:ring-[#ECC47E] focus:ring-offset-2 focus:ring-offset-[#0D0C0A] transition-transform"
+        >
+          Lewati ke Konten Utama
+        </a>
+
         <Navbar />
-        <main className="flex-1 flex flex-col">{children}</main>
+        <main id="main-content" className="flex-1 flex flex-col">
+          {children}
+        </main>
         <Footer />
+        <ScrollToTop />
       </body>
     </html>
   );
 }
-

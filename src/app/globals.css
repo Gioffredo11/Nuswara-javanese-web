@@ -361,6 +361,23 @@
   border: 1px solid rgba(197, 163, 106, 0.18);
 }
 
+/* Accessible Golden Focus Ring */
+:focus-visible {
+  outline: 2px solid #ecc47e;
+  outline-offset: 2px;
+}
+
+/* Card Hover Lift Utility */
+.card-hover-lift {
+  transition: transform 300ms cubic-bezier(0.16, 1, 0.3, 1), box-shadow 300ms cubic-bezier(0.16, 1, 0.3, 1), border-color 300ms ease;
+}
+
+.card-hover-lift:hover {
+  transform: translateY(-4px);
+  border-color: rgba(236, 196, 126, 0.6);
+  box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.8), 0 0 25px -5px rgba(197, 155, 83, 0.25);
+}
+
 @media (prefers-reduced-motion: reduce) {
   .animate-float-wayang,
   .animate-blencong-glow,
@@ -370,12 +387,14 @@
   .animate-dust-particle-3,
   .animate-card-flip,
   .animate-oracle-card-spin,
-  .animate-oracle-card-spin-decelerate {
+  .animate-oracle-card-spin-decelerate,
+  .card-hover-lift:hover {
     animation: none !important;
     transform: none !important;
     transition: none !important;
   }
 }
+
 
 
 
