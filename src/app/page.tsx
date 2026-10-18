@@ -35,6 +35,8 @@ import { ManifestationClient } from '@/app/manifestation/ManifestationClient';
 import { PhotoboothClient } from '@/app/photobooth/PhotoboothClient';
 import { ScrollReveal } from '@/components/ui/ScrollReveal';
 import { TokohIdentitySection } from '@/components/ui/TokohIdentitySection';
+import { useInkRipple } from '@/components/ui/useInkRipple';
+import { ParallaxHero } from '@/components/ui/ParallaxHero';
 
 interface HomePageProps {
   defaultSection?: string;
@@ -90,6 +92,7 @@ function SectionDivider({
 export function HomePage({ defaultSection }: HomePageProps = {}) {
   const [philosophiesCount, setPhilosophiesCount] = useState<number>(11);
   const [copiedLink, setCopiedLink] = useState(false);
+  const onRipple = useInkRipple();
 
   // Smooth scroll to target section when requested
   const scrollToSection = (id: string) => {
@@ -139,20 +142,22 @@ export function HomePage({ defaultSection }: HomePageProps = {}) {
           (Faithfully matches Visual Reference Photo reference_hero.png 1:1)
           ========================================================================= */}
       <section className="relative overflow-hidden min-h-screen flex flex-col justify-between pt-24 sm:pt-28 pb-6">
-        {/* Background Landscape Atmosphere (Punthuk Setumbu, Merapi & Borobudur Dawn with Wayang) */}
-        <div className="absolute inset-0 pointer-events-none z-0">
-          <Image
-            src="/images/editorial/hero-nuswara-reference.jpg"
-            alt="Misty landscape of Mount Merapi and Borobudur temples Central Java with noble Wayang silhouette"
-            fill
-            priority
-            sizes="100vw"
-            className="object-cover object-[78%_center] md:object-center filter brightness-[0.98] contrast-[1.04]"
-          />
-          {/* Controlled dark gradient overlay matching reference photo lighting */}
-          <div className="absolute inset-0 bg-gradient-to-r from-[#0D0C0A]/95 via-[#0D0C0A]/50 to-transparent pointer-events-none md:via-[#0D0C0A]/25" />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#0D0C0A] via-transparent to-[#0D0C0A]/50 pointer-events-none" />
-        </div>
+        {/* Background Landscape Atmosphere with subtle parallax */}
+        <ParallaxHero className="absolute inset-0 pointer-events-none z-0 overflow-hidden" speed={0.15}>
+          <div data-parallax className="absolute inset-0 scale-[1.12] origin-center">
+            <Image
+              src="/images/editorial/hero-nuswara-reference.jpg"
+              alt="Misty landscape of Mount Merapi and Borobudur temples Central Java with noble Wayang silhouette"
+              fill
+              priority
+              sizes="100vw"
+              className="object-cover object-[78%_center] md:object-center filter brightness-[0.98] contrast-[1.04]"
+            />
+            {/* Controlled dark gradient overlay matching reference photo lighting */}
+            <div className="absolute inset-0 bg-gradient-to-r from-[#0D0C0A]/95 via-[#0D0C0A]/50 to-transparent pointer-events-none md:via-[#0D0C0A]/25" />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#0D0C0A] via-transparent to-[#0D0C0A]/50 pointer-events-none" />
+          </div>
+        </ParallaxHero>
 
         {/* Ambient Golden Sparks & Floating Dust Motes */}
         <GoldenDustMotes className="absolute inset-0 pointer-events-none z-10 opacity-50 animate-dust-particle-1" />
@@ -169,8 +174,8 @@ export function HomePage({ defaultSection }: HomePageProps = {}) {
                 </span>
               </div>
 
-              {/* Classical Serif Title */}
-              <h1 className="font-royal text-6xl sm:text-7xl md:text-8xl lg:text-[7.5rem] xl:text-[8.5rem] font-normal tracking-[0.06em] text-[#F0E6D4] leading-none select-none">
+              {/* Classical Serif Title with entrance animation */}
+              <h1 className="font-royal text-6xl sm:text-7xl md:text-8xl lg:text-[7.5rem] xl:text-[8.5rem] font-normal tracking-[0.06em] text-[#F0E6D4] leading-none select-none headline-enter">
                 NUSWARA
               </h1>
 
@@ -184,12 +189,12 @@ export function HomePage({ defaultSection }: HomePageProps = {}) {
                 </p>
               </div>
 
-              {/* Primary Antique Gold CTA Button (Matches Reference Photo 1:1, Title Case) */}
+              {/* Primary Antique Gold CTA Button */}
               <div className="pt-2 sm:pt-4 flex items-center">
                 <button
                   type="button"
-                  onClick={() => scrollToSection('sejarah')}
-                  className="px-8 py-3.5 sm:py-4 bg-[#C5A063] hover:bg-[#D4AF37] text-[#140F0A] font-medium text-xs sm:text-sm tracking-wide transition-all duration-300 shadow-xl flex items-center gap-3 cursor-pointer group"
+                  onClick={(e) => { onRipple(e); scrollToSection('sejarah'); }}
+                  className="relative overflow-hidden px-8 py-3.5 sm:py-4 bg-[#C5A063] hover:bg-[#D4AF37] text-[#140F0A] font-medium text-xs sm:text-sm tracking-wide transition-all duration-300 shadow-xl flex items-center gap-3 cursor-pointer group press-scale ambient-glow"
                 >
                   <span>Jelajahi Jawa Tengah</span>
                   <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
@@ -261,8 +266,8 @@ export function HomePage({ defaultSection }: HomePageProps = {}) {
                 <button
                   key={pill.number}
                   type="button"
-                  onClick={() => scrollToSection(pill.target)}
-                  className="px-4 py-2 rounded-full bg-[#181122] hover:bg-[#C5A36A] text-[#B9B0A3] hover:text-[#100D0A] border border-[#C5A36A]/30 transition-all text-xs font-mono uppercase tracking-wider flex items-center gap-2 cursor-pointer shadow-md group"
+                  onClick={(e) => { onRipple(e); scrollToSection(pill.target); }}
+                  className="relative overflow-hidden px-4 py-2 rounded-full bg-[#181122] hover:bg-[#C5A36A] text-[#B9B0A3] hover:text-[#100D0A] border border-[#C5A36A]/30 transition-all text-xs font-mono uppercase tracking-wider flex items-center gap-2 cursor-pointer shadow-md group press-scale"
                 >
                   <span className="text-[#ECC47E] group-hover:text-[#100D0A] font-bold">
                     {pill.number}
@@ -547,7 +552,7 @@ export function HomePage({ defaultSection }: HomePageProps = {}) {
           </ScrollReveal>
 
           {/* Food Cards Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 stagger-grid">
             {/* Lumpia Semarang */}
             <ScrollReveal direction="up" distance={35} delay={100} className="h-full flex">
               <Link

@@ -197,9 +197,9 @@ export function Navbar() {
 
   return (
     <header
-      className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
+      className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 ${
         isScrolled
-          ? 'bg-[#0D0C0A]/90 backdrop-blur-md border-b border-[#C59B53]/20 py-4 shadow-2xl'
+          ? 'bg-[#0D0C0A]/92 backdrop-blur-lg border-b border-[#C59B53]/20 py-3 shadow-[0_4px_40px_-10px_rgba(0,0,0,0.9)]'
           : 'bg-transparent py-6 sm:py-8'
       }`}
     >
@@ -223,14 +223,16 @@ export function Navbar() {
                   key={item.sectionId}
                   type="button"
                   onClick={() => handleNavClick(item.sectionId)}
-                  className={`relative text-xs xl:text-sm tracking-wide transition-colors py-1 cursor-pointer font-serif whitespace-nowrap ${
+                  className={`relative text-xs xl:text-sm tracking-wide transition-colors py-1 cursor-pointer font-serif whitespace-nowrap press-scale ${
                     active ? 'text-[#F0E6D4] font-medium' : 'text-[#B9B0A3] hover:text-[#F0E6D4]'
                   }`}
                 >
                   <span>{item.label}</span>
-                  {active && (
-                    <span className="absolute -bottom-1 left-0 w-full h-[2px] bg-[#B99A60]" />
-                  )}
+                  {/* Animated active indicator — slides in from left */}
+                  <span
+                    className="absolute -bottom-1 left-0 w-full h-[2px] bg-gradient-to-r from-[#C59B53] to-[#ECC47E] rounded-full origin-left transition-transform duration-300"
+                    style={{ transform: active ? 'scaleX(1)' : 'scaleX(0)' }}
+                  />
                 </button>
               );
             })}
@@ -241,7 +243,7 @@ export function Navbar() {
             <button
               type="button"
               onClick={() => handleNavClick('oracle')}
-              className={`px-3 py-1.5 text-xs font-mono rounded-full flex items-center gap-1.5 transition-all cursor-pointer border ${
+              className={`px-3 py-1.5 text-xs font-mono rounded-full flex items-center gap-1.5 transition-all cursor-pointer border press-scale ${
                 isLinkActive('oracle')
                   ? 'bg-[#B99A60] text-[#100D0A] font-bold border-[#C59B53] shadow-md'
                   : 'text-[#ECC47E] hover:text-white bg-[#17130E] hover:bg-[#231A12] border-[#C59B53]/40'
@@ -254,7 +256,7 @@ export function Navbar() {
             <button
               type="button"
               onClick={() => handleNavClick('photobooth')}
-              className={`px-3.5 py-1.5 text-xs font-mono font-bold rounded-full flex items-center gap-1.5 transition-all cursor-pointer shadow-sm ${
+              className={`px-3.5 py-1.5 text-xs font-mono font-bold rounded-full flex items-center gap-1.5 transition-all cursor-pointer shadow-sm press-scale ${
                 isLinkActive('photobooth')
                   ? 'bg-[#E5C17D] text-[#100D0A] ring-2 ring-[#ECC47E]'
                   : 'bg-[#C5A063] hover:bg-[#D4AF37] text-[#100D0A]'

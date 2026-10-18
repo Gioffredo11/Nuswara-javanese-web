@@ -4,6 +4,9 @@ import './globals.css';
 import { Navbar } from '@/components/layout/Navbar';
 import { Footer } from '@/components/layout/Footer';
 import { ScrollToTop } from '@/components/ui/ScrollToTop';
+import { PageTransition } from '@/components/ui/PageTransition';
+import { ReadingProgressBar } from '@/components/ui/ReadingProgressBar';
+import { NativeCursor } from '@/components/ui/NativeCursor';
 
 const cinzel = Cinzel({
   subsets: ['latin'],
@@ -90,10 +93,21 @@ export default function RootLayout({
           Lewati ke Konten Utama
         </a>
 
+        {/* Scroll-progress gold line at top of viewport */}
+        <ReadingProgressBar />
+
+        {/* Custom spring-lag gold cursor (desktop only, hides on touch) */}
+        <NativeCursor />
+
         <Navbar />
-        <main id="main-content" className="flex-1 flex flex-col">
-          {children}
-        </main>
+
+        {/* Cinematic ink-wash page transition veil */}
+        <PageTransition>
+          <main id="main-content" className="flex-1 flex flex-col">
+            {children}
+          </main>
+        </PageTransition>
+
         <Footer />
         <ScrollToTop />
       </body>

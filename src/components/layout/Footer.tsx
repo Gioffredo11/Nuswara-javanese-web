@@ -10,7 +10,7 @@ export function Footer() {
           {/* Brand & Cultural Manifesto */}
           <div className="md:col-span-1 space-y-4">
             <div className="flex items-center gap-3">
-              <GununganSvg className="w-8 h-12 text-[#ECC47E]" />
+              <GununganSvg className="w-8 h-12 text-[#ECC47E] animate-blencong-glow" />
               <div>
                 <span className="font-royal tracking-[0.25em] text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#F4DE9B] via-[#E2BC73] to-[#C59B53] uppercase block">
                   NUSWARA
@@ -33,19 +33,19 @@ export function Footer() {
             <h3 className="text-xs font-mono uppercase tracking-widest text-[#ECC47E] font-semibold">
               Eksplorasi Budaya
             </h3>
-            <ul className="space-y-2 text-xs">
+            <ul className="space-y-2 text-xs stagger-list">
               <li>
-                <Link href="/#sejarah" className="hover:text-[#F4DE9B] transition-colors">
+                <Link href="/#sejarah" className="hover:text-[#F4DE9B] transition-colors link-reveal">
                   Sejarah Jawa Tengah
                 </Link>
               </li>
               <li>
-                <Link href="/tokoh" className="hover:text-[#F4DE9B] transition-colors">
+                <Link href="/tokoh" className="hover:text-[#F4DE9B] transition-colors link-reveal">
                   Arsip Artikel Tokoh Jawa
                 </Link>
               </li>
               <li>
-                <Link href="/#wayangpedia" className="hover:text-[#F4DE9B] transition-colors">
+                <Link href="/#wayangpedia" className="hover:text-[#F4DE9B] transition-colors link-reveal">
                   Wayangpedia (Katalog Tokoh)
                 </Link>
               </li>
