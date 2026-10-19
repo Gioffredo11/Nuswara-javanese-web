@@ -2,13 +2,8 @@ import React from 'react';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { characterService } from '@/server/services/character.service';
-import {
-  GununganSvg,
-  GatotkacaSvg,
-  ArjunaSvg,
-  SrikandiSvg,
-  SemarSvg,
-} from '@/components/ui/WayangVectors';
+import Image from 'next/image';
+import { getTarotImagePath } from '@/components/ui/WayangVectors';
 import {
   ArrowLeft,
   Shield,
@@ -77,25 +72,15 @@ export default async function CharacterDetailPage({
                 {character.category.name}
               </span>
 
-              <div className="relative z-10 w-56 h-72 flex items-center justify-center py-4 filter drop-shadow-[0_10px_30px_rgba(0,0,0,0.85)]">
-                {character.slug === 'gatotkaca' && (
-                  <GatotkacaSvg className="h-full w-auto text-[#ECC47E]" />
-                )}
-                {character.slug === 'arjuna' && (
-                  <ArjunaSvg className="h-full w-auto text-[#ECC47E]" />
-                )}
-                {character.slug === 'srikandi' && (
-                  <SrikandiSvg className="h-full w-auto text-[#ECC47E]" />
-                )}
-                {character.slug === 'semar' && (
-                  <SemarSvg className="h-full w-auto text-[#ECC47E]" />
-                )}
-                {character.slug !== 'gatotkaca' &&
-                  character.slug !== 'arjuna' &&
-                  character.slug !== 'srikandi' &&
-                  character.slug !== 'semar' && (
-                    <GununganSvg className="h-44 w-auto text-[#ECC47E]" />
-                  )}
+              <div className="relative z-10 w-64 max-w-full aspect-[9/16] rounded-2xl overflow-hidden border border-[#C59B53]/50 shadow-[0_15px_35px_rgba(0,0,0,0.9)] bg-[#0d0a07] my-3 transition-transform duration-500 hover:scale-[1.02]">
+                <Image
+                  src={getTarotImagePath(character.slug)}
+                  alt={character.name}
+                  fill
+                  sizes="(max-width: 768px) 256px, 280px"
+                  className="object-cover"
+                  priority
+                />
               </div>
 
               <div className="relative z-10 w-full pt-4 mt-2 border-t border-[#C59B53]/20 text-center">

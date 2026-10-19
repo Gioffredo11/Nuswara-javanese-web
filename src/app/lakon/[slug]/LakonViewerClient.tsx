@@ -2,13 +2,8 @@
 
 import React, { useState } from 'react';
 import { Link } from '@/components/common/Link';
-import {
-  GununganSvg,
-  GatotkacaSvg,
-  ArjunaSvg,
-  SrikandiSvg,
-  SemarSvg,
-} from '@/components/ui/WayangVectors';
+import Image from 'next/image';
+import { getTarotImagePath } from '@/components/ui/WayangVectors';
 import {
   ArrowLeft,
   BookOpen,
@@ -103,19 +98,18 @@ export function LakonViewerClient({ story }: { story: StoryDetail }) {
     )
   );
 
-  const renderCharacterVector = (slug: string, className = 'w-16 h-20') => {
-    switch (slug) {
-      case 'gatotkaca':
-        return <GatotkacaSvg className={className} color="#ECC47E" />;
-      case 'arjuna':
-        return <ArjunaSvg className={className} color="#ECC47E" />;
-      case 'srikandi':
-        return <SrikandiSvg className={className} color="#ECC47E" />;
-      case 'semar':
-        return <SemarSvg className={className} color="#ECC47E" />;
-      default:
-        return <GununganSvg className={className} color="#ECC47E" />;
-    }
+  const renderCharacterVector = (slug: string, _className = 'w-16 h-20') => {
+    return (
+      <div className="relative w-full h-full aspect-[9/16] rounded-xl overflow-hidden border border-[#ECC47E]/40 shadow-md">
+        <Image
+          src={getTarotImagePath(slug)}
+          alt={slug}
+          fill
+          sizes="64px"
+          className="object-cover"
+        />
+      </div>
+    );
   };
 
   const handleSelectQuizOption = (index: number) => {
@@ -416,8 +410,8 @@ export function LakonViewerClient({ story }: { story: StoryDetail }) {
                     <div>
                       {/* Character Card Header */}
                       <div className="flex items-start gap-4 border-b border-[#C59B53]/20 pb-5">
-                        <div className="w-16 h-20 shrink-0 flex items-center justify-center p-2 rounded-2xl bg-[#1C1611] border border-[#C59B53]/30 shadow-inner group-hover:border-[#ECC47E] transition-colors">
-                          {renderCharacterVector(char.slug, 'w-full h-full')}
+                        <div className="w-16 h-24 shrink-0 flex items-center justify-center rounded-xl bg-[#1C1611] border border-[#C59B53]/35 shadow-md group-hover:border-[#ECC47E] transition-colors">
+                          {renderCharacterVector(char.slug)}
                         </div>
                         <div className="space-y-1">
                           <span className="text-[10px] font-mono uppercase tracking-wider text-[#ECC47E] bg-[#241B12] px-2.5 py-0.5 rounded-full border border-[#C59B53]/30 font-semibold inline-block">

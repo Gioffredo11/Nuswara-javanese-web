@@ -311,7 +311,7 @@ export function OracleTeaserCards({
                     <div className="transition-all duration-300 filter drop-shadow-[0_0_10px_rgba(245,158,11,0.35)] group-hover:drop-shadow-[0_0_20px_rgba(245,158,11,0.65)] group-hover:scale-105">
                       <WayangFigureBySlug
                         slug={item.slug}
-                        className="h-28 sm:h-38 w-auto object-contain opacity-75 group-hover:opacity-100 transition-opacity"
+                        className="h-28 sm:h-38 w-auto object-cover opacity-85 group-hover:opacity-100 transition-opacity"
                       />
                     </div>
                   </div>
@@ -354,7 +354,7 @@ export function OracleTeaserCards({
                     <div className="filter drop-shadow-[0_0_22px_rgba(251,191,36,0.85)] animate-pulse-glow">
                       <WayangFigureBySlug
                         slug={item.slug}
-                        className="h-32 sm:h-44 w-auto object-contain"
+                        className="h-32 sm:h-44 w-auto object-cover"
                       />
                     </div>
                   </div>

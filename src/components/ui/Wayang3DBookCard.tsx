@@ -2,13 +2,9 @@
 
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 import {
-  GununganSvg,
-  GatotkacaSvg,
-  ArjunaSvg,
-  SrikandiSvg,
-  SemarSvg,
-  PetrukPosterFigure,
+  getTarotImagePath,
   BatikKawungPatternSvg,
 } from './WayangVectors';
 import { ChevronRight, Zap, BookOpen, Sparkles } from 'lucide-react';
@@ -140,21 +136,18 @@ export function Wayang3DBookCard({ character, forceOpen = false }: Wayang3DBookC
   const theme = getCategoryTheme(character.category?.slug || '');
 
   // Render character artwork
-  const renderVector = (className = 'h-32 w-auto', color = 'currentColor') => {
-    switch (character.slug) {
-      case 'gatotkaca':
-        return <GatotkacaSvg className={className} color={color} />;
-      case 'arjuna':
-        return <ArjunaSvg className={className} color={color} />;
-      case 'srikandi':
-        return <SrikandiSvg className={className} color={color} />;
-      case 'semar':
-        return <SemarSvg className={className} color={color} />;
-      case 'petruk':
-        return <PetrukPosterFigure className={className} />;
-      default:
-        return <GununganSvg className={className} color={color} />;
-    }
+  const renderVector = (_className = 'h-32 w-auto', _color = 'currentColor') => {
+    return (
+      <div className="relative aspect-[9/16] w-28 sm:w-32 rounded-xl overflow-hidden border border-[#D4AF37]/50 shadow-xl bg-black/40">
+        <Image
+          src={getTarotImagePath(character.slug)}
+          alt={character.name}
+          fill
+          sizes="128px"
+          className="object-cover"
+        />
+      </div>
+    );
   };
 
   return (

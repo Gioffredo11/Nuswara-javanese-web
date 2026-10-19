@@ -1374,48 +1374,82 @@ export function GununganPosterFigure({ className = 'h-64 w-auto' }: { className?
 }
 
 // -------------------------------------------------------------
-// DYNAMIC COMPONENT RESOLVER
+// TAROT ARTWORK & DYNAMIC COMPONENT RESOLVER
 // -------------------------------------------------------------
 
-export function WayangFigureBySlug({ slug, className = 'h-52 sm:h-60 w-auto' }: { slug: string; className?: string }) {
+export function getTarotImagePath(slug: string): string {
   const s = (slug || '').toLowerCase().trim();
   switch (s) {
-    case 'sadewa':
-    case 'nakula':
-      return <SadewaPosterFigure className={className} />;
-    case 'bima':
-    case 'werkudara':
-    case 'bratasena':
-      return <BimaPosterFigure className={className} />;
-    case 'yudhistira':
-    case 'puntadewa':
-    case 'samiaji':
-      return <YudhistiraPosterFigure className={className} />;
-    case 'gatotkaca':
-    case 'purubaya':
-    case 'tetuka':
-      return <GatotkacaPosterFigure className={className} />;
-    case 'srikandi':
-      return <SrikandiPosterFigure className={className} />;
-    case 'semar':
-    case 'badranaya':
-    case 'ismaya':
-      return <SemarPosterFigure className={className} />;
-    case 'petruk':
-    case 'kanthong-bolong':
-    case 'gareng':
-    case 'bagong':
-      return <PetrukPosterFigure className={className} />;
-    case 'gunungan':
-      return <GununganPosterFigure className={className} />;
     case 'arjuna':
     case 'janaka':
     case 'permadi':
+      return '/images/tarot/arjuna.jpg';
+    case 'bima':
+    case 'werkudara':
+    case 'bratasena':
+      return '/images/tarot/bima.jpg';
+    case 'gatotkaca':
+    case 'purubaya':
+    case 'tetuka':
+      return '/images/tarot/gatotkaca.jpg';
+    case 'semar':
+    case 'badranaya':
+    case 'ismaya':
+      return '/images/tarot/semar.jpg';
+    case 'kresna':
+    case 'narayana':
+      return '/images/tarot/kresna.jpg';
+    case 'srikandi':
+      return '/images/tarot/srikandi.jpg';
+    case 'bagong':
+    case 'bawor':
+      return '/images/tarot/bagong.jpg';
+    case 'petruk':
+    case 'kanthong-bolong':
+      return '/images/tarot/petruk.jpg';
+    case 'gareng':
+    case 'cakruk':
+      return '/images/tarot/gareng.jpg';
     case 'karna':
+    case 'suryaputra':
+      return '/images/tarot/karna.jpg';
+    case 'yudhistira':
+    case 'puntadewa':
+    case 'samiaji':
+      return '/images/tarot/yudhistira.jpg';
+    case 'nakula':
+    case 'pinten':
+      return '/images/tarot/nakula.jpg';
+    case 'sadewa':
+    case 'tangsen':
+      return '/images/tarot/sadewa.jpg';
     case 'duryodana':
+    case 'kurupati':
+    case 'suyodhana':
+      return '/images/tarot/duryodana.jpg';
     default:
-      return s === 'sadewa' ? <SadewaPosterFigure className={className} /> : <ArjunaPosterFigure className={className} />;
+      return `/images/tarot/${s}.jpg`;
   }
+}
+
+export function WayangFigureBySlug({
+  slug,
+  className = 'h-52 sm:h-60 w-auto',
+  alt,
+}: {
+  slug: string;
+  className?: string;
+  alt?: string;
+}) {
+  const imageSrc = getTarotImagePath(slug);
+  return (
+    <img
+      src={imageSrc}
+      alt={alt || slug}
+      className={`aspect-[9/16] object-cover rounded-xl border border-[#C59B53]/50 shadow-xl ${className}`}
+      loading="lazy"
+    />
+  );
 }
 
 // -------------------------------------------------------------
@@ -1920,19 +1954,44 @@ export async function drawWayangOnCanvas(
   width: number,
   height: number
 ): Promise<void> {
+  const tarotSrc = getTarotImagePath(slug);
   const svgString = getWayangSvgString(slug);
+
   return new Promise((resolve) => {
     try {
-      const img = new Image();
-      const dataUri = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svgString)}`;
+      const tarotImg = new Image();
+      tarotImg.crossOrigin = 'anonymous';
 
-      const renderImage = () => {
+      const renderTarotCard = () => {
         try {
           ctx.save();
           ctx.shadowColor = 'rgba(0, 0, 0, 0.85)';
           ctx.shadowBlur = 36;
           ctx.shadowOffsetY = 18;
-          ctx.drawImage(img, x, y, width, height);
+
+          // Clip to rounded rectangle with gold border
+          const radius = Math.min(24, width * 0.08);
+          ctx.beginPath();
+          ctx.moveTo(x + radius, y);
+          ctx.lineTo(x + width - radius, y);
+          ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
+          ctx.lineTo(x + width, y + height - radius);
+          ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
+          ctx.lineTo(x + radius, y + height);
+          ctx.quadraticCurveTo(x, y + height, x, y + height - radius);
+          ctx.lineTo(x, y + radius);
+          ctx.quadraticCurveTo(x, y, x + radius, y);
+          ctx.closePath();
+          ctx.save();
+          ctx.clip();
+          ctx.drawImage(tarotImg, x, y, width, height);
+          ctx.restore();
+
+          // Stroke subtle golden border around card
+          ctx.lineWidth = 4;
+          ctx.strokeStyle = '#D4AF37';
+          ctx.stroke();
+
           ctx.restore();
         } catch (drawErr) {
           console.error('[drawWayangOnCanvas] drawImage failed:', drawErr);
@@ -1940,41 +1999,35 @@ export async function drawWayangOnCanvas(
         resolve();
       };
 
-      img.onload = renderImage;
-      img.onerror = () => {
-        // Fallback to Blob URL if data URI has issues in any browser environment
+      tarotImg.onload = renderTarotCard;
+      tarotImg.onerror = () => {
+        // Fallback to SVG rendering if tarot image cannot be fetched
         try {
-          const blob = new Blob([svgString], { type: 'image/svg+xml;charset=utf-8' });
-          const url = URL.createObjectURL(blob);
-          const fallbackImg = new Image();
-          fallbackImg.onload = () => {
+          const img = new Image();
+          const dataUri = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svgString)}`;
+          img.onload = () => {
             try {
               ctx.save();
               ctx.shadowColor = 'rgba(0, 0, 0, 0.85)';
               ctx.shadowBlur = 36;
               ctx.shadowOffsetY = 18;
-              ctx.drawImage(fallbackImg, x, y, width, height);
+              ctx.drawImage(img, x, y, width, height);
               ctx.restore();
-            } catch (drawErr) {
-              console.error('[drawWayangOnCanvas] fallback drawImage failed:', drawErr);
-            } finally {
-              URL.revokeObjectURL(url);
-              resolve();
+            } catch (err) {
+              console.error('[drawWayangOnCanvas] svg draw failed:', err);
             }
-          };
-          fallbackImg.onerror = (err) => {
-            console.error('[drawWayangOnCanvas] Fallback image failed to load:', err);
-            URL.revokeObjectURL(url);
             resolve();
           };
-          fallbackImg.src = url;
-        } catch (e) {
-          console.error('[drawWayangOnCanvas] Fallback exception:', e);
+          img.onerror = () => {
+            resolve();
+          };
+          img.src = dataUri;
+        } catch {
           resolve();
         }
       };
 
-      img.src = dataUri;
+      tarotImg.src = tarotSrc;
     } catch (e) {
       console.error('[drawWayangOnCanvas] Exception:', e);
       resolve();

@@ -2,19 +2,6 @@
 
 import React, { useRef, useState } from 'react';
 import {
-  GununganSvg,
-  GatotkacaSvg,
-  ArjunaSvg,
-  SrikandiSvg,
-  SemarSvg,
-  ArjunaPosterFigure,
-  PetrukPosterFigure,
-  SadewaPosterFigure,
-  BimaPosterFigure,
-  YudhistiraPosterFigure,
-  GatotkacaPosterFigure,
-  SrikandiPosterFigure,
-  SemarPosterFigure,
   WayangFigureBySlug,
   GununganPosterWatermarks,
   GoldenDustMotes,

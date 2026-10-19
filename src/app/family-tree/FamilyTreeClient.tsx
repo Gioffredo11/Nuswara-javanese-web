@@ -2,13 +2,8 @@
 
 import React, { useState, useEffect } from 'react';
 import { Link } from '@/components/common/Link';
-import {
-  GununganSvg,
-  GatotkacaSvg,
-  ArjunaSvg,
-  SrikandiSvg,
-  SemarSvg,
-} from '@/components/ui/WayangVectors';
+import Image from 'next/image';
+import { getTarotImagePath, GununganSvg } from '@/components/ui/WayangVectors';
 import {
   ZoomIn,
   ZoomOut,
@@ -444,25 +439,14 @@ export function FamilyTreeClient() {
 
               {/* Character Header */}
               <div className="flex items-center gap-4">
-                <div className="w-16 h-20 bg-[#1B1611] rounded-lg flex items-center justify-center p-2 border border-[#C59B53]/30">
-                  {selectedNode.slug === 'gatotkaca' && (
-                    <GatotkacaSvg className="h-full w-auto text-[#ECC47E]" />
-                  )}
-                  {selectedNode.slug === 'arjuna' && (
-                    <ArjunaSvg className="h-full w-auto text-[#ECC47E]" />
-                  )}
-                  {selectedNode.slug === 'srikandi' && (
-                    <SrikandiSvg className="h-full w-auto text-[#ECC47E]" />
-                  )}
-                  {selectedNode.slug === 'semar' && (
-                    <SemarSvg className="h-full w-auto text-[#ECC47E]" />
-                  )}
-                  {selectedNode.slug !== 'gatotkaca' &&
-                    selectedNode.slug !== 'arjuna' &&
-                    selectedNode.slug !== 'srikandi' &&
-                    selectedNode.slug !== 'semar' && (
-                      <GununganSvg className="h-full w-auto text-[#ECC47E]" />
-                    )}
+                <div className="relative w-16 h-24 aspect-[9/16] bg-[#1B1611] rounded-xl overflow-hidden shrink-0 border border-[#C59B53]/50 shadow-md">
+                  <Image
+                    src={getTarotImagePath(selectedNode.slug)}
+                    alt={selectedNode.name}
+                    fill
+                    sizes="64px"
+                    className="object-cover"
+                  />
                 </div>
 
                 <div>
