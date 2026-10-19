@@ -1,7 +1,9 @@
 'use client';
 
 import React, { useRef, useState } from 'react';
+import Image from 'next/image';
 import {
+  getTarotImagePath,
   WayangFigureBySlug,
   GununganPosterWatermarks,
   GoldenDustMotes,
@@ -251,12 +253,16 @@ export function WayangPosterCard({
           </div>
         </div>
 
-        {/* CENTERPIECE: HIGH-FIDELITY WAYANG KULIT FIGURE */}
-        <div className="relative z-10 my-auto py-1 flex items-center justify-center">
-          <div className="relative flex items-center justify-center w-full max-h-56 sm:max-h-64">
-            <WayangFigureBySlug
-              slug={normalizedSlug}
-              className="h-52 sm:h-60 w-auto drop-shadow-[0_12px_24px_rgba(0,0,0,0.7)]"
+        {/* CENTERPIECE: HIGH-FIDELITY WAYANG TAROT CARD */}
+        <div className="relative z-10 my-auto py-2 flex items-center justify-center">
+          <div className="relative w-40 sm:w-48 aspect-[2/3] rounded-2xl overflow-hidden border border-[#C59B53]/50 shadow-[0_15px_35px_rgba(0,0,0,0.85)] bg-black transition-transform duration-300 hover:scale-[1.02]">
+            <Image
+              src={getTarotImagePath(normalizedSlug)}
+              alt={displayTitle}
+              fill
+              sizes="(max-width: 640px) 160px, 192px"
+              className="object-cover"
+              priority
             />
           </div>
         </div>

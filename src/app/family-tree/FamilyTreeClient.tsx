@@ -439,7 +439,7 @@ export function FamilyTreeClient() {
 
               {/* Character Header */}
               <div className="flex items-center gap-4">
-                <div className="relative w-16 h-24 aspect-[9/16] bg-[#1B1611] rounded-xl overflow-hidden shrink-0 border border-[#C59B53]/50 shadow-md">
+                <div className="relative w-16 h-24 aspect-[2/3] bg-[#1B1611] rounded-xl overflow-hidden shrink-0 border border-[#C59B53]/50 shadow-md">
                   <Image
                     src={getTarotImagePath(selectedNode.slug)}
                     alt={selectedNode.name}

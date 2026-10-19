@@ -2,7 +2,8 @@
 
 import React, { useState, useEffect } from 'react';
 import { Sparkles, Shuffle } from 'lucide-react';
-import { WayangFigureBySlug } from '@/components/ui/WayangVectors';
+import Image from 'next/image';
+import { getTarotImagePath } from '@/components/ui/WayangVectors';
 
 export interface TeaserCardItem {
   id: string;
@@ -306,12 +307,16 @@ export function OracleTeaserCards({
                     </span>
                   </div>
 
-                  {/* Enhanced Silhouette with Subtle Golden Glow */}
-                  <div className="relative z-10 flex-1 w-full flex items-center justify-center my-1 py-1">
-                    <div className="transition-all duration-300 filter drop-shadow-[0_0_10px_rgba(245,158,11,0.35)] group-hover:drop-shadow-[0_0_20px_rgba(245,158,11,0.65)] group-hover:scale-105">
-                      <WayangFigureBySlug
-                        slug={item.slug}
-                        className="h-28 sm:h-38 w-auto object-cover opacity-85 group-hover:opacity-100 transition-opacity"
+                  {/* Authentic Wayang Tarot Card Preview */}
+                  <div className="relative z-10 flex-1 w-full flex items-center justify-center my-2">
+                    <div className="relative w-24 sm:w-28 aspect-[2/3] rounded-xl overflow-hidden border border-amber-400/50 shadow-[0_8px_20px_rgba(0,0,0,0.85)] bg-black transition-all duration-300 group-hover:scale-105 group-hover:border-amber-300 group-hover:shadow-[0_0_20px_rgba(245,158,11,0.5)]">
+                      <Image
+                        src={getTarotImagePath(item.slug)}
+                        alt={item.characterName}
+                        fill
+                        sizes="(max-width: 640px) 96px, 112px"
+                        className="object-cover"
+                        priority
                       />
                     </div>
                   </div>
@@ -350,11 +355,15 @@ export function OracleTeaserCards({
                   </div>
 
                   {/* Fully Revealed Character Artwork */}
-                  <div className="relative z-10 flex-1 w-full flex items-center justify-center my-1">
-                    <div className="filter drop-shadow-[0_0_22px_rgba(251,191,36,0.85)] animate-pulse-glow">
-                      <WayangFigureBySlug
-                        slug={item.slug}
-                        className="h-32 sm:h-44 w-auto object-cover"
+                  <div className="relative z-10 flex-1 w-full flex items-center justify-center my-2">
+                    <div className="relative w-28 sm:w-32 aspect-[2/3] rounded-xl overflow-hidden border-2 border-amber-400 shadow-[0_0_25px_rgba(251,191,36,0.7)] bg-black animate-pulse-glow">
+                      <Image
+                        src={getTarotImagePath(item.slug)}
+                        alt={item.characterName}
+                        fill
+                        sizes="(max-width: 640px) 112px, 128px"
+                        className="object-cover"
+                        priority
                       />
                     </div>
                   </div>

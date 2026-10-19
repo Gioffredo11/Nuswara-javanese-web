@@ -72,7 +72,7 @@ export default async function CharacterDetailPage({
                 {character.category.name}
               </span>
 
-              <div className="relative z-10 w-64 max-w-full aspect-[9/16] rounded-2xl overflow-hidden border border-[#C59B53]/50 shadow-[0_15px_35px_rgba(0,0,0,0.9)] bg-[#0d0a07] my-3 transition-transform duration-500 hover:scale-[1.02]">
+              <div className="relative z-10 w-64 max-w-full aspect-[2/3] rounded-2xl overflow-hidden border border-[#C59B53]/50 shadow-[0_15px_35px_rgba(0,0,0,0.9)] bg-[#0d0a07] my-3 transition-transform duration-500 hover:scale-[1.02]">
                 <Image
                   src={getTarotImagePath(character.slug)}
                   alt={character.name}

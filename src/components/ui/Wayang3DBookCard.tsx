@@ -138,7 +138,7 @@ export function Wayang3DBookCard({ character, forceOpen = false }: Wayang3DBookC
   // Render character artwork
   const renderVector = (_className = 'h-32 w-auto', _color = 'currentColor') => {
     return (
-      <div className="relative aspect-[9/16] w-28 sm:w-32 rounded-xl overflow-hidden border border-[#D4AF37]/50 shadow-xl bg-black/40">
+      <div className="relative aspect-[2/3] w-28 sm:w-32 rounded-xl overflow-hidden border border-[#D4AF37]/50 shadow-xl bg-black/40">
         <Image
           src={getTarotImagePath(character.slug)}
           alt={character.name}

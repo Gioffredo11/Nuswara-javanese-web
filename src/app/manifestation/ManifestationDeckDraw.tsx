@@ -2,10 +2,11 @@
 
 import React, { useState } from 'react';
 import { Sparkles, Layers, RefreshCw } from 'lucide-react';
+import Image from 'next/image';
 import {
   GununganSvg,
   BatikKawungPatternSvg,
-  WayangFigureBySlug,
+  getTarotImagePath,
 } from '@/components/ui/WayangVectors';
 
 interface ManifestationDeckDrawProps {
@@ -228,10 +229,14 @@ export function ManifestationDeckDraw({
 
             {/* Character Silhouette / Figure */}
             <div className="relative z-10 flex-1 flex flex-col items-center justify-center my-1 py-1">
-              <div className="filter drop-shadow-[0_0_20px_rgba(251,191,36,0.8)]">
-                <WayangFigureBySlug
-                  slug={drawnCharacterSlug || 'petruk'}
-                  className="h-28 sm:h-36 w-auto object-contain"
+              <div className="relative w-28 sm:w-32 aspect-[2/3] rounded-xl overflow-hidden border border-amber-400/50 shadow-[0_0_20px_rgba(251,191,36,0.6)] bg-black">
+                <Image
+                  src={getTarotImagePath(drawnCharacterSlug || 'petruk')}
+                  alt={drawnCharacterName || 'Wayang'}
+                  fill
+                  sizes="(max-width: 640px) 112px, 128px"
+                  className="object-cover"
+                  priority
                 />
               </div>
 

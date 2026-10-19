@@ -100,7 +100,7 @@ export function LakonViewerClient({ story }: { story: StoryDetail }) {
 
   const renderCharacterVector = (slug: string, _className = 'w-16 h-20') => {
     return (
-      <div className="relative w-full h-full aspect-[9/16] rounded-xl overflow-hidden border border-[#ECC47E]/40 shadow-md">
+      <div className="relative w-full h-full aspect-[2/3] rounded-xl overflow-hidden border border-[#ECC47E]/40 shadow-md">
         <Image
           src={getTarotImagePath(slug)}
           alt={slug}

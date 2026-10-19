@@ -1446,8 +1446,8 @@ export function WayangFigureBySlug({
     <img
       src={imageSrc}
       alt={alt || slug}
-      className={`aspect-[9/16] object-cover rounded-xl border border-[#C59B53]/50 shadow-xl ${className}`}
-      loading="lazy"
+      className={`aspect-[2/3] object-cover rounded-xl border border-[#C59B53]/50 shadow-xl inline-block ${className}`}
+      loading="eager"
     />
   );
 }
