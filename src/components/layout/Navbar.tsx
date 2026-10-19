@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 import { Link } from '@/components/common/Link';
 import { Menu, X, Sparkles, BookOpen, Camera, GitFork, Compass, Layers, Heart } from 'lucide-react';
+import { ManifestationModal } from '@/components/ui/ManifestationModal';
 
 export function Navbar() {
   const pathname = usePathname();
@@ -11,6 +12,7 @@ export function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState<string>('beranda');
   const [isScrolled, setIsScrolled] = useState(false);
+  const [manifestModalOpen, setManifestModalOpen] = useState(false);
 
   // Primary Navigation Links matching reference_hero.png 1:1
   const primaryNavLinks = [
@@ -122,16 +124,7 @@ export function Navbar() {
 
     // Direct route targets
     if (sectionId === 'manifestasi' || sectionId === 'manifestation') {
-      if (pathname === '/') {
-        const el = document.getElementById('manifestasi');
-        if (el) {
-          el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-          window.history.pushState(null, '', '#manifestasi');
-          setActiveSection('manifestasi');
-          return;
-        }
-      }
-      router.push('/manifestation');
+      setManifestModalOpen(true);
       return;
     }
     if (sectionId === 'oracle') {
@@ -257,64 +250,47 @@ export function Navbar() {
             })}
           </nav>
 
-          {/* Desktop Card-Shaped Button: Manifestasi Harian */}
+          {/* Desktop Textless Card Button: Manifestasi Harian */}
           <div className="flex items-center pl-3 border-l border-[#C59B53]/25">
             <button
               type="button"
-              onClick={() => handleNavClick('manifestasi')}
-              className={`group relative flex items-center gap-2.5 px-3.5 py-1.5 rounded-lg border transition-all duration-300 cursor-pointer overflow-hidden press-scale shadow-sm ${
-                isLinkActive('manifestasi')
-                  ? 'bg-gradient-to-r from-[#2A1D13] via-[#332216] to-[#24170E] border-[#ECC47E] shadow-[0_0_20px_rgba(236,196,126,0.35)] ring-1 ring-[#ECC47E]/40'
-                  : 'bg-gradient-to-r from-[#17120D] via-[#1D1610] to-[#140E0A] hover:from-[#241A12] hover:to-[#2B1D14] border-[#C59B53]/50 hover:border-[#ECC47E] hover:shadow-[0_0_16px_rgba(197,155,83,0.3)]'
-              }`}
-              title="Tarik Kartu Pitutur & Manifestasi Harian"
-              aria-label="Tarik Kartu Manifestasi Harian"
+              onClick={() => setManifestModalOpen(true)}
+              className="group relative w-8.5 h-11.5 rounded-[5px] border border-[#C59B53]/80 hover:border-[#ECC47E] bg-gradient-to-b from-[#2E2014] via-[#1B130D] to-[#100A06] p-[2.5px] shadow-md hover:shadow-[0_0_20px_rgba(236,196,126,0.5)] transition-all duration-300 hover:scale-110 active:scale-95 cursor-pointer overflow-hidden press-scale"
+              title="Buka Kartu Manifestasi Harian"
+              aria-label="Buka Kartu Manifestasi Harian"
             >
-              {/* Miniature Tarot Card Silhouette Graphic */}
-              <div className="relative w-5 h-7 rounded-[3px] border border-[#C59B53]/70 bg-gradient-to-b from-[#352516] to-[#17100B] flex flex-col items-center justify-between p-[2px] shadow-sm group-hover:scale-105 group-hover:border-[#ECC47E] transition-transform duration-300">
-                <span className="w-1 h-1 rounded-full bg-[#ECC47E]/80" />
-                <Sparkles className="w-2.5 h-2.5 text-[#ECC47E] animate-pulse" />
-                <span className="w-2 h-[1px] bg-[#C59B53]/60 rounded-full" />
-              </div>
+              {/* Inner Decorative Card Filigree Border */}
+              <div className="w-full h-full rounded-[2.5px] border border-[#C59B53]/45 bg-[#17110C] flex flex-col items-center justify-between p-1 relative overflow-hidden group-hover:border-[#ECC47E]/80 transition-colors">
+                {/* Top Card Pip */}
+                <span className="w-1 h-1 rounded-full bg-[#ECC47E]/90 shadow-[0_0_4px_rgba(236,196,126,0.8)]" />
+                
+                {/* Center Glowing Mystical Sparkle Motif */}
+                <Sparkles className="w-3.5 h-3.5 text-[#ECC47E] group-hover:scale-125 transition-transform duration-300" />
+                
+                {/* Bottom Card Base Line */}
+                <span className="w-2.5 h-[1.5px] bg-[#C59B53]/70 rounded-full" />
 
-              {/* Text Layout: Miniature Card Title */}
-              <div className="flex flex-col items-start text-left">
-                <span className="text-[9px] font-mono uppercase tracking-[0.16em] text-[#C59B53] font-semibold leading-none flex items-center gap-1">
-                  <span>KARTU HARI INI</span>
-                </span>
-                <span className="text-xs font-serif font-bold text-[#F5EFE6] group-hover:text-[#ECC47E] transition-colors leading-tight mt-0.5">
-                  Manifestasi
-                </span>
+                {/* Shimmer Light Reflection Sweep on Hover */}
+                <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 bg-gradient-to-tr from-transparent via-white/25 to-transparent pointer-events-none" />
               </div>
-
-              {/* Delicate Gold Shimmer Line on Hover */}
-              <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 bg-gradient-to-r from-transparent via-white/10 to-transparent pointer-events-none" />
             </button>
           </div>
         </div>
 
-        {/* Mobile & Tablet Card-Shaped Button for Manifestasi */}
+        {/* Mobile & Tablet Textless Card Button for Manifestasi */}
         <div className="lg:hidden flex items-center gap-2">
           <button
             type="button"
-            onClick={() => handleNavClick('manifestasi')}
-            className={`flex items-center gap-2 px-2.5 py-1.5 rounded-lg border transition-all duration-300 cursor-pointer ${
-              isLinkActive('manifestasi')
-                ? 'bg-[#2E1E12] border-[#ECC47E] text-[#ECC47E] shadow-[0_0_12px_rgba(236,196,126,0.3)] ring-1 ring-[#ECC47E]/30'
-                : 'bg-[#18120C] border-[#C59B53]/50 text-[#F5EFE6] active:bg-[#251A11]'
-            }`}
-            title="Tarik Kartu Manifestasi Harian"
-            aria-label="Tarik Kartu Manifestasi Harian"
+            onClick={() => setManifestModalOpen(true)}
+            className="group relative w-8 h-10.5 rounded-[4.5px] border border-[#C59B53]/80 hover:border-[#ECC47E] bg-gradient-to-b from-[#2E2014] via-[#1B130D] to-[#100A06] p-[2px] shadow-sm active:scale-95 cursor-pointer overflow-hidden"
+            title="Buka Kartu Manifestasi Harian"
+            aria-label="Buka Kartu Manifestasi Harian"
           >
-            {/* Miniature Card Icon */}
-            <div className="w-4 h-6 rounded-[2px] border border-[#C59B53]/80 bg-[#2E2014] flex flex-col items-center justify-between p-[1px]">
-              <span className="w-0.5 h-0.5 rounded-full bg-[#ECC47E]" />
-              <Sparkles className="w-2.5 h-2.5 text-[#ECC47E]" />
-              <span className="w-1.5 h-[1px] bg-[#C59B53]/60" />
-            </div>
-            <div className="flex flex-col items-start leading-none text-left">
-              <span className="text-[8px] font-mono text-[#C59B53] uppercase tracking-wider font-semibold">KARTU</span>
-              <span className="text-[11px] font-serif font-bold text-[#F5EFE6] mt-0.5">Manifestasi</span>
+            {/* Inner Border */}
+            <div className="w-full h-full rounded-[2px] border border-[#C59B53]/50 bg-[#17110C] flex flex-col items-center justify-between p-1 relative overflow-hidden">
+              <span className="w-1 h-1 rounded-full bg-[#ECC47E]" />
+              <Sparkles className="w-3 h-3 text-[#ECC47E]" />
+              <span className="w-2 h-[1px] bg-[#C59B53]/70 rounded-full" />
             </div>
           </button>
           <button
@@ -328,6 +304,12 @@ export function Navbar() {
           </button>
         </div>
       </div>
+
+      {/* Manifestation Modal (In-place interactive card popup) */}
+      <ManifestationModal
+        isOpen={manifestModalOpen}
+        onClose={() => setManifestModalOpen(false)}
+      />
 
       {/* Mobile & Tablet Drawer Menu */}
       {mobileMenuOpen && (

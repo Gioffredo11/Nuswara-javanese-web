@@ -30,7 +30,12 @@ interface ManifestationData {
   } | null;
 }
 
-export function ManifestationClient() {
+export interface ManifestationClientProps {
+  isModal?: boolean;
+  onClose?: () => void;
+}
+
+export function ManifestationClient({ isModal = false, onClose }: ManifestationClientProps = {}) {
   const [loading, setLoading] = useState(true);
   const [drawing, setDrawing] = useState(false);
   const [hasDrawn, setHasDrawn] = useState(false);
@@ -170,17 +175,17 @@ export function ManifestationClient() {
   }
 
   return (
-    <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
+    <div className={isModal ? 'w-full max-w-4xl mx-auto px-2 sm:px-4 py-4' : 'max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16'}>
       {/* Header */}
-      <div className="max-w-2xl mx-auto text-center space-y-4 mb-10">
-        <div className="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-amber-800 bg-amber-50 px-3 py-1 rounded-full border border-amber-200/60">
-          <Compass className="w-3.5 h-3.5 text-amber-600" />
+      <div className={`max-w-2xl mx-auto text-center space-y-3 ${isModal ? 'mb-6' : 'mb-10'}`}>
+        <div className="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-[#ECC47E] bg-[#1F1710] px-3 py-1 rounded-full border border-[#C59B53]/40">
+          <Compass className="w-3.5 h-3.5 text-[#ECC47E]" />
           <span>Piwulang Luhur • Daily Philosophy</span>
         </div>
-        <h1 className="text-3xl sm:text-5xl font-serif font-bold text-stone-900 tracking-tight">
+        <h2 className={`font-serif font-bold text-[#F5EFE6] tracking-tight ${isModal ? 'text-2xl sm:text-3xl' : 'text-3xl sm:text-5xl'}`}>
           Manifestasi Harian
-        </h1>
-        <p className="text-sm sm:text-base text-stone-600 leading-relaxed font-sans">
+        </h2>
+        <p className="text-xs sm:text-sm text-[#B9B0A3] leading-relaxed font-sans max-w-xl mx-auto">
           Ambil satu perenungan bijak dari khazanah leluhur Jawa setiap 24 jam. Lengkap dengan interpretasi modern agar relevan dalam kehidupan sehari-harimu.
         </p>
       </div>
