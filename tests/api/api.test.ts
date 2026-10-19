@@ -8,6 +8,7 @@ import { prisma } from '@/server/db';
 import { rateLimiter } from '@/server/http/rate-limiter';
 import { GUEST_COOKIE_NAME } from '@/server/auth/guest-session';
 import { generateShareCode } from '@/server/domain/share/generateShareCode';
+import { shareRepository } from '@/server/repositories/share.repository';
 
 describe('API Route Handlers Integration Tests', () => {
   beforeAll(async () => {
@@ -135,17 +136,14 @@ describe('API Route Handlers Integration Tests', () => {
       expect(res.status).toBe(404);
       expect(json.error.code).toBe('NOT_FOUND');
     });
-
     it('returns 404/410 when share code has expired', async () => {
-      // Insert an expired share link directly in DB with guaranteed unambiguous charset
+      // Insert an expired share link with guaranteed unambiguous charset
       const expiredCode = generateShareCode(10);
-      await prisma.shareLink.create({
-        data: {
-          shortCode: expiredCode,
-          type: 'ORACLE',
-          referenceId: '1',
-          expiresAt: new Date(Date.now() - 3600000), // 1 hour ago
-        },
+      await shareRepository.create({
+        shortCode: expiredCode,
+        type: 'ORACLE',
+        referenceId: '1',
+        expiresAt: new Date(Date.now() - 3600000), // 1 hour ago
       });
 
       const req = new NextRequest(`http://localhost:3000/api/share/${expiredCode}`);

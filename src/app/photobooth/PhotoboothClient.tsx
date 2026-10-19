@@ -68,6 +68,7 @@ export function PhotoboothClient({ autoStart = false }: { autoStart?: boolean } 
 
   const videoRef = useRef<HTMLVideoElement>(null);
   const streamCanvasRef = useRef<HTMLCanvasElement>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   // Initialize Camera
   const startCamera = useCallback(async () => {
@@ -199,6 +200,21 @@ export function PhotoboothClient({ autoStart = false }: { autoStart?: boolean } 
       generateDemoSnap('4. Jaya Nusantara'),
     ];
     setPhotos(demoSnaps);
+  };
+
+  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (!files || files.length === 0) return;
+    const readers: Promise<string>[] = Array.from(files).slice(0, 4).map((file) => {
+      return new Promise((resolve) => {
+        const reader = new FileReader();
+        reader.onload = (event) => resolve(event.target?.result as string);
+        reader.readAsDataURL(file);
+      });
+    });
+    Promise.all(readers).then((newPhotos) => {
+      setPhotos((prev) => [...prev, ...newPhotos].slice(0, 4));
+    });
   };
 
   function generateDemoSnap(label: string): string {
@@ -697,12 +713,26 @@ function drawImageCover(
                     </button>
                   </div>
                 )}
-                <div className="pt-2">
+                <input
+                  ref={fileInputRef}
+                  type="file"
+                  accept="image/*"
+                  multiple
+                  onChange={handleFileUpload}
+                  className="hidden"
+                />
+                <div className="pt-2 flex flex-col gap-1.5 items-center">
                   <button
                     onClick={loadDemoPhotos}
-                    className="text-[11px] font-mono text-amber-400 hover:text-amber-300 underline"
+                    className="text-[11px] font-mono text-amber-400 hover:text-amber-300 underline cursor-pointer"
                   >
                     Atau gunakan mode demo tanpa kamera
+                  </button>
+                  <button
+                    onClick={() => fileInputRef.current?.click()}
+                    className="text-[11px] font-mono text-stone-400 hover:text-stone-200 underline cursor-pointer"
+                  >
+                    Atau unggah foto dari galeri
                   </button>
                 </div>
               </div>

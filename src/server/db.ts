@@ -125,6 +125,9 @@ export const prisma =
         return async function (...args: any[]) {
           const online = await isDatabaseOnline();
           if (!online) {
+            if (prop === '$connect' || prop === '$disconnect') {
+              return;
+            }
             const err = new Error(`Can't reach database server at \`${dbHost}:${dbPort}\``);
             (err as any).name = 'PrismaClientInitializationError';
             throw err;
