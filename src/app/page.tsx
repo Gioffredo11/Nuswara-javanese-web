@@ -282,37 +282,38 @@ export function HomePage({ defaultSection }: HomePageProps = {}) {
 
       {/* =========================================================================
           PARCHMENT SECTION 1: "Berabad-abad cerita, satu tanah yang sama."
+          (Minimalist Editorial Chronology - Non-Slop, Museum/Magazine Grade)
           ========================================================================= */}
-      <section id="sejarah" className="bg-[#F4EDE2] text-[#241E17] py-20 scroll-mt-20">
+      <section id="sejarah" className="bg-[#F4EDE2] text-[#241E17] py-20 sm:py-24 scroll-mt-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-            {/* Left: Antique Stone Bas-Relief Carving */}
-            <ScrollReveal direction="up" distance={40} delay={100} className="lg:col-span-5">
-              <div className="relative rounded-2xl overflow-hidden border-2 border-[#D4AF37]/50 shadow-2xl p-2 bg-[#EBE2D3]">
-                <div className="relative aspect-[4/3] rounded-xl overflow-hidden">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
+            {/* Left: Bas-Relief Carving (Museum Placard Presentation) */}
+            <ScrollReveal direction="up" distance={35} delay={100} className="lg:col-span-5 lg:sticky lg:top-28">
+              <div className="rounded-2xl overflow-hidden border border-[#8A5A2B]/25 p-2.5 sm:p-3 bg-[#EBE2D3]/70 shadow-lg">
+                <div className="relative aspect-[4/3] rounded-xl overflow-hidden bg-[#241E17]/10">
                   <Image
                     src="/images/editorial/candi-relief.jpg"
-                    alt="Ancient bas-relief carving of Borobudur temple Central Java"
+                    alt="Relief Candi Borobudur Jawa Tengah"
                     fill
-                    sizes="(max-width: 1024px) 100vw, 42vw"
-                    className="object-cover hover:scale-105 transition-transform duration-700"
+                    sizes="(max-width: 1024px) 100vw, 40vw"
+                    className="object-cover hover:scale-103 transition-transform duration-700"
                   />
                 </div>
-                <div className="p-3 text-center">
-                  <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-[#7A6A53] block">
+                <div className="pt-3.5 pb-1 px-1.5 text-center">
+                  <span className="text-[10px] font-mono uppercase tracking-[0.22em] text-[#8A5A2B] font-semibold block">
                     RELIEF CANDI BOROBUDUR • ABAD VIII MASEHI
                   </span>
-                  <p className="font-editorial italic text-xs text-[#4A3D2C] mt-0.5">
+                  <p className="font-editorial italic text-xs text-[#574F44] mt-1 leading-relaxed">
                     Guratan batu andesit yang memahat doa dan perjalanan spiritual manusia Jawa.
                   </p>
                 </div>
               </div>
             </ScrollReveal>
 
-            {/* Right: Narrative Eras of Central Java */}
-            <div className="lg:col-span-7 space-y-6">
+            {/* Right: Editorial Reading Timeline without boxed cards */}
+            <div className="lg:col-span-7">
               <ScrollReveal direction="up" distance={30}>
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#E5DBCB] border border-[#C59B53]/50 text-[#5C4A33] text-xs font-mono tracking-widest uppercase">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#E5DBCB] border border-[#C59B53]/40 text-[#5C4A33] text-xs font-mono tracking-widest uppercase">
                   KILAS SEJARAH JAWA TENGAH
                 </div>
 
@@ -321,94 +322,85 @@ export function HomePage({ defaultSection }: HomePageProps = {}) {
                   <span className="italic font-normal text-[#8A5A2B]">satu tanah yang sama.</span>
                 </h2>
 
-                <p className="text-sm sm:text-base text-[#574F44] leading-relaxed font-sans mt-3">
+                <p className="text-sm sm:text-base text-[#574F44] leading-relaxed font-sans mt-3 max-w-2xl">
                   Dari dataran vulkanik Dieng hingga keraton Surakarta, Jawa Tengah menjadi episentrum bertemunya spiritualitas Hindu-Buddha, kearifan animisme purba, dan peradaban Islam Nusantara.
                 </p>
               </ScrollReveal>
 
-              {/* Timeline Items as interactive buttons connecting to article pages */}
-              <div className="space-y-4 pt-2">
-                <ScrollReveal direction="up" distance={35} delay={100}>
-                  <Link
-                    href="/sejarah/era-keagungan-candi"
-                    className="block p-4 sm:p-5 rounded-xl bg-[#FAF5EB] border border-[#D9CEBE] transition-all duration-300 hover:border-[#C59B53] hover:bg-[#FDF9F2] hover:shadow-md group cursor-pointer"
-                  >
-                    <div className="flex items-center justify-between text-xs font-mono text-[#8A5A2B] font-bold">
-                      <span>01. KERAJAAN MATARAM KUNO</span>
-                      <span className="text-[11px] text-[#8A5A2B]/80">Abad VIII - X M</span>
-                    </div>
-                    <div className="flex items-center justify-between gap-2 mt-1.5">
-                      <h3 className="font-editorial text-lg sm:text-xl font-bold text-[#231E17] group-hover:text-[#8A5A2B] transition-colors">
-                        Era Keagungan Candi & Pemujaan Semesta
-                      </h3>
-                      <div className="w-7 h-7 rounded-full bg-[#EFE5D5] group-hover:bg-[#C59B53] text-[#8A5A2B] group-hover:text-[#100D0A] flex items-center justify-center shrink-0 transition-all duration-300 group-hover:translate-x-1">
-                        <ArrowRight className="w-3.5 h-3.5" />
+              {/* Minimalist Editorial Chronology (Clean typographic list, no boxed containers) */}
+              <div className="mt-8 divide-y divide-[#8A5A2B]/20 border-y border-[#8A5A2B]/20">
+                {[
+                  {
+                    number: '01',
+                    eraTag: 'KERAJAAN MATARAM KUNO',
+                    period: 'Abad VIII - X M',
+                    title: 'Era Keagungan Candi & Pemujaan Semesta',
+                    description:
+                      'Pembangunan Candi Borobudur oleh Dinasti Syailendra dan Candi Prambanan oleh Rakai Pikatan. Fondasi kosmologi yang memuliakan harmoni antara manusia, alam, dan Sang Pencipta.',
+                    href: '/sejarah/era-keagungan-candi',
+                  },
+                  {
+                    number: '02',
+                    eraTag: 'KESULTANAN ISLAM PESISIR & MATARAM ISLAM',
+                    period: 'Abad XVI - XVIII M',
+                    title: 'Akulturasi Wayang Kulit & Tembang Macapat',
+                    description:
+                      'Para wali menggubah wayang kulit purwa menjadi sarana dakwah dan tuntunan budi pekerti. Munculnya gamelan keraton, serat-serat piwulang, dan keselarasan rasa batin Jawa.',
+                    href: '/sejarah/akulturasi-wayang-kulit',
+                  },
+                  {
+                    number: '03',
+                    eraTag: 'PERGERAKAN NASIONAL & IDENTITAS DIGITAL',
+                    period: 'Abad XIX - XXI M',
+                    title: 'Ksatria Modern: Literasi, Pendidikan, & Kelestarian',
+                    description:
+                      'Perjuangan Pangeran Diponegoro, R.A. Kartini, hingga Ki Hadjar Dewantara menegakkan martabat batin bangsa. Hari ini, Nuswara meneruskan estafet nilai tersebut ke ranah digital.',
+                    href: '/sejarah/ksatria-modern',
+                  },
+                ].map((era, idx) => (
+                  <ScrollReveal key={era.number} direction="up" distance={25} delay={100 + idx * 120}>
+                    <Link
+                      href={era.href}
+                      className="group block py-6 sm:py-7 transition-all hover:pl-2 duration-300 cursor-pointer"
+                    >
+                      <div className="flex items-center justify-between text-xs font-mono text-[#8A5A2B] font-bold">
+                        <span className="tracking-wider">{era.number}. {era.eraTag}</span>
+                        <span className="text-[11px] text-[#8A5A2B]/75 font-normal">{era.period}</span>
                       </div>
-                    </div>
-                    <p className="text-xs text-[#665D50] leading-relaxed mt-1.5">
-                      Pembangunan Candi Borobudur oleh Dinasti Syailendra dan Candi Prambanan oleh Rakai Pikatan. Fondasi kosmologi yang memuliakan harmoni antara manusia, alam, dan Sang Pencipta.
-                    </p>
-                    <div className="mt-3 pt-2.5 border-t border-[#E8DDCC] flex items-center gap-1.5 text-[11px] font-mono text-[#8A5A2B] font-semibold group-hover:text-[#6E421B]">
-                      <span>Baca Artikel Sejarah Lengkap</span>
-                      <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
-                    </div>
-                  </Link>
-                </ScrollReveal>
 
-                <ScrollReveal direction="up" distance={35} delay={250}>
-                  <Link
-                    href="/sejarah/akulturasi-wayang-kulit"
-                    className="block p-4 sm:p-5 rounded-xl bg-[#FAF5EB] border border-[#D9CEBE] transition-all duration-300 hover:border-[#C59B53] hover:bg-[#FDF9F2] hover:shadow-md group cursor-pointer"
-                  >
-                    <div className="flex items-center justify-between text-xs font-mono text-[#8A5A2B] font-bold">
-                      <span>02. KESULTANAN ISLAM PESISIR & MATARAM ISLAM</span>
-                      <span className="text-[11px] text-[#8A5A2B]/80">Abad XVI - XVIII M</span>
-                    </div>
-                    <div className="flex items-center justify-between gap-2 mt-1.5">
-                      <h3 className="font-editorial text-lg sm:text-xl font-bold text-[#231E17] group-hover:text-[#8A5A2B] transition-colors">
-                        Akulturasi Wayang Kulit & Tembang Macapat
-                      </h3>
-                      <div className="w-7 h-7 rounded-full bg-[#EFE5D5] group-hover:bg-[#C59B53] text-[#8A5A2B] group-hover:text-[#100D0A] flex items-center justify-center shrink-0 transition-all duration-300 group-hover:translate-x-1">
-                        <ArrowRight className="w-3.5 h-3.5" />
+                      <div className="mt-2 flex items-baseline justify-between gap-4">
+                        <h3 className="font-editorial text-xl sm:text-2xl font-bold text-[#231E17] group-hover:text-[#8A5A2B] transition-colors leading-snug">
+                          {era.title}
+                        </h3>
+                        <span className="shrink-0 text-xs font-mono text-[#8A5A2B] font-bold inline-flex items-center gap-1 group-hover:translate-x-1.5 transition-transform">
+                          <span className="hidden sm:inline">Telusuri</span>
+                          <ArrowRight className="w-3.5 h-3.5" />
+                        </span>
                       </div>
-                    </div>
-                    <p className="text-xs text-[#665D50] leading-relaxed mt-1.5">
-                      Para wali menggubah wayang kulit purwa menjadi sarana dakwah dan tuntunan budi pekerti. Munculnya gamelan keraton, serat-serat piwulang, dan keselarasan rasa batin Jawa.
-                    </p>
-                    <div className="mt-3 pt-2.5 border-t border-[#E8DDCC] flex items-center gap-1.5 text-[11px] font-mono text-[#8A5A2B] font-semibold group-hover:text-[#6E421B]">
-                      <span>Baca Artikel Sejarah Lengkap</span>
-                      <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
-                    </div>
-                  </Link>
-                </ScrollReveal>
 
-                <ScrollReveal direction="up" distance={35} delay={400}>
-                  <Link
-                    href="/sejarah/ksatria-modern"
-                    className="block p-4 sm:p-5 rounded-xl bg-[#FAF5EB] border border-[#D9CEBE] transition-all duration-300 hover:border-[#C59B53] hover:bg-[#FDF9F2] hover:shadow-md group cursor-pointer"
-                  >
-                    <div className="flex items-center justify-between text-xs font-mono text-[#8A5A2B] font-bold">
-                      <span>03. PERGERAKAN NASIONAL & IDENTITAS DIGITAL</span>
-                      <span className="text-[11px] text-[#8A5A2B]/80">Abad XIX - XXI M</span>
-                    </div>
-                    <div className="flex items-center justify-between gap-2 mt-1.5">
-                      <h3 className="font-editorial text-lg sm:text-xl font-bold text-[#231E17] group-hover:text-[#8A5A2B] transition-colors">
-                        Ksatria Modern: Literasi, Pendidikan, & Kelestarian
-                      </h3>
-                      <div className="w-7 h-7 rounded-full bg-[#EFE5D5] group-hover:bg-[#C59B53] text-[#8A5A2B] group-hover:text-[#100D0A] flex items-center justify-center shrink-0 transition-all duration-300 group-hover:translate-x-1">
-                        <ArrowRight className="w-3.5 h-3.5" />
-                      </div>
-                    </div>
-                    <p className="text-xs text-[#665D50] leading-relaxed mt-1.5">
-                      Perjuangan Pangeran Diponegoro, R.A. Kartini, hingga Ki Hadjar Dewantara menegakkan martabat batin bangsa. Hari ini, Nuswara meneruskan estafet nilai tersebut ke ranah digital.
-                    </p>
-                    <div className="mt-3 pt-2.5 border-t border-[#E8DDCC] flex items-center gap-1.5 text-[11px] font-mono text-[#8A5A2B] font-semibold group-hover:text-[#6E421B]">
-                      <span>Baca Artikel Sejarah Lengkap</span>
-                      <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
-                    </div>
-                  </Link>
-                </ScrollReveal>
+                      <p className="mt-2 text-xs sm:text-sm text-[#5C5449] leading-relaxed font-sans max-w-2xl">
+                        {era.description}
+                      </p>
+                    </Link>
+                  </ScrollReveal>
+                ))}
               </div>
+
+              {/* Editorial Link to Full History Archive */}
+              <ScrollReveal direction="up" distance={20} delay={450}>
+                <div className="pt-6 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                  <span className="text-xs font-mono text-[#7A6A53]">
+                    Jejak peradaban Nusantara dalam 3 babak besar.
+                  </span>
+                  <Link
+                    href="/sejarah"
+                    className="inline-flex items-center gap-2 text-xs font-mono font-bold text-[#8A5A2B] hover:text-[#5C3A18] group cursor-pointer"
+                  >
+                    <span>Buka Arsip Kronologi Lengkap</span>
+                    <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+                  </Link>
+                </div>
+              </ScrollReveal>
             </div>
           </div>
         </div>

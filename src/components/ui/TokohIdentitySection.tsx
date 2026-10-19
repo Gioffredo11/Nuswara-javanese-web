@@ -9,25 +9,20 @@ import {
 } from '@/data/tokohArticles';
 import {
   ArrowRight,
-  Sparkles,
-  Award,
-  Calendar,
-  MapPin,
-  Shield,
   BookOpen,
   X,
-  ExternalLink,
   Quote,
   CheckCircle2,
-  Clock,
   Compass,
   FileText,
-  User,
 } from 'lucide-react';
 import { ScrollReveal } from '@/components/ui/ScrollReveal';
 
 export function TokohIdentitySection() {
+  const [activeSlug, setActiveSlug] = useState<string>(tokohArticles[0]?.slug || 'ra-kartini');
   const [selectedTokoh, setSelectedTokoh] = useState<TokohArticle | null>(null);
+
+  const activeFigure = tokohArticles.find((t) => t.slug === activeSlug) || tokohArticles[0];
 
   // Close modal on Escape key press
   useEffect(() => {
@@ -49,8 +44,8 @@ export function TokohIdentitySection() {
   }, [selectedTokoh]);
 
   return (
-    <div className="space-y-12">
-      {/* Top Header with Action Button to /tokoh */}
+    <div className="space-y-10">
+      {/* Editorial Header */}
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
         <ScrollReveal direction="up" distance={30}>
           <div className="max-w-2xl space-y-3">
@@ -67,253 +62,193 @@ export function TokohIdentitySection() {
             </h2>
 
             <p className="text-sm text-[#A89F91] leading-relaxed">
-              Tokoh-tokoh peradaban Jawa Tengah yang mengorbankan raga dan meluhurkan jiwa demi kemerdekaan akal budi manusia. Klik kartu identitas untuk membuka riwayat arsip lengkap.
+              Tokoh-tokoh peradaban Jawa Tengah yang mengorbankan raga dan meluhurkan jiwa demi kemerdekaan akal budi manusia. Telusuri intisari pemikiran dan berkas arsip mereka.
             </p>
           </div>
         </ScrollReveal>
 
-        {/* Primary CTA button leading to /tokoh article archive */}
+        {/* Primary Action Button */}
         <ScrollReveal direction="up" distance={30} delay={150}>
           <div className="shrink-0">
             <Link
               href="/tokoh"
-              className="inline-flex items-center gap-2.5 px-6 py-3.5 bg-gradient-to-r from-[#DFB873] via-[#ECC47E] to-[#C59B53] hover:from-[#ECC47E] hover:to-[#DFB873] text-[#140F08] font-bold text-xs sm:text-sm uppercase tracking-wider rounded-xl transition-all shadow-xl hover:scale-102 group cursor-pointer"
+              className="inline-flex items-center gap-2 px-5 py-3 bg-[#1C1610] hover:bg-[#C59B53] text-[#ECC47E] hover:text-[#100D0A] border border-[#C59B53]/40 hover:border-[#C59B53] font-mono text-xs font-bold uppercase tracking-wider rounded-xl transition-all duration-300 group cursor-pointer shadow-md"
             >
-              <BookOpen className="w-4 h-4 text-[#140F08]" />
-              <span>Buka Seluruh Artikel Tokoh Jawa</span>
-              <ArrowRight className="w-4 h-4 text-[#140F08] transition-transform group-hover:translate-x-1" />
+              <BookOpen className="w-4 h-4 text-[#ECC47E] group-hover:text-[#100D0A] transition-colors" />
+              <span>Buka Seluruh Direktori ({tokohArticles.length} Tokoh)</span>
+              <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
             </Link>
           </div>
         </ScrollReveal>
       </div>
 
-      {/* Asymmetric Editorial Hero & Secondary Showcase */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
-        {/* Left: Featured Large Editorial Card (R.A. Kartini) */}
-        {tokohArticles[0] && (
-          <ScrollReveal direction="up" distance={35} className="lg:col-span-6 flex">
-            <div
-              onClick={() => setSelectedTokoh(tokohArticles[0])}
-              role="button"
-              tabIndex={0}
-              onKeyDown={(e) => {
-                if (e.key === 'Enter' || e.key === ' ') {
-                  e.preventDefault();
-                  setSelectedTokoh(tokohArticles[0]);
-                }
-              }}
-              aria-label={`Buka berkas ${tokohArticles[0].name}`}
-              className="w-full rounded-3xl bg-gradient-to-b from-[#18120B] to-[#110D09] border-2 border-[#C5A36A]/40 hover:border-[#ECC47E] p-6 sm:p-8 flex flex-col justify-between shadow-2xl transition-all duration-300 hover:shadow-[0_20px_45px_rgba(197,163,106,0.22)] cursor-pointer group relative overflow-hidden select-none"
-            >
-              <div className="space-y-6">
-                <div className="flex items-center justify-between border-b border-[#C5A36A]/20 pb-3">
-                  <span className="text-[10px] font-mono tracking-widest text-[#ECC47E] uppercase font-bold">
-                    02 / TOKOH UTAMA · {tokohArticles[0].originCity.toUpperCase()}
-                  </span>
-                  <span className="text-[10px] font-mono text-[#ECC47E] bg-[#22180F] px-2.5 py-0.5 rounded-md border border-[#C5A36A]/30">
-                    {tokohArticles[0].period}
-                  </span>
-                </div>
+      {/* Minimalist Interactive Figure Selector (Replaces repetitive catalog cards) */}
+      <ScrollReveal direction="up" distance={25} delay={100}>
+        <div
+          role="tablist"
+          aria-label="Pilih tokoh peradaban"
+          className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none border-b border-[#C59B53]/20"
+        >
+          {tokohArticles.map((tokoh, index) => {
+            const isActive = tokoh.slug === activeFigure.slug;
+            return (
+              <button
+                key={tokoh.slug}
+                role="tab"
+                id={`tokoh-tab-${tokoh.slug}`}
+                aria-selected={isActive}
+                aria-controls={`tokoh-panel-${tokoh.slug}`}
+                tabIndex={0}
+                onClick={() => setActiveSlug(tokoh.slug)}
+                className={`group shrink-0 px-4 py-2.5 rounded-xl text-xs font-mono transition-all duration-300 flex items-center gap-2.5 cursor-pointer min-h-[44px] ${
+                  isActive
+                    ? 'bg-[#241A12] text-[#ECC47E] border border-[#C59B53]/60 shadow-lg'
+                    : 'bg-[#14100C]/60 hover:bg-[#1C150E] text-[#8E8271] hover:text-[#D8C8AD] border border-transparent'
+                }`}
+              >
+                <span className={`text-[10px] font-bold ${isActive ? 'text-[#ECC47E]' : 'text-[#8E8271] group-hover:text-[#C59B53]'}`}>
+                  0{index + 1}
+                </span>
+                <span className="font-semibold">{tokoh.name}</span>
+                <span className={`hidden sm:inline text-[10px] px-1.5 py-0.5 rounded ${isActive ? 'bg-[#312318] text-[#DFB873]' : 'bg-[#18130E] text-[#6E6353]'}`}>
+                  {tokoh.originCity.split(',')[0]}
+                </span>
+              </button>
+            );
+          })}
+        </div>
+      </ScrollReveal>
 
-                <div className="relative aspect-[4/3] sm:aspect-[16/10] w-full rounded-2xl overflow-hidden border border-[#C5A36A]/40 bg-[#0D0B08]">
+      {/* Curated Editorial Spotlight Showcase (Single focused layout without catalog fatigue) */}
+      {activeFigure && (
+        <ScrollReveal direction="up" distance={30} delay={150}>
+          <div
+            id={`tokoh-panel-${activeFigure.slug}`}
+            role="tabpanel"
+            aria-labelledby={`tokoh-tab-${activeFigure.slug}`}
+            className="rounded-3xl bg-gradient-to-b from-[#16110B] via-[#120E0A] to-[#0D0A07] border border-[#C59B53]/35 p-6 sm:p-8 lg:p-10 shadow-2xl relative overflow-hidden"
+          >
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+              {/* Left Column: Authentic Museum Archival Portrait */}
+              <div className="lg:col-span-5 flex flex-col items-center">
+                <div className="relative w-full max-w-sm aspect-[4/5] rounded-2xl overflow-hidden border-2 border-[#C59B53]/50 bg-[#0B0907] shadow-xl group">
                   <Image
-                    src={tokohArticles[0].photoUrl}
-                    alt={tokohArticles[0].name}
+                    src={activeFigure.photoUrl}
+                    alt={activeFigure.name}
                     fill
-                    sizes="(max-width: 1024px) 100vw, 50vw"
-                    className="object-cover filter contrast-[1.08] sepia-[0.12] group-hover:scale-105 transition-transform duration-700"
+                    sizes="(max-width: 1024px) 100vw, 40vw"
+                    className="object-cover filter contrast-[1.08] sepia-[0.1] group-hover:scale-103 transition-transform duration-700"
                     priority
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#110D09] via-transparent to-transparent opacity-80" />
-                  <div className="absolute bottom-4 left-4 right-4">
-                    <span className="text-[10px] font-mono uppercase tracking-wider text-[#ECC47E] bg-[#261A10]/90 backdrop-blur-md px-2.5 py-1 rounded-full border border-[#C5A36A]/40 font-semibold inline-block mb-1.5">
-                      {tokohArticles[0].badgeLabel}
+                  {/* Antique framing corners */}
+                  <div className="absolute top-2.5 left-2.5 w-4 h-4 border-t-2 border-l-2 border-[#ECC47E]/80 pointer-events-none" />
+                  <div className="absolute top-2.5 right-2.5 w-4 h-4 border-t-2 border-r-2 border-[#ECC47E]/80 pointer-events-none" />
+                  <div className="absolute bottom-2.5 left-2.5 w-4 h-4 border-b-2 border-l-2 border-[#ECC47E]/80 pointer-events-none" />
+                  <div className="absolute bottom-2.5 right-2.5 w-4 h-4 border-b-2 border-r-2 border-[#ECC47E]/80 pointer-events-none" />
+
+                  {/* Gradient shadow for caption readability */}
+                  <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-[#0B0907] via-[#0B0907]/60 to-transparent p-4 pt-10">
+                    <span className="text-[10px] font-mono tracking-widest text-[#ECC47E] uppercase font-bold block">
+                      {activeFigure.idNumber}
                     </span>
-                    <h3 className="font-royal text-3xl sm:text-4xl font-bold text-[#F5EFE6]">
-                      {tokohArticles[0].name}
-                    </h3>
+                    <span className="text-xs text-[#E2D5C3] font-editorial italic block mt-0.5">
+                      {activeFigure.originCity} • {activeFigure.period}
+                    </span>
                   </div>
                 </div>
 
-                <div className="p-4 rounded-2xl bg-[#1D1610] border border-[#C5A36A]/30 space-y-1.5">
-                  <div className="flex items-center gap-1.5 text-[10px] font-mono text-[#ECC47E] uppercase font-bold">
-                    <Quote className="w-3.5 h-3.5 text-[#C5A36A]" />
-                    <span>Surat & Pemikiran</span>
+                <div className="mt-3 text-center">
+                  <span className="text-[10px] font-mono uppercase tracking-wider text-[#ECC47E] bg-[#22180F] px-3 py-1 rounded-full border border-[#C59B53]/30 inline-block">
+                    {activeFigure.badgeLabel}
+                  </span>
+                </div>
+              </div>
+
+              {/* Right Column: Editorial Bio, Falsafah Hidup, and Actions */}
+              <div className="lg:col-span-7 space-y-6">
+                <div>
+                  <div className="flex items-center gap-2 text-[11px] font-mono text-[#C59B53] uppercase tracking-wider">
+                    <span>{activeFigure.category}</span>
+                    <span>•</span>
+                    <span>{activeFigure.period}</span>
                   </div>
-                  <p className="font-editorial italic text-sm text-[#F3E9D8] leading-relaxed">
-                    &ldquo;{tokohArticles[0].quote}&rdquo;
+
+                  <h3 className="font-royal text-2xl sm:text-3xl lg:text-4xl font-bold text-[#F5EFE6] mt-1.5">
+                    {activeFigure.name}
+                  </h3>
+
+                  <p className="font-editorial italic text-xs sm:text-sm text-[#DFB873] mt-1">
+                    {activeFigure.honorificTitle}
                   </p>
                 </div>
 
-                <p className="text-xs sm:text-sm text-[#A89F91] leading-relaxed">
-                  {tokohArticles[0].summary}
-                </p>
-              </div>
+                {/* Semboyan Luhur Quote Block */}
+                <div className="p-4 sm:p-5 rounded-2xl bg-[#1D1610]/90 border border-[#C59B53]/30 relative">
+                  <div className="flex items-center gap-2 text-[10px] font-mono text-[#ECC47E] uppercase font-bold mb-1.5">
+                    <Quote className="w-3.5 h-3.5 text-[#C59B53]" />
+                    <span>Falsafah Hidup &amp; Semboyan</span>
+                  </div>
+                  <p className="font-editorial italic text-base sm:text-lg text-[#F3E9D8] leading-relaxed">
+                    &ldquo;{activeFigure.quote}&rdquo;
+                  </p>
+                </div>
 
-              <div className="pt-6 mt-6 border-t border-[#C5A36A]/20 flex items-center justify-between">
-                <span className="text-xs font-mono text-[#ECC47E] flex items-center gap-1.5 font-bold">
-                  <span>Buka Berkas & Kisah Lengkap</span>
-                  <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-                </span>
-                <span className="text-[11px] font-mono text-[#8E8271]">
-                  KLIK UNTUK DETAIL
-                </span>
+                {/* Narrative Summary */}
+                <p className="text-xs sm:text-sm text-[#B9B0A3] leading-relaxed font-sans">
+                  {activeFigure.summary}
+                </p>
+
+                {/* Instrument / Weapon / Struggle Attribute */}
+                <div className="p-3 rounded-xl bg-[#140F0A] border border-[#C59B53]/20 flex items-start gap-2.5 text-xs">
+                  <span className="font-mono text-[#ECC47E] font-bold shrink-0 text-[11px] uppercase">
+                    Pusaka / Atribut:
+                  </span>
+                  <span className="text-[#D8C8AD] font-sans">
+                    {activeFigure.personalData.senjataAtauAtribut}
+                  </span>
+                </div>
+
+                {/* Action Buttons: Inspect Archival Dossier or Full Article */}
+                <div className="pt-2 flex flex-wrap items-center gap-3">
+                  <button
+                    type="button"
+                    onClick={() => setSelectedTokoh(activeFigure)}
+                    className="min-h-[44px] px-5 py-2.5 bg-gradient-to-r from-[#DFB873] to-[#C59B53] hover:from-[#ECC47E] hover:to-[#DFB873] text-[#140F08] font-bold text-xs uppercase tracking-wider rounded-xl transition-all shadow-lg hover:scale-102 flex items-center gap-2 cursor-pointer"
+                  >
+                    <FileText className="w-4 h-4 text-[#140F08]" />
+                    <span>Buka Berkas Arsip Lengkap</span>
+                  </button>
+
+                  <Link
+                    href={`/tokoh/${activeFigure.slug}`}
+                    className="min-h-[44px] px-5 py-2.5 bg-[#1C1610] hover:bg-[#281F17] text-[#ECC47E] hover:text-white border border-[#C59B53]/40 rounded-xl font-medium text-xs uppercase tracking-wider transition-all flex items-center gap-2 cursor-pointer"
+                  >
+                    <span>Baca Biografi Penuh</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </Link>
+                </div>
               </div>
             </div>
-          </ScrollReveal>
-        )}
+          </div>
+        </ScrollReveal>
+      )}
 
-        {/* Right: Stacked Secondary Tokoh Cards (Pangeran Diponegoro & Ki Hadjar Dewantara) */}
-        <div className="lg:col-span-6 flex flex-col gap-6 justify-between">
-          {tokohArticles.slice(1, 3).map((tokoh, idx) => (
-            <ScrollReveal
-              key={tokoh.slug}
-              direction="up"
-              distance={35}
-              delay={150 + idx * 100}
-              className="flex-1"
-            >
-              <div
-                onClick={() => setSelectedTokoh(tokoh)}
-                role="button"
-                tabIndex={0}
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter' || e.key === ' ') {
-                    e.preventDefault();
-                    setSelectedTokoh(tokoh);
-                  }
-                }}
-                aria-label={`Buka berkas ${tokoh.name}`}
-                className="h-full rounded-3xl bg-[#14100C] border-2 border-[#C5A36A]/35 hover:border-[#ECC47E] p-5 sm:p-6 flex flex-col justify-between shadow-xl transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl cursor-pointer group select-none"
-              >
-                <div className="flex flex-col sm:flex-row gap-5 items-start">
-                  <div className="relative w-28 sm:w-32 aspect-[3/4] shrink-0 rounded-2xl overflow-hidden border border-[#C5A36A]/40 bg-[#0D0B08] p-1">
-                    <div className="relative w-full h-full rounded-xl overflow-hidden">
-                      <Image
-                        src={tokoh.photoUrl}
-                        alt={tokoh.name}
-                        fill
-                        sizes="(max-width: 640px) 112px, 128px"
-                        className="object-cover filter contrast-[1.08] sepia-[0.1] group-hover:scale-105 transition-transform duration-500"
-                      />
-                    </div>
-                  </div>
-
-                  <div className="space-y-2 flex-1 min-w-0">
-                    <div className="flex items-center justify-between text-[10px] font-mono text-[#ECC47E]">
-                      <span className="bg-[#24190F] px-2 py-0.5 rounded border border-[#C5A36A]/30">
-                        {tokoh.badgeLabel}
-                      </span>
-                      <span>{tokoh.period}</span>
-                    </div>
-
-                    <h4 className="font-royal text-xl sm:text-2xl font-bold text-[#F5EFE6] group-hover:text-[#ECC47E] transition-colors">
-                      {tokoh.name}
-                    </h4>
-
-                    <p className="text-xs text-[#8E8271] font-editorial italic">
-                      {tokoh.originCity} · {tokoh.honorificTitle}
-                    </p>
-
-                    <p className="text-xs text-[#A89F91] leading-relaxed line-clamp-3 pt-1">
-                      {tokoh.summary}
-                    </p>
-                  </div>
-                </div>
-
-                <div className="pt-4 mt-4 border-t border-[#C5A36A]/20 flex items-center justify-between text-xs font-mono">
-                  <span className="text-[#A89F91] line-clamp-1 italic text-[11px]">
-                    &ldquo;{tokoh.quote}&rdquo;
-                  </span>
-                  <span className="text-[#ECC47E] font-bold shrink-0 ml-2 flex items-center gap-1">
-                    <span>Detail</span>
-                    <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
-                  </span>
-                </div>
-              </div>
-            </ScrollReveal>
-          ))}
-        </div>
-      </div>
-
-      {/* Expandable Section for Remaining Figures */}
-      <div className="pt-2">
-        <div className="flex items-center justify-between pb-4">
-          <span className="text-xs font-mono uppercase tracking-widest text-[#C5A36A]">
-            TOKOH PERGERAKAN LAINNYA
+      {/* Editorial Footnote (Replaces redundant bottom banner and 3-card mini grid) */}
+      <ScrollReveal direction="up" distance={20} delay={200}>
+        <div className="pt-4 border-t border-[#C59B53]/20 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono">
+          <span className="text-[#8E8271] text-center sm:text-left">
+            Menyimpan {tokohArticles.length} biografi tokoh peradaban Jawa Tengah dengan arsip sejarah terverifikasi.
           </span>
           <Link
             href="/tokoh"
-            className="text-xs font-mono text-[#ECC47E] hover:text-white flex items-center gap-1.5 transition-colors"
+            className="inline-flex items-center gap-1.5 text-[#ECC47E] hover:text-white font-bold transition-colors group cursor-pointer"
           >
-            <span>Buka Seluruh 6 Tokoh di Galeri</span>
-            <ArrowRight className="w-3.5 h-3.5" />
+            <span>Buka Seluruh {tokohArticles.length} Tokoh di Direktori</span>
+            <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
           </Link>
         </div>
+      </ScrollReveal>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {tokohArticles.slice(3).map((tokoh) => (
-            <div
-              key={tokoh.slug}
-              onClick={() => setSelectedTokoh(tokoh)}
-              role="button"
-              tabIndex={0}
-              onKeyDown={(e) => {
-                if (e.key === 'Enter' || e.key === ' ') {
-                  e.preventDefault();
-                  setSelectedTokoh(tokoh);
-                }
-              }}
-              aria-label={`Buka berkas ${tokoh.name}`}
-              className="rounded-2xl bg-[#14100C] border border-[#C5A36A]/30 hover:border-[#ECC47E] p-4 flex items-center gap-4 shadow-lg hover:-translate-y-1 transition-all cursor-pointer group"
-            >
-              <div className="relative w-16 aspect-[3/4] shrink-0 rounded-xl overflow-hidden border border-[#C5A36A]/35 bg-[#0D0B08]">
-                <Image
-                  src={tokoh.photoUrl}
-                  alt={tokoh.name}
-                  fill
-                  sizes="64px"
-                  className="object-cover group-hover:scale-105 transition-transform duration-300"
-                />
-              </div>
-              <div className="space-y-1 min-w-0 flex-1">
-                <span className="text-[9px] font-mono uppercase text-[#ECC47E] block truncate">
-                  {tokoh.badgeLabel}
-                </span>
-                <h5 className="font-royal text-base font-bold text-[#F5EFE6] group-hover:text-[#ECC47E] truncate">
-                  {tokoh.name}
-                </h5>
-                <p className="text-[11px] text-[#8E8271] truncate">
-                  {tokoh.originCity} · {tokoh.period}
-                </p>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* Bottom Banner Linking to All Articles */}
-      <div className="p-6 sm:p-8 rounded-3xl bg-gradient-to-r from-[#17120D] via-[#21170F] to-[#17120D] border border-[#C59B53]/40 shadow-xl flex flex-col sm:flex-row items-center justify-between gap-6 text-center sm:text-left">
-        <div className="space-y-1.5 max-w-xl">
-          <span className="text-xs font-mono uppercase tracking-widest text-[#ECC47E] font-bold">
-            DIREKTORI TOKOH NUSANTARA DARI TANAH JAWA
-          </span>
-          <h4 className="font-royal text-xl sm:text-2xl font-bold text-[#F5EFE6]">
-            Ingin Mempelajari Seluruh Biografi & Tonggak Sejarah?
-          </h4>
-          <p className="text-xs sm:text-sm text-[#A89F91]">
-            Baca artikel mendalam tentang pemikiran, surat-surat arsip, kronologi perjuangan militer, hingga warisan filosofis tokoh-tokoh pahlawan di halaman khusus.
-          </p>
-        </div>
-
-        <Link
-          href="/tokoh"
-          className="shrink-0 inline-flex items-center gap-2 px-6 py-3 bg-[#B99A60] hover:bg-[#C9A96E] text-[#100D0A] font-bold text-xs uppercase tracking-wider rounded-xl transition-all shadow-lg hover:scale-102"
-        >
-          <span>Buka Galeri Artikel Tokoh</span>
-          <ArrowRight className="w-4 h-4" />
-        </Link>
-      </div>
       {/* Modal: In-Depth Identity Dossier */}
       {selectedTokoh && (
         <div
