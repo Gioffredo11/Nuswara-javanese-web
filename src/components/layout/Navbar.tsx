@@ -23,6 +23,7 @@ export function Navbar() {
   ];
 
   const allMobileNavLinks = [
+    { sectionId: 'manifestasi', label: 'Manifestasi Harian (Kartu Hari Ini)', icon: Sparkles, highlight: true },
     { sectionId: 'beranda', label: 'Beranda (Pameran)', icon: Compass },
     { sectionId: 'sejarah', label: 'Sejarah Jawa Tengah', icon: BookOpen },
     { sectionId: 'tokoh', label: 'Tokoh & Pahlawan', icon: Compass },
@@ -31,9 +32,8 @@ export function Navbar() {
     { sectionId: 'ragam-rupa', label: 'Ragam Rupa Wayang', icon: Layers },
     { sectionId: 'kuliner', label: 'Khazanah Kuliner Jawa', icon: Layers },
     { sectionId: 'monumen', label: 'Tempat Sakral & Candi', icon: Compass },
-    { sectionId: 'oracle', label: 'Javanese Oracle (Weton)', icon: Sparkles, highlight: true },
-    { sectionId: 'manifestasi', label: 'Manifestasi Harian', icon: Compass },
-    { sectionId: 'photobooth', label: 'Web Photobooth 4-Cut', icon: Camera, highlight: true },
+    { sectionId: 'oracle', label: 'Javanese Oracle (Weton)', icon: Sparkles },
+    { sectionId: 'photobooth', label: 'Web Photobooth 4-Cut', icon: Camera },
   ];
 
   // Track scroll position to transition header background and active section
@@ -63,10 +63,10 @@ export function Navbar() {
         { id: 'photobooth', target: 'photobooth' },
         { id: 'monumen', target: 'monumen' },
         { id: 'kuliner', target: 'kuliner' },
-        { id: 'manifestasi', target: 'oracle' },
         { id: 'oracle', target: 'oracle' },
         { id: 'family-tree', target: 'budaya' },
         { id: 'wayangpedia', target: 'budaya' },
+        { id: 'manifestasi', target: 'manifestasi' },
         { id: 'budaya', target: 'budaya' },
         { id: 'tokoh', target: 'tokoh' },
         { id: 'sejarah', target: 'sejarah' },
@@ -121,6 +121,19 @@ export function Navbar() {
 
 
     // Direct route targets
+    if (sectionId === 'manifestasi' || sectionId === 'manifestation') {
+      if (pathname === '/') {
+        const el = document.getElementById('manifestasi');
+        if (el) {
+          el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          window.history.pushState(null, '', '#manifestasi');
+          setActiveSection('manifestasi');
+          return;
+        }
+      }
+      router.push('/manifestation');
+      return;
+    }
     if (sectionId === 'oracle') {
       router.push('/oracle');
       return;
@@ -177,6 +190,12 @@ export function Navbar() {
   };
 
   const isLinkActive = (sectionId: string) => {
+    if (
+      (sectionId === 'manifestasi' || sectionId === 'manifestation') &&
+      (pathname.startsWith('/manifestation') || (pathname === '/' && activeSection === 'manifestasi'))
+    ) {
+      return true;
+    }
     if (sectionId === 'oracle' && pathname.startsWith('/oracle')) return true;
     if (sectionId === 'photobooth' && pathname.startsWith('/photobooth')) return true;
     if (sectionId === 'tokoh' && pathname.startsWith('/tokoh')) return true;
@@ -238,55 +257,65 @@ export function Navbar() {
             })}
           </nav>
 
-          {/* Desktop Interactive Feature Quick Actions */}
-          <div className="flex items-center gap-2 pl-3 border-l border-[#C59B53]/25">
+          {/* Desktop Card-Shaped Button: Manifestasi Harian */}
+          <div className="flex items-center pl-3 border-l border-[#C59B53]/25">
             <button
               type="button"
-              onClick={() => handleNavClick('oracle')}
-              className={`px-3 py-1.5 text-xs font-mono rounded-full flex items-center gap-1.5 transition-all cursor-pointer border press-scale ${
-                isLinkActive('oracle')
-                  ? 'bg-[#B99A60] text-[#100D0A] font-bold border-[#C59B53] shadow-md'
-                  : 'text-[#ECC47E] hover:text-white bg-[#17130E] hover:bg-[#231A12] border-[#C59B53]/40'
+              onClick={() => handleNavClick('manifestasi')}
+              className={`group relative flex items-center gap-2.5 px-3.5 py-1.5 rounded-lg border transition-all duration-300 cursor-pointer overflow-hidden press-scale shadow-sm ${
+                isLinkActive('manifestasi')
+                  ? 'bg-gradient-to-r from-[#2A1D13] via-[#332216] to-[#24170E] border-[#ECC47E] shadow-[0_0_20px_rgba(236,196,126,0.35)] ring-1 ring-[#ECC47E]/40'
+                  : 'bg-gradient-to-r from-[#17120D] via-[#1D1610] to-[#140E0A] hover:from-[#241A12] hover:to-[#2B1D14] border-[#C59B53]/50 hover:border-[#ECC47E] hover:shadow-[0_0_16px_rgba(197,155,83,0.3)]'
               }`}
-              title="Javanese Oracle (Weton Matcher)"
+              title="Tarik Kartu Pitutur & Manifestasi Harian"
+              aria-label="Tarik Kartu Manifestasi Harian"
             >
-              <Sparkles className="w-3.5 h-3.5" />
-              <span>Weton</span>
-            </button>
-            <button
-              type="button"
-              onClick={() => handleNavClick('photobooth')}
-              className={`px-3.5 py-1.5 text-xs font-mono font-bold rounded-full flex items-center gap-1.5 transition-all cursor-pointer shadow-sm press-scale ${
-                isLinkActive('photobooth')
-                  ? 'bg-[#E5C17D] text-[#100D0A] ring-2 ring-[#ECC47E]'
-                  : 'bg-[#C5A063] hover:bg-[#D4AF37] text-[#100D0A]'
-              }`}
-              title="Web Photobooth 4-Cut"
-            >
-              <Camera className="w-3.5 h-3.5 text-[#100D0A]" />
-              <span>Photobooth</span>
+              {/* Miniature Tarot Card Silhouette Graphic */}
+              <div className="relative w-5 h-7 rounded-[3px] border border-[#C59B53]/70 bg-gradient-to-b from-[#352516] to-[#17100B] flex flex-col items-center justify-between p-[2px] shadow-sm group-hover:scale-105 group-hover:border-[#ECC47E] transition-transform duration-300">
+                <span className="w-1 h-1 rounded-full bg-[#ECC47E]/80" />
+                <Sparkles className="w-2.5 h-2.5 text-[#ECC47E] animate-pulse" />
+                <span className="w-2 h-[1px] bg-[#C59B53]/60 rounded-full" />
+              </div>
+
+              {/* Text Layout: Miniature Card Title */}
+              <div className="flex flex-col items-start text-left">
+                <span className="text-[9px] font-mono uppercase tracking-[0.16em] text-[#C59B53] font-semibold leading-none flex items-center gap-1">
+                  <span>KARTU HARI INI</span>
+                </span>
+                <span className="text-xs font-serif font-bold text-[#F5EFE6] group-hover:text-[#ECC47E] transition-colors leading-tight mt-0.5">
+                  Manifestasi
+                </span>
+              </div>
+
+              {/* Delicate Gold Shimmer Line on Hover */}
+              <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 bg-gradient-to-r from-transparent via-white/10 to-transparent pointer-events-none" />
             </button>
           </div>
         </div>
 
-        {/* Mobile & Tablet Hamburger Toggle */}
+        {/* Mobile & Tablet Card-Shaped Button for Manifestasi */}
         <div className="lg:hidden flex items-center gap-2">
           <button
             type="button"
-            onClick={() => handleNavClick('oracle')}
-            className="sm:hidden px-2.5 py-1 text-[11px] font-semibold text-[#ECC47E] bg-[#17130E] border border-[#C59B53]/40 rounded-full flex items-center gap-1 cursor-pointer"
+            onClick={() => handleNavClick('manifestasi')}
+            className={`flex items-center gap-2 px-2.5 py-1.5 rounded-lg border transition-all duration-300 cursor-pointer ${
+              isLinkActive('manifestasi')
+                ? 'bg-[#2E1E12] border-[#ECC47E] text-[#ECC47E] shadow-[0_0_12px_rgba(236,196,126,0.3)] ring-1 ring-[#ECC47E]/30'
+                : 'bg-[#18120C] border-[#C59B53]/50 text-[#F5EFE6] active:bg-[#251A11]'
+            }`}
+            title="Tarik Kartu Manifestasi Harian"
+            aria-label="Tarik Kartu Manifestasi Harian"
           >
-            <Sparkles className="w-3 h-3 text-[#ECC47E]" />
-            <span>Weton</span>
-          </button>
-          <button
-            type="button"
-            onClick={() => handleNavClick('photobooth')}
-            className="sm:hidden p-1.5 rounded-full bg-[#B99A60] text-[#100D0A] cursor-pointer"
-            title="Photobooth"
-            aria-label="Photobooth"
-          >
-            <Camera className="w-3.5 h-3.5" />
+            {/* Miniature Card Icon */}
+            <div className="w-4 h-6 rounded-[2px] border border-[#C59B53]/80 bg-[#2E2014] flex flex-col items-center justify-between p-[1px]">
+              <span className="w-0.5 h-0.5 rounded-full bg-[#ECC47E]" />
+              <Sparkles className="w-2.5 h-2.5 text-[#ECC47E]" />
+              <span className="w-1.5 h-[1px] bg-[#C59B53]/60" />
+            </div>
+            <div className="flex flex-col items-start leading-none text-left">
+              <span className="text-[8px] font-mono text-[#C59B53] uppercase tracking-wider font-semibold">KARTU</span>
+              <span className="text-[11px] font-serif font-bold text-[#F5EFE6] mt-0.5">Manifestasi</span>
+            </div>
           </button>
           <button
             type="button"

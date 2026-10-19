@@ -459,19 +459,19 @@ export function HomePage({ defaultSection }: HomePageProps = {}) {
               <div className="flex flex-wrap items-center gap-3 pt-2">
                 <button
                   type="button"
-                  onClick={() => scrollToSection('wayangpedia')}
+                  onClick={() => scrollToSection('manifestasi')}
                   className="px-5 py-2.5 bg-gradient-to-r from-[#DFB873] to-[#C59B53] hover:from-[#ECC47E] hover:to-[#DFB873] text-[#140F08] font-bold text-xs uppercase tracking-wider rounded-lg transition-all shadow-md flex items-center gap-1.5 cursor-pointer"
                 >
-                  <BookOpen className="w-3.5 h-3.5" />
-                  <span>Jelajahi Wayangpedia</span>
+                  <Sparkles className="w-3.5 h-3.5" />
+                  <span>Tarik Kartu Manifestasi Hari Ini</span>
                 </button>
                 <button
                   type="button"
-                  onClick={() => scrollToSection('family-tree')}
+                  onClick={() => scrollToSection('wayangpedia')}
                   className="px-5 py-2.5 bg-[#1C1712] hover:bg-[#282119] text-[#ECC47E] font-medium text-xs uppercase tracking-wider border border-[#C59B53]/40 rounded-lg transition-all flex items-center gap-1.5 cursor-pointer"
                 >
-                  <GitFork className="w-3.5 h-3.5" />
-                  <span>Lihat Silsilah Purwa</span>
+                  <BookOpen className="w-3.5 h-3.5" />
+                  <span>Katalog Wayangpedia</span>
                 </button>
               </div>
             </ScrollReveal>
@@ -480,36 +480,37 @@ export function HomePage({ defaultSection }: HomePageProps = {}) {
       </section>
 
       {/* =========================================================================
-          FEATURE SECTION 01: WAYANGPEDIA & BUDAYA
+          FEATURE SECTION 01: MANIFESTASI HARIAN (KARTU PITUTUR HARI INI)
+          Primary Daily Entertainment & Cultural Wisdom Hook
+          ========================================================================= */}
+      <section id="manifestasi" className="scroll-mt-20 py-12 bg-gradient-to-b from-[#140F0B] via-[#0E0C0A] to-[#120F0C] border-b border-[#C59B53]/25">
+        <div id="budaya" className="scroll-mt-24" />
+        <SectionDivider number="01" title="MANIFESTASI HARIAN" icon={Compass} />
+        <ManifestationClient />
+      </section>
+
+      {/* =========================================================================
+          FEATURE SECTION 02: WAYANGPEDIA & BUDAYA
           ========================================================================= */}
       <section id="wayangpedia" className="scroll-mt-20 py-10 bg-[#0E0C0A]">
-        <div id="budaya" className="scroll-mt-24" />
-        <SectionDivider number="01" title="WAYANGPEDIA" icon={BookOpen} />
+        <SectionDivider number="02" title="WAYANGPEDIA" icon={BookOpen} />
         <WayangpediaClient />
       </section>
 
       {/* =========================================================================
-          FEATURE SECTION 02: SILSILAH WAYANG PURWA
+          FEATURE SECTION 03: SILSILAH WAYANG PURWA
           ========================================================================= */}
       <section id="family-tree" className="scroll-mt-20 py-10 bg-[#120F0C] border-y border-[#C59B53]/20">
-        <SectionDivider number="02" title="SILSILAH PURWA" icon={GitFork} />
+        <SectionDivider number="03" title="SILSILAH PURWA" icon={GitFork} />
         <FamilyTreeClient />
       </section>
 
       {/* =========================================================================
-          FEATURE SECTION 03: JAVANESE ORACLE (WETON MATCHER)
+          FEATURE SECTION 04: JAVANESE ORACLE (WETON MATCHER)
           ========================================================================= */}
       <section id="oracle" className="scroll-mt-20 py-10 bg-gradient-to-b from-[#140F0B] via-[#1F1209] to-[#140F0B] border-y border-[#C59B53]/30">
-        <SectionDivider number="03" title="JAVANESE ORACLE" icon={Sparkles} />
+        <SectionDivider number="04" title="JAVANESE ORACLE" icon={Sparkles} />
         <OracleClient />
-      </section>
-
-      {/* =========================================================================
-          FEATURE SECTION 04: MANIFESTASI HARIAN (PIWULANG)
-          ========================================================================= */}
-      <section id="manifestasi" className="scroll-mt-20 py-10 bg-[#0E0C0A]">
-        <SectionDivider number="04" title="MANIFESTASI HARIAN" icon={Compass} />
-        <ManifestationClient />
       </section>
 
       {/* =========================================================================
