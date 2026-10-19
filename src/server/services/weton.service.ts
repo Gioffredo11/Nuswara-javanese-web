@@ -27,13 +27,13 @@ export class WetonService {
         neptu: calc.neptu,
         auraTitle: dbWeton.auraTitle,
         summary: dbWeton.summary,
-        traits: dbWeton.traits.map((t) => ({
+        traits: (dbWeton.traits || []).map((t: any) => ({
           id: t.id,
           trait: t.trait,
           description: t.description,
           kind: t.kind,
         })),
-        matchedCharacters: dbWeton.rules.map((r) => ({
+        matchedCharacters: (dbWeton.rules || []).map((r: any) => ({
           character: r.character,
           matchReason: r.matchReason,
           compatibilityAdvice: r.compatibilityAdvice,
