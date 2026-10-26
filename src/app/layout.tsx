@@ -5,8 +5,6 @@ import { Navbar } from '@/components/layout/Navbar';
 import { Footer } from '@/components/layout/Footer';
 import { ScrollToTop } from '@/components/ui/ScrollToTop';
 import { PageTransition } from '@/components/ui/PageTransition';
-import { ReadingProgressBar } from '@/components/ui/ReadingProgressBar';
-import { NativeCursor } from '@/components/ui/NativeCursor';
 
 const cinzel = Cinzel({
   subsets: ['latin'],
@@ -82,6 +80,7 @@ export default function RootLayout({
   return (
     <html
       lang="id"
+      data-scroll-behavior="smooth"
       className={`${cinzel.variable} ${cormorant.variable} ${plusJakarta.variable} scroll-smooth`}
     >
       <body className="min-h-screen flex flex-col bg-[#0D0C0A] text-[#F5EFE6] font-sans selection:bg-[#C59B53]/35 selection:text-[#FFF8EC]">
@@ -92,12 +91,6 @@ export default function RootLayout({
         >
           Lewati ke Konten Utama
         </a>
-
-        {/* Scroll-progress gold line at top of viewport */}
-        <ReadingProgressBar />
-
-        {/* Custom spring-lag gold cursor (desktop only, hides on touch) */}
-        <NativeCursor />
 
         <Navbar />
 

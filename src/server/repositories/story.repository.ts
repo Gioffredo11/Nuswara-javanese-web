@@ -1,4 +1,4 @@
-import { prisma } from '../db';
+import { prisma, isDatabaseOnline, isOfflineError } from '../db';
 import { ContentStatus, Prisma } from '@prisma/client';
 import storiesSeed from '../../../prisma/seed-data/stories.json';
 
@@ -94,112 +94,129 @@ export class StoryRepository {
     const where: Prisma.StoryWhereInput = {};
     if (params.status) where.status = params.status;
 
-    try {
-      const stories = await prisma.story.findMany({
-        where,
-        include: {
-          philosophy: {
-            select: {
-              id: true,
-              slug: true,
-              title: true,
+    const online = await isDatabaseOnline();
+    if (online) {
+      try {
+        const stories = await prisma.story.findMany({
+          where,
+          include: {
+            philosophy: {
+              select: {
+                id: true,
+                slug: true,
+                title: true,
+              },
             },
-          },
-          characters: {
-            include: {
-              character: {
-                select: {
-                  id: true,
-                  slug: true,
-                  name: true,
-                  lineArtKey: true,
+            characters: {
+              include: {
+                character: {
+                  select: {
+                    id: true,
+                    slug: true,
+                    name: true,
+                    lineArtKey: true,
+                  },
                 },
               },
             },
-          },
-          chapters: {
-            orderBy: { order: 'asc' },
-            include: {
-              scenes: {
-                orderBy: { order: 'asc' },
+            chapters: {
+              orderBy: { order: 'asc' },
+              include: {
+                scenes: {
+                  orderBy: { order: 'asc' },
+                },
               },
             },
+            _count: {
+              select: { chapters: true },
+            },
           },
-          _count: {
-            select: { chapters: true },
-          },
-        },
-        orderBy: { id: 'asc' },
-      });
+          orderBy: { id: 'asc' },
+        });
 
-      if (stories && stories.length > 0) {
-        return stories;
+        if (stories && stories.length > 0) {
+          return stories;
+        }
+      } catch (err) {
+        if (!isOfflineError(err)) {
+          console.warn('[StoryRepository] DB findAll failed, using static seed fallback:', err);
+        }
       }
-    } catch (err) {
-      console.warn('[StoryRepository] DB findAll failed, using static seed fallback:', err);
     }
 
     return getFallbackAllStories();
   }
 
   async findBySlug(slug: string) {
-    try {
-      const story = await prisma.story.findUnique({
-        where: { slug },
-        include: {
-          philosophy: true,
-          characters: {
-            include: {
-              character: {
-                select: {
-                  id: true,
-                  slug: true,
-                  name: true,
-                  title: true,
-                  lineArtKey: true,
+    const online = await isDatabaseOnline();
+    if (online) {
+      try {
+        const story = await prisma.story.findUnique({
+          where: { slug },
+          include: {
+            philosophy: true,
+            characters: {
+              include: {
+                character: {
+                  select: {
+                    id: true,
+                    slug: true,
+                    name: true,
+                    title: true,
+                    lineArtKey: true,
+                  },
+                },
+              },
+            },
+            chapters: {
+              orderBy: { order: 'asc' },
+              include: {
+                scenes: {
+                  orderBy: { order: 'asc' },
                 },
               },
             },
           },
-          chapters: {
-            orderBy: { order: 'asc' },
-            include: {
-              scenes: {
-                orderBy: { order: 'asc' },
-              },
-            },
-          },
-        },
-      });
+        });
 
-      if (story) return story;
-    } catch (err) {
-      console.warn(`[StoryRepository] DB findBySlug failed for '${slug}', using static seed fallback:`, err);
+        if (story) return story;
+      } catch (err) {
+        if (!isOfflineError(err)) {
+          console.warn(`[StoryRepository] DB findBySlug failed for '${slug}', using static seed fallback:`, err);
+        }
+      }
     }
 
     return getFallbackStoryBySlug(slug);
   }
 
   async findByCharacterId(characterId: number) {
-    try {
-      return await prisma.story.findMany({
-        where: {
-          characters: {
-            some: { characterId },
+    const online = await isDatabaseOnline();
+    if (online) {
+      try {
+        return await prisma.story.findMany({
+          where: {
+            characters: {
+              some: { characterId },
+            },
           },
-        },
-        select: {
-          id: true,
-          slug: true,
-          title: true,
-          summary: true,
-          coverKey: true,
-        },
-      });
-    } catch (err) {
-      console.warn(`[StoryRepository] DB findByCharacterId failed for ${characterId}:`, err);
-      return [];
+          select: {
+            id: true,
+            slug: true,
+            title: true,
+            summary: true,
+            coverKey: true,
+          },
+        });
+      } catch (err) {
+        if (!isOfflineError(err)) {
+          console.warn(`[StoryRepository] DB findByCharacterId failed for ${characterId}:`, err);
+        }
+        return [];
+      }
     }
+
+    return [];
   }
 
   async create(data: Prisma.StoryUncheckedCreateInput) {

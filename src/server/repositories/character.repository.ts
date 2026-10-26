@@ -1,6 +1,6 @@
-import { prisma } from '../db';
+import { prisma, isDatabaseOnline, isOfflineError } from '../db';
 import { Character, ContentStatus, Prisma } from '@prisma/client';
-import { getFallbackCharactersWithCategories } from '../domain/seedFallback';
+import { getFallbackCharactersWithCategories, getFallbackFamilyTreeGraph } from '../domain/seedFallback';
 
 export interface CharacterFindAllParams {
   q?: string;
@@ -36,37 +36,42 @@ export class CharacterRepository {
       ];
     }
 
-    try {
-      const [characters, total] = await Promise.all([
-        prisma.character.findMany({
-          where,
-          skip,
-          take: limit,
-          orderBy: [{ order: 'asc' }, { id: 'asc' }],
-          include: {
-            category: {
-              select: {
-                id: true,
-                slug: true,
-                name: true,
+    const online = await isDatabaseOnline();
+    if (online) {
+      try {
+        const [characters, total] = await Promise.all([
+          prisma.character.findMany({
+            where,
+            skip,
+            take: limit,
+            orderBy: [{ order: 'asc' }, { id: 'asc' }],
+            include: {
+              category: {
+                select: {
+                  id: true,
+                  slug: true,
+                  name: true,
+                },
               },
             },
-          },
-        }),
-        prisma.character.count({ where }),
-      ]);
+          }),
+          prisma.character.count({ where }),
+        ]);
 
-      if (characters && characters.length > 0) {
-        return {
-          characters,
-          total,
-          page,
-          limit,
-          totalPages: Math.ceil(total / limit),
-        };
+        if (characters && characters.length > 0) {
+          return {
+            characters,
+            total,
+            page,
+            limit,
+            totalPages: Math.ceil(total / limit),
+          };
+        }
+      } catch (err) {
+        if (!isOfflineError(err)) {
+          console.warn('[CharacterRepository] DB findAll failed, falling back to seed data:', err);
+        }
       }
-    } catch (err) {
-      console.warn('[CharacterRepository] DB findAll failed, falling back to seed data:', err);
     }
 
     // Fallback to static seed data
@@ -189,59 +194,71 @@ export class CharacterRepository {
   }
 
   async getRelationshipsGraph() {
-    const [characters, relationships] = await Promise.all([
-      prisma.character.findMany({
-        select: {
-          id: true,
-          slug: true,
-          name: true,
-          javaneseName: true,
-          title: true,
-          shortDescription: true,
-          category: { select: { slug: true, name: true } },
-          generationLevel: true,
-          kingdom: true,
-          lineArtKey: true,
-        },
-        orderBy: [{ generationLevel: 'asc' }, { order: 'asc' }],
-      }),
-      prisma.characterRelationship.findMany({
-        include: {
-          from: { select: { id: true, slug: true, name: true } },
-          to: { select: { id: true, slug: true, name: true } },
-        },
-      }),
-    ]);
+    const online = await isDatabaseOnline();
+    if (!online) {
+      return getFallbackFamilyTreeGraph() as any;
+    }
 
-    const edges = relationships.map((r) => ({
-      id: r.id,
-      fromId: r.fromId,
-      toId: r.toId,
-      fromSlug: r.from.slug,
-      toSlug: r.to.slug,
-      fromName: r.from.name,
-      toName: r.to.name,
-      type: r.type,
-      note: r.note,
-    }));
+    try {
+      const [characters, relationships] = await Promise.all([
+        prisma.character.findMany({
+          select: {
+            id: true,
+            slug: true,
+            name: true,
+            javaneseName: true,
+            title: true,
+            shortDescription: true,
+            category: { select: { slug: true, name: true } },
+            generationLevel: true,
+            kingdom: true,
+            lineArtKey: true,
+          },
+          orderBy: [{ generationLevel: 'asc' }, { order: 'asc' }],
+        }),
+        prisma.characterRelationship.findMany({
+          include: {
+            from: { select: { id: true, slug: true, name: true } },
+            to: { select: { id: true, slug: true, name: true } },
+          },
+        }),
+      ]);
 
-    return {
-      nodes: characters.map((c) => ({
-        id: c.id,
-        slug: c.slug,
-        name: c.name,
-        javaneseName: c.javaneseName,
-        title: c.title,
-        shortDescription: c.shortDescription,
-        category: c.category.name,
-        categorySlug: c.category.slug,
-        generationLevel: c.generationLevel,
-        kingdom: c.kingdom,
-        lineArtKey: c.lineArtKey,
-      })),
-      edges,
-      links: edges, // Backward compatibility alias
-    };
+      const edges = relationships.map((r) => ({
+        id: r.id,
+        fromId: r.fromId,
+        toId: r.toId,
+        fromSlug: r.from.slug,
+        toSlug: r.to.slug,
+        fromName: r.from.name,
+        toName: r.to.name,
+        type: r.type,
+        note: r.note,
+      }));
+
+      return {
+        nodes: characters.map((c) => ({
+          id: c.id,
+          slug: c.slug,
+          name: c.name,
+          javaneseName: c.javaneseName,
+          title: c.title,
+          shortDescription: c.shortDescription,
+          category: c.category.name,
+          categorySlug: c.category.slug,
+          generationLevel: c.generationLevel,
+          kingdom: c.kingdom,
+          lineArtKey: c.lineArtKey,
+        })),
+        edges,
+        links: edges, // Backward compatibility alias
+      };
+    } catch (err) {
+      if (!isOfflineError(err)) {
+        console.warn('[CharacterRepository] getRelationshipsGraph failed:', err);
+      }
+      return getFallbackFamilyTreeGraph() as any;
+    }
   }
 
   async create(data: Prisma.CharacterUncheckedCreateInput) {

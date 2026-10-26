@@ -117,9 +117,9 @@ export function KulinerExplorer({ articles }: KulinerExplorerProps) {
 
   return (
     <div className="space-y-12">
-      {/* Search and Filters Bar */}
+      {/* Search and Filters Bar (Open Editorial Layout) */}
       <ScrollReveal direction="up" distance={25} delay={150}>
-        <div className="p-6 rounded-2xl bg-[#14110E] border border-[#C59B53]/30 shadow-2xl space-y-6">
+        <div className="space-y-6 pb-6 border-b border-[#C59B53]/20">
           {/* Top row: Search input + Results Counter */}
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
             <div className="relative flex-1 max-w-lg">
@@ -319,91 +319,82 @@ export function KulinerExplorer({ articles }: KulinerExplorerProps) {
           </div>
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10">
           {filteredArticles.map((article, idx) => (
             <ScrollReveal
               key={article.slug}
               direction="up"
               distance={30}
-              delay={100 + (idx % 3) * 120}
-              className="h-full flex"
+              delay={100 + (idx % 3) * 80}
             >
               <Link
                 href={`/kuliner/${article.slug}`}
-                className="group flex flex-col justify-between w-full rounded-2xl bg-[#14110E] border border-[#C59B53]/30 hover:border-[#ECC47E] transition-all shadow-xl card-hover-lift overflow-hidden cursor-pointer"
+                className="group block space-y-4 cursor-pointer"
               >
-                <div>
-                  {/* Food Image with Category & Region Tag */}
-                  <div className="relative aspect-[16/10] w-full overflow-hidden bg-[#0D0C0A]">
-                    <Image
-                      src={article.heroImage}
-                      alt={article.heroImageAlt}
-                      fill
-                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 400px"
-                      className="object-cover group-hover:scale-105 transition-transform duration-700"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#14110E] via-transparent to-transparent opacity-90 pointer-events-none" />
+                {/* Food Image with Category & Region Tag */}
+                <div className="relative aspect-[16/10] w-full rounded-xl overflow-hidden bg-[#16120E]">
+                  <Image
+                    src={article.heroImage}
+                    alt={article.heroImageAlt}
+                    fill
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 400px"
+                    className="object-cover group-hover:scale-104 transition-transform duration-700"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#0D0C0A]/80 via-transparent to-transparent opacity-60 pointer-events-none" />
 
-                    {/* Category Label Pill */}
-                    <div className="absolute top-3 left-3">
-                      <span className="px-2.5 py-1 rounded-full bg-[#0D0C0A]/85 backdrop-blur-md border border-[#C59B53]/40 text-[#ECC47E] text-[10px] font-mono uppercase tracking-wider">
-                        {article.categoryLabel}
-                      </span>
-                    </div>
-
-                    {/* City Badge */}
-                    <div className="absolute bottom-3 left-3 flex items-center gap-1.5 text-xs font-mono text-[#F5EFE6] bg-[#14110E]/80 backdrop-blur-sm px-2.5 py-0.5 rounded-lg border border-[#C59B53]/25">
-                      <MapPin className="w-3 h-3 text-[#C59B53]" />
-                      <span>{article.city}</span>
-                    </div>
+                  {/* Category Label Pill */}
+                  <div className="absolute top-3 left-3">
+                    <span className="px-2.5 py-1 rounded-full bg-[#0D0C0A]/85 backdrop-blur-md border border-[#C59B53]/40 text-[#ECC47E] text-[10px] font-mono uppercase tracking-wider">
+                      {article.categoryLabel}
+                    </span>
                   </div>
 
-                  {/* Body Details */}
-                  <div className="p-6 space-y-4">
-                    {/* Theme and Javanese name */}
-                    <div className="space-y-1">
-                      <span className="text-[11px] font-mono uppercase tracking-widest text-[#C59B53] block">
-                        {article.culturalTheme}
-                      </span>
-                      <h3 className="font-editorial text-2xl font-bold text-[#F5EFE6] group-hover:text-[#ECC47E] transition-colors leading-tight">
-                        {article.name}
-                      </h3>
-                      {article.javaneseName && (
-                        <p className="font-royal text-xs text-[#A89F91] italic">
-                          Aksara / Asma: {article.javaneseName}
-                        </p>
-                      )}
-                    </div>
-
-                    {/* Summary */}
-                    <p className="text-xs sm:text-[13px] text-[#C2B7A5] leading-relaxed line-clamp-3 font-sans">
-                      {article.shortSummary}
-                    </p>
-
-                    {/* Flavor Profile Tags */}
-                    <div className="flex flex-wrap gap-1.5 pt-1">
-                      {article.flavorProfile.slice(0, 3).map((flavor, fIdx) => (
-                        <span
-                          key={fIdx}
-                          className="px-2 py-0.5 rounded-md bg-[#1C1712] border border-[#C59B53]/20 text-[#D8C8AD] text-[10px] font-mono"
-                        >
-                          {flavor}
-                        </span>
-                      ))}
-                    </div>
+                  {/* City Badge */}
+                  <div className="absolute bottom-3 left-3 flex items-center gap-1.5 text-xs font-mono text-[#F5EFE6] bg-[#14110E]/80 backdrop-blur-sm px-2.5 py-0.5 rounded-lg border border-[#C59B53]/25">
+                    <MapPin className="w-3 h-3 text-[#C59B53]" />
+                    <span>{article.city}</span>
                   </div>
                 </div>
 
-                {/* Footer Action */}
-                <div className="px-6 py-4 bg-[#110E0B] border-t border-[#C59B53]/20 flex items-center justify-between text-xs font-mono">
-                  <span className="text-[#A89F91] flex items-center gap-1.5">
-                    <Clock className="w-3.5 h-3.5 text-[#C59B53]" />
-                    <span>{article.readTime}</span>
-                  </span>
-                  <span className="text-[#ECC47E] font-semibold flex items-center gap-1.5 group-hover:translate-x-1 transition-transform">
-                    <span>Kisah Lengkap</span>
-                    <ArrowRight className="w-3.5 h-3.5" />
-                  </span>
+                {/* Body Details */}
+                <div className="space-y-2.5">
+                  {/* Theme and Javanese name */}
+                  <div className="space-y-1">
+                    <span className="text-[11px] font-mono uppercase tracking-widest text-[#C59B53] block">
+                      {article.culturalTheme}
+                    </span>
+                    <h3 className="font-editorial text-2xl font-bold text-[#F5EFE6] group-hover:text-[#ECC47E] transition-colors leading-tight">
+                      {article.name}
+                    </h3>
+                    {article.javaneseName && (
+                      <p className="font-royal text-xs text-[#A89F91] italic">
+                        Aksara / Asma: {article.javaneseName}
+                      </p>
+                    )}
+                  </div>
+
+                  {/* Summary */}
+                  <p className="text-xs sm:text-[13px] text-[#C2B7A5] leading-relaxed line-clamp-3 font-sans">
+                    {article.shortSummary}
+                  </p>
+
+                  {/* Flavor Profile Tags */}
+                  <div className="flex flex-wrap gap-1.5 pt-1">
+                    {article.flavorProfile.slice(0, 3).map((flavor, fIdx) => (
+                      <span
+                        key={fIdx}
+                        className="px-2 py-0.5 rounded-md bg-[#1C1712] border border-[#C59B53]/20 text-[#D8C8AD] text-[10px] font-mono"
+                      >
+                        {flavor}
+                      </span>
+                    ))}
+                  </div>
+
+                  {/* Inline Action Link */}
+                  <div className="pt-2 flex items-center gap-2 text-xs font-mono text-[#ECC47E] group-hover:text-white transition-colors">
+                    <span>Kisah &amp; Resep Lengkap ({article.readTime})</span>
+                    <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+                  </div>
                 </div>
               </Link>
             </ScrollReveal>

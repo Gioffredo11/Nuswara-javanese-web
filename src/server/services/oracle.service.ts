@@ -7,6 +7,7 @@ import { philosophyRepository } from '../repositories/philosophy.repository';
 import { oracleRepository } from '../repositories/oracle.repository';
 import { userRepository } from '../repositories/user.repository';
 import { NotFoundError } from '../http/errors';
+import { isDatabaseOnline, isOfflineError } from '../db';
 import {
   getFallbackWeton,
   getFallbackCharactersForOracle,
@@ -29,21 +30,27 @@ export class OracleService {
       cutoff: input.cutoff,
     });
 
+    const online = await isDatabaseOnline();
+
     // 2. Fetch weton traits & data from DB or seed fallback
     let dbWeton: any = null;
     let allCharacters: any[] = [];
     let allRules: any[] = [];
 
-    try {
-      dbWeton = await wetonRepository.findByDayAndPasaran(calc.dayName, calc.pasaran);
-      if (dbWeton) {
-        [allCharacters, allRules] = await Promise.all([
-          characterRepository.getAllForOracle(),
-          wetonRepository.getAllRules(),
-        ]);
+    if (online) {
+      try {
+        dbWeton = await wetonRepository.findByDayAndPasaran(calc.dayName, calc.pasaran);
+        if (dbWeton) {
+          [allCharacters, allRules] = await Promise.all([
+            characterRepository.getAllForOracle(),
+            wetonRepository.getAllRules(),
+          ]);
+        }
+      } catch (dbErr) {
+        if (!isOfflineError(dbErr)) {
+          console.warn('[OracleService] DB query failed, using static seed fallback:', dbErr);
+        }
       }
-    } catch (dbErr) {
-      console.warn('[OracleService] DB query failed, using static seed fallback:', dbErr);
     }
 
     if (!dbWeton) {
@@ -84,12 +91,17 @@ export class OracleService {
     let relatedStories: any[] = [];
     let relatedPhilosophies: any[] = [];
 
-    try {
-      [relatedStories, relatedPhilosophies] = await Promise.all([
-        storyRepository.findByCharacterId(match.character.id),
-        philosophyRepository.findAll({ status: ContentStatus.REVIEWED }),
-      ]);
-    } catch {
+    if (online) {
+      try {
+        [relatedStories, relatedPhilosophies] = await Promise.all([
+          storyRepository.findByCharacterId(match.character.id),
+          philosophyRepository.findAll({ status: ContentStatus.REVIEWED }),
+        ]);
+      } catch {
+        relatedStories = getFallbackStoriesForCharacter(match.character.slug);
+        relatedPhilosophies = getFallbackPhilosophies();
+      }
+    } else {
       relatedStories = getFallbackStoriesForCharacter(match.character.slug);
       relatedPhilosophies = getFallbackPhilosophies();
     }
@@ -179,7 +191,9 @@ export class OracleService {
       });
       resultDto.id = saved.id;
     } catch (saveErr) {
-      console.warn('[OracleService] Could not persist oracle_results:', saveErr);
+      if (!isOfflineError(saveErr)) {
+        console.warn('[OracleService] Could not persist oracle_results:', saveErr);
+      }
     }
 
     return resultDto;

@@ -1,6 +1,7 @@
 import { getWibDateString, pickDailyCard } from '../domain/manifestation/pickDailyCard';
 import { manifestationRepository } from '../repositories/manifestation.repository';
 import { philosophyRepository } from '../repositories/philosophy.repository';
+import { isDatabaseOnline, isOfflineError } from '../db';
 import {
   getFallbackPhilosophiesForManifestation,
   getFallbackManifestation,
@@ -14,10 +15,15 @@ export class ManifestationService {
     const localDate = customDate || getWibDateString();
     let existing = null;
 
-    try {
-      existing = await manifestationRepository.findByUserAndDate(userId, localDate);
-    } catch (dbErr) {
-      console.warn('[ManifestationService] DB findByUserAndDate error, checking fallback cache:', dbErr);
+    const online = await isDatabaseOnline();
+    if (online) {
+      try {
+        existing = await manifestationRepository.findByUserAndDate(userId, localDate);
+      } catch (dbErr) {
+        if (!isOfflineError(dbErr)) {
+          console.warn('[ManifestationService] DB findByUserAndDate error, checking fallback cache:', dbErr);
+        }
+      }
     }
 
     if (!existing) {
@@ -77,29 +83,34 @@ export class ManifestationService {
    */
   async draw(userId: number, customDate?: string): Promise<DailyManifestationDTO> {
     const localDate = customDate || getWibDateString();
+    const online = await isDatabaseOnline();
 
     // 1. Check existing record from DB or Fallback Cache
-    try {
-      const existing = await manifestationRepository.findByUserAndDate(userId, localDate);
-      if (existing) {
-        return {
-          id: existing.id,
-          localDate: existing.localDate,
-          philosophy: {
-            id: existing.philosophy.id,
-            slug: existing.philosophy.slug,
-            title: existing.philosophy.title,
-            textJawa: existing.philosophy.textJawa,
-            meaning: existing.philosophy.meaning,
-            modernInterpretation: existing.philosophy.modernInterpretation,
-            category: existing.philosophy.category,
-          },
-          relatedCharacters: this.extractRelatedCharacters(existing.characters, existing.philosophy),
-          isFirstDrawToday: false,
-        };
+    if (online) {
+      try {
+        const existing = await manifestationRepository.findByUserAndDate(userId, localDate);
+        if (existing) {
+          return {
+            id: existing.id,
+            localDate: existing.localDate,
+            philosophy: {
+              id: existing.philosophy.id,
+              slug: existing.philosophy.slug,
+              title: existing.philosophy.title,
+              textJawa: existing.philosophy.textJawa,
+              meaning: existing.philosophy.meaning,
+              modernInterpretation: existing.philosophy.modernInterpretation,
+              category: existing.philosophy.category,
+            },
+            relatedCharacters: this.extractRelatedCharacters(existing.characters, existing.philosophy),
+            isFirstDrawToday: false,
+          };
+        }
+      } catch (dbErr) {
+        if (!isOfflineError(dbErr)) {
+          console.warn('[ManifestationService] DB findByUserAndDate error, checking fallback cache:', dbErr);
+        }
       }
-    } catch (dbErr) {
-      console.warn('[ManifestationService] DB findByUserAndDate error, checking fallback cache:', dbErr);
     }
 
     const cached = getFallbackManifestation(userId, localDate);
@@ -109,10 +120,14 @@ export class ManifestationService {
 
     // 2. Load all available philosophies for manifestation
     let cards: any[] = [];
-    try {
-      cards = await philosophyRepository.getAllForManifestation();
-    } catch (dbErr) {
-      console.warn('[ManifestationService] DB getAllForManifestation error, using fallback seed data:', dbErr);
+    if (online) {
+      try {
+        cards = await philosophyRepository.getAllForManifestation();
+      } catch (dbErr) {
+        if (!isOfflineError(dbErr)) {
+          console.warn('[ManifestationService] DB getAllForManifestation error, using fallback seed data:', dbErr);
+        }
+      }
     }
 
     if (!cards || cards.length === 0) {
@@ -127,58 +142,63 @@ export class ManifestationService {
     const pickedCard = pickDailyCard(userId, localDate, cards);
 
     // 4. Save to DB with race-condition catch or fallback to memory
-    try {
-      const created = await manifestationRepository.create({
-        userId,
-        localDate,
-        philosophyId: pickedCard.id,
-      });
+    if (online) {
+      try {
+        const created = await manifestationRepository.create({
+          userId,
+          localDate,
+          philosophyId: pickedCard.id,
+        });
 
-      return {
-        id: created.id,
-        localDate: created.localDate,
-        philosophy: {
-          id: created.philosophy.id,
-          slug: created.philosophy.slug,
-          title: created.philosophy.title,
-          textJawa: created.philosophy.textJawa,
-          meaning: created.philosophy.meaning,
-          modernInterpretation: created.philosophy.modernInterpretation,
-          category: created.philosophy.category,
-        },
-        relatedCharacters: this.extractRelatedCharacters(created.characters, created.philosophy),
-        isFirstDrawToday: true,
-      };
-    } catch (err: unknown) {
-      // Prisma P2002: Unique constraint failed on (userId, localDate)
-      const isUniqueError =
-        typeof err === 'object' && err !== null && 'code' in err && (err as { code: string }).code === 'P2002';
-      if (isUniqueError) {
-        try {
-          const reRead = await manifestationRepository.findByUserAndDate(userId, localDate);
-          if (reRead) {
-            return {
-              id: reRead.id,
-              localDate: reRead.localDate,
-              philosophy: {
-                id: reRead.philosophy.id,
-                slug: reRead.philosophy.slug,
-                title: reRead.philosophy.title,
-                textJawa: reRead.philosophy.textJawa,
-                meaning: reRead.philosophy.meaning,
-                modernInterpretation: reRead.philosophy.modernInterpretation,
-                category: reRead.philosophy.category,
-              },
-              relatedCharacters: this.extractRelatedCharacters(reRead.characters, reRead.philosophy),
-              isFirstDrawToday: false,
-            };
+        return {
+          id: created.id,
+          localDate: created.localDate,
+          philosophy: {
+            id: created.philosophy.id,
+            slug: created.philosophy.slug,
+            title: created.philosophy.title,
+            textJawa: created.philosophy.textJawa,
+            meaning: created.philosophy.meaning,
+            modernInterpretation: created.philosophy.modernInterpretation,
+            category: created.philosophy.category,
+          },
+          relatedCharacters: this.extractRelatedCharacters(created.characters, created.philosophy),
+          isFirstDrawToday: true,
+        };
+      } catch (err: unknown) {
+        // Prisma P2002: Unique constraint failed on (userId, localDate)
+        const isUniqueError =
+          typeof err === 'object' && err !== null && 'code' in err && (err as { code: string }).code === 'P2002';
+        if (isUniqueError) {
+          try {
+            const reRead = await manifestationRepository.findByUserAndDate(userId, localDate);
+            if (reRead) {
+              return {
+                id: reRead.id,
+                localDate: reRead.localDate,
+                philosophy: {
+                  id: reRead.philosophy.id,
+                  slug: reRead.philosophy.slug,
+                  title: reRead.philosophy.title,
+                  textJawa: reRead.philosophy.textJawa,
+                  meaning: reRead.philosophy.meaning,
+                  modernInterpretation: reRead.philosophy.modernInterpretation,
+                  category: reRead.philosophy.category,
+                },
+                relatedCharacters: this.extractRelatedCharacters(reRead.characters, reRead.philosophy),
+                isFirstDrawToday: false,
+              };
+            }
+          } catch {
+            // ignore and proceed to fallback
           }
-        } catch {
-          // ignore and proceed to fallback
+        }
+
+        if (!isOfflineError(err)) {
+          console.warn('[ManifestationService] DB persist failed, using in-memory manifestation result:', err);
         }
       }
-
-      console.warn('[ManifestationService] DB persist failed, using in-memory manifestation result:', err);
+    }
       const fallbackResult: DailyManifestationDTO = {
         id: Math.abs(pickedCard.id * 1000 + userId) || 1,
         localDate,
@@ -206,7 +226,6 @@ export class ManifestationService {
 
       saveFallbackManifestation(userId, localDate, fallbackResult);
       return fallbackResult;
-    }
   }
 }
 

@@ -74,7 +74,7 @@ export function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/#manifestasi" className="hover:text-[#F4DE9B] transition-colors">
+                <Link href="/manifestation" className="hover:text-[#F4DE9B] transition-colors">
                   Manifestasi Harian (Piwulang)
                 </Link>
               </li>

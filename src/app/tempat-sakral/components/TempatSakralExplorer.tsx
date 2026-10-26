@@ -112,9 +112,9 @@ export function TempatSakralExplorer({ articles }: TempatSakralExplorerProps) {
 
   return (
     <div className="space-y-12">
-      {/* Search and Filters Bar */}
+      {/* Search and Filters Bar (Open Editorial Layout) */}
       <ScrollReveal direction="up" distance={25} delay={150}>
-        <div className="p-6 rounded-2xl bg-[#14110E] border border-[#C59B53]/30 shadow-2xl space-y-6">
+        <div className="space-y-6 pb-6 border-b border-[#C59B53]/20">
           <div className="flex flex-col md:flex-row gap-4 items-stretch md:items-center justify-between">
             {/* Search Input */}
             <div className="relative flex-1">
@@ -317,102 +317,97 @@ export function TempatSakralExplorer({ articles }: TempatSakralExplorerProps) {
           </div>
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10">
           {filteredArticles.map((article, idx) => (
             <ScrollReveal
               key={article.slug}
               direction="up"
               distance={30}
-              delay={idx * 60}
-              className="h-full flex"
+              delay={idx * 50}
             >
               <Link
                 href={`/tempat-sakral/${article.slug}`}
-                className="rounded-2xl bg-[#14110E] border border-[#C59B53]/30 overflow-hidden shadow-2xl hover:border-[#ECC47E] transition-all duration-300 card-hover-lift group flex flex-col justify-between h-full cursor-pointer w-full"
+                className="group block space-y-4 cursor-pointer"
               >
-                <div>
-                  {/* Hero Image Thumbnail */}
-                  <div className="relative aspect-[16/10] w-full overflow-hidden bg-[#0D0C0A]">
-                    <Image
-                      src={article.heroImage}
-                      alt={article.heroImageAlt}
-                      fill
-                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                      className="object-cover group-hover:scale-105 transition-transform duration-700"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#14110E] via-transparent to-transparent opacity-90" />
+                {/* Hero Image Thumbnail */}
+                <div className="relative aspect-[16/10] w-full rounded-xl overflow-hidden bg-[#16120E]">
+                  <Image
+                    src={article.heroImage}
+                    alt={article.heroImageAlt}
+                    fill
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    className="object-cover group-hover:scale-104 transition-transform duration-700"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#0D0C0A]/80 via-transparent to-transparent opacity-60" />
 
-                    {/* Top Badges */}
-                    <div className="absolute top-3 left-3 right-3 flex items-center justify-between gap-2">
-                      <span className="px-2.5 py-1 rounded-full bg-[#0D0C0A]/85 backdrop-blur-sm border border-[#C59B53]/40 text-[#ECC47E] text-[10px] font-mono tracking-wider uppercase font-semibold">
-                        {article.categoryLabel.split('•')[0].trim()}
+                  {/* Top Badges */}
+                  <div className="absolute top-3 left-3 right-3 flex items-center justify-between gap-2">
+                    <span className="px-2.5 py-1 rounded-full bg-[#0D0C0A]/85 backdrop-blur-sm border border-[#C59B53]/40 text-[#ECC47E] text-[10px] font-mono tracking-wider uppercase font-semibold">
+                      {article.categoryLabel.split('•')[0].trim()}
+                    </span>
+                    {article.locationDetails.elevation && (
+                      <span className="px-2 py-0.5 rounded-full bg-[#18130E]/90 text-[#D8C8AD] text-[10px] font-mono flex items-center gap-1 border border-[#C59B53]/30">
+                        <Mountain className="w-3 h-3 text-[#ECC47E]" />
+                        <span>{article.locationDetails.elevation}</span>
                       </span>
-                      {article.locationDetails.elevation && (
-                        <span className="px-2 py-0.5 rounded-full bg-[#18130E]/90 text-[#D8C8AD] text-[10px] font-mono flex items-center gap-1 border border-[#C59B53]/30">
-                          <Mountain className="w-3 h-3 text-[#ECC47E]" />
-                          <span>{article.locationDetails.elevation}</span>
-                        </span>
-                      )}
-                    </div>
-                  </div>
-
-                  {/* Body Content */}
-                  <div className="p-6 space-y-3.5">
-                    {/* Location & Read time */}
-                    <div className="flex items-center justify-between text-[11px] font-mono text-[#ECC47E]">
-                      <span className="flex items-center gap-1">
-                        <MapPin className="w-3.5 h-3.5 shrink-0" />
-                        <span className="truncate max-w-[180px]">{article.city}</span>
-                      </span>
-                      <span className="flex items-center gap-1 text-[#A89F91]">
-                        <Clock className="w-3 h-3 text-[#ECC47E]" />
-                        <span>{article.readTime}</span>
-                      </span>
-                    </div>
-
-                    {/* Title */}
-                    <div>
-                      <h2 className="font-royal text-2xl font-bold text-[#F5EFE6] group-hover:text-[#ECC47E] transition-colors leading-tight">
-                        {article.name}
-                      </h2>
-                      {article.javaneseName && (
-                        <p className="font-editorial italic text-xs text-[#A89F91] mt-0.5">
-                          {article.javaneseName}
-                        </p>
-                      )}
-                    </div>
-
-                    {/* Spiritual Theme Quote */}
-                    <div className="p-2.5 rounded-xl bg-[#0D0C0A]/80 border-l-2 border-[#C59B53] text-xs text-[#D8C8AD] font-serif italic leading-relaxed">
-                      &ldquo;{article.spiritualTheme}&rdquo;
-                    </div>
-
-                    {/* Summary */}
-                    <p className="text-xs text-[#A89F91] leading-relaxed line-clamp-3">
-                      {article.shortSummary}
-                    </p>
-
-                    {/* Highlights tags */}
-                    <div className="flex flex-wrap gap-1.5 pt-1">
-                      {article.highlights.slice(0, 3).map((hl, i) => (
-                        <span
-                          key={i}
-                          className="text-[10px] font-mono px-2 py-0.5 rounded bg-[#1C1712] text-[#ECC47E]/90 border border-[#C59B53]/20"
-                        >
-                          {hl}
-                        </span>
-                      ))}
-                    </div>
+                    )}
                   </div>
                 </div>
 
-                {/* Card Footer Button */}
-                <div className="px-6 py-4 border-t border-[#C59B53]/20 bg-[#100D0A] flex items-center justify-between text-xs font-mono text-[#ECC47E] group-hover:text-white transition-colors">
-                  <span className="font-semibold tracking-wider uppercase">
-                    Baca Kisah Spiritual
-                  </span>
-                  <div className="w-7 h-7 rounded-full bg-[#1C160F] group-hover:bg-[#C59B53] text-[#ECC47E] group-hover:text-[#0D0C0A] flex items-center justify-center transition-all duration-300 group-hover:translate-x-1">
-                    <ArrowRight className="w-3.5 h-3.5" />
+                {/* Body Content */}
+                <div className="space-y-2.5">
+                  {/* Location & Read time */}
+                  <div className="flex items-center justify-between text-[11px] font-mono text-[#ECC47E]">
+                    <span className="flex items-center gap-1">
+                      <MapPin className="w-3.5 h-3.5 shrink-0" />
+                      <span className="truncate max-w-[180px]">{article.city}</span>
+                    </span>
+                    <span className="flex items-center gap-1 text-[#A89F91]">
+                      <Clock className="w-3 h-3 text-[#ECC47E]" />
+                      <span>{article.readTime}</span>
+                    </span>
+                  </div>
+
+                  {/* Title */}
+                  <div>
+                    <h2 className="font-royal text-2xl font-bold text-[#F5EFE6] group-hover:text-[#ECC47E] transition-colors leading-tight">
+                      {article.name}
+                    </h2>
+                    {article.javaneseName && (
+                      <p className="font-editorial italic text-xs text-[#A89F91] mt-0.5">
+                        {article.javaneseName}
+                      </p>
+                    )}
+                  </div>
+
+                  {/* Spiritual Theme Quote (Clean left border line, no box) */}
+                  <div className="border-l-2 border-[#C59B53] pl-3 py-0.5 text-xs text-[#D8C8AD] font-serif italic leading-relaxed">
+                    &ldquo;{article.spiritualTheme}&rdquo;
+                  </div>
+
+                  {/* Summary */}
+                  <p className="text-xs text-[#A89F91] leading-relaxed line-clamp-3 font-sans">
+                    {article.shortSummary}
+                  </p>
+
+                  {/* Highlights tags */}
+                  <div className="flex flex-wrap gap-1.5 pt-1">
+                    {article.highlights.slice(0, 3).map((hl, i) => (
+                      <span
+                        key={i}
+                        className="text-[10px] font-mono px-2 py-0.5 rounded bg-[#1C1712] text-[#ECC47E]/90 border border-[#C59B53]/20"
+                      >
+                        {hl}
+                      </span>
+                    ))}
+                  </div>
+
+                  {/* Inline Action Link */}
+                  <div className="pt-2 flex items-center gap-2 text-xs font-mono text-[#ECC47E] group-hover:text-white transition-colors">
+                    <span className="font-semibold tracking-wider uppercase">
+                      Baca Kisah Spiritual
+                    </span>
+                    <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
                   </div>
                 </div>
               </Link>

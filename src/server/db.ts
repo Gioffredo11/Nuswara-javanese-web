@@ -112,6 +112,24 @@ if (process.env.NODE_ENV !== 'production') {
   globalForPrisma.rawPrisma = rawPrisma;
 }
 
+export function isOfflineError(err: unknown): boolean {
+  if (!err) return false;
+  const e = err as any;
+  return (
+    e.isOffline === true ||
+    e.name === 'PrismaClientInitializationError' ||
+    String(e.message || '').includes("Can't reach database server")
+  );
+}
+
+function createOfflineError(): Error {
+  const err = new Error(`Can't reach database server at \`${dbHost}:${dbPort}\``);
+  (err as any).name = 'PrismaClientInitializationError';
+  (err as any).isOffline = true;
+  err.stack = `PrismaClientInitializationError: Can't reach database server at \`${dbHost}:${dbPort}\``;
+  return err;
+}
+
 // Transparent Proxy that guards Prisma queries with instant circuit-breaker rejection
 // when MySQL is offline, eliminating 2.1s connection timeouts and console spam.
 export const prisma =
@@ -128,9 +146,7 @@ export const prisma =
             if (prop === '$connect' || prop === '$disconnect') {
               return;
             }
-            const err = new Error(`Can't reach database server at \`${dbHost}:${dbPort}\``);
-            (err as any).name = 'PrismaClientInitializationError';
-            throw err;
+            throw createOfflineError();
           }
           return orig.apply(target, args);
         };
@@ -145,9 +161,7 @@ export const prisma =
               return async function (...args: any[]) {
                 const online = await isDatabaseOnline();
                 if (!online) {
-                  const err = new Error(`Can't reach database server at \`${dbHost}:${dbPort}\``);
-                  (err as any).name = 'PrismaClientInitializationError';
-                  throw err;
+                  throw createOfflineError();
                 }
                 try {
                   return await modelMethod.apply(modelTarget, args);

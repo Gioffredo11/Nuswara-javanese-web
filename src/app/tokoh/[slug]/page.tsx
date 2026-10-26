@@ -20,7 +20,6 @@ import {
   FileText,
 } from 'lucide-react';
 import { ScrollReveal } from '@/components/ui/ScrollReveal';
-import { ReadingProgressBar } from '@/components/ui/ReadingProgressBar';
 import { ArticleShareBar } from '@/components/ui/ArticleShareBar';
 
 interface TokohDetailPageProps {
@@ -82,8 +81,6 @@ export default async function TokohDetailPage({
 
   return (
     <main className="min-h-screen bg-[#0D0C0A] text-[#F5EFE6] pt-28 sm:pt-32 pb-24 selection:bg-[#C59B53]/30 selection:text-[#ECC47E]">
-      <ReadingProgressBar />
-
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
         {/* Navigation Breadcrumb */}
         <ScrollReveal direction="up" distance={20}>

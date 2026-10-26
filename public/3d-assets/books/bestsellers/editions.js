@@ -1,17 +1,212 @@
-export const editions=[
+export const editions = [
   {
-    "id": "codex",
-    "title": "Codex",
-    "html": "<button\n        class=\"book-card\"\n        type=\"button\"\n        data-book=\"codex\"\n        aria-label=\"Open Codex cover\"\n        style=\"\n          --cover-color: #363126;\n          --cover: url('https://ublctyddhtbgaersvxxb.supabase.co/storage/v1/object/public/threeui-media/scene-images/embedded/eafc13621b9605d30356b7d4396072b2593a46e0c47c96d17ba60ca03d98f925.jpg');\n        \"\n      >\n        <span class=\"book\" aria-hidden=\"true\">\n          <span class=\"book-shadow\"></span>\n          <span class=\"book-back\"></span>\n          <span class=\"page-block\"></span>\n          <span class=\"page-fan\"><i></i><i></i><i></i><i></i></span>\n          <span class=\"front-cover\">\n            <video class=\"cover-motion\" autoplay muted loop playsinline preload=\"metadata\">\n              <source src=\"https://ublctyddhtbgaersvxxb.supabase.co/storage/v1/object/public/threeui-media/scene-images/embedded/6b3318cc6a7da610e3a55369131b20a2419cda826d558da09da284f09582956d.mp4\" type=\"video/mp4\">\n            </video>\n            <span class=\"cover-copy\">\n              <span class=\"cover-kicker\">Field Manual · I</span>\n              <span class=\"cover-title\">Codex</span>\n              <span class=\"cover-subtitle\">The Agentic Engineer</span>\n              <span></span>\n              <span class=\"cover-footer\">Systems · Tools · Taste</span>\n            </span>\n          </span>\n          \n        </span>\n      </button>"
+    "id": "arjuna",
+    "title": "Serat Arjuna",
+    "html": `<button
+        class="book-card"
+        type="button"
+        data-book="arjuna"
+        aria-label="Buka Kitab Serat Arjuna"
+        style="
+          --cover-color: #1c150f;
+          --cover: url('./assets/cover-arjuna.jpg');
+        "
+      >
+        <span class="book" aria-hidden="true">
+          <span class="book-shadow"></span>
+          <span class="book-back"></span>
+          <span class="page-block"></span>
+          <span class="page-fan"><i></i><i></i><i></i><i></i></span>
+          <span class="front-cover">
+            <span class="cover-copy visually-hidden">
+              <span class="cover-kicker">Pandawa Lima · Adiluhung</span>
+              <span class="cover-title">Serat Arjuna</span>
+              <span class="cover-subtitle">Ksatria Janaka Madukara</span>
+              <span></span>
+              <span class="cover-footer">Nuswara · Adiluhung</span>
+            </span>
+          </span>
+        </span>
+      </button>`
   },
   {
-    "id": "claude",
-    "title": "Claude Code",
-    "html": "<button\n        class=\"book-card\"\n        type=\"button\"\n        data-book=\"claude\"\n        aria-label=\"Open Claude Code cover\"\n        style=\"\n          --cover-color: #945a3e;\n          --cover: url('https://ublctyddhtbgaersvxxb.supabase.co/storage/v1/object/public/threeui-media/scene-images/embedded/99df6a45ad1f9dd7e47b65c064df0ae58c7c22069fadd9aa896754c3bad27123.jpg');\n        \"\n      >\n        <span class=\"book\" aria-hidden=\"true\">\n          <span class=\"book-shadow\"></span>\n          <span class=\"book-back\"></span>\n          <span class=\"page-block\"></span>\n          <span class=\"page-fan\"><i></i><i></i><i></i><i></i></span>\n          <span class=\"front-cover\">\n            <video class=\"cover-motion\" autoplay muted loop playsinline preload=\"metadata\">\n              <source src=\"https://ublctyddhtbgaersvxxb.supabase.co/storage/v1/object/public/threeui-media/scene-images/embedded/76a7b0b20e4992f91bb5febf2fa8edd2d33fd4b7bb0cda5f8ae0fffdff9d5a7e.mp4\" type=\"video/mp4\">\n            </video>\n            <span class=\"cover-copy\">\n              <span class=\"cover-kicker\">Field Manual · II</span>\n              <span class=\"cover-title\">Claude<br>Code</span>\n              <span class=\"cover-subtitle\">The Quiet Terminal</span>\n              <span></span>\n              <span class=\"cover-footer\">Context · Craft · Care</span>\n            </span>\n          </span>\n          \n        </span>\n      </button>"
+    "id": "bima",
+    "title": "Serat Bima",
+    "html": `<button
+        class="book-card"
+        type="button"
+        data-book="bima"
+        aria-label="Buka Kitab Serat Bima"
+        style="
+          --cover-color: #1c150f;
+          --cover: url('./assets/cover-bima.jpg');
+        "
+      >
+        <span class="book" aria-hidden="true">
+          <span class="book-shadow"></span>
+          <span class="book-back"></span>
+          <span class="page-block"></span>
+          <span class="page-fan"><i></i><i></i><i></i><i></i></span>
+          <span class="front-cover">
+            <span class="cover-copy visually-hidden">
+              <span class="cover-kicker">Pandawa Lima · Adiluhung</span>
+              <span class="cover-title">Serat Bima</span>
+              <span class="cover-subtitle">Werkudara Jodhipati</span>
+              <span></span>
+              <span class="cover-footer">Nuswara · Adiluhung</span>
+            </span>
+          </span>
+        </span>
+      </button>`
   },
   {
-    "id": "cursor",
-    "title": "Cursor",
-    "html": "<button\n        class=\"book-card\"\n        type=\"button\"\n        data-book=\"cursor\"\n        aria-label=\"Open Cursor cover\"\n        style=\"\n          --cover-color: #566044;\n          --cover: url('https://ublctyddhtbgaersvxxb.supabase.co/storage/v1/object/public/threeui-media/scene-images/embedded/5f73c2c9094bbeef04fdc241909a4672235142882112ec15c6d130f89bf5fd16.jpg');\n        \"\n      >\n        <span class=\"book\" aria-hidden=\"true\">\n          <span class=\"book-shadow\"></span>\n          <span class=\"book-back\"></span>\n          <span class=\"page-block\"></span>\n          <span class=\"page-fan\"><i></i><i></i><i></i><i></i></span>\n          <span class=\"front-cover\">\n            <video class=\"cover-motion\" autoplay muted loop playsinline preload=\"metadata\">\n              <source src=\"https://ublctyddhtbgaersvxxb.supabase.co/storage/v1/object/public/threeui-media/scene-images/embedded/aabcdc51e4d9f6c4cbf6656bbd3447d6b50814507395f9e5bd0efecd7c1b22b3.mp4\" type=\"video/mp4\">\n            </video>\n            <span class=\"cover-copy\">\n              <span class=\"cover-kicker\">Field Manual · III</span>\n              <span class=\"cover-title\">Cursor</span>\n              <span class=\"cover-subtitle\">The Augmented Editor</span>\n              <span></span>\n              <span class=\"cover-footer\">Select · Predict · Refine</span>\n            </span>\n          </span>\n          \n        </span>\n      </button>"
+    "id": "yudhistira",
+    "title": "Serat Yudhistira",
+    "html": `<button
+        class="book-card"
+        type="button"
+        data-book="yudhistira"
+        aria-label="Buka Kitab Serat Yudhistira"
+        style="
+          --cover-color: #1c150f;
+          --cover: url('./assets/cover-yudhistira.jpg');
+        "
+      >
+        <span class="book" aria-hidden="true">
+          <span class="book-shadow"></span>
+          <span class="book-back"></span>
+          <span class="page-block"></span>
+          <span class="page-fan"><i></i><i></i><i></i><i></i></span>
+          <span class="front-cover">
+            <span class="cover-copy visually-hidden">
+              <span class="cover-kicker">Pandawa Lima · Adiluhung</span>
+              <span class="cover-title">Serat Yudhistira</span>
+              <span class="cover-subtitle">Prabu Puntadewa Amarta</span>
+              <span></span>
+              <span class="cover-footer">Nuswara · Adiluhung</span>
+            </span>
+          </span>
+        </span>
+      </button>`
+  },
+  {
+    "id": "gatotkaca",
+    "title": "Serat Gatotkaca",
+    "html": `<button
+        class="book-card"
+        type="button"
+        data-book="gatotkaca"
+        aria-label="Buka Kitab Serat Gatotkaca"
+        style="
+          --cover-color: #191512;
+          --cover: url('./assets/cover-gatotkaca.jpg');
+        "
+      >
+        <span class="book" aria-hidden="true">
+          <span class="book-shadow"></span>
+          <span class="book-back"></span>
+          <span class="page-block"></span>
+          <span class="page-fan"><i></i><i></i><i></i><i></i></span>
+          <span class="front-cover">
+            <span class="cover-copy visually-hidden">
+              <span class="cover-kicker">Kesatria & Pahlawan</span>
+              <span class="cover-title">Serat Gatotkaca</span>
+              <span class="cover-subtitle">Pahlawan Angkasa Pringgandani</span>
+              <span></span>
+              <span class="cover-footer">Nuswara · Adiluhung</span>
+            </span>
+          </span>
+        </span>
+      </button>`
+  },
+  {
+    "id": "semar",
+    "title": "Serat Semar",
+    "html": `<button
+        class="book-card"
+        type="button"
+        data-book="semar"
+        aria-label="Buka Kitab Serat Semar"
+        style="
+          --cover-color: #20160f;
+          --cover: url('./assets/cover-semar.jpg');
+        "
+      >
+        <span class="book" aria-hidden="true">
+          <span class="book-shadow"></span>
+          <span class="book-back"></span>
+          <span class="page-block"></span>
+          <span class="page-fan"><i></i><i></i><i></i><i></i></span>
+          <span class="front-cover">
+            <span class="cover-copy visually-hidden">
+              <span class="cover-kicker">Pamomong · Karangtumaritis</span>
+              <span class="cover-title">Serat Semar</span>
+              <span class="cover-subtitle">Kyai Semar Badranaya</span>
+              <span></span>
+              <span class="cover-footer">Nuswara · Adiluhung</span>
+            </span>
+          </span>
+        </span>
+      </button>`
+  },
+  {
+    "id": "srikandi",
+    "title": "Serat Srikandi",
+    "html": `<button
+        class="book-card"
+        type="button"
+        data-book="srikandi"
+        aria-label="Buka Kitab Serat Srikandi"
+        style="
+          --cover-color: #191512;
+          --cover: url('./assets/cover-srikandi.jpg');
+        "
+      >
+        <span class="book" aria-hidden="true">
+          <span class="book-shadow"></span>
+          <span class="book-back"></span>
+          <span class="page-block"></span>
+          <span class="page-fan"><i></i><i></i><i></i><i></i></span>
+          <span class="front-cover">
+            <span class="cover-copy visually-hidden">
+              <span class="cover-kicker">Kesatria & Pahlawan</span>
+              <span class="cover-title">Serat Srikandi</span>
+              <span class="cover-subtitle">Prajurit Utama Pancala</span>
+              <span></span>
+              <span class="cover-footer">Nuswara · Adiluhung</span>
+            </span>
+          </span>
+        </span>
+      </button>`
+  },
+  {
+    "id": "karna",
+    "title": "Serat Karna",
+    "html": `<button
+        class="book-card"
+        type="button"
+        data-book="karna"
+        aria-label="Buka Kitab Serat Karna"
+        style="
+          --cover-color: #211214;
+          --cover: url('./assets/cover-karna.jpg');
+        "
+      >
+        <span class="book" aria-hidden="true">
+          <span class="book-shadow"></span>
+          <span class="book-back"></span>
+          <span class="page-block"></span>
+          <span class="page-fan"><i></i><i></i><i></i><i></i></span>
+          <span class="front-cover">
+            <span class="cover-copy visually-hidden">
+              <span class="cover-kicker">Astina · Kurawa Satus</span>
+              <span class="cover-title">Serat Karna</span>
+              <span class="cover-subtitle">Adipati Basukarna Awangga</span>
+              <span></span>
+              <span class="cover-footer">Nuswara · Adiluhung</span>
+            </span>
+          </span>
+        </span>
+      </button>`
   }
 ];

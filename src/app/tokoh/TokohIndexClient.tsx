@@ -83,9 +83,9 @@ export function TokohIndexClient() {
         </div>
       </ScrollReveal>
 
-      {/* Search & Filter Bar */}
+      {/* Search & Filter Bar (Open Editorial Layout) */}
       <ScrollReveal direction="up" distance={30} delay={150}>
-        <div className="bg-[#14100C] border border-[#C59B53]/30 rounded-2xl p-4 sm:p-6 space-y-4 shadow-xl">
+        <div className="space-y-4 pb-6 border-b border-[#C59B53]/20">
           <div className="flex flex-col md:flex-row gap-4 items-stretch md:items-center justify-between">
             {/* Search Input */}
             <div className="relative flex-1">
@@ -95,13 +95,13 @@ export function TokohIndexClient() {
                 placeholder="Cari nama tokoh, gelar, kota asal, atau kutipan falsafah..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full bg-[#0D0B08] border border-[#C59B53]/30 rounded-xl pl-11 pr-4 py-3 text-sm text-[#F5EFE6] placeholder-[#7E7465] focus:outline-none focus:border-[#C59B53] focus:ring-1 focus:ring-[#C59B53] transition-all"
+                className="w-full bg-[#120E0A] border border-[#C59B53]/30 rounded-xl pl-11 pr-4 py-3 text-sm text-[#F5EFE6] placeholder-[#7E7465] focus:outline-none focus:border-[#C59B53] focus:ring-1 focus:ring-[#C59B53] transition-all"
               />
               {searchQuery && (
                 <button
                   type="button"
                   onClick={() => setSearchQuery('')}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-[#A89F91] hover:text-[#F5EFE6] px-2 py-1"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-[#A89F91] hover:text-[#F5EFE6] px-2 py-1 cursor-pointer"
                 >
                   Reset
                 </button>
@@ -126,7 +126,7 @@ export function TokohIndexClient() {
                   key={cat.id}
                   onClick={() => setSelectedCategory(cat.id)}
                   type="button"
-                  className={`text-xs px-3.5 py-1.5 rounded-lg border transition-all flex items-center gap-1.5 ${
+                  className={`text-xs px-3.5 py-1.5 rounded-lg border transition-all flex items-center gap-1.5 cursor-pointer ${
                     active
                       ? 'bg-[#C59B53] text-[#0D0B08] border-[#C59B53] font-semibold shadow-md'
                       : 'bg-[#1A140F] text-[#A89F91] border-[#C59B53]/25 hover:border-[#C59B53]/50 hover:text-[#F5EFE6]'

@@ -1,6 +1,7 @@
 'use client';
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { X, Sparkles } from 'lucide-react';
 import { ManifestationClient } from '@/app/manifestation/ManifestationClient';
 
@@ -10,6 +11,12 @@ interface ManifestationModalProps {
 }
 
 export function ManifestationModal({ isOpen, onClose }: ManifestationModalProps) {
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   // Handle escape key to close modal
   useEffect(() => {
     if (!isOpen) return;
@@ -33,29 +40,32 @@ export function ManifestationModal({ isOpen, onClose }: ManifestationModalProps)
     }
   }, [isOpen]);
 
-  if (!isOpen) return null;
+  if (!isOpen || !mounted) return null;
 
-  return (
+  const modalContent = (
     <div
       role="dialog"
       aria-modal="true"
       aria-labelledby="manifestation-modal-title"
-      className="fixed inset-0 z-[100] flex items-center justify-center p-3 sm:p-5 md:p-8 overflow-y-auto"
+      className="fixed inset-0 z-[9990] flex items-center justify-center p-3 sm:p-5 md:p-8 overflow-y-auto"
     >
       {/* Backdrop with blur & darken */}
       <div
-        className="fixed inset-0 bg-black/80 backdrop-blur-md transition-opacity duration-300 animate-in fade-in"
+        className="fixed inset-0 bg-black/85 backdrop-blur-md transition-opacity duration-300 animate-in fade-in"
         onClick={onClose}
         aria-hidden="true"
       />
 
       {/* Modal Dialog Card */}
-      <div className="relative w-full max-w-3xl bg-[#120F0C] border border-[#C59B53]/40 rounded-2xl shadow-[0_25px_80px_rgba(0,0,0,0.95)] overflow-hidden z-10 animate-in zoom-in-95 duration-200">
+      <div
+        className="relative w-full max-w-2xl max-h-[92vh] flex flex-col bg-[#120F0C] border border-[#C59B53]/40 rounded-2xl shadow-[0_25px_80px_rgba(0,0,0,0.95)] overflow-hidden z-10 animate-in zoom-in-95 duration-200 my-auto"
+        onClick={(e) => e.stopPropagation()}
+      >
         {/* Top Decorative Border Accent */}
-        <div className="h-1 w-full bg-gradient-to-r from-transparent via-[#ECC47E] to-transparent" />
+        <div className="h-1 w-full bg-gradient-to-r from-transparent via-[#ECC47E] to-transparent shrink-0" />
 
         {/* Modal Header */}
-        <div className="flex items-center justify-between px-5 pt-4 pb-2 border-b border-[#C59B53]/20">
+        <div className="flex items-center justify-between px-5 pt-4 pb-3 border-b border-[#C59B53]/20 shrink-0 bg-[#16120E]">
           <div className="flex items-center gap-2">
             <div className="w-2 h-2 rounded-full bg-[#ECC47E] animate-pulse" />
             <span
@@ -77,12 +87,14 @@ export function ManifestationModal({ isOpen, onClose }: ManifestationModalProps)
         </div>
 
         {/* Modal Body: Embed ManifestationClient */}
-        <div className="p-2 sm:p-4 max-h-[80vh] overflow-y-auto">
+        <div className="p-3 sm:p-5 overflow-y-auto flex-1">
           <ManifestationClient isModal={true} onClose={onClose} />
         </div>
       </div>
     </div>
   );
+
+  return createPortal(modalContent, document.body);
 }
 
 export default ManifestationModal;

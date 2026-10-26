@@ -1,5 +1,5 @@
 import {toolbar} from '../runtime/resources.js';import {editions} from './editions.js';
-export async function mountBestsellers(host,{edition='codex',controls=true,background='dark',open=false}={}){
+export async function mountBestsellers(host,{edition='gatotkaca',controls=true,background='dark',open=false}={}){
  const events=new AbortController(),{signal}=events,motion=matchMedia('(prefers-reduced-motion:reduce)');let disposed=false,visible=true,paused=false,opened=open,x=0,y=-12,tx=0,ty=-12,raf=0,drag,bar,video;
  host.dataset.controls=String(controls);host.dataset.background=background;host.dataset.open=String(opened);const stage=document.createElement('div');stage.className='css-stage';stage.tabIndex=0;stage.setAttribute('aria-label','Animated book; drag or use arrow keys to rotate');const book=document.createElement('div');book.className='css-book';stage.append(book);host.append(stage);
  function sync(){if(video){if(visible&&!document.hidden&&!paused&&!motion.matches)video.play().catch(()=>{});else video.pause();}}

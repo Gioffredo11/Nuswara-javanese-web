@@ -12,7 +12,8 @@
 .paper-top,.paper-bottom{left:0;width:100%;height:calc(var(--book-depth) * .8);background:repeating-linear-gradient(0deg,#baa780 0 1px,#efe1c1 1px 3px);transform-origin:center top;transform:rotateX(-90deg)}
 .paper-top{top:0}.paper-bottom{top:100%}
 .title-page{position:absolute;inset:12% 12% 10%;display:flex;align-items:center;justify-content:center;border:1px solid #b8a581;color:#57442c;font-size:calc(var(--book-unit) * 8);font-style:italic;background:linear-gradient(90deg,#00000006,transparent)}
-.title-page::after{content:'FIELD MANUAL';position:absolute;bottom:12%;font-size:calc(var(--book-unit) * 2);letter-spacing:.16em}
+.title-page::after{content:'SERAT PEWAYANGAN NUSWARA';position:absolute;bottom:12%;font-size:calc(var(--book-unit) * 2);letter-spacing:.16em}
+.visually-hidden{display:none!important}
 .page-fan{inset:2% 2.2% 2% 3.9%;pointer-events:none;transform-style:preserve-3d}
 .page-fan i{position:absolute;inset:0;display:block;border:1px solid #c4b18e;background:linear-gradient(90deg,#cdbb98,#f4e9d0 12%,#eee0c1);transform-origin:left center;transform:translateZ(calc(var(--book-depth) * .42));border-radius:1px}
 .front-cover{transform-style:preserve-3d;transform:translateZ(calc(var(--book-depth) * .5));transform-origin:left center}

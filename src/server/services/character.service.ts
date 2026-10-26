@@ -1,6 +1,7 @@
 import { characterRepository, CharacterFindAllParams } from '../repositories/character.repository';
 import { NotFoundError } from '../http/errors';
 import { CharacterDetailDTO, CharacterSummaryDTO, FamilyTreeGraphDTO } from '@/types/dtos';
+import { isDatabaseOnline, isOfflineError } from '../db';
 import {
   getFallbackFamilyTreeGraph,
   getFallbackCharactersWithCategories,
@@ -39,10 +40,15 @@ export class CharacterService {
 
   async getCharacterBySlug(slug: string): Promise<CharacterDetailDTO> {
     let c = null;
-    try {
-      c = await characterRepository.findBySlug(slug);
-    } catch (err) {
-      console.warn(`[CharacterService] DB findBySlug failed for '${slug}', falling back to seed:`, err);
+    const online = await isDatabaseOnline();
+    if (online) {
+      try {
+        c = await characterRepository.findBySlug(slug);
+      } catch (err) {
+        if (!isOfflineError(err)) {
+          console.warn(`[CharacterService] DB findBySlug failed for '${slug}', falling back to seed:`, err);
+        }
+      }
     }
 
     if (!c) {
@@ -116,6 +122,11 @@ export class CharacterService {
   }
 
   async getFamilyTreeGraph(): Promise<FamilyTreeGraphDTO> {
+    const online = await isDatabaseOnline();
+    if (!online) {
+      return getFallbackFamilyTreeGraph();
+    }
+
     try {
       const graph = await characterRepository.getRelationshipsGraph();
       if (!graph.nodes || graph.nodes.length === 0) {
@@ -123,7 +134,9 @@ export class CharacterService {
       }
       return graph;
     } catch (dbErr) {
-      console.warn('[CharacterService] DB query failed for family tree, using static seed fallback:', dbErr);
+      if (!isOfflineError(dbErr)) {
+        console.warn('[CharacterService] DB query failed for family tree, using static seed fallback:', dbErr);
+      }
       return getFallbackFamilyTreeGraph();
     }
   }

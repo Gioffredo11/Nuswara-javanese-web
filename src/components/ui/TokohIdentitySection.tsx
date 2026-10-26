@@ -119,19 +119,19 @@ export function TokohIdentitySection() {
         </div>
       </ScrollReveal>
 
-      {/* Curated Editorial Spotlight Showcase (Single focused layout without catalog fatigue) */}
+      {/* Curated Editorial Spotlight Showcase (Open Breathing Layout Without Boxed Containers) */}
       {activeFigure && (
         <ScrollReveal direction="up" distance={30} delay={150}>
           <div
             id={`tokoh-panel-${activeFigure.slug}`}
             role="tabpanel"
             aria-labelledby={`tokoh-tab-${activeFigure.slug}`}
-            className="rounded-3xl bg-gradient-to-b from-[#16110B] via-[#120E0A] to-[#0D0A07] border border-[#C59B53]/35 p-6 sm:p-8 lg:p-10 shadow-2xl relative overflow-hidden"
+            className="py-4 relative"
           >
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-center">
               {/* Left Column: Authentic Museum Archival Portrait */}
               <div className="lg:col-span-5 flex flex-col items-center">
-                <div className="relative w-full max-w-sm aspect-[4/5] rounded-2xl overflow-hidden border-2 border-[#C59B53]/50 bg-[#0B0907] shadow-xl group">
+                <div className="relative w-full max-w-sm aspect-[4/5] rounded-2xl overflow-hidden border-2 border-[#C59B53]/50 bg-[#0B0907] shadow-2xl group">
                   <Image
                     src={activeFigure.photoUrl}
                     alt={activeFigure.name}
@@ -158,7 +158,7 @@ export function TokohIdentitySection() {
                 </div>
 
                 <div className="mt-3 text-center">
-                  <span className="text-[10px] font-mono uppercase tracking-wider text-[#ECC47E] bg-[#22180F] px-3 py-1 rounded-full border border-[#C59B53]/30 inline-block">
+                  <span className="text-[10px] font-mono uppercase tracking-wider text-[#ECC47E] bg-[#1E1710] px-3 py-1 rounded-full border border-[#C59B53]/30 inline-block">
                     {activeFigure.badgeLabel}
                   </span>
                 </div>
@@ -173,37 +173,37 @@ export function TokohIdentitySection() {
                     <span>{activeFigure.period}</span>
                   </div>
 
-                  <h3 className="font-royal text-2xl sm:text-3xl lg:text-4xl font-bold text-[#F5EFE6] mt-1.5">
+                  <h3 className="font-royal text-3xl sm:text-4xl lg:text-5xl font-bold text-[#F5EFE6] mt-1.5 leading-tight">
                     {activeFigure.name}
                   </h3>
 
-                  <p className="font-editorial italic text-xs sm:text-sm text-[#DFB873] mt-1">
+                  <p className="font-editorial italic text-sm sm:text-base text-[#DFB873] mt-1">
                     {activeFigure.honorificTitle}
                   </p>
                 </div>
 
-                {/* Semboyan Luhur Quote Block */}
-                <div className="p-4 sm:p-5 rounded-2xl bg-[#1D1610]/90 border border-[#C59B53]/30 relative">
-                  <div className="flex items-center gap-2 text-[10px] font-mono text-[#ECC47E] uppercase font-bold mb-1.5">
-                    <Quote className="w-3.5 h-3.5 text-[#C59B53]" />
+                {/* Semboyan Luhur: Authentic Editorial Pullquote (No Box Container) */}
+                <blockquote className="border-l-2 border-[#C59B53] pl-5 py-2 my-2">
+                  <div className="flex items-center gap-2 text-[10px] font-mono text-[#ECC47E] uppercase font-bold mb-1">
+                    <Quote className="w-3 h-3 text-[#C59B53]" />
                     <span>Falsafah Hidup &amp; Semboyan</span>
                   </div>
-                  <p className="font-editorial italic text-base sm:text-lg text-[#F3E9D8] leading-relaxed">
+                  <p className="font-editorial italic text-lg sm:text-xl text-[#F3E9D8] leading-relaxed">
                     &ldquo;{activeFigure.quote}&rdquo;
                   </p>
-                </div>
+                </blockquote>
 
                 {/* Narrative Summary */}
-                <p className="text-xs sm:text-sm text-[#B9B0A3] leading-relaxed font-sans">
+                <p className="text-sm text-[#B9B0A3] leading-relaxed font-sans">
                   {activeFigure.summary}
                 </p>
 
-                {/* Instrument / Weapon / Struggle Attribute */}
-                <div className="p-3 rounded-xl bg-[#140F0A] border border-[#C59B53]/20 flex items-start gap-2.5 text-xs">
-                  <span className="font-mono text-[#ECC47E] font-bold shrink-0 text-[11px] uppercase">
-                    Pusaka / Atribut:
+                {/* Instrument / Weapon / Struggle Attribute (Clean Unboxed Detail) */}
+                <div className="flex items-baseline gap-2 text-xs font-sans text-[#B9B0A3] pt-1">
+                  <span className="font-mono text-[#ECC47E] font-bold text-[11px] uppercase tracking-wider shrink-0">
+                    Atribut Perjuangan:
                   </span>
-                  <span className="text-[#D8C8AD] font-sans">
+                  <span className="text-[#D8C8AD]">
                     {activeFigure.personalData.senjataAtauAtribut}
                   </span>
                 </div>

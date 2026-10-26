@@ -150,6 +150,15 @@ export function WayangPosterCard({
     }
   };
 
+  // Determine proportional title size so long philosophy quotes don't collide or overflow
+  const titleLength = displayTitle.length;
+  const titleSizeClass =
+    titleLength > 32
+      ? 'text-2xl sm:text-3xl leading-snug'
+      : titleLength > 18
+      ? 'text-3xl sm:text-4xl leading-tight'
+      : 'text-4xl sm:text-5xl leading-tight';
+
   return (
     <div className="flex flex-col items-center w-full max-w-[440px] mx-auto">
       {/* 9:16 Cultural Luxury Dimensional Poster Card Frame */}
@@ -216,9 +225,9 @@ export function WayangPosterCard({
         {/* HERO TITLE & DUAL BADGES */}
         <div className="relative z-10 pt-3 sm:pt-4">
           <div className="flex items-start justify-between gap-3">
-            {/* Bold Display Headline: "Arjuna." */}
+            {/* Bold Display Headline with dynamic size and healthy line-height */}
             <div>
-              <h1 className="text-4xl sm:text-5xl font-['Playfair_Display',serif] font-bold tracking-tight text-white drop-shadow-md leading-none">
+              <h1 className={`${titleSizeClass} font-['Playfair_Display',serif] font-bold tracking-tight text-white drop-shadow-md`}>
                 {displayTitle}
               </h1>
               {tagline && (

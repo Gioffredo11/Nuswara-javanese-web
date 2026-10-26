@@ -231,7 +231,7 @@ export function PhotoboothClient({ autoStart = false }: { autoStart?: boolean } 
     ctx.fillStyle = '#FAF7F0';
     ctx.font = 'bold 36px serif';
     ctx.textAlign = 'center';
-    ctx.fillText('JAWA EPIC PHOTO', 320, 220);
+    ctx.fillText('NUSWARA PHOTO', 320, 220);
     ctx.font = '24px monospace';
     ctx.fillStyle = '#D4A373';
     ctx.fillText(label, 320, 280);
@@ -654,30 +654,30 @@ function drawImageCover(
               className={`w-full h-full object-cover ${cameraActive ? 'block' : 'hidden'}`}
             />
 
-            {/* Companion Silhouette Overlays on Viewfinder */}
-            {activeFrame === 'companion-gatotkaca' && (
+            {/* Companion Silhouette Overlays on Viewfinder - Only active during camera live view */}
+            {cameraActive && activeFrame === 'companion-gatotkaca' && (
               <div className="absolute right-4 bottom-2 h-4/5 pointer-events-none opacity-85 z-20">
                 <GatotkacaSvg className="h-full w-auto text-amber-400 drop-shadow-md" />
               </div>
             )}
-            {activeFrame === 'companion-srikandi' && (
+            {cameraActive && activeFrame === 'companion-srikandi' && (
               <div className="absolute right-4 bottom-2 h-4/5 pointer-events-none opacity-85 z-20">
                 <SrikandiSvg className="h-full w-auto text-amber-400 drop-shadow-md" />
               </div>
             )}
-            {activeFrame === 'gunungan' && (
+            {cameraActive && activeFrame === 'gunungan' && (
               <div className="absolute top-2 left-1/2 -translate-x-1/2 h-16 pointer-events-none opacity-80 z-20">
                 <GununganSvg className="h-full w-auto text-amber-400" />
               </div>
             )}
-            {activeFrame === 'ukiran-jepara' && <UkiranJeparaViewfinderOverlay />}
-            {activeFrame === 'klasik-maroon' && (
+            {cameraActive && activeFrame === 'ukiran-jepara' && <UkiranJeparaViewfinderOverlay />}
+            {cameraActive && activeFrame === 'klasik-maroon' && (
               <KlasikMaroonViewfinderOverlay
                 coupleText={customCoupleText}
                 hashtagText={customHashtagText}
               />
             )}
-            {activeFrame === 'sugeng-ambal-warsa' && (
+            {cameraActive && activeFrame === 'sugeng-ambal-warsa' && (
               <SugengAmbalWarsaViewfinderOverlay
                 birthdayName={customWarsaName}
               />
@@ -685,8 +685,10 @@ function drawImageCover(
 
             {/* Fallback Screen when camera is not ready */}
             {!cameraActive && (
-              <div className="p-8 text-center space-y-4 max-w-sm">
-                <Camera className="w-12 h-12 text-stone-600 mx-auto" />
+              <div className="p-4 sm:p-6 text-center space-y-3 max-w-sm w-full z-10">
+                <div className="w-12 h-12 rounded-full bg-stone-900 border border-stone-800 flex items-center justify-center mx-auto shadow-inner">
+                  <Camera className="w-6 h-6 text-amber-400/80" />
+                </div>
                 {cameraError ? (
                   <div className="space-y-2">
                     <p className="text-xs text-red-400 leading-relaxed font-sans">
@@ -694,21 +696,21 @@ function drawImageCover(
                     </p>
                     <button
                       onClick={startCamera}
-                      className="px-3 py-1.5 bg-stone-800 hover:bg-stone-700 text-stone-200 text-xs rounded-md"
+                      className="px-3.5 py-1.5 bg-stone-800 hover:bg-stone-700 text-stone-200 text-xs rounded-md cursor-pointer transition-colors"
                     >
                       Coba Sambungkan Ulang
                     </button>
                   </div>
                 ) : (
-                  <div className="space-y-3">
-                    <p className="text-xs text-stone-300">
+                  <div className="space-y-2.5">
+                    <p className="text-xs text-stone-300 font-sans">
                       Kamera bilik foto siap dinyalakan untuk mengambil 4-cut pose.
                     </p>
                     <button
                       onClick={startCamera}
-                      className="px-4 py-2 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-stone-950 font-bold text-xs rounded-lg shadow-md transition-all flex items-center gap-2 mx-auto cursor-pointer"
+                      className="px-5 py-2.5 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-stone-950 font-bold text-xs rounded-xl shadow-lg transition-all flex items-center gap-2 mx-auto cursor-pointer active:scale-95"
                     >
-                      <Camera className="w-3.5 h-3.5" />
+                      <Camera className="w-4 h-4" />
                       <span>Nyalakan Kamera</span>
                     </button>
                   </div>
@@ -724,13 +726,13 @@ function drawImageCover(
                 <div className="pt-2 flex flex-col gap-1.5 items-center">
                   <button
                     onClick={loadDemoPhotos}
-                    className="text-[11px] font-mono text-amber-400 hover:text-amber-300 underline cursor-pointer"
+                    className="text-[11px] font-mono text-amber-400 hover:text-amber-300 underline underline-offset-2 cursor-pointer transition-colors"
                   >
                     Atau gunakan mode demo tanpa kamera
                   </button>
                   <button
                     onClick={() => fileInputRef.current?.click()}
-                    className="text-[11px] font-mono text-stone-400 hover:text-stone-200 underline cursor-pointer"
+                    className="text-[11px] font-mono text-stone-400 hover:text-stone-200 underline underline-offset-2 cursor-pointer transition-colors"
                   >
                     Atau unggah foto dari galeri
                   </button>
@@ -1010,10 +1012,23 @@ function drawImageCover(
                   ))}
                 </div>
               ) : (
-                <div className="text-center p-8 space-y-2 text-stone-400">
-                  <GununganSvg className="w-10 h-14 mx-auto text-stone-300" />
-                  <p className="text-xs">
-                    Tekan &ldquo;Mulai Ambil 4 Foto&rdquo; untuk merangkai strip fotomu.
+                <div className="w-48 py-2 space-y-2">
+                  <div className="text-center pb-1">
+                    <span className="text-[10px] font-mono uppercase tracking-wider text-stone-500 font-semibold block">
+                      Strip Vertikal 4-Cut
+                    </span>
+                  </div>
+                  {[1, 2, 3, 4].map((slot) => (
+                    <div
+                      key={slot}
+                      className="aspect-[4/3] rounded-lg border-2 border-dashed border-stone-300/90 bg-white/40 flex flex-col items-center justify-center text-stone-400 group hover:border-amber-400/60 transition-colors"
+                    >
+                      <Camera className="w-4 h-4 text-stone-300 mb-1" />
+                      <span className="text-[10px] font-mono">Pose #{slot}</span>
+                    </div>
+                  ))}
+                  <p className="text-[10px] text-center text-stone-400 pt-1 font-sans">
+                    Nyalakan kamera atau gunakan demo untuk mengisi 4 pose.
                   </p>
                 </div>
               )}

@@ -73,6 +73,24 @@ export function ManifestationClient({ isModal = false, onClose }: ManifestationC
     };
   }
 
+  function broadcastManifestation(data: ManifestationData) {
+    if (typeof window === 'undefined') return;
+    try {
+      const charSlug = data.relatedCharacter?.slug || 'gatotkaca';
+      const charName = data.relatedCharacter?.name || 'Wayang Piwulang';
+      const detail = {
+        characterSlug: charSlug,
+        characterName: charName,
+        philosophyTitle: data.philosophy.title,
+        localDate: data.localDate,
+      };
+      localStorage.setItem('nuswara_daily_manifestation', JSON.stringify(detail));
+      window.dispatchEvent(new CustomEvent('nuswara-manifestation-drawn', { detail }));
+    } catch (e) {
+      console.warn('Could not broadcast manifestation', e);
+    }
+  }
+
   useEffect(() => {
     async function checkStatus() {
       try {
@@ -85,6 +103,7 @@ export function ManifestationClient({ isModal = false, onClose }: ManifestationC
           if (mapped) {
             setHasDrawn(true);
             setManifestation(mapped);
+            broadcastManifestation(mapped);
           }
         }
       } catch (err) {
@@ -115,6 +134,7 @@ export function ManifestationClient({ isModal = false, onClose }: ManifestationC
         const mapped = mapManifestationPayload(payload);
         if (mapped) {
           setManifestation(mapped);
+          broadcastManifestation(mapped);
           return true;
         }
       }
@@ -177,18 +197,26 @@ export function ManifestationClient({ isModal = false, onClose }: ManifestationC
   return (
     <div className={isModal ? 'w-full max-w-4xl mx-auto px-2 sm:px-4 py-4' : 'max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16'}>
       {/* Header */}
-      <div className={`max-w-2xl mx-auto text-center space-y-3 ${isModal ? 'mb-6' : 'mb-10'}`}>
-        <div className="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-[#ECC47E] bg-[#1F1710] px-3 py-1 rounded-full border border-[#C59B53]/40">
-          <Compass className="w-3.5 h-3.5 text-[#ECC47E]" />
-          <span>Piwulang Luhur • Daily Philosophy</span>
+      {!isModal ? (
+        <div className="max-w-2xl mx-auto text-center space-y-3 mb-10">
+          <div className="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-[#ECC47E] bg-[#1F1710] px-3 py-1 rounded-full border border-[#C59B53]/40">
+            <Compass className="w-3.5 h-3.5 text-[#ECC47E]" />
+            <span>Piwulang Luhur • Daily Philosophy</span>
+          </div>
+          <h2 className="font-serif font-bold text-[#F5EFE6] tracking-tight text-3xl sm:text-5xl">
+            Manifestasi Harian
+          </h2>
+          <p className="text-xs sm:text-sm text-[#B9B0A3] leading-relaxed font-sans max-w-xl mx-auto">
+            Ambil satu perenungan bijak dari khazanah leluhur Jawa setiap 24 jam. Lengkap dengan interpretasi modern agar relevan dalam kehidupan sehari-harimu.
+          </p>
         </div>
-        <h2 className={`font-serif font-bold text-[#F5EFE6] tracking-tight ${isModal ? 'text-2xl sm:text-3xl' : 'text-3xl sm:text-5xl'}`}>
-          Manifestasi Harian
-        </h2>
-        <p className="text-xs sm:text-sm text-[#B9B0A3] leading-relaxed font-sans max-w-xl mx-auto">
-          Ambil satu perenungan bijak dari khazanah leluhur Jawa setiap 24 jam. Lengkap dengan interpretasi modern agar relevan dalam kehidupan sehari-harimu.
-        </p>
-      </div>
+      ) : (
+        <div className="max-w-md mx-auto text-center mb-3">
+          <p className="text-xs text-[#B9B0A3] font-sans">
+            Ambil satu perenungan bijak dari khazanah leluhur Jawa hari ini.
+          </p>
+        </div>
+      )}
 
       {!hasDrawn || !manifestation ? (
         /* POKER CARD DRAW INTERACTIVE ANIMATION FROM DECK */

@@ -2,9 +2,18 @@
 
 import React, { useState, useEffect } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
+import Image from 'next/image';
 import { Link } from '@/components/common/Link';
 import { Menu, X, Sparkles, BookOpen, Camera, GitFork, Compass, Layers, Heart } from 'lucide-react';
 import { ManifestationModal } from '@/components/ui/ManifestationModal';
+import { getTarotImagePath } from '@/components/ui/WayangVectors';
+
+interface DrawnManifestationState {
+  characterSlug: string;
+  characterName: string;
+  philosophyTitle: string;
+  localDate?: string;
+}
 
 export function Navbar() {
   const pathname = usePathname();
@@ -13,6 +22,56 @@ export function Navbar() {
   const [activeSection, setActiveSection] = useState<string>('beranda');
   const [isScrolled, setIsScrolled] = useState(false);
   const [manifestModalOpen, setManifestModalOpen] = useState(false);
+  const [drawnManifestation, setDrawnManifestation] = useState<DrawnManifestationState | null>(null);
+
+  // Synchronize drawn manifestation from localStorage and API
+  useEffect(() => {
+    try {
+      const stored = localStorage.getItem('nuswara_daily_manifestation');
+      if (stored) {
+        const parsed = JSON.parse(stored);
+        if (parsed?.characterSlug) {
+          setDrawnManifestation(parsed);
+        }
+      }
+    } catch {}
+
+    async function checkTodayManifestation() {
+      try {
+        const res = await fetch('/api/manifestation/today');
+        if (!res.ok) return;
+        const json = await res.json();
+        const payload = json.data || json;
+        if (payload && payload.philosophy) {
+          const char = payload.relatedCharacters?.[0];
+          const slug = char?.slug || payload.philosophy?.primaryCharacter?.slug || 'gatotkaca';
+          const name = char?.name || payload.philosophy?.primaryCharacter?.name || 'Wayang Piwulang';
+          const data: DrawnManifestationState = {
+            characterSlug: slug,
+            characterName: name,
+            philosophyTitle: payload.philosophy.title,
+            localDate: payload.localDate,
+          };
+          setDrawnManifestation(data);
+          try {
+            localStorage.setItem('nuswara_daily_manifestation', JSON.stringify(data));
+          } catch {}
+        }
+      } catch {}
+    }
+    checkTodayManifestation();
+
+    const handleUpdated = (e: Event) => {
+      const customEvent = e as CustomEvent<DrawnManifestationState>;
+      if (customEvent.detail && customEvent.detail.characterSlug) {
+        setDrawnManifestation(customEvent.detail);
+      }
+    };
+    window.addEventListener('nuswara-manifestation-drawn', handleUpdated);
+    return () => {
+      window.removeEventListener('nuswara-manifestation-drawn', handleUpdated);
+    };
+  }, []);
 
   // Primary Navigation Links matching reference_hero.png 1:1
   const primaryNavLinks = [
@@ -68,7 +127,6 @@ export function Navbar() {
         { id: 'oracle', target: 'oracle' },
         { id: 'family-tree', target: 'budaya' },
         { id: 'wayangpedia', target: 'budaya' },
-        { id: 'manifestasi', target: 'manifestasi' },
         { id: 'budaya', target: 'budaya' },
         { id: 'tokoh', target: 'tokoh' },
         { id: 'sejarah', target: 'sejarah' },
@@ -91,6 +149,13 @@ export function Navbar() {
     handleScroll();
     return () => window.removeEventListener('scroll', handleScroll);
   }, [pathname]);
+
+  // Support open-manifestation-modal event across components
+  useEffect(() => {
+    const handleOpenModal = () => setManifestModalOpen(true);
+    window.addEventListener('open-manifestation-modal', handleOpenModal);
+    return () => window.removeEventListener('open-manifestation-modal', handleOpenModal);
+  }, []);
 
   // Handle Escape key to close mobile menu
   useEffect(() => {
@@ -185,7 +250,7 @@ export function Navbar() {
   const isLinkActive = (sectionId: string) => {
     if (
       (sectionId === 'manifestasi' || sectionId === 'manifestation') &&
-      (pathname.startsWith('/manifestation') || (pathname === '/' && activeSection === 'manifestasi'))
+      pathname.startsWith('/manifestation')
     ) {
       return true;
     }
@@ -208,7 +273,8 @@ export function Navbar() {
   };
 
   return (
-    <header
+    <>
+      <header
       className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 ${
         isScrolled
           ? 'bg-[#0D0C0A]/92 backdrop-blur-lg border-b border-[#C59B53]/20 py-3 shadow-[0_4px_40px_-10px_rgba(0,0,0,0.9)]'
@@ -255,24 +321,58 @@ export function Navbar() {
             <button
               type="button"
               onClick={() => setManifestModalOpen(true)}
-              className="group relative w-8.5 h-11.5 rounded-[5px] border border-[#C59B53]/80 hover:border-[#ECC47E] bg-gradient-to-b from-[#2E2014] via-[#1B130D] to-[#100A06] p-[2.5px] shadow-md hover:shadow-[0_0_20px_rgba(236,196,126,0.5)] transition-all duration-300 hover:scale-110 active:scale-95 cursor-pointer overflow-hidden press-scale"
-              title="Buka Kartu Manifestasi Harian"
-              aria-label="Buka Kartu Manifestasi Harian"
+              className={`group relative w-8.5 h-11.5 rounded-[5px] border ${
+                drawnManifestation
+                  ? 'border-[#ECC47E] shadow-[0_0_16px_rgba(236,196,126,0.5)] hover:shadow-[0_0_24px_rgba(236,196,126,0.8)] hover:border-[#FFF0D4]'
+                  : 'border-[#C59B53]/80 hover:border-[#ECC47E] shadow-md hover:shadow-[0_0_20px_rgba(236,196,126,0.5)]'
+              } bg-gradient-to-b from-[#2E2014] via-[#1B130D] to-[#100A06] p-[2.5px] transition-all duration-300 hover:scale-110 active:scale-95 cursor-pointer overflow-hidden press-scale`}
+              title={
+                drawnManifestation
+                  ? `Kartu Manifestasi Hari Ini: ${drawnManifestation.characterName} (${drawnManifestation.philosophyTitle})`
+                  : 'Buka Kartu Manifestasi Harian'
+              }
+              aria-label={
+                drawnManifestation
+                  ? `Kartu Manifestasi Hari Ini: ${drawnManifestation.characterName}`
+                  : 'Buka Kartu Manifestasi Harian'
+              }
             >
-              {/* Inner Decorative Card Filigree Border */}
-              <div className="w-full h-full rounded-[2.5px] border border-[#C59B53]/45 bg-[#17110C] flex flex-col items-center justify-between p-1 relative overflow-hidden group-hover:border-[#ECC47E]/80 transition-colors">
-                {/* Top Card Pip */}
-                <span className="w-1 h-1 rounded-full bg-[#ECC47E]/90 shadow-[0_0_4px_rgba(236,196,126,0.8)]" />
-                
-                {/* Center Glowing Mystical Sparkle Motif */}
-                <Sparkles className="w-3.5 h-3.5 text-[#ECC47E] group-hover:scale-125 transition-transform duration-300" />
-                
-                {/* Bottom Card Base Line */}
-                <span className="w-2.5 h-[1.5px] bg-[#C59B53]/70 rounded-full" />
+              {drawnManifestation ? (
+                /* Unlocked Character Card Face */
+                <div className="relative w-full h-full rounded-[2.5px] overflow-hidden border border-[#ECC47E]/70 bg-[#0D0B09]">
+                  <Image
+                    src={getTarotImagePath(drawnManifestation.characterSlug)}
+                    alt={drawnManifestation.characterName}
+                    fill
+                    sizes="34px"
+                    className="object-cover object-top transition-transform duration-500 group-hover:scale-115"
+                  />
+                  {/* Subtle dark vignette & golden highlight frame */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/20 pointer-events-none" />
+                  <div className="absolute inset-0 border border-[#ECC47E]/40 rounded-[2px] pointer-events-none" />
 
-                {/* Shimmer Light Reflection Sweep on Hover */}
-                <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 bg-gradient-to-tr from-transparent via-white/25 to-transparent pointer-events-none" />
-              </div>
+                  {/* Top Pip - Glowing Gold */}
+                  <span className="absolute top-0.5 right-0.5 w-1.5 h-1.5 rounded-full bg-[#ECC47E] shadow-[0_0_6px_#ECC47E] z-10 animate-pulse" />
+
+                  {/* Shimmer Light Reflection Sweep on Hover */}
+                  <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 bg-gradient-to-tr from-transparent via-white/35 to-transparent pointer-events-none z-10" />
+                </div>
+              ) : (
+                /* Mystery Card Back */
+                <div className="w-full h-full rounded-[2.5px] border border-[#C59B53]/45 bg-[#17110C] flex flex-col items-center justify-between p-1 relative overflow-hidden group-hover:border-[#ECC47E]/80 transition-colors">
+                  {/* Top Card Pip */}
+                  <span className="w-1 h-1 rounded-full bg-[#ECC47E]/90 shadow-[0_0_4px_rgba(236,196,126,0.8)]" />
+                  
+                  {/* Center Glowing Mystical Sparkle Motif */}
+                  <Sparkles className="w-3.5 h-3.5 text-[#ECC47E] group-hover:scale-125 transition-transform duration-300" />
+                  
+                  {/* Bottom Card Base Line */}
+                  <span className="w-2.5 h-[1.5px] bg-[#C59B53]/70 rounded-full" />
+
+                  {/* Shimmer Light Reflection Sweep on Hover */}
+                  <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 bg-gradient-to-tr from-transparent via-white/25 to-transparent pointer-events-none" />
+                </div>
+              )}
             </button>
           </div>
         </div>
@@ -282,16 +382,41 @@ export function Navbar() {
           <button
             type="button"
             onClick={() => setManifestModalOpen(true)}
-            className="group relative w-8 h-10.5 rounded-[4.5px] border border-[#C59B53]/80 hover:border-[#ECC47E] bg-gradient-to-b from-[#2E2014] via-[#1B130D] to-[#100A06] p-[2px] shadow-sm active:scale-95 cursor-pointer overflow-hidden"
-            title="Buka Kartu Manifestasi Harian"
-            aria-label="Buka Kartu Manifestasi Harian"
+            className={`group relative w-8 h-10.5 rounded-[4.5px] border ${
+              drawnManifestation
+                ? 'border-[#ECC47E] shadow-[0_0_12px_rgba(236,196,126,0.45)]'
+                : 'border-[#C59B53]/80 hover:border-[#ECC47E] shadow-sm'
+            } bg-gradient-to-b from-[#2E2014] via-[#1B130D] to-[#100A06] p-[2px] active:scale-95 cursor-pointer overflow-hidden`}
+            title={
+              drawnManifestation
+                ? `Kartu Manifestasi: ${drawnManifestation.characterName}`
+                : 'Buka Kartu Manifestasi Harian'
+            }
+            aria-label={
+              drawnManifestation
+                ? `Kartu Manifestasi: ${drawnManifestation.characterName}`
+                : 'Buka Kartu Manifestasi Harian'
+            }
           >
-            {/* Inner Border */}
-            <div className="w-full h-full rounded-[2px] border border-[#C59B53]/50 bg-[#17110C] flex flex-col items-center justify-between p-1 relative overflow-hidden">
-              <span className="w-1 h-1 rounded-full bg-[#ECC47E]" />
-              <Sparkles className="w-3 h-3 text-[#ECC47E]" />
-              <span className="w-2 h-[1px] bg-[#C59B53]/70 rounded-full" />
-            </div>
+            {drawnManifestation ? (
+              <div className="relative w-full h-full rounded-[2px] overflow-hidden border border-[#ECC47E]/70 bg-[#0D0B09]">
+                <Image
+                  src={getTarotImagePath(drawnManifestation.characterSlug)}
+                  alt={drawnManifestation.characterName}
+                  fill
+                  sizes="32px"
+                  className="object-cover object-top"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-black/20 pointer-events-none" />
+                <span className="absolute top-0.5 right-0.5 w-1 h-1 rounded-full bg-[#ECC47E] shadow-[0_0_4px_#ECC47E] z-10" />
+              </div>
+            ) : (
+              <div className="w-full h-full rounded-[2px] border border-[#C59B53]/50 bg-[#17110C] flex flex-col items-center justify-between p-1 relative overflow-hidden">
+                <span className="w-1 h-1 rounded-full bg-[#ECC47E]" />
+                <Sparkles className="w-3 h-3 text-[#ECC47E]" />
+                <span className="w-2 h-[1px] bg-[#C59B53]/70 rounded-full" />
+              </div>
+            )}
           </button>
           <button
             type="button"
@@ -304,12 +429,6 @@ export function Navbar() {
           </button>
         </div>
       </div>
-
-      {/* Manifestation Modal (In-place interactive card popup) */}
-      <ManifestationModal
-        isOpen={manifestModalOpen}
-        onClose={() => setManifestModalOpen(false)}
-      />
 
       {/* Mobile & Tablet Drawer Menu */}
       {mobileMenuOpen && (
@@ -344,7 +463,11 @@ export function Navbar() {
                 >
                   <div className="flex items-center gap-2.5">
                     <Icon className={`w-4 h-4 ${active ? 'text-[#100D0A]' : 'text-[#ECC47E]'}`} />
-                    <span>{item.label}</span>
+                    <span>
+                      {item.sectionId === 'manifestasi' && drawnManifestation
+                        ? `Manifestasi: ${drawnManifestation.characterName}`
+                        : item.label}
+                    </span>
                   </div>
                   {item.highlight && !active && (
                     <span className="text-[9px] font-mono bg-[#241A0E] text-[#ECC47E] border border-[#C59B53]/40 px-2 py-0.5 rounded-full">
@@ -378,6 +501,13 @@ export function Navbar() {
       </>
     )}
   </header>
+
+      {/* Manifestation Modal (Rendered outside header) */}
+      <ManifestationModal
+        isOpen={manifestModalOpen}
+        onClose={() => setManifestModalOpen(false)}
+      />
+    </>
   );
 }
 
