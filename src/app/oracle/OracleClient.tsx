@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Sparkles, RefreshCw } from 'lucide-react';
 import { exportWayangPosterCard } from '@/components/ui/posterCardExport';
 import { getGenZProfile } from './genZCopywriting';
 import { OracleTeaserCards } from './components/OracleTeaserCards';
@@ -76,8 +75,6 @@ export function OracleClient() {
     setIsRevealing(true);
     setError(null);
 
-    const startTime = Date.now();
-
     try {
       const res = await fetch('/api/oracle/calculate', {
         method: 'POST',
@@ -133,7 +130,6 @@ export function OracleClient() {
         shareCode: raw.shareCode || Math.random().toString(36).substring(2, 10).toUpperCase(),
       };
 
-      // Store mapped result into pendingResult for the spinning roulette to lock onto
       setPendingResult(mapped);
     } catch (err: any) {
       console.error('Oracle calculate fetch error:', err);
@@ -202,15 +198,15 @@ export function OracleClient() {
     <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10 md:py-16">
       {/* Editorial Header */}
       <ScrollReveal direction="up" distance={30}>
-        <div className="max-w-2xl mx-auto text-center space-y-3.5 mb-8 md:mb-12">
-          <div className="inline-flex items-center gap-2 text-xs font-sans font-semibold uppercase tracking-wider text-amber-800 bg-amber-100/70 px-3.5 py-1 rounded-full border border-amber-300/60 shadow-xs">
-            <Sparkles className="w-3.5 h-3.5 text-amber-600" />
-            <span>Primbon Digital & Karakter Wayang</span>
+        <div className="max-w-2xl mx-auto text-center space-y-3.5 mb-10 md:mb-14">
+          <div className="inline-flex items-center gap-2 text-xs font-mono font-bold uppercase tracking-widest text-[#C5A059] bg-[#14110E] px-4 py-1.5 border border-[#C5A059]/30">
+            <span className="text-[#C5A059]">❖</span>
+            <span>PRIMBON DIGITAL &amp; KARAKTER WAYANG</span>
           </div>
-          <h1 className="text-3xl sm:text-5xl font-serif font-bold text-stone-900 tracking-tight">
-            Javanese Oracle
+          <h1 className="text-3xl sm:text-5xl font-royal font-bold text-[#F4EFE6] tracking-tight">
+            Siapakah Cerminan Jiwamu?
           </h1>
-          <p className="text-sm sm:text-base text-stone-600 leading-relaxed font-sans">
+          <p className="text-sm sm:text-base text-[#A89F91] leading-relaxed font-sans">
             Temukan weton kelahiranmu, pasaran Jawa, jumlah neptu, dan cerminan ksatria wayang yang membawa resonansi energi batinmu.
           </p>
         </div>
@@ -239,7 +235,7 @@ export function OracleClient() {
             )}
           </ScrollReveal>
 
-          {/* Kolom Kanan: Dark Textured Form Card */}
+          {/* Kolom Kanan: Dark Textured Manuscript Form Card */}
           <ScrollReveal direction="up" distance={35} delay={250} className="lg:col-span-5 lg:sticky lg:top-24">
             <OracleForm
               name={name}
@@ -263,7 +259,7 @@ export function OracleClient() {
         /* HASIL WETON: 2 Kolom di Desktop (Teaser Flip di Kiri + Kartu Tarot Jawa di Kanan) */
         <div className="space-y-8 animate-in fade-in duration-500">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
-            {/* Kolom Kiri: 3 Kartu Teaser (Kartu yang cocok melakukan FLIP 3D, 2 lainnya meredup) */}
+            {/* Kolom Kiri: 3 Kartu Teaser */}
             <div className="lg:col-span-6 hidden lg:block">
               <OracleTeaserCards
                 matchedSlug={result.character.slug}
@@ -272,7 +268,7 @@ export function OracleClient() {
               />
             </div>
 
-            {/* Kolom Kanan: Kartu Tarot Jawa (Rasio 2:3, Bingkai Emas, Tombol Unduh & Bagikan) */}
+            {/* Kolom Kanan: Kartu Tarot Jawa */}
             <div className="lg:col-span-6">
               <ResultCard
                 result={result}

@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { Sparkles, Shuffle } from 'lucide-react';
+import { Shuffle } from 'lucide-react';
 import Image from 'next/image';
 import { getTarotImagePath } from '@/components/ui/WayangVectors';
 
@@ -99,40 +99,54 @@ export const ALL_ARCHETYPES: TeaserCardItem[] = [
   {
     id: 'bagong',
     slug: 'bagong',
-    mysteryTitle: 'Suara Nurani?',
-    archetypeLabel: 'Kritis & Jujur',
-    characterName: 'Kyai Bagong Bawor',
-    quote: 'Berani bicara jujur apa adanya di hadapan siapa pun.',
+    mysteryTitle: 'Pengkritik Berani?',
+    archetypeLabel: 'Kritis & Spontan',
+    characterName: 'Bagong Bawor',
+    quote: 'Lancang tapi benar, suara nurani rakyat yang tak terbendung.',
   },
   {
     id: 'gareng',
     slug: 'gareng',
-    mysteryTitle: 'Langkah Mawas?',
-    archetypeLabel: 'Waspada & Bersahaja',
+    mysteryTitle: 'Penjaga Batas?',
+    archetypeLabel: 'Hati-Hati & Wasapada',
     characterName: 'Nala Gareng',
-    quote: 'Melangkah penuh kehati-hatian agar tak ceroboh di dunia fana.',
+    quote: 'Langkah pincang tangan ceko, waspada menjaga marwah batin.',
+  },
+  {
+    id: 'duryodana',
+    slug: 'duryodana',
+    mysteryTitle: 'Pemimpin Ambisius?',
+    archetypeLabel: 'Ego & Kekuasaan',
+    characterName: 'Prabu Duryodana',
+    quote: 'Pantang menyerah demi mahkota, gigih memperjuangkan tahta.',
+  },
+  {
+    id: 'kumbakarna',
+    slug: 'kumbakarna',
+    mysteryTitle: 'Patriot Sejati?',
+    archetypeLabel: 'Nasionalis Luhur',
+    characterName: 'Raden Kumbakarna',
+    quote: 'Gugur bukan demi angkara raja, melainkan demi ibu pertiwi tercinta.',
   },
 ];
 
-function getArchetypeData(slug: string): TeaserCardItem {
-  const norm = slug.toLowerCase().trim();
-  const found = ALL_ARCHETYPES.find((a) => a.slug === norm);
-  if (found) return found;
-  return {
-    id: norm,
-    slug: norm,
-    mysteryTitle: 'Ksatria Misterius?',
-    archetypeLabel: 'Resonansi Leluhur',
-    characterName: norm.charAt(0).toUpperCase() + norm.slice(1),
-    quote: 'Jiwa ksatria purwa yang mengalir dalam garis takdir wetonmu.',
-  };
+export function getRandomThreeArchetypes(excludeSlugs: string[] = []): TeaserCardItem[] {
+  const pool = ALL_ARCHETYPES.filter((a) => !excludeSlugs.includes(a.slug));
+  const shuffled = [...(pool.length >= 3 ? pool : ALL_ARCHETYPES)].sort(() => 0.5 - Math.random());
+  return shuffled.slice(0, 3);
 }
 
-function getRandomThreeArchetypes(excludeSlugs: string[] = []): TeaserCardItem[] {
-  const available = ALL_ARCHETYPES.filter((a) => !excludeSlugs.includes(a.slug));
-  const pool = available.length >= 3 ? available : ALL_ARCHETYPES;
-  const shuffled = [...pool].sort(() => 0.5 - Math.random());
-  return shuffled.slice(0, 3);
+export function getArchetypeData(slug: string): TeaserCardItem {
+  const match = ALL_ARCHETYPES.find((a) => a.slug === slug);
+  if (match) return match;
+  return {
+    id: slug,
+    slug,
+    mysteryTitle: 'Ksatria Luhur?',
+    archetypeLabel: 'Arketipe Takdir',
+    characterName: slug.replace(/-/g, ' ').toUpperCase(),
+    quote: 'Ksatria luhur penjaga keseimbangan jagad raya.',
+  };
 }
 
 interface OracleTeaserCardsProps {
@@ -148,7 +162,6 @@ export function OracleTeaserCards({
   isRevealing = false,
   onCardClick,
 }: OracleTeaserCardsProps) {
-  // Initial 3 cards (deterministic default for SSR hydration safety)
   const [displayedCards, setDisplayedCards] = useState<TeaserCardItem[]>([
     ALL_ARCHETYPES[0], // Gatotkaca
     ALL_ARCHETYPES[1], // Arjuna
@@ -157,16 +170,13 @@ export function OracleTeaserCards({
   const [isShuffling, setIsShuffling] = useState(false);
   const [activeFlippedSlug, setActiveFlippedSlug] = useState<string | null>(null);
 
-  // Randomize cards once on mount in client to show diverse archetypes immediately
   useEffect(() => {
     setDisplayedCards(getRandomThreeArchetypes());
   }, []);
 
-  // Handle matching when result arrives
   useEffect(() => {
     if (!matchedSlug) {
       setActiveFlippedSlug(null);
-      // Un-mark any secret reveal flag
       setDisplayedCards((prev) => prev.map((c) => ({ ...c, isSecretReveal: false })));
       return;
     }
@@ -175,11 +185,8 @@ export function OracleTeaserCards({
     const existingIndex = displayedCards.findIndex((c) => c.slug === normSlug);
 
     if (existingIndex !== -1) {
-      // The matched character was already displayed in the deck!
       setActiveFlippedSlug(normSlug);
     } else {
-      // The matched character was NOT in the currently displayed 3 cards!
-      // Dynamically reveal the authentic matched archetype in the center card (index 1)
       const targetArchetype = getArchetypeData(normSlug);
       setDisplayedCards((prev) => {
         const next = [...prev];
@@ -210,39 +217,36 @@ export function OracleTeaserCards({
   return (
     <div className="w-full space-y-4">
       {/* Teaser Header & Shuffle Action */}
-      <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3 text-left">
+      <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3 text-left border-b border-[#C5A059]/20 pb-3">
         <div className="space-y-1">
-          <div className="inline-flex items-center gap-1.5 text-xs font-sans font-semibold uppercase tracking-wider text-amber-500">
-            <Sparkles className="w-3.5 h-3.5 text-amber-500" />
-            <span>Semesta Wayang Purwa ({ALL_ARCHETYPES.length} Arketipe)</span>
+          <div className="inline-flex items-center gap-1.5 text-xs font-mono font-bold uppercase tracking-wider text-[#C5A059]">
+            <span>[ ARSIP ARKETIPE // {ALL_ARCHETYPES.length} TOKOH ]</span>
           </div>
-          <h3 className="text-xl sm:text-2xl font-serif font-bold text-stone-900 tracking-tight">
+          <h3 className="text-xl sm:text-2xl font-royal font-bold text-[#F4EFE6] tracking-tight">
             Siapakah Cerminan Jiwamu?
           </h3>
-          <p className="text-xs sm:text-sm text-stone-600 font-sans leading-relaxed">
+          <p className="text-xs sm:text-sm text-[#A89F91] font-sans leading-relaxed">
             Perhitungan wetonmu akan menyingkap salah satu dari seluruh arketipe wayang:
           </p>
         </div>
 
-        {/* Tombol Kocok Kartu (Randomize Displayed Cards with 3D Spin) */}
+        {/* Tombol Kocok Kartu */}
         {!matchedSlug && (
           <button
             type="button"
             onClick={handleShuffleDeck}
             disabled={isShuffling}
             title="Kocok untuk memutar 3 arketipe wayang lainnya"
-            className="self-start sm:self-auto inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-sans font-medium text-amber-900 bg-amber-100/90 hover:bg-amber-200/90 border border-amber-300/80 rounded-lg shadow-xs hover:shadow-sm transition-all duration-200 cursor-pointer active:scale-95 shrink-0"
+            className="self-start sm:self-auto inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-mono font-medium text-[#C5A059] hover:text-[#0C0A08] bg-[#14110E] hover:bg-[#C5A059] border border-[#C5A059]/40 transition-colors cursor-pointer shrink-0"
           >
-            <Shuffle className={`w-3.5 h-3.5 text-amber-700 transition-transform duration-500 ${isShuffling ? 'rotate-180' : ''}`} />
+            <Shuffle className={`w-3.5 h-3.5 transition-transform duration-500 ${isShuffling ? 'rotate-180' : ''}`} />
             <span>Kocok Kartu</span>
           </button>
         )}
       </div>
 
       {/* Grid of 3 Cards with 3D Flip & Spin capability */}
-      <div
-        className="grid grid-cols-3 gap-2.5 sm:gap-4 perspective-1000"
-      >
+      <div className="grid grid-cols-3 gap-2.5 sm:gap-4 perspective-1000">
         {displayedCards.map((item, idx) => {
           const isMatch = activeFlippedSlug === item.slug;
           const isDimmed = activeFlippedSlug !== null && !isMatch;
@@ -259,8 +263,8 @@ export function OracleTeaserCards({
             >
               {/* Card Container with 3D Flip & Spin */}
               <div
-                className={`relative w-full h-64 sm:h-80 rounded-2xl transition-transform duration-700 card-preserve-3d ${
-                  isMatch ? '[transform:rotateY(180deg)] shadow-2xl ring-2 ring-amber-400/90' : ''
+                className={`relative w-full h-64 sm:h-80 transition-transform duration-700 card-preserve-3d ${
+                  isMatch ? '[transform:rotateY(180deg)] shadow-2xl ring-1 ring-[#C5A059]' : ''
                 }`}
                 style={{
                   transformStyle: 'preserve-3d',
@@ -281,35 +285,24 @@ export function OracleTeaserCards({
                     backfaceVisibility: 'hidden',
                     WebkitBackfaceVisibility: 'hidden',
                   }}
-                  className={`absolute inset-0 card-backface-hidden group bg-gradient-to-b from-[#2C1207] via-[#220D05] to-[#160702] rounded-2xl p-3 sm:p-4 border border-amber-500/40 hover:border-amber-400/90 shadow-md hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 flex flex-col items-center justify-between overflow-hidden cursor-default ${
+                  className={`absolute inset-0 card-backface-hidden group bg-[#14110E] p-3 sm:p-4 border border-[#C5A059]/40 hover:border-[#C5A059] shadow-md transition-all duration-300 flex flex-col items-center justify-between overflow-hidden cursor-default ${
                     isMatch ? 'opacity-0 pointer-events-none' : 'opacity-100'
                   }`}
                 >
-                  {/* Subtle Batik Parang Pattern Overlay */}
-                  <div
-                    className="absolute inset-0 pointer-events-none opacity-20 bg-repeat"
-                    style={{
-                      backgroundImage: "url('/images/batik-parang.png')",
-                      backgroundSize: '110px 110px',
-                    }}
-                  />
-
                   {/* Corner Accent Ornaments */}
-                  <div className="absolute top-2 left-2 w-2.5 h-2.5 border-t border-l border-amber-400/50" />
-                  <div className="absolute top-2 right-2 w-2.5 h-2.5 border-t border-r border-amber-400/50" />
-                  <div className="absolute bottom-2 left-2 w-2.5 h-2.5 border-b border-l border-amber-400/50" />
-                  <div className="absolute bottom-2 right-2 w-2.5 h-2.5 border-b border-r border-amber-400/50" />
+                  <div className="absolute top-2 left-2 w-2.5 h-2.5 border-t border-l border-[#C5A059]/50" />
+                  <div className="absolute top-2 right-2 w-2.5 h-2.5 border-t border-r border-[#C5A059]/50" />
+                  <div className="absolute bottom-2 left-2 w-2.5 h-2.5 border-b border-l border-[#C5A059]/50" />
+                  <div className="absolute bottom-2 right-2 w-2.5 h-2.5 border-b border-r border-[#C5A059]/50" />
 
-                  {/* Top Disc Indicator */}
-                  <div className="relative z-10 w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-gradient-to-b from-amber-400/30 to-amber-600/20 border border-amber-300/80 flex items-center justify-center shadow-xs">
-                    <span className="text-xs sm:text-sm font-black font-sans text-amber-200">
-                      ?
-                    </span>
+                  {/* Top Indicator */}
+                  <div className="relative z-10 w-7 h-7 sm:w-8 sm:h-8 bg-[#0C0A08] border border-[#C5A059]/60 flex items-center justify-center font-mono text-xs font-bold text-[#C5A059]">
+                    ?
                   </div>
 
                   {/* Authentic Wayang Tarot Card Preview */}
                   <div className="relative z-10 flex-1 w-full flex items-center justify-center my-2">
-                    <div className="relative w-24 sm:w-28 aspect-[2/3] rounded-xl overflow-hidden border border-amber-400/50 shadow-[0_8px_20px_rgba(0,0,0,0.85)] bg-black transition-all duration-300 group-hover:scale-105 group-hover:border-amber-300 group-hover:shadow-[0_0_20px_rgba(245,158,11,0.5)]">
+                    <div className="relative w-24 sm:w-28 aspect-[2/3] overflow-hidden border border-[#C5A059]/40 shadow-xl bg-black transition-all duration-300 group-hover:scale-103 group-hover:border-[#C5A059]">
                       <Image
                         src={getTarotImagePath(item.slug)}
                         alt={item.characterName}
@@ -321,18 +314,18 @@ export function OracleTeaserCards({
                     </div>
                   </div>
 
-                  {/* Card Label: High-contrast typography */}
-                  <div className="relative z-10 text-center pt-2 pb-1 border-t border-amber-500/25 w-full space-y-0.5 bg-gradient-to-t from-black/40 to-transparent rounded-b-xl">
-                    <span className="text-xs sm:text-sm font-serif font-bold text-amber-100 block truncate drop-shadow-xs">
+                  {/* Card Label */}
+                  <div className="relative z-10 text-center pt-2 pb-1 border-t border-[#C5A059]/20 w-full space-y-0.5 bg-[#0C0A08]">
+                    <span className="text-xs sm:text-sm font-editorial font-bold text-[#F4EFE6] block truncate">
                       {item.mysteryTitle}
                     </span>
-                    <span className="text-[11px] sm:text-[12px] font-sans font-semibold text-amber-300 block tracking-wider uppercase">
+                    <span className="text-[10px] sm:text-[11px] font-mono font-semibold text-[#C5A059] block tracking-wider uppercase">
                       {item.archetypeLabel}
                     </span>
                   </div>
                 </div>
 
-                {/* BACK FACE: Revealed Archetype Front (Shows on 3D Flip) */}
+                {/* BACK FACE: Revealed Archetype Front */}
                 <div
                   style={{
                     backfaceVisibility: 'hidden',
@@ -340,23 +333,19 @@ export function OracleTeaserCards({
                     transform: 'rotateY(180deg)',
                     WebkitTransform: 'rotateY(180deg)',
                   }}
-                  className={`absolute inset-0 card-backface-hidden bg-gradient-to-b from-[#3D1A0A] via-[#281005] to-[#1A0802] rounded-2xl p-3 sm:p-4 border-2 border-amber-400 shadow-2xl flex flex-col items-center justify-between overflow-hidden transition-opacity duration-300 ${
+                  className={`absolute inset-0 card-backface-hidden bg-[#14110E] p-3 sm:p-4 border-2 border-[#C5A059] shadow-2xl flex flex-col items-center justify-between overflow-hidden transition-opacity duration-300 ${
                     isMatch ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
                   }`}
                 >
-                  {/* Glowing Backlight */}
-                  <div className="absolute inset-0 bg-radial from-amber-500/25 via-transparent to-transparent pointer-events-none" />
-
-                  <div className="relative z-10 w-full flex items-center justify-between text-[10px] font-sans font-bold uppercase tracking-wider text-amber-300">
+                  <div className="relative z-10 w-full flex items-center justify-between text-[10px] font-mono font-bold uppercase tracking-wider text-[#C5A059]">
                     <span>COCOK!</span>
-                    <span className="bg-amber-400/20 px-1.5 py-0.5 rounded-full border border-amber-300/50">
+                    <span className="bg-[#0C0A08] px-2 py-0.5 border border-[#C5A059]/50">
                       {item.isSecretReveal ? 'ARKETIPE TERKUAK' : 'RESONANSI TAKDIR'}
                     </span>
                   </div>
 
-                  {/* Fully Revealed Character Artwork */}
                   <div className="relative z-10 flex-1 w-full flex items-center justify-center my-2">
-                    <div className="relative w-28 sm:w-32 aspect-[2/3] rounded-xl overflow-hidden border-2 border-amber-400 shadow-[0_0_25px_rgba(251,191,36,0.7)] bg-black animate-pulse-glow">
+                    <div className="relative w-28 sm:w-32 aspect-[2/3] overflow-hidden border border-[#C5A059] shadow-2xl bg-black">
                       <Image
                         src={getTarotImagePath(item.slug)}
                         alt={item.characterName}
@@ -368,11 +357,11 @@ export function OracleTeaserCards({
                     </div>
                   </div>
 
-                  <div className="relative z-10 text-center w-full pt-1.5 pb-1 border-t border-amber-400/40 bg-gradient-to-t from-black/40 to-transparent rounded-b-xl">
-                    <span className="text-xs sm:text-sm font-serif font-bold text-amber-100 block truncate">
+                  <div className="relative z-10 text-center w-full pt-1.5 pb-1 border-t border-[#C5A059]/40 bg-[#0C0A08]">
+                    <span className="text-xs sm:text-sm font-royal font-bold text-[#F4EFE6] block truncate">
                       {item.characterName}
                     </span>
-                    <span className="text-[10px] sm:text-[11px] font-sans text-amber-300/90 italic block line-clamp-1">
+                    <span className="text-[10px] sm:text-[11px] font-editorial text-[#C5A059] italic block line-clamp-1">
                       {item.quote}
                     </span>
                   </div>

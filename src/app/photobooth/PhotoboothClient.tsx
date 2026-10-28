@@ -1,45 +1,39 @@
 'use client';
 
-import React, { useState, useRef, useEffect, useCallback } from 'react';
+import React, { useState, useRef, useEffect, useCallback, useMemo } from 'react';
 import { Link } from '@/components/common/Link';
-import {
-  GununganSvg,
-  GatotkacaSvg,
-  SrikandiSvg,
-  BatikKawungPatternSvg,
-  BatikParangPatternSvg,
-} from '@/components/ui/WayangVectors';
 import {
   Camera,
   RotateCcw,
   Download,
   Share2,
   Check,
-  Sparkles,
-  AlertCircle,
   RefreshCw,
   Sliders,
   Image as ImageIcon,
+  ExternalLink,
+  Info,
 } from 'lucide-react';
-import QRCode from 'qrcode';
 import {
-  drawJogloHouse,
-  drawTumpalPattern,
-  drawBotanicalLeaves,
-  UkiranJeparaViewfinderOverlay,
-  KlasikMaroonViewfinderOverlay,
-  SugengAmbalWarsaViewfinderOverlay,
-} from '@/components/ui/PhotoboothOverlays';
+  CULTURAL_FRAMES,
+  FrameId,
+  CulturalCategory,
+  getFrameById,
+} from '@/data/photoboothFrames';
+import { renderPhotoboothStripCanvas } from '@/components/ui/PhotoboothCanvasRenderer';
+import { PhotoboothStripPreview } from '@/components/ui/PhotoboothStripPreview';
+import { JavaneseViewfinderOverlay } from '@/components/ui/PhotoboothOverlays';
 
 type FilterType = 'warm' | 'monochrome' | 'cyberpunk';
-type FrameType =
-  | 'gunungan'
-  | 'pola-jawa'
-  | 'companion-gatotkaca'
-  | 'companion-srikandi'
-  | 'ukiran-jepara'
-  | 'klasik-maroon'
-  | 'sugeng-ambal-warsa';
+type FrameType = FrameId;
+
+const CATEGORY_TABS: { id: CulturalCategory; label: string }[] = [
+  { id: 'semua', label: 'Semua Corak' },
+  { id: 'keraton-mataram', label: 'Keraton' },
+  { id: 'geometri-klasik', label: 'Geometri' },
+  { id: 'kriya-arsitektur', label: 'Kriya' },
+  { id: 'alam-pesisir', label: 'Alam' },
+];
 
 export function PhotoboothClient({ autoStart = false }: { autoStart?: boolean } = {}) {
   const [stream, setStream] = useState<MediaStream | null>(null);
@@ -52,13 +46,12 @@ export function PhotoboothClient({ autoStart = false }: { autoStart?: boolean } 
   const [countdownNum, setCountdownNum] = useState<number | null>(null);
   const [flash, setFlash] = useState(false);
 
-  // Styling options
+  // Styling options (12 authentic Javanese cultural frames)
   const [activeFilter, setActiveFilter] = useState<FilterType>('warm');
-  const [activeFrame, setActiveFrame] = useState<FrameType>('gunungan');
-  const [customCoupleText, setCustomCoupleText] = useState('Raden & Ayu');
-  const [customHashtagText, setCustomHashtagText] = useState('#NuswaraMoments');
-  const [customWarsaName, setCustomWarsaName] = useState('Sang Sutresna');
-  const [customWarsaGreeting, setCustomWarsaGreeting] = useState('Rahayu Widodo Lestari');
+  const [activeFrame, setActiveFrame] = useState<FrameType>('parang-kencana');
+  const [selectedCategory, setSelectedCategory] = useState<CulturalCategory>('semua');
+  const [customTitle, setCustomTitle] = useState('');
+  const [customMessage, setCustomMessage] = useState('');
 
   // Strip rendering & sharing
   const [stripUrl, setStripUrl] = useState<string | null>(null);
@@ -69,6 +62,14 @@ export function PhotoboothClient({ autoStart = false }: { autoStart?: boolean } 
   const videoRef = useRef<HTMLVideoElement>(null);
   const streamCanvasRef = useRef<HTMLCanvasElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const currentFrame = getFrameById(activeFrame);
+
+  // Filter frames based on selected category
+  const filteredFrames = useMemo(() => {
+    if (selectedCategory === 'semua') return CULTURAL_FRAMES;
+    return CULTURAL_FRAMES.filter((f) => f.category === selectedCategory);
+  }, [selectedCategory]);
 
   // Initialize Camera
   const startCamera = useCallback(async () => {
@@ -119,102 +120,140 @@ export function PhotoboothClient({ autoStart = false }: { autoStart?: boolean } 
         stream.getTracks().forEach((track) => track.stop());
       }
     };
-  }, [autoStart, startCamera]);
+  }, [autoStart, startCamera, stream]);
 
-  // Filter CSS style mapping
-  const getFilterStyle = (f: FilterType) => {
-    switch (f) {
+  // Filter CSS style computation
+  const getFilterStyle = (filter: FilterType): string => {
+    switch (filter) {
       case 'warm':
         return 'sepia(0.2) saturate(1.15) contrast(1.05) brightness(1.02)';
       case 'monochrome':
-        return 'grayscale(1) contrast(1.3) brightness(0.95)';
+        return 'grayscale(1) contrast(1.25) brightness(0.95)';
       case 'cyberpunk':
-        return 'contrast(1.25) hue-rotate(180deg) saturate(1.5) brightness(0.9)';
+        return 'contrast(1.3) hue-rotate(185deg) saturate(1.4) brightness(0.9)';
       default:
         return 'none';
     }
   };
 
-  // Capture single photo from video element
+  // Capture single snapshot from camera
   const capturePhoto = useCallback((): string | null => {
     if (!videoRef.current) return null;
     const video = videoRef.current;
-    const canvas = document.createElement('canvas');
+    const canvas = streamCanvasRef.current || document.createElement('canvas');
     canvas.width = video.videoWidth || 640;
     canvas.height = video.videoHeight || 480;
     const ctx = canvas.getContext('2d');
     if (!ctx) return null;
 
-    // Apply mirror flip for user selfie camera
+    ctx.save();
     ctx.translate(canvas.width, 0);
     ctx.scale(-1, 1);
-
-    // Apply filter on canvas
     ctx.filter = getFilterStyle(activeFilter);
     ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+    ctx.restore();
 
-    return canvas.toDataURL('image/jpeg', 0.9);
+    return canvas.toDataURL('image/jpeg', 0.92);
   }, [activeFilter]);
 
-  // Automated 4-photo capture sequence
-  const startCaptureSequence = async () => {
-    if (photos.length >= 4) {
-      setPhotos([]);
-    }
+  // Trigger flash visual effect
+  const triggerFlash = () => {
+    setFlash(true);
+    setTimeout(() => setFlash(false), 200);
+  };
+
+  // Countdown timer helper
+  const runCountdown = (seconds: number): Promise<void> => {
+    return new Promise((resolve) => {
+      let current = seconds;
+      setCountdownNum(current);
+      const timer = setInterval(() => {
+        current -= 1;
+        if (current <= 0) {
+          clearInterval(timer);
+          setCountdownNum(null);
+          resolve();
+        } else {
+          setCountdownNum(current);
+        }
+      }, 1000);
+    });
+  };
+
+  // Take a single snap with 3s countdown
+  const handleTakeSnap = async () => {
+    if (photos.length >= 4 || isCountingDown) return;
     setIsCountingDown(true);
-
-    const captured: string[] = [];
-
-    for (let snapIndex = 0; snapIndex < 4; snapIndex++) {
-      // Countdown 3, 2, 1
-      for (let sec = 3; sec >= 1; sec--) {
-        setCountdownNum(sec);
-        await new Promise((r) => setTimeout(r, 900));
-      }
-      setCountdownNum(null);
-
-      // Flash effect
-      setFlash(true);
-      const snap = capturePhoto();
-      if (snap) {
-        captured.push(snap);
-        setPhotos([...captured]);
-      }
-      setTimeout(() => setFlash(false), 200);
-
-      // Brief pause between snaps
-      if (snapIndex < 3) {
-        await new Promise((r) => setTimeout(r, 1200));
-      }
+    await runCountdown(3);
+    triggerFlash();
+    const snap = capturePhoto();
+    if (snap) {
+      setPhotos((prev) => [...prev, snap]);
     }
-
     setIsCountingDown(false);
   };
 
-  // Sample photo generator for fallback if camera not available
-  const loadDemoPhotos = () => {
-    const demoSnaps = [
-      generateDemoSnap('1. Salam Budaya'),
-      generateDemoSnap('2. Pose Satria'),
-      generateDemoSnap('3. Senyum Rama'),
-      generateDemoSnap('4. Jaya Nusantara'),
-    ];
-    setPhotos(demoSnaps);
+  // Take 4 snaps consecutively in burst mode
+  const handleTakeFourBurst = async () => {
+    if (photos.length >= 4 || isCountingDown) return;
+    setIsCountingDown(true);
+    setPhotos([]);
+
+    const newSnaps: string[] = [];
+    for (let i = 0; i < 4; i++) {
+      await runCountdown(3);
+      triggerFlash();
+      const snap = capturePhoto();
+      if (snap) {
+        newSnaps.push(snap);
+        setPhotos([...newSnaps]);
+      }
+      if (i < 3) {
+        await new Promise((r) => setTimeout(r, 800));
+      }
+    }
+    setIsCountingDown(false);
   };
 
+  // Handle manual photo upload fallback
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
     if (!files || files.length === 0) return;
-    const readers: Promise<string>[] = Array.from(files).slice(0, 4).map((file) => {
-      return new Promise((resolve) => {
-        const reader = new FileReader();
-        reader.onload = (event) => resolve(event.target?.result as string);
-        reader.readAsDataURL(file);
-      });
+
+    const remainingSlots = 4 - photos.length;
+    const filesToRead = Array.from(files).slice(0, remainingSlots);
+
+    filesToRead.forEach((file) => {
+      const reader = new FileReader();
+      reader.onload = (loadEvent) => {
+        if (loadEvent.target?.result) {
+          setPhotos((prev) => {
+            if (prev.length >= 4) return prev;
+            return [...prev, loadEvent.target!.result as string];
+          });
+        }
+      };
+      reader.readAsDataURL(file);
     });
-    Promise.all(readers).then((newPhotos) => {
-      setPhotos((prev) => [...prev, ...newPhotos].slice(0, 4));
-    });
+  };
+
+  // Reset photos
+  const handleRetake = () => {
+    setPhotos([]);
+    setStripUrl(null);
+    setShareCode(null);
+    setCopied(false);
+  };
+
+  // Load demo snaps if user doesn't have camera or image files
+  const loadDemoSnaps = () => {
+    const demoSnaps = [
+      generateDemoSnap('POSE 01: SIKAP ANORAGA'),
+      generateDemoSnap('POSE 02: SEMBAH TAPA'),
+      generateDemoSnap('POSE 03: KERIS TAYUHAN'),
+      generateDemoSnap('POSE 04: RAHAYU LESTARI'),
+    ];
+    setPhotos(demoSnaps);
   };
 
   function generateDemoSnap(label: string): string {
@@ -223,356 +262,51 @@ export function PhotoboothClient({ autoStart = false }: { autoStart?: boolean } 
     canvas.height = 480;
     const ctx = canvas.getContext('2d');
     if (!ctx) return '';
-    ctx.fillStyle = '#1C1917';
+    ctx.fillStyle = '#14110E';
     ctx.fillRect(0, 0, 640, 480);
-    ctx.strokeStyle = '#D4A373';
-    ctx.lineWidth = 4;
+    ctx.strokeStyle = '#C5A059';
+    ctx.lineWidth = 3;
     ctx.strokeRect(20, 20, 600, 440);
-    ctx.fillStyle = '#FAF7F0';
-    ctx.font = 'bold 36px serif';
+    ctx.fillStyle = '#F4EFE6';
+    ctx.font = 'bold 32px serif';
     ctx.textAlign = 'center';
-    ctx.fillText('NUSWARA PHOTO', 320, 220);
-    ctx.font = '24px monospace';
-    ctx.fillStyle = '#D4A373';
+    ctx.fillText('NUSWARA BILIK FOTO', 320, 220);
+    ctx.font = '18px monospace';
+    ctx.fillStyle = '#C5A059';
     ctx.fillText(label, 320, 280);
     return canvas.toDataURL('image/jpeg');
   }
 
-function drawImageCover(
-  ctx: CanvasRenderingContext2D,
-  img: HTMLImageElement,
-  x: number,
-  y: number,
-  w: number,
-  h: number
-) {
-  const imgRatio = img.width / img.height;
-  const targetRatio = w / h;
-  let sWidth = img.width;
-  let sHeight = img.height;
-  let sx = 0;
-  let sy = 0;
-
-  if (imgRatio > targetRatio) {
-    sWidth = img.height * targetRatio;
-    sx = (img.width - sWidth) / 2;
-  } else {
-    sHeight = img.width / targetRatio;
-    sy = (img.height - sHeight) / 2;
-  }
-
-  ctx.drawImage(img, sx, sy, sWidth, sHeight, x, y, w, h);
-}
-
-  // Generate 4-Cut Vertical Strip
+  // Generate 4-Cut Vertical Strip (1:3 format at 800 x 2400)
   const generateStrip = useCallback(async () => {
     if (photos.length < 4) return;
-
     const stripCanvas = document.createElement('canvas');
-
-    // Sugeng Ambal Warsa Celebration Frame (9:16 aspect ratio at 1152x2048)
-    if (activeFrame === 'sugeng-ambal-warsa') {
-      stripCanvas.width = 1152;
-      stripCanvas.height = 2048;
-      const ctx = stripCanvas.getContext('2d');
-      if (!ctx) return;
-
-      // Base warm parchment background
-      ctx.fillStyle = '#EBDAC2';
-      ctx.fillRect(0, 0, 1152, 2048);
-
-      // Load Photo 1 (Main Portrait Window)
-      const img1 = new Image();
-      img1.src = photos[0];
-      await new Promise((resolve) => {
-        img1.onload = resolve;
-        img1.onerror = resolve;
+    try {
+      const stripData = await renderPhotoboothStripCanvas(stripCanvas, {
+        photos,
+        frameId: activeFrame,
+        filterId: activeFilter,
+        customText: customTitle,
+        customSubtext: customMessage,
       });
-
-      // Load Photo 2 (Tilted Accent Window)
-      const img2 = new Image();
-      img2.src = photos[1] || photos[0];
-      await new Promise((resolve) => {
-        img2.onload = resolve;
-        img2.onerror = resolve;
-      });
-
-      // Load Sugeng Ambal Warsa Frame Overlay
-      const frameImg = new Image();
-      frameImg.src = '/frames/frame-sugeng-ambal-warsa.png';
-      await new Promise((resolve) => {
-        frameImg.onload = resolve;
-        frameImg.onerror = resolve;
-      });
-
-      // Draw Photo 1 in Window 1 (Main vertical ornate frame)
-      ctx.save();
-      ctx.beginPath();
-      ctx.rect(275, 435, 600, 790);
-      ctx.clip();
-      drawImageCover(ctx, img1, 275, 435, 600, 790);
-      ctx.restore();
-
-      // Draw Photo 2 in Window 2 (Tilted landscape ornate frame)
-      ctx.save();
-      ctx.translate(800, 1300);
-      ctx.rotate((-2.5 * Math.PI) / 180);
-      ctx.beginPath();
-      ctx.rect(-240, -180, 480, 360);
-      ctx.clip();
-      drawImageCover(ctx, img2, -240, -180, 480, 360);
-      ctx.restore();
-
-      // Draw Frame PNG Overlay on top
-      ctx.drawImage(frameImg, 0, 0, 1152, 2048);
-
-      // Custom Typography Overlay in bottom maroon cloud
-      ctx.save();
-      ctx.textAlign = 'center';
-      if (customWarsaName) {
-        ctx.fillStyle = '#FEF3C7';
-        ctx.font = 'bold 32px serif';
-        ctx.shadowColor = 'rgba(0, 0, 0, 0.7)';
-        ctx.shadowBlur = 6;
-        ctx.fillText(`✦ ${customWarsaName} ✦`, 576, 1935);
-      }
-      ctx.fillStyle = '#FDE68A';
-      ctx.font = 'italic 24px serif';
-      ctx.shadowColor = 'rgba(0, 0, 0, 0.6)';
-      ctx.shadowBlur = 5;
-      ctx.fillText(customWarsaGreeting || 'Rahayu Widodo Lestari', 576, 1975);
-
-      const dateStr = new Date().toLocaleDateString('id-ID', {
-        day: 'numeric',
-        month: 'long',
-        year: 'numeric',
-      });
-      ctx.fillStyle = '#E2D3B8';
-      ctx.font = '16px monospace';
-      ctx.fillText(dateStr, 576, 2008);
-      ctx.restore();
-
-      const stripData = stripCanvas.toDataURL('image/png');
       setStripUrl(stripData);
-      return;
+    } catch (err) {
+      console.error('Error generating photo strip canvas:', err);
     }
-
-    // Vertical 4-cut dimensions: 800 width x 2400 height
-    stripCanvas.width = 800;
-    stripCanvas.height = 2400;
-    const ctx = stripCanvas.getContext('2d');
-    if (!ctx) return;
-
-    const photoWidth = 680;
-    const photoHeight = 440;
-    const startY = 170;
-    const gap = 30;
-
-    // Background based on active frame
-    if (activeFrame === 'klasik-maroon') {
-      ctx.fillStyle = '#3E1210'; // Deep royal maroon
-    } else if (activeFilter === 'cyberpunk') {
-      ctx.fillStyle = '#0F172A';
-    } else {
-      ctx.fillStyle = '#FAF7F0';
-    }
-    ctx.fillRect(0, 0, stripCanvas.width, stripCanvas.height);
-
-    // Frame outer border
-    if (activeFrame === 'klasik-maroon') {
-      ctx.strokeStyle = '#D4AF37';
-      ctx.lineWidth = 6;
-      ctx.strokeRect(20, 20, stripCanvas.width - 40, stripCanvas.height - 40);
-    } else if (activeFrame === 'ukiran-jepara') {
-      ctx.strokeStyle = '#8C522B';
-      ctx.lineWidth = 8;
-      ctx.strokeRect(25, 25, stripCanvas.width - 50, stripCanvas.height - 50);
-    } else {
-      ctx.strokeStyle = activeFilter === 'cyberpunk' ? '#38BDF8' : '#C85A32';
-      ctx.lineWidth = 10;
-      ctx.strokeRect(30, 30, stripCanvas.width - 60, stripCanvas.height - 60);
-    }
-
-    // Header Branding
-    if (activeFrame === 'klasik-maroon') {
-      drawBotanicalLeaves(ctx, 400, 75);
-      ctx.fillStyle = '#FEF3C7';
-      ctx.font = 'bold 30px serif';
-      ctx.textAlign = 'center';
-      ctx.fillText('SUN FLOWER • NUSWARA', 400, 105);
-      ctx.font = 'italic 18px serif';
-      ctx.fillStyle = '#FDE68A';
-      ctx.fillText('@nuswara.id  •  BILIK KENANGAN BUDAYA', 400, 135);
-    } else if (activeFrame === 'ukiran-jepara') {
-      ctx.fillStyle = '#29140A';
-      ctx.font = 'bold 34px serif';
-      ctx.textAlign = 'center';
-      ctx.fillText('NUSWARA', 400, 95);
-      ctx.font = 'bold 18px monospace';
-      ctx.fillStyle = '#8C522B';
-      ctx.fillText('UKIRAN JEPARA EDITION', 400, 125);
-    } else {
-      ctx.fillStyle = activeFilter === 'cyberpunk' ? '#E2E8F0' : '#1C1917';
-      ctx.font = 'bold 34px serif';
-      ctx.textAlign = 'center';
-      ctx.fillText('NUSWARA', 400, 100);
-      ctx.font = 'bold 18px monospace';
-      ctx.fillStyle = '#78716C';
-      ctx.fillText('DIGITAL CULTURE PHOTOBOOTH', 400, 130);
-    }
-
-    // Load Jepara frame overlay image if activeFrame === 'ukiran-jepara'
-    let jeparaImg: HTMLImageElement | null = null;
-    if (activeFrame === 'ukiran-jepara') {
-      jeparaImg = new Image();
-      jeparaImg.src = '/frames/frame-ukiran-jepara.png';
-      await new Promise((resolve) => {
-        jeparaImg!.onload = resolve;
-        jeparaImg!.onerror = resolve;
-      });
-    }
-
-    // Draw the 4 photos stacked vertically
-    for (let i = 0; i < 4; i++) {
-      const currentY = startY + i * (photoHeight + gap);
-
-      // Load image
-      const img = new Image();
-      img.src = photos[i];
-      await new Promise((resolve) => {
-        img.onload = resolve;
-      });
-
-      if (activeFrame === 'klasik-maroon') {
-        // White matting around photo
-        ctx.fillStyle = '#FFFFFF';
-        ctx.fillRect(52, currentY - 8, photoWidth + 16, photoHeight + 16);
-        ctx.drawImage(img, 60, currentY, photoWidth, photoHeight);
-        ctx.strokeStyle = '#D4AF37';
-        ctx.lineWidth = 3;
-        ctx.strokeRect(60, currentY, photoWidth, photoHeight);
-      } else {
-        // Photo frame card
-        ctx.drawImage(img, 60, currentY, photoWidth, photoHeight);
-
-        // Inner photo thin border
-        ctx.strokeStyle = activeFrame === 'ukiran-jepara' ? '#8C522B' : '#D4A373';
-        ctx.lineWidth = 4;
-        ctx.strokeRect(60, currentY, photoWidth, photoHeight);
-
-        // If Jepara frame, overlay the carved wood ornament over each photo
-        if (activeFrame === 'ukiran-jepara' && jeparaImg) {
-          ctx.drawImage(jeparaImg, 60, currentY, photoWidth, photoHeight);
-        }
-      }
-
-      // Frame specific overlays
-      if (activeFrame === 'companion-gatotkaca' && i === 3) {
-        ctx.fillStyle = 'rgba(200, 90, 50, 0.85)';
-        ctx.font = 'bold 20px monospace';
-        ctx.textAlign = 'right';
-        ctx.fillText('✦ GATOTKACA COMPANION', 720, currentY + photoHeight - 20);
-      }
-      if (activeFrame === 'companion-srikandi' && i === 3) {
-        ctx.fillStyle = 'rgba(200, 90, 50, 0.85)';
-        ctx.font = 'bold 20px monospace';
-        ctx.textAlign = 'right';
-        ctx.fillText('✦ SRIKANDI COMPANION', 720, currentY + photoHeight - 20);
-      }
-    }
-
-    // Bottom Branding, Stamp & QR Code
-    const bottomY = startY + 4 * (photoHeight + gap) + 40;
-    const dateStr = new Date().toLocaleDateString('id-ID', {
-      day: 'numeric',
-      month: 'long',
-      year: 'numeric',
-    });
-
-    if (activeFrame === 'klasik-maroon') {
-      // Golden Joglo houses flanking the signature
-      drawJogloHouse(ctx, 45, bottomY - 30, 140, 140);
-      drawJogloHouse(ctx, 615, bottomY - 30, 140, 140);
-
-      // Center Wedding / Celebration Calligraphy & Signature
-      ctx.textAlign = 'center';
-      ctx.fillStyle = '#FDE68A';
-      ctx.font = '22px serif';
-      ctx.fillText('The Celebration Of', 400, bottomY - 15);
-
-      ctx.fillStyle = '#FFFBEB';
-      ctx.font = 'bold italic 48px serif';
-      ctx.fillText(customCoupleText || 'Raden & Ayu', 400, bottomY + 38);
-
-      ctx.fillStyle = '#FDE68A';
-      ctx.font = '20px serif';
-      ctx.fillText(dateStr, 400, bottomY + 80);
-
-      ctx.fillStyle = '#F59E0B';
-      ctx.font = 'bold 19px monospace';
-      ctx.fillText(customHashtagText || '#NuswaraMoments', 400, bottomY + 115);
-
-      // Bottom golden tumpal border across base
-      drawTumpalPattern(ctx, 2345, 800, 40);
-    } else {
-      ctx.textAlign = 'left';
-      ctx.fillStyle = activeFilter === 'cyberpunk' ? '#F8FAFC' : '#1C1917';
-      ctx.font = 'bold 24px serif';
-      ctx.fillText(`Solo & Mataram Edition`, 60, bottomY);
-
-      ctx.fillStyle = '#78716C';
-      ctx.font = '18px monospace';
-      ctx.fillText(dateStr, 60, bottomY + 30);
-      ctx.fillText(`Frame: ${activeFrame.toUpperCase()}`, 60, bottomY + 55);
-
-      // Generate real QR code image for bottom right
-      const dummyShortCode = Math.random().toString(36).substring(2, 10);
-      const qrDataUrl = await QRCode.toDataURL(
-        `${window.location.origin}/photobooth`,
-        { width: 130, margin: 1 }
-      );
-      const qrImg = new Image();
-      qrImg.src = qrDataUrl;
-      await new Promise((resolve) => {
-        qrImg.onload = resolve;
-      });
-
-      ctx.drawImage(qrImg, 610, bottomY - 35, 130, 130);
-    }
-
-    const stripData = stripCanvas.toDataURL('image/png');
-    setStripUrl(stripData);
-  }, [
-    photos,
-    activeFilter,
-    activeFrame,
-    customCoupleText,
-    customHashtagText,
-    customWarsaName,
-    customWarsaGreeting,
-  ]);
+  }, [photos, activeFilter, activeFrame, customTitle, customMessage]);
 
   useEffect(() => {
     if (photos.length === 4) {
       generateStrip();
     }
-  }, [
-    photos,
-    activeFilter,
-    activeFrame,
-    customCoupleText,
-    customHashtagText,
-    customWarsaName,
-    customWarsaGreeting,
-    generateStrip,
-  ]);
+  }, [photos, activeFilter, activeFrame, customTitle, customMessage, generateStrip]);
 
-  // Handle Download Strip
+  // Handle Download Strip (PNG high-resolution)
   const handleDownloadStrip = () => {
     if (!stripUrl) return;
     const a = document.createElement('a');
     a.href = stripUrl;
-    a.download = `Nuswara_Strip_${Date.now()}.png`;
+    a.download = `Nuswara_Strip_${activeFrame}_${Date.now()}.png`;
     a.click();
   };
 
@@ -586,9 +320,10 @@ function drawImageCover(
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           shareType: 'PHOTOBOOTH',
-          title: `Photobooth 4-Cut Strip Jawa Epic`,
+          title: `Photobooth 4-Cut Strip ${currentFrame.name}`,
           snapshotData: {
             frame: activeFrame,
+            frameName: currentFrame.name,
             filter: activeFilter,
             createdAt: new Date().toISOString(),
           },
@@ -612,470 +347,493 @@ function drawImageCover(
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
       {/* Editorial Header */}
-      <div className="max-w-3xl space-y-3 mb-10">
-        <div className="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-[#ECC47E] bg-[#241B12] px-3 py-1 rounded-full border border-[#C59B53]/40">
-          <Camera className="w-3.5 h-3.5 text-[#B99A60]" />
-          <span>Web Photobooth 4-Cut</span>
-        </div>
-        <h2 className="text-3xl sm:text-5xl font-royal font-bold text-[#F0E6D4] tracking-tight">
-          Bilik Foto Jawa Kontemporer
-        </h2>
-        <p className="text-xs sm:text-sm text-[#A89F91] leading-relaxed font-sans">
-          Ambil 4 foto langsung dari kameramu. Pilih filter Warm Minimalist atau Batik Monochrome, gunakan bingkai Gunungan atau Ukiran Jepara, lalu unduh dan bagikan vertical strip karyamu.
-        </p>
-      </div>
-
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-        {/* Left Column: Live Camera & Controls */}
-        <div className="lg:col-span-7 space-y-6">
-          {/* Viewfinder Frame */}
-          <div className="relative aspect-[4/3] bg-stone-950 rounded-2xl overflow-hidden border-2 border-stone-800 shadow-md flex items-center justify-center">
-            {/* White Flash overlay */}
-            {flash && (
-              <div className="absolute inset-0 bg-white z-50 animate-out fade-out duration-200 pointer-events-none" />
-            )}
-
-            {/* Countdown Overlay */}
-            {countdownNum && (
-              <div className="absolute inset-0 z-40 bg-black/40 backdrop-blur-[2px] flex items-center justify-center">
-                <span className="text-8xl font-serif font-bold text-amber-400 animate-ping">
-                  {countdownNum}
-                </span>
-              </div>
-            )}
-
-            {/* Live Video Element */}
-            <video
-              ref={videoRef}
-              autoPlay
-              playsInline
-              muted
-              style={{ filter: getFilterStyle(activeFilter), transform: 'scaleX(-1)' }}
-              className={`w-full h-full object-cover ${cameraActive ? 'block' : 'hidden'}`}
-            />
-
-            {/* Companion Silhouette Overlays on Viewfinder - Only active during camera live view */}
-            {cameraActive && activeFrame === 'companion-gatotkaca' && (
-              <div className="absolute right-4 bottom-2 h-4/5 pointer-events-none opacity-85 z-20">
-                <GatotkacaSvg className="h-full w-auto text-amber-400 drop-shadow-md" />
-              </div>
-            )}
-            {cameraActive && activeFrame === 'companion-srikandi' && (
-              <div className="absolute right-4 bottom-2 h-4/5 pointer-events-none opacity-85 z-20">
-                <SrikandiSvg className="h-full w-auto text-amber-400 drop-shadow-md" />
-              </div>
-            )}
-            {cameraActive && activeFrame === 'gunungan' && (
-              <div className="absolute top-2 left-1/2 -translate-x-1/2 h-16 pointer-events-none opacity-80 z-20">
-                <GununganSvg className="h-full w-auto text-amber-400" />
-              </div>
-            )}
-            {cameraActive && activeFrame === 'ukiran-jepara' && <UkiranJeparaViewfinderOverlay />}
-            {cameraActive && activeFrame === 'klasik-maroon' && (
-              <KlasikMaroonViewfinderOverlay
-                coupleText={customCoupleText}
-                hashtagText={customHashtagText}
-              />
-            )}
-            {cameraActive && activeFrame === 'sugeng-ambal-warsa' && (
-              <SugengAmbalWarsaViewfinderOverlay
-                birthdayName={customWarsaName}
-              />
-            )}
-
-            {/* Fallback Screen when camera is not ready */}
-            {!cameraActive && (
-              <div className="p-4 sm:p-6 text-center space-y-3 max-w-sm w-full z-10">
-                <div className="w-12 h-12 rounded-full bg-stone-900 border border-stone-800 flex items-center justify-center mx-auto shadow-inner">
-                  <Camera className="w-6 h-6 text-amber-400/80" />
-                </div>
-                {cameraError ? (
-                  <div className="space-y-2">
-                    <p className="text-xs text-red-400 leading-relaxed font-sans">
-                      {cameraError}
-                    </p>
-                    <button
-                      onClick={startCamera}
-                      className="px-3.5 py-1.5 bg-stone-800 hover:bg-stone-700 text-stone-200 text-xs rounded-md cursor-pointer transition-colors"
-                    >
-                      Coba Sambungkan Ulang
-                    </button>
-                  </div>
-                ) : (
-                  <div className="space-y-2.5">
-                    <p className="text-xs text-stone-300 font-sans">
-                      Kamera bilik foto siap dinyalakan untuk mengambil 4-cut pose.
-                    </p>
-                    <button
-                      onClick={startCamera}
-                      className="px-5 py-2.5 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-stone-950 font-bold text-xs rounded-xl shadow-lg transition-all flex items-center gap-2 mx-auto cursor-pointer active:scale-95"
-                    >
-                      <Camera className="w-4 h-4" />
-                      <span>Nyalakan Kamera</span>
-                    </button>
-                  </div>
-                )}
-                <input
-                  ref={fileInputRef}
-                  type="file"
-                  accept="image/*"
-                  multiple
-                  onChange={handleFileUpload}
-                  className="hidden"
-                />
-                <div className="pt-2 flex flex-col gap-1.5 items-center">
-                  <button
-                    onClick={loadDemoPhotos}
-                    className="text-[11px] font-mono text-amber-400 hover:text-amber-300 underline underline-offset-2 cursor-pointer transition-colors"
-                  >
-                    Atau gunakan mode demo tanpa kamera
-                  </button>
-                  <button
-                    onClick={() => fileInputRef.current?.click()}
-                    className="text-[11px] font-mono text-stone-400 hover:text-stone-200 underline underline-offset-2 cursor-pointer transition-colors"
-                  >
-                    Atau unggah foto dari galeri
-                  </button>
-                </div>
-              </div>
-            )}
+      <div className="border-b border-[#C5A059]/20 pb-8 mb-8">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
+          <div className="space-y-2">
+            <span className="text-xs font-mono uppercase tracking-[0.25em] text-[#C5A059] font-bold block">
+              [ BILIK FOTO // 04 ] — ARCHIVAL DARKROOM STUDIO WORKSPACE
+            </span>
+            <h2 className="text-3xl sm:text-5xl font-royal font-bold text-[#F4EFE6] tracking-tight">
+              Bilik Foto Jawa Kontemporer
+            </h2>
+            <p className="text-xs sm:text-sm text-[#A89F91] leading-relaxed font-sans max-w-2xl">
+              Abadikan 4 pose budaya langsung dari kameramu. Pilih nuansa filter Mataram, padukan dengan 12 corak adiluhung berdasar riset arsip Jawa, lalu unduh strip vertikal beresolusi tinggi.
+            </p>
           </div>
 
-          {/* Trigger & Action Bar */}
-          <div className="flex flex-wrap items-center justify-between gap-4 p-4 bg-white rounded-xl border border-stone-200 shadow-sm">
-            <div className="flex items-center gap-2">
-              <button
-                onClick={startCaptureSequence}
-                disabled={isCountingDown || (!cameraActive && photos.length === 0)}
-                className="px-6 py-3 bg-stone-900 hover:bg-stone-800 disabled:opacity-40 text-stone-50 font-medium text-xs rounded-lg transition-all shadow-sm flex items-center gap-2"
-              >
-                <Camera className="w-4 h-4 text-amber-400" />
-                <span>
-                  {photos.length === 0 ? 'Mulai Ambil 4 Foto (3..2..1)' : 'Foto Ulang 4 Pose'}
-                </span>
-              </button>
+          <div className="text-xs font-mono text-[#A89F91] border border-[#C5A059]/30 px-3.5 py-2 bg-[#14110E] shrink-0">
+            <span className="text-[#C5A059] font-bold">FORMAT // 1:3</span> VERTICAL STRIP
+          </div>
+        </div>
+      </div>
 
-              {photos.length > 0 && (
-                <button
-                  onClick={() => setPhotos([])}
-                  className="p-3 text-stone-500 hover:text-stone-900 rounded-lg hover:bg-stone-100"
-                  title="Reset Semua Foto"
-                >
-                  <RotateCcw className="w-4 h-4" />
-                </button>
+      {/* UNIFIED 3-COLUMN DARKROOM STUDIO WORKSPACE (5 : 4 : 3 GRID) */}
+      <div className="border border-[#C5A059]/30 bg-[#14110E] shadow-2xl">
+        {/* Studio Top Control Strip */}
+        <div className="flex flex-wrap items-center justify-between px-5 py-3 border-b border-[#C5A059]/20 bg-[#0C0A08] text-xs font-mono">
+          <div className="flex items-center gap-2">
+            <span className="text-[#C5A059]">❖</span>
+            <span className="font-bold text-[#F4EFE6] uppercase tracking-wider">
+              DARKROOM STUDIO WORKSPACE
+            </span>
+            <span className="text-[#C5A059]/40">•</span>
+            <span className="text-[#A89F91]">3-PANE INTEGRATED EDITORIAL LAYOUT</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <span className="text-[#A89F91]">STATUS POSE:</span>
+            <span className="text-[#0C0A08] bg-[#C5A059] px-2.5 py-0.5 font-bold">
+              {photos.length} / 4 POSE
+            </span>
+          </div>
+        </div>
+
+        {/* 3-Column Desk: Viewfinder (5 cols) : Kurasi Filter & Bingkai (4 cols) : Pratinjau (3 cols) */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 divide-y lg:divide-y-0 lg:divide-x divide-[#C5A059]/20 items-stretch">
+          
+          {/* =========================================================================
+              KOLOM 1: VIEWFINDER KAMERA (5 BAGIAN / 12 COLS)
+              ========================================================================= */}
+          <div className="lg:col-span-5 p-5 space-y-4 flex flex-col justify-between bg-[#100D0A]">
+            <div className="space-y-3">
+              {/* Camera Header Plate */}
+              <div className="flex items-center justify-between text-xs font-mono border-b border-[#C5A059]/15 pb-2">
+                <span className="text-[#C5A059] font-bold uppercase tracking-wider">
+                  01 // VIEWFINDER KAMERA
+                </span>
+                <span className="text-[#A89F91]">
+                  {cameraActive ? 'KAMERA AKTIF' : 'STANDBY'}
+                </span>
+              </div>
+
+              {/* Viewfinder Frame with Studio Reticles */}
+              <div className="relative aspect-[4/3] bg-[#0C0A08] border border-[#C5A059]/40 overflow-hidden flex items-center justify-center">
+                {/* Darkroom Reticle Corner Accents */}
+                <div className="absolute top-2.5 left-2.5 w-4 h-4 border-t-2 border-l-2 border-[#C5A059] pointer-events-none z-20" />
+                <div className="absolute top-2.5 right-2.5 w-4 h-4 border-t-2 border-r-2 border-[#C5A059] pointer-events-none z-20" />
+                <div className="absolute bottom-2.5 left-2.5 w-4 h-4 border-b-2 border-l-2 border-[#C5A059] pointer-events-none z-20" />
+                <div className="absolute bottom-2.5 right-2.5 w-4 h-4 border-b-2 border-r-2 border-[#C5A059] pointer-events-none z-20" />
+
+                {/* White Flash overlay */}
+                {flash && (
+                  <div className="absolute inset-0 bg-white z-50 animate-out fade-out duration-200 pointer-events-none" />
+                )}
+
+                {/* Countdown Overlay */}
+                {countdownNum && (
+                  <div className="absolute inset-0 z-40 bg-black/60 backdrop-blur-[2px] flex items-center justify-center">
+                    <span className="text-8xl font-editorial font-bold text-[#C5A059] animate-ping">
+                      {countdownNum}
+                    </span>
+                  </div>
+                )}
+
+                {/* Live Video Element */}
+                <video
+                  ref={videoRef}
+                  autoPlay
+                  playsInline
+                  muted
+                  style={{ filter: getFilterStyle(activeFilter), transform: 'scaleX(-1)' }}
+                  className={`w-full h-full object-cover ${cameraActive ? 'block' : 'hidden'}`}
+                />
+
+                {/* Javanese Cultural Viewfinder Overlay */}
+                {cameraActive && <JavaneseViewfinderOverlay frameId={activeFrame} />}
+
+                {/* Fallback Screen when camera is not ready */}
+                {!cameraActive && (
+                  <div className="p-6 text-center space-y-4 max-w-sm w-full z-10">
+                    <div className="w-14 h-14 bg-[#14110E] border border-[#C5A059]/30 flex items-center justify-center mx-auto">
+                      <Camera className="w-6 h-6 text-[#C5A059]" />
+                    </div>
+                    {cameraError ? (
+                      <div className="space-y-3">
+                        <p className="text-xs text-red-400 leading-relaxed font-mono">
+                          {cameraError}
+                        </p>
+                        <button
+                          onClick={startCamera}
+                          className="px-4 py-2 bg-[#1C1610] hover:bg-[#282119] text-[#C5A059] text-xs font-mono uppercase tracking-wider border border-[#C5A059]/40 cursor-pointer transition-colors"
+                        >
+                          Coba Sambungkan Ulang
+                        </button>
+                      </div>
+                    ) : (
+                      <div className="space-y-3">
+                        <p className="text-xs text-[#A89F91] font-sans">
+                          Kamera bilik foto siap dinyalakan untuk mengambil 4-cut pose budaya Jawa.
+                        </p>
+                        <button
+                          onClick={startCamera}
+                          className="px-6 py-3.5 bg-[#C5A059] hover:bg-[#D5B36E] text-[#0C0A08] font-bold text-xs font-mono uppercase tracking-wider shadow-lg transition-colors flex items-center gap-2 mx-auto cursor-pointer"
+                        >
+                          <Camera className="w-4 h-4" />
+                          <span>Nyalakan Kamera</span>
+                        </button>
+                      </div>
+                    )}
+                    <input
+                      ref={fileInputRef}
+                      type="file"
+                      accept="image/*"
+                      multiple
+                      onChange={handleFileUpload}
+                      className="hidden"
+                    />
+                    <div className="pt-2 flex items-center justify-center gap-3">
+                      <button
+                        onClick={() => fileInputRef.current?.click()}
+                        className="text-[11px] text-[#A89F91] hover:text-[#C5A059] underline font-mono flex items-center gap-1 cursor-pointer"
+                      >
+                        <ImageIcon className="w-3 h-3" />
+                        <span>Upload Foto</span>
+                      </button>
+                      <span className="text-[#C5A059]/30">•</span>
+                      <button
+                        onClick={loadDemoSnaps}
+                        className="text-[11px] text-[#C5A059] hover:underline font-mono cursor-pointer"
+                      >
+                        Gunakan Foto Demo (4 Pose)
+                      </button>
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {/* Camera Trigger Buttons */}
+              {cameraActive && (
+                <div className="flex items-center gap-2 pt-1">
+                  <button
+                    onClick={handleTakeSnap}
+                    disabled={photos.length >= 4 || isCountingDown}
+                    className="px-4 py-3 bg-[#14110E] hover:bg-[#1C1610] disabled:opacity-40 text-[#F4EFE6] text-xs font-mono uppercase tracking-wider border border-[#C5A059]/40 transition-colors flex items-center gap-2 cursor-pointer"
+                  >
+                    <Camera className="w-3.5 h-3.5 text-[#C5A059]" />
+                    <span>Ambil 1</span>
+                  </button>
+                  <button
+                    onClick={handleTakeFourBurst}
+                    disabled={photos.length >= 4 || isCountingDown}
+                    className="flex-1 py-3 bg-[#C5A059] hover:bg-[#D5B36E] disabled:opacity-40 text-[#0C0A08] text-xs font-mono uppercase font-bold tracking-wider transition-colors flex items-center justify-center gap-2 cursor-pointer shadow-md"
+                  >
+                    <span className="text-[#0C0A08]">❖</span>
+                    <span>{isCountingDown ? 'Mengambil Pose...' : 'Burst 4 Pose'}</span>
+                  </button>
+                  <button
+                    onClick={stopCamera}
+                    title="Matikan Kamera"
+                    className="p-3 text-[#A89F91] hover:text-[#F4EFE6] border border-[#C5A059]/30 hover:bg-[#14110E] transition-colors"
+                  >
+                    <RefreshCw className="w-3.5 h-3.5" />
+                  </button>
+                </div>
               )}
             </div>
 
-            <div className="text-xs font-mono text-stone-500">
-              {photos.length}/4 Foto Terambil
+            {/* Thumbnail Snap Bar */}
+            <div className="pt-3 border-t border-[#C5A059]/15">
+              <div className="flex items-center justify-between gap-2 mb-2">
+                <span className="text-[10px] font-mono uppercase tracking-wider text-[#A89F91]">
+                  HASIL JEPRETAN ({photos.length}/4):
+                </span>
+                {photos.length > 0 && (
+                  <button
+                    onClick={handleRetake}
+                    className="text-[11px] text-red-400 hover:text-red-300 font-mono flex items-center gap-1 cursor-pointer"
+                  >
+                    <RotateCcw className="w-3 h-3" />
+                    <span>Reset Pose</span>
+                  </button>
+                )}
+              </div>
+              <div className="grid grid-cols-4 gap-2">
+                {Array.from({ length: 4 }).map((_, idx) => {
+                  const photo = photos[idx];
+                  return (
+                    <div
+                      key={idx}
+                      className="relative aspect-[4/3] border border-[#C5A059]/30 bg-[#0C0A08] overflow-hidden flex items-center justify-center"
+                    >
+                      {photo ? (
+                        <>
+                          <img src={photo} alt={`Snap ${idx + 1}`} className="w-full h-full object-cover" />
+                          <span className="absolute bottom-0 right-0 bg-[#0C0A08]/90 text-[9px] text-[#C5A059] px-1 font-mono">
+                            #{idx + 1}
+                          </span>
+                        </>
+                      ) : (
+                        <span className="text-[10px] font-mono text-[#A89F91]/50">
+                          #{idx + 1}
+                        </span>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
             </div>
           </div>
 
-          {/* Filters & Frames Customization Box */}
-          <div className="bg-white rounded-xl border border-stone-200 p-6 space-y-6 shadow-sm">
-            {/* Filter Picker */}
-            <div className="space-y-2">
-              <span className="text-xs font-mono uppercase tracking-wider text-stone-500 font-semibold block">
-                Pilih Nuansa Filter
+          {/* =========================================================================
+              KOLOM 2: KURASI FILTER & 12 BINGKAI BUDAYA (4 BAGIAN / 12 COLS)
+              ========================================================================= */}
+          <div className="lg:col-span-4 p-5 space-y-5 bg-[#14110E] overflow-y-auto max-h-[820px]">
+            {/* Header Plate */}
+            <div className="flex items-center justify-between text-xs font-mono border-b border-[#C5A059]/15 pb-2">
+              <span className="text-[#C5A059] font-bold uppercase tracking-wider">
+                02 // FILTER &amp; BINGKAI BUDAYA
               </span>
-              <div className="grid grid-cols-3 gap-3">
+              <span className="text-[#A89F91]">
+                {CULTURAL_FRAMES.length} MOTIF
+              </span>
+            </div>
+
+            {/* Filter Nuansa */}
+            <div className="space-y-2">
+              <div className="flex items-center justify-between text-xs font-mono">
+                <span className="text-[#A89F91] font-bold flex items-center gap-1.5 uppercase">
+                  <Sliders className="w-3.5 h-3.5 text-[#C5A059]" />
+                  <span>FILTER NUANSA:</span>
+                </span>
+                <span className="text-[#C5A059] uppercase">{activeFilter}</span>
+              </div>
+              <div className="grid grid-cols-3 gap-2">
                 <button
                   onClick={() => setActiveFilter('warm')}
-                  className={`p-3 rounded-lg border text-left text-xs transition-all ${
+                  className={`p-2.5 border text-left text-xs transition-colors cursor-pointer ${
                     activeFilter === 'warm'
-                      ? 'border-stone-900 bg-stone-900 text-stone-50 shadow-sm'
-                      : 'border-stone-200 hover:border-stone-400 bg-stone-50 text-stone-800'
+                      ? 'border-[#C5A059] bg-[#C5A059] text-[#0C0A08] font-bold'
+                      : 'border-[#C5A059]/25 bg-[#0C0A08] text-[#F4EFE6] hover:border-[#C5A059]/50'
                   }`}
                 >
-                  <span className="font-semibold block">Warm Minimal</span>
-                  <span className="text-[10px] opacity-75">Bumi Mataram</span>
+                  <span className="font-bold block font-mono text-[11px]">Warm Mataram</span>
+                  <span className={`text-[9px] block ${activeFilter === 'warm' ? 'text-[#0C0A08]/80' : 'text-[#A89F91]'}`}>Sogan Klasik</span>
                 </button>
                 <button
                   onClick={() => setActiveFilter('monochrome')}
-                  className={`p-3 rounded-lg border text-left text-xs transition-all ${
+                  className={`p-2.5 border text-left text-xs transition-colors cursor-pointer ${
                     activeFilter === 'monochrome'
-                      ? 'border-stone-900 bg-stone-900 text-stone-50 shadow-sm'
-                      : 'border-stone-200 hover:border-stone-400 bg-stone-50 text-stone-800'
+                      ? 'border-[#C5A059] bg-[#C5A059] text-[#0C0A08] font-bold'
+                      : 'border-[#C5A059]/25 bg-[#0C0A08] text-[#F4EFE6] hover:border-[#C5A059]/50'
                   }`}
                 >
-                  <span className="font-semibold block">Batik B&W</span>
-                  <span className="text-[10px] opacity-75">Kontras Klise</span>
+                  <span className="font-bold block font-mono text-[11px]">Batik B&amp;W</span>
+                  <span className={`text-[9px] block ${activeFilter === 'monochrome' ? 'text-[#0C0A08]/80' : 'text-[#A89F91]'}`}>Kontras Klise</span>
                 </button>
                 <button
                   onClick={() => setActiveFilter('cyberpunk')}
-                  className={`p-3 rounded-lg border text-left text-xs transition-all ${
+                  className={`p-2.5 border text-left text-xs transition-colors cursor-pointer ${
                     activeFilter === 'cyberpunk'
-                      ? 'border-stone-900 bg-stone-900 text-stone-50 shadow-sm'
-                      : 'border-stone-200 hover:border-stone-400 bg-stone-50 text-stone-800'
+                      ? 'border-[#C5A059] bg-[#C5A059] text-[#0C0A08] font-bold'
+                      : 'border-[#C5A059]/25 bg-[#0C0A08] text-[#F4EFE6] hover:border-[#C5A059]/50'
                   }`}
                 >
-                  <span className="font-semibold block">Cyberpunk</span>
-                  <span className="text-[10px] opacity-75">Neon Wayang</span>
+                  <span className="font-bold block font-mono text-[11px]">Cyberpunk</span>
+                  <span className={`text-[9px] block ${activeFilter === 'cyberpunk' ? 'text-[#0C0A08]/80' : 'text-[#A89F91]'}`}>Neon Wayang</span>
                 </button>
               </div>
             </div>
 
-            {/* Frame Picker */}
-            <div className="space-y-2 pt-2 border-t border-stone-100">
-              <span className="text-xs font-mono uppercase tracking-wider text-stone-500 font-semibold block">
-                Pilih Bingkai Budaya (Frame)
+            {/* Category Filter Tabs */}
+            <div className="space-y-2 pt-2 border-t border-[#C5A059]/15">
+              <span className="text-[10px] font-mono uppercase tracking-wider text-[#A89F91] font-bold block">
+                KATEGORI CORAK JAWA:
               </span>
-              <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5">
-                <button
-                  onClick={() => setActiveFrame('gunungan')}
-                  className={`p-2.5 rounded-lg border text-xs text-left transition-all ${
-                    activeFrame === 'gunungan'
-                      ? 'border-amber-900 bg-amber-50 text-amber-950 font-semibold'
-                      : 'border-stone-200 hover:border-stone-400 bg-stone-50 text-stone-700'
-                  }`}
+              <div className="flex items-center gap-1.5 overflow-x-auto pb-1">
+                {CATEGORY_TABS.map((tab) => {
+                  const isActive = selectedCategory === tab.id;
+                  return (
+                    <button
+                      key={tab.id}
+                      onClick={() => setSelectedCategory(tab.id)}
+                      className={`px-2.5 py-1 text-[11px] font-mono whitespace-nowrap transition-colors cursor-pointer ${
+                        isActive
+                          ? 'bg-[#C5A059] text-[#0C0A08] font-bold'
+                          : 'bg-[#0C0A08] text-[#A89F91] border border-[#C5A059]/20 hover:text-[#F4EFE6]'
+                      }`}
+                    >
+                      {tab.label}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* 12 Cultural Frames Grid (2 Columns in this pane) */}
+            <div className="grid grid-cols-2 gap-2 max-h-[260px] overflow-y-auto pr-1">
+              {filteredFrames.map((f) => {
+                const isSelected = activeFrame === f.id;
+                return (
+                  <button
+                    key={f.id}
+                    onClick={() => setActiveFrame(f.id)}
+                    className={`p-2 border text-left text-xs transition-colors relative flex flex-col justify-between cursor-pointer ${
+                      isSelected
+                        ? 'border-[#C5A059] bg-[#221A12] text-[#F4EFE6] ring-1 ring-[#C5A059]'
+                        : 'border-[#C5A059]/20 bg-[#0C0A08] text-[#A89F91] hover:border-[#C5A059]/40 hover:text-[#F4EFE6]'
+                    }`}
+                  >
+                    <div className="flex items-center gap-1 mb-1.5">
+                      <span
+                        style={{ backgroundColor: f.palette.background }}
+                        className="w-3 h-3 border border-[#C5A059]/40 shadow-xs"
+                      />
+                      <span
+                        style={{ backgroundColor: f.palette.borderOuter }}
+                        className="w-2.5 h-2.5 border border-[#C5A059]/40 shadow-xs"
+                      />
+                      <span
+                        style={{ backgroundColor: f.palette.accentGold }}
+                        className="w-2 h-2 border border-[#C5A059]/40 shadow-xs"
+                      />
+                    </div>
+                    <div>
+                      <span className="font-bold block text-[11px] leading-tight text-[#F4EFE6]">
+                        {f.name}
+                      </span>
+                      <span className="text-[9px] text-[#A89F91] block truncate font-mono">
+                        {f.motifCategory}
+                      </span>
+                    </div>
+                    {isSelected && (
+                      <span className="absolute top-1.5 right-1.5 w-1.5 h-1.5 bg-[#C5A059] animate-pulse" />
+                    )}
+                  </button>
+                );
+              })}
+            </div>
+
+            {/* Cultural Information of Selected Frame */}
+            <div className="p-3 bg-[#0C0A08] border border-[#C5A059]/30 space-y-2 text-xs">
+              <div className="flex items-start justify-between gap-2 border-b border-[#C5A059]/15 pb-1.5">
+                <div>
+                  <span className="text-[9px] font-mono text-[#C5A059] uppercase tracking-wider block font-bold">
+                    [ {currentFrame.origin} ]
+                  </span>
+                  <h4 className="font-royal font-bold text-sm text-[#F4EFE6]">
+                    {currentFrame.javaneseName}
+                  </h4>
+                </div>
+                <a
+                  href={currentFrame.pinterestSearchUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1 text-[10px] font-mono text-[#C5A059] hover:text-[#F4EFE6] bg-[#14110E] px-2 py-0.5 border border-[#C5A059]/40 shrink-0 transition-colors"
                 >
-                  Gunungan Line
-                </button>
-                <button
-                  onClick={() => setActiveFrame('pola-jawa')}
-                  className={`p-2.5 rounded-lg border text-xs text-left transition-all ${
-                    activeFrame === 'pola-jawa'
-                      ? 'border-amber-900 bg-amber-50 text-amber-950 font-semibold'
-                      : 'border-stone-200 hover:border-stone-400 bg-stone-50 text-stone-700'
-                  }`}
-                >
-                  Kawung-Parang
-                </button>
-                <button
-                  onClick={() => setActiveFrame('companion-gatotkaca')}
-                  className={`p-2.5 rounded-lg border text-xs text-left transition-all ${
-                    activeFrame === 'companion-gatotkaca'
-                      ? 'border-amber-900 bg-amber-50 text-amber-950 font-semibold'
-                      : 'border-stone-200 hover:border-stone-400 bg-stone-50 text-stone-700'
-                  }`}
-                >
-                  Gatotkaca Pose
-                </button>
-                <button
-                  onClick={() => setActiveFrame('companion-srikandi')}
-                  className={`p-2.5 rounded-lg border text-xs text-left transition-all ${
-                    activeFrame === 'companion-srikandi'
-                      ? 'border-amber-900 bg-amber-50 text-amber-950 font-semibold'
-                      : 'border-stone-200 hover:border-stone-400 bg-stone-50 text-stone-700'
-                  }`}
-                >
-                  Srikandi Pose
-                </button>
-                <button
-                  onClick={() => setActiveFrame('ukiran-jepara')}
-                  className={`p-2.5 rounded-lg border text-xs text-left transition-all flex items-center justify-between ${
-                    activeFrame === 'ukiran-jepara'
-                      ? 'border-amber-900 bg-amber-50 text-amber-950 font-semibold ring-1 ring-amber-600/30'
-                      : 'border-stone-200 hover:border-stone-400 bg-stone-50 text-stone-700'
-                  }`}
-                >
-                  <span>Ukiran Jepara</span>
-                  <span className="text-[10px] bg-amber-200/80 text-amber-900 px-1 py-0.5 rounded font-mono">NEW</span>
-                </button>
-                <button
-                  onClick={() => setActiveFrame('klasik-maroon')}
-                  className={`p-2.5 rounded-lg border text-xs text-left transition-all flex items-center justify-between ${
-                    activeFrame === 'klasik-maroon'
-                      ? 'border-amber-900 bg-amber-50 text-amber-950 font-semibold ring-1 ring-amber-600/30'
-                      : 'border-stone-200 hover:border-stone-400 bg-stone-50 text-stone-700'
-                  }`}
-                >
-                  <span>Klasik Maroon</span>
-                  <span className="text-[10px] bg-amber-200/80 text-amber-900 px-1 py-0.5 rounded font-mono">NEW</span>
-                </button>
-                <button
-                  onClick={() => setActiveFrame('sugeng-ambal-warsa')}
-                  className={`p-2.5 rounded-lg border text-xs text-left transition-all flex items-center justify-between ${
-                    activeFrame === 'sugeng-ambal-warsa'
-                      ? 'border-amber-900 bg-amber-50 text-amber-950 font-semibold ring-1 ring-amber-600/30'
-                      : 'border-stone-200 hover:border-stone-400 bg-stone-50 text-stone-700'
-                  }`}
-                >
-                  <span>Ambal Warsa</span>
-                  <span className="text-[10px] bg-amber-200/80 text-amber-900 px-1 py-0.5 rounded font-mono">NEW</span>
-                </button>
+                  <span>Pinterest</span>
+                  <ExternalLink className="w-2.5 h-2.5" />
+                </a>
+              </div>
+              <p className="text-[10px] text-[#A89F91] leading-relaxed font-sans line-clamp-2">
+                {currentFrame.description}
+              </p>
+              <div className="p-1.5 bg-[#14110E] border-l border-[#C5A059] flex items-start gap-1.5">
+                <Info className="w-3 h-3 text-[#C5A059] shrink-0 mt-0.5" />
+                <p className="text-[10px] text-[#F4EFE6] italic leading-tight font-sans">
+                  <strong className="not-italic font-bold font-mono text-[#C5A059]">FILOSOFI:</strong> {currentFrame.philosophy}
+                </p>
               </div>
 
-              {/* Customizer for Klasik Maroon */}
-              {activeFrame === 'klasik-maroon' && (
-                <div className="mt-3 p-3 bg-amber-50/60 rounded-xl border border-amber-200/70 space-y-2 animate-in fade-in duration-200">
-                  <div className="flex items-center gap-1.5 text-xs font-semibold text-amber-950">
-                    <Sparkles className="w-3.5 h-3.5 text-amber-700" />
-                    <span>Kustomisasi Teks Strip Klasik Maroon</span>
-                  </div>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
-                    <div>
-                      <label className="text-[11px] text-stone-600 font-medium block mb-1">
-                        Nama Pasangan / Tokoh
-                      </label>
-                      <input
-                        type="text"
-                        value={customCoupleText}
-                        onChange={(e) => setCustomCoupleText(e.target.value)}
-                        placeholder="e.g. Raden & Ayu / Mus'ab & Ega"
-                        className="w-full px-2.5 py-1.5 bg-white border border-stone-300 rounded text-stone-900 text-xs focus:ring-1 focus:ring-amber-600 focus:outline-none"
-                      />
-                    </div>
-                    <div>
-                      <label className="text-[11px] text-stone-600 font-medium block mb-1">
-                        Hashtag / Slogan Bawah
-                      </label>
-                      <input
-                        type="text"
-                        value={customHashtagText}
-                        onChange={(e) => setCustomHashtagText(e.target.value)}
-                        placeholder="e.g. #NuswaraMoments"
-                        className="w-full px-2.5 py-1.5 bg-white border border-stone-300 rounded text-stone-900 text-xs focus:ring-1 focus:ring-amber-600 focus:outline-none"
-                      />
-                    </div>
-                  </div>
+              {/* Personalization Inputs */}
+              <div className="pt-2 border-t border-[#C5A059]/15 space-y-1.5">
+                <label className="text-[10px] text-[#A89F91] font-mono uppercase block">
+                  Teks Kustom Strip (Opsional):
+                </label>
+                <div className="space-y-1.5">
+                  <input
+                    type="text"
+                    value={customTitle}
+                    onChange={(e) => setCustomTitle(e.target.value)}
+                    placeholder={`e.g. ${currentFrame.javaneseName}`}
+                    className="w-full px-2.5 py-1.5 bg-[#14110E] border border-[#C5A059]/30 text-[#F4EFE6] text-[11px] font-mono focus:border-[#C5A059] focus:outline-none"
+                  />
+                  <input
+                    type="text"
+                    value={customMessage}
+                    onChange={(e) => setCustomMessage(e.target.value)}
+                    placeholder="e.g. Rahayu Widodo Lestari / #Nuswara"
+                    className="w-full px-2.5 py-1.5 bg-[#14110E] border border-[#C5A059]/30 text-[#F4EFE6] text-[11px] font-mono focus:border-[#C5A059] focus:outline-none"
+                  />
                 </div>
-              )}
-
-              {/* Customizer for Sugeng Ambal Warsa */}
-              {activeFrame === 'sugeng-ambal-warsa' && (
-                <div className="mt-3 p-3 bg-amber-50/60 rounded-xl border border-amber-200/70 space-y-2 animate-in fade-in duration-200">
-                  <div className="flex items-center gap-1.5 text-xs font-semibold text-amber-950">
-                    <Sparkles className="w-3.5 h-3.5 text-amber-700" />
-                    <span>Kustomisasi Teks Sugeng Ambal Warsa</span>
-                  </div>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
-                    <div>
-                      <label className="text-[11px] text-stone-600 font-medium block mb-1">
-                        Nama yang Berulang Tahun
-                      </label>
-                      <input
-                        type="text"
-                        value={customWarsaName}
-                        onChange={(e) => setCustomWarsaName(e.target.value)}
-                        placeholder="e.g. Sang Sutresna / Raden Mas"
-                        className="w-full px-2.5 py-1.5 bg-white border border-stone-300 rounded text-stone-900 text-xs focus:ring-1 focus:ring-amber-600 focus:outline-none"
-                      />
-                    </div>
-                    <div>
-                      <label className="text-[11px] text-stone-600 font-medium block mb-1">
-                        Doa & Ucapan Rahayu
-                      </label>
-                      <input
-                        type="text"
-                        value={customWarsaGreeting}
-                        onChange={(e) => setCustomWarsaGreeting(e.target.value)}
-                        placeholder="e.g. Rahayu Widodo Lestari"
-                        className="w-full px-2.5 py-1.5 bg-white border border-stone-300 rounded text-stone-900 text-xs focus:ring-1 focus:ring-amber-600 focus:outline-none"
-                      />
-                    </div>
-                  </div>
-                </div>
-              )}
+              </div>
             </div>
           </div>
-        </div>
 
-        {/* Right Column: 4-Cut Vertical Strip Preview & Actions */}
-        <div className="lg:col-span-5 space-y-6">
-          <div className="bg-white rounded-2xl border border-stone-200 p-6 shadow-sm space-y-4">
-            <div className="flex items-center justify-between">
-              <span className="text-xs font-mono uppercase tracking-wider text-stone-500 font-semibold">
-                Preview Photo Strip 4-Cut
-              </span>
-              <span className="text-[11px] font-mono text-stone-400">
-                {activeFrame === 'sugeng-ambal-warsa' ? 'Format 9:16 Ambal Warsa' : 'Format 1:3 Vertikal'}
-              </span>
-            </div>
+          {/* =========================================================================
+              KOLOM 3: PRATINJAU PHOTO STRIP 4-CUT (3 BAGIAN / 12 COLS)
+              ========================================================================= */}
+          <div className="lg:col-span-3 p-5 space-y-4 bg-[#0C0A08] flex flex-col justify-between">
+            <div className="space-y-3">
+              {/* Header Plate */}
+              <div className="flex items-center justify-between text-xs font-mono border-b border-[#C5A059]/15 pb-2">
+                <span className="text-[#C5A059] font-bold uppercase tracking-wider">
+                  03 // PRATINJAU STRIP
+                </span>
+                <span className="text-[#A89F91] text-[11px]">
+                  1:3 VERTIKAL
+                </span>
+              </div>
 
-            {/* Strip Preview Container */}
-            <div className="flex justify-center bg-[#F4EEE2] p-4 rounded-xl border border-stone-300/80 min-h-[460px] items-center">
-              {stripUrl ? (
-                <img
-                  src={stripUrl}
-                  alt="Hasil 4-Cut Photo Strip"
-                  className="max-h-[520px] w-auto rounded-lg shadow-md border border-stone-300"
+              {/* Strip Preview Container (Darkroom Presentation Stage) */}
+              <div className="flex justify-center bg-[#080705] p-3 border border-[#C5A059]/20 min-h-[460px] items-center">
+                <PhotoboothStripPreview
+                  frame={currentFrame}
+                  photos={photos}
+                  stripUrl={stripUrl}
+                  customText={customTitle}
+                  customSubtext={customMessage}
                 />
-              ) : photos.length > 0 ? (
-                /* Snaps in progress */
-                <div className="space-y-2 w-48">
-                  {photos.map((p, idx) => (
-                    <div
-                      key={idx}
-                      className="aspect-[4/3] rounded border border-stone-400 overflow-hidden"
-                    >
-                      <img src={p} alt={`Snap ${idx + 1}`} className="w-full h-full object-cover" />
-                    </div>
-                  ))}
-                  {Array.from({ length: 4 - photos.length }).map((_, idx) => (
-                    <div
-                      key={idx}
-                      className="aspect-[4/3] rounded border border-dashed border-stone-300 flex items-center justify-center text-[10px] text-stone-400 font-mono"
-                    >
-                      Pose #{photos.length + idx + 1}
-                    </div>
-                  ))}
-                </div>
-              ) : (
-                <div className="w-48 py-2 space-y-2">
-                  <div className="text-center pb-1">
-                    <span className="text-[10px] font-mono uppercase tracking-wider text-stone-500 font-semibold block">
-                      Strip Vertikal 4-Cut
-                    </span>
-                  </div>
-                  {[1, 2, 3, 4].map((slot) => (
-                    <div
-                      key={slot}
-                      className="aspect-[4/3] rounded-lg border-2 border-dashed border-stone-300/90 bg-white/40 flex flex-col items-center justify-center text-stone-400 group hover:border-amber-400/60 transition-colors"
-                    >
-                      <Camera className="w-4 h-4 text-stone-300 mb-1" />
-                      <span className="text-[10px] font-mono">Pose #{slot}</span>
-                    </div>
-                  ))}
-                  <p className="text-[10px] text-center text-stone-400 pt-1 font-sans">
-                    Nyalakan kamera atau gunakan demo untuk mengisi 4 pose.
-                  </p>
-                </div>
-              )}
+              </div>
             </div>
 
             {/* Action Buttons */}
-            {stripUrl && (
-              <div className="pt-2 space-y-2">
+            {photos.length === 4 && stripUrl ? (
+              <div className="space-y-2 pt-2 border-t border-[#C5A059]/20">
                 <button
                   onClick={handleDownloadStrip}
-                  className="w-full py-3 bg-stone-900 hover:bg-stone-800 text-stone-50 text-xs font-medium rounded-lg transition-colors flex items-center justify-center gap-2 shadow-sm"
+                  className="w-full py-3 bg-[#C5A059] hover:bg-[#D5B36E] text-[#0C0A08] text-xs font-mono uppercase font-bold tracking-wider transition-colors flex items-center justify-center gap-1.5 shadow-lg cursor-pointer"
                 >
-                  <Download className="w-4 h-4 text-amber-400" />
-                  <span>Download Strip (PNG Resolusi Tinggi)</span>
+                  <Download className="w-3.5 h-3.5 text-[#0C0A08]" />
+                  <span>Download Strip PNG</span>
                 </button>
 
                 <button
                   onClick={handleShareStrip}
                   disabled={sharing}
-                  className="w-full py-3 bg-white hover:bg-stone-100 text-stone-800 text-xs font-medium border border-stone-300 rounded-lg transition-colors flex items-center justify-center gap-2"
+                  className="w-full py-2.5 bg-[#14110E] hover:bg-[#1C1610] text-[#C5A059] hover:text-[#F4EFE6] text-xs font-mono uppercase tracking-wider border border-[#C5A059]/40 transition-colors flex items-center justify-center gap-1.5 cursor-pointer"
                 >
                   {copied ? (
                     <>
-                      <Check className="w-4 h-4 text-emerald-600" />
-                      <span className="text-emerald-700">Tautan Berbagi Disalin!</span>
+                      <Check className="w-3.5 h-3.5 text-[#C5A059]" />
+                      <span className="text-[#C5A059] font-bold">Tautan Disalin!</span>
                     </>
                   ) : (
                     <>
-                      <Share2 className="w-4 h-4 text-stone-600" />
-                      <span>{sharing ? 'Membuat Tautan...' : 'Simpan & Dapatkan Tautan Share'}</span>
+                      <Share2 className="w-3.5 h-3.5 text-[#C5A059]" />
+                      <span>{sharing ? 'Menyimpan...' : 'Bagikan Strip'}</span>
                     </>
                   )}
                 </button>
 
                 {shareCode && (
-                  <div className="p-3 bg-amber-50 rounded-lg border border-amber-200 text-center text-xs">
-                    <span className="font-mono text-stone-500 text-[11px] block">
-                      Kode Share Publik:
+                  <div className="p-2 bg-[#14110E] border border-[#C5A059]/30 text-center text-xs">
+                    <span className="font-mono text-[#A89F91] text-[10px] block uppercase">
+                      KODE PUBLIK:
                     </span>
                     <Link
                       href={`/share/${shareCode}`}
-                      className="font-mono font-bold text-amber-900 underline mt-0.5 block"
+                      className="font-mono font-bold text-[#C5A059] underline text-[11px] block truncate"
                     >
                       nuswara.id/share/{shareCode}
                     </Link>
                   </div>
                 )}
+              </div>
+            ) : (
+              <div className="p-3 bg-[#14110E] border border-[#C5A059]/20 text-center text-xs font-mono text-[#A89F91] space-y-1">
+                <span className="text-[#C5A059] block">❖ AMBIL 4 POSE ❖</span>
+                <p className="text-[10px] text-[#A89F91]/80">
+                  Strip 4-cut resolusi tinggi akan otomatis dirender setelah 4 foto terisi.
+                </p>
               </div>
             )}
           </div>
@@ -1084,3 +842,5 @@ function drawImageCover(
     </div>
   );
 }
+
+export default PhotoboothClient;

@@ -150,7 +150,7 @@ export default async function ShareDetailPage({
               Foto Strip Jawa Epic
             </h2>
             <p className="text-xs text-stone-500 mt-1">
-              Frame: {parsed.frame || 'Gunungan Line'} • Filter: {parsed.filter || 'Warm Minimal'}
+              Frame: {parsed.frameName || parsed.frame || 'Parang Kencana'} • Filter: {parsed.filter || 'Warm Mataram'}
             </p>
           </div>
 

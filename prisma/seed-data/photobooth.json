@@ -1,74 +1,156 @@
 {
   "frames": [
     {
-      "slug": "frame-gunungan",
-      "name": "Gunungan Archaic Line",
-      "assetKey": "frame-gunungan-svg",
+      "slug": "frame-parang-kencana",
+      "name": "Batik Parang Kencana",
+      "assetKey": "frame-parang-kencana",
       "config": {
-        "frameType": "GUNUNGAN",
-        "description": "Bingkai vertikal bergaris tipis kontemporer dengan motif Gunungan Jawa di puncak strip foto.",
+        "frameType": "PARANG_KENCANA",
+        "origin": "Surakarta & Yogyakarta",
+        "description": "Motif lereng miring pedang kencana keraton Jawa melambangkan keteguhan watak, keberanian pantang menyerah, dan keluhuran budi pekerti.",
         "borderWidth": 12,
-        "aspectRatio": "3:4"
+        "aspectRatio": "1:3"
       },
       "isActive": true
     },
     {
-      "slug": "frame-pola-jawa",
-      "name": "Pola Geometris Kawung & Parang",
-      "assetKey": "frame-pola-jawa-svg",
+      "slug": "frame-kawung-sari",
+      "name": "Batik Kawung Sari",
+      "assetKey": "frame-kawung-sari",
       "config": {
-        "frameType": "POLA_JAWA",
-        "description": "Bingkai minimalis dengan ornamen sudut Kawung dan aksen garis diagonal Parang.",
+        "frameType": "KAWUNG_SARI",
+        "origin": "Mataram Kuno",
+        "description": "Pola geometris empat elips bersilangan melambangkan Sedulur Papat Lima Pancer, kesucian hati, keadilan seimbang, dan pengendalian hawa nafsu.",
+        "borderWidth": 12,
+        "aspectRatio": "1:3"
+      },
+      "isActive": true
+    },
+    {
+      "slug": "frame-truntum-kencana",
+      "name": "Batik Truntum Kencana",
+      "assetKey": "frame-truntum-kencana",
+      "config": {
+        "frameType": "TRUNTUM_KENCANA",
+        "origin": "Kasunanan Surakarta",
+        "description": "Taburan kuntum melati bintang di langit malam ciptaan Kanjeng Ratu Kencana, perlambang cinta tulus yang terus bersemi dan menuntun sanubari.",
+        "borderWidth": 12,
+        "aspectRatio": "1:3"
+      },
+      "isActive": true
+    },
+    {
+      "slug": "frame-ukiran-gebyok",
+      "name": "Ukiran Gebyok Jepara",
+      "assetKey": "frame-ukiran-gebyok",
+      "config": {
+        "frameType": "UKIRAN_GEBYOK",
+        "origin": "Jepara, Jawa Tengah",
+        "description": "Mahkota gapura gebyok berukir daun paku ulir krawangan kayu jati dengan lis prada emas, simbol pintu gerbang kemakmuran dan perlindungan hidup.",
         "borderWidth": 14,
-        "aspectRatio": "3:4"
+        "aspectRatio": "1:3"
       },
       "isActive": true
     },
     {
-      "slug": "frame-gatotkaca",
-      "name": "Companion: Gatotkaca Sang Pelindung",
-      "assetKey": "frame-gatotkaca-svg",
+      "slug": "frame-lung-lungan",
+      "name": "Lung-Lungan Flora Jawa",
+      "assetKey": "frame-lung-lungan",
       "config": {
-        "frameType": "CHARACTER_COMPANION",
-        "description": "Berfoto berdampingan dengan siluet line-art Gatotkaca sang ksatria perkasa.",
-        "characterSlug": "gatotkaca",
-        "borderWidth": 10,
-        "aspectRatio": "3:4"
+        "frameType": "LUNG_LUNGAN",
+        "origin": "Keraton Surakarta & Pesisir Demak",
+        "description": "Pilinan sulur tanaman liar, kuncup bunga padma, dan daun pakis keemasan melambangkan keluwesan hidup, rezeki bertunas, dan harmoni semesta.",
+        "borderWidth": 12,
+        "aspectRatio": "1:3"
       },
       "isActive": true
     },
     {
-      "slug": "frame-srikandi",
-      "name": "Companion: Srikandi Sang Prajurit",
-      "assetKey": "frame-srikandi-svg",
+      "slug": "frame-gunungan-agung",
+      "name": "Gunungan Wayang Agung",
+      "assetKey": "frame-gunungan-agung",
       "config": {
-        "frameType": "CHARACTER_COMPANION",
-        "description": "Berfoto berdampingan dengan siluet anggun memanah Dewi Srikandi.",
-        "characterSlug": "srikandi",
-        "borderWidth": 10,
-        "aspectRatio": "3:4"
+        "frameType": "GUNUNGAN_AGUNG",
+        "origin": "Pewayangan Mataram",
+        "description": "Siluet puncak Kayon Gunungan agung bermahkota lidah api pelindung jagad dan Pohon Hayat Kalpataru, lambang semesta alam dan doa keselamatan.",
+        "borderWidth": 14,
+        "aspectRatio": "1:3"
       },
       "isActive": true
     },
     {
-      "slug": "frame-ukiran-jepara",
-      "name": "Ukiran Lung-Lungan Jepara",
-      "assetKey": "/frames/frame-ukiran-jepara.png",
+      "slug": "frame-sido-mukti",
+      "name": "Batik Sido Mukti Ageng",
+      "assetKey": "frame-sido-mukti",
       "config": {
-        "frameType": "CARVED_WOOD",
-        "description": "Bingkai ornamen ukir kayu Jepara bernuansa klasik kraton dengan mahkota atas dan ornamen bawah.",
-        "borderWidth": 16,
-        "aspectRatio": "3:4"
+        "frameType": "SIDO_MUKTI",
+        "origin": "Kasunanan Surakarta",
+        "description": "Motif adiluhung upacara ageng pernikahan Jawa dengan jalinan wajik, ornamen garuda, dan ornamen rumah kemuliaan pembawa kemakmuran abadi.",
+        "borderWidth": 12,
+        "aspectRatio": "1:3"
       },
       "isActive": true
     },
     {
-      "slug": "frame-klasik-maroon",
-      "name": "Klasik Maroon & Emas (Joglo)",
-      "assetKey": "/frames/frame-klasik-maroon.jpg",
+      "slug": "frame-mega-mendung",
+      "name": "Batik Mega Mendung Pesisiran",
+      "assetKey": "frame-mega-mendung",
       "config": {
-        "frameType": "WEDDING_CELEBRATION",
-        "description": "Bingkai photostrip elegan merah marun dan emas dengan ornamen dedaunan, arsitektur Joglo, dan tumpal Jawa.",
+        "frameType": "MEGA_MENDUNG",
+        "origin": "Cirebon & Pesisir Utara Jawa",
+        "description": "Awan pembawa hujan penyejuk jagad, perlambang kesabaran mendalam, kejernihan pikiran, dan ketenangan hati saat menghadapi prahara hidup.",
+        "borderWidth": 12,
+        "aspectRatio": "1:3"
+      },
+      "isActive": true
+    },
+    {
+      "slug": "frame-sekar-jagad",
+      "name": "Batik Sekar Jagad Nuswantara",
+      "assetKey": "frame-sekar-jagad",
+      "config": {
+        "frameType": "SEKAR_JAGAD",
+        "origin": "Kasultanan Yogyakarta & Pekalongan",
+        "description": "Karang Jagad bermakna peta bunga semesta. Melambangkan keindahan keberagaman suku, budaya, dan alam nusantara yang bersatu dalam satu kesatuan luhur.",
+        "borderWidth": 12,
+        "aspectRatio": "1:3"
+      },
+      "isActive": true
+    },
+    {
+      "slug": "frame-semen-rama",
+      "name": "Batik Semen Rama Hastha Brata",
+      "assetKey": "frame-semen-rama",
+      "config": {
+        "frameType": "SEMEN_RAMA",
+        "origin": "Kasunanan Surakarta & Mataram",
+        "description": "Semen bermakna semi (tumbuh bersemi). Mengandung ajaran Hastha Brata (delapan watak keutamaan pemimpin luhur) pelindung jagad.",
+        "borderWidth": 12,
+        "aspectRatio": "1:3"
+      },
+      "isActive": true
+    },
+    {
+      "slug": "frame-surya-majapahit",
+      "name": "Ornamen Surya Majapahit Kencana",
+      "assetKey": "frame-surya-majapahit",
+      "config": {
+        "frameType": "SURYA_MAJAPAHIT",
+        "origin": "Trowulan (Kekaisaran Majapahit)",
+        "description": "Matahari bersudut delapan Dewata Nawasanga melambangkan keteraturan kosmik mandala, martabat kedaulatan ksatria, dan cahaya pencerahan nusantara.",
+        "borderWidth": 14,
+        "aspectRatio": "1:3"
+      },
+      "isActive": true
+    },
+    {
+      "slug": "frame-alas-alasan",
+      "name": "Batik Alas-Alasan Mangkunegaran",
+      "assetKey": "frame-alas-alasan",
+      "config": {
+        "frameType": "ALAS_ALASAN",
+        "origin": "Praja Mangkunegaran, Surakarta",
+        "description": "Alas bermakna rimba raya. Mengajarkan manusia untuk selalu mawas diri (introspeksi), menghormati peran setiap makhluk, dan menjaga harmoni sakral semesta.",
         "borderWidth": 12,
         "aspectRatio": "1:3"
       },

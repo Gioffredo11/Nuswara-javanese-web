@@ -116,18 +116,27 @@ export function Footer() {
         </div>
 
         {/* Bottom Bar */}
-        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between text-xs text-[#8C8273] gap-4">
-          <p>© {new Date().getFullYear()} NUSWARA × JAWA EPIC. Menelusuri Jejak, Merawat Suara.</p>
-          <div className="flex items-center space-x-4 sm:space-x-6 text-[#A89F91]/80 text-xs">
-            <span>Mataram & Pesisir Archive</span>
-            <span>•</span>
-            <span>Wayang Purwa Heritage</span>
-            <span>•</span>
-            <span>Digital Conservation</span>
+        <div className="pt-8 flex flex-col gap-3">
+          <div className="flex flex-col sm:flex-row items-center justify-between text-xs text-[#8C8273] gap-2">
+            <p>© {new Date().getFullYear()} NUSWARA. Menelusuri Jejak, Merawat Warisan.</p>
+            <div className="flex items-center gap-3 text-[#A89F91]/70 text-[11px] font-mono">
+              <span>Wayang Purwa Heritage</span>
+              <span>•</span>
+              <span>Digital Conservation</span>
+            </div>
+          </div>
+          {/* PJBL Exhibition Credit */}
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-2 pt-2 border-t border-[#C59B53]/10">
+            <p className="text-[10px] font-mono text-[#C59B53]/70 uppercase tracking-widest">
+              Proyek Berbasis Masalah (PJBL) • Pameran Karya 2026
+            </p>
+            <p className="text-[10px] text-[#8C8273]/60 font-sans">
+              Dibangun dengan Next.js · TailwindCSS v4 · Three.js
+            </p>
           </div>
         </div>
       </div>
     </footer>
-
   );
 }
+

@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
-import { X, Sparkles } from 'lucide-react';
+import { X } from 'lucide-react';
 import { ManifestationClient } from '@/app/manifestation/ManifestationClient';
 
 interface ManifestationModalProps {
@@ -58,19 +58,16 @@ export function ManifestationModal({ isOpen, onClose }: ManifestationModalProps)
 
       {/* Modal Dialog Card */}
       <div
-        className="relative w-full max-w-2xl max-h-[92vh] flex flex-col bg-[#120F0C] border border-[#C59B53]/40 rounded-2xl shadow-[0_25px_80px_rgba(0,0,0,0.95)] overflow-hidden z-10 animate-in zoom-in-95 duration-200 my-auto"
+        className="relative w-full max-w-2xl max-h-[92vh] flex flex-col bg-[#14110E] border border-[#C5A059]/40 rounded-none shadow-[0_25px_80px_rgba(0,0,0,0.95)] overflow-hidden z-10 animate-in zoom-in-95 duration-200 my-auto"
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Top Decorative Border Accent */}
-        <div className="h-1 w-full bg-gradient-to-r from-transparent via-[#ECC47E] to-transparent shrink-0" />
-
         {/* Modal Header */}
-        <div className="flex items-center justify-between px-5 pt-4 pb-3 border-b border-[#C59B53]/20 shrink-0 bg-[#16120E]">
+        <div className="flex items-center justify-between px-5 pt-4 pb-3 border-b border-[#C5A059]/20 shrink-0 bg-[#0C0A08]">
           <div className="flex items-center gap-2">
-            <div className="w-2 h-2 rounded-full bg-[#ECC47E] animate-pulse" />
+            <span className="text-[10px] text-[#C5A059]">❖</span>
             <span
               id="manifestation-modal-title"
-              className="text-[11px] font-mono uppercase tracking-[0.2em] text-[#C59B53] font-semibold"
+              className="text-[11px] font-mono uppercase tracking-[0.2em] text-[#C5A059] font-bold"
             >
               PIWULANG LUHUR • KARTU HARIAN
             </span>
@@ -79,15 +76,15 @@ export function ManifestationModal({ isOpen, onClose }: ManifestationModalProps)
           <button
             type="button"
             onClick={onClose}
-            className="p-1.5 rounded-lg text-[#B9B0A3] hover:text-white bg-[#1A140F] hover:bg-[#281F17] border border-[#C59B53]/30 transition-all cursor-pointer"
+            className="p-1.5 rounded-none text-[#A89F91] hover:text-[#F4EFE6] bg-[#14110E] hover:bg-[#1C1610] border border-[#C5A059]/30 transition-colors cursor-pointer"
             aria-label="Tutup Dialog Manifestasi"
           >
-            <X className="w-5 h-5" />
+            <X className="w-4 h-4" />
           </button>
         </div>
 
         {/* Modal Body: Embed ManifestationClient */}
-        <div className="p-3 sm:p-5 overflow-y-auto flex-1">
+        <div className="p-3 sm:p-5 overflow-y-auto flex-1 bg-[#14110E]">
           <ManifestationClient isModal={true} onClose={onClose} />
         </div>
       </div>

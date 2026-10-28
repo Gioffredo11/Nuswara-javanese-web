@@ -302,15 +302,16 @@ export function Navbar() {
                   type="button"
                   onClick={() => handleNavClick(item.sectionId)}
                   className={`relative text-xs xl:text-sm tracking-wide transition-colors py-1 cursor-pointer font-serif whitespace-nowrap press-scale ${
-                    active ? 'text-[#F0E6D4] font-medium' : 'text-[#B9B0A3] hover:text-[#F0E6D4]'
+                    active ? 'text-[#ECC47E] font-bold' : 'text-[#B9B0A3] hover:text-[#F0E6D4]'
                   }`}
                 >
                   <span>{item.label}</span>
                   {/* Animated active indicator — slides in from left */}
                   <span
-                    className="absolute -bottom-1 left-0 w-full h-[2px] bg-gradient-to-r from-[#C59B53] to-[#ECC47E] rounded-full origin-left transition-transform duration-300"
+                    className="absolute -bottom-1 left-0 w-full h-[2.5px] bg-[#ECC47E] rounded-full origin-left transition-transform duration-300"
                     style={{ transform: active ? 'scaleX(1)' : 'scaleX(0)' }}
                   />
+
                 </button>
               );
             })}

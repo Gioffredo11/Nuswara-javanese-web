@@ -643,6 +643,10 @@ async function main() {
     }>;
   }
   const pbData = loadJson<PhotoboothSeed>('photobooth.json');
+  const validFrameSlugs = pbData.frames.map((f) => f.slug);
+  await prisma.photoboothFrame.deleteMany({
+    where: { slug: { notIn: validFrameSlugs } },
+  });
 
   for (const f of pbData.frames) {
     await prisma.photoboothFrame.upsert({

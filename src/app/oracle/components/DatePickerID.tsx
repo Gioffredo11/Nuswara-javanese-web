@@ -63,7 +63,7 @@ export function DatePickerID({
 
   const daysInCurrentMonth = getDaysInMonth(year, month);
 
-  // When year or month changes, validate day doesn't exceed max days (e.g. 31 Feb)
+  // When year or month changes, validate day doesn't exceed max days
   const updateDate = (newDay: string, newMonth: string, newYear: string) => {
     let finalDay = newDay;
     if (newYear && newMonth && newDay) {
@@ -100,13 +100,13 @@ export function DatePickerID({
     updateDate(day, month, val);
   };
 
-  // Generate Year options descending (e.g. 2026 down to 1950)
+  // Generate Year options descending
   const yearOptions: number[] = [];
   for (let y = maxYear; y >= minYear; y--) {
     yearOptions.push(y);
   }
 
-  // Generate Day options (1..31 or clamped)
+  // Generate Day options
   const dayOptions: number[] = [];
   for (let d = 1; d <= daysInCurrentMonth; d++) {
     dayOptions.push(d);
@@ -125,22 +125,22 @@ export function DatePickerID({
             value={day}
             onChange={handleDayChange}
             aria-label="Pilih tanggal lahir"
-            className="w-full appearance-none bg-[#1C0A04] hover:bg-[#250E06] text-amber-100 text-xs sm:text-sm font-sans font-medium px-3 py-2.5 sm:py-3 pr-8 rounded-xl border border-amber-500/30 hover:border-amber-400/60 focus:border-amber-400 focus:outline-none focus:ring-2 focus:ring-amber-500/40 transition-all cursor-pointer shadow-inner"
+            className="w-full appearance-none bg-[#0C0A08] hover:bg-[#14110E] text-[#F4EFE6] text-xs font-mono px-3 py-3 pr-8 rounded-none border border-[#C5A059]/30 hover:border-[#C5A059] focus:border-[#C5A059] focus:outline-none transition-colors cursor-pointer"
           >
-            <option value="" disabled className="bg-[#1C0A04] text-stone-400">
+            <option value="" disabled className="bg-[#0C0A08] text-[#A89F91]">
               Tanggal
             </option>
             {dayOptions.map((d) => {
               const val = String(d).padStart(2, '0');
               return (
-                <option key={d} value={val} className="bg-[#1C0A04] text-amber-100 py-1">
+                <option key={d} value={val} className="bg-[#0C0A08] text-[#F4EFE6] py-1">
                   {d}
                 </option>
               );
             })}
           </select>
-          <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2.5 text-amber-400/70">
-            <ChevronDown className="w-4 h-4" />
+          <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2.5 text-[#C5A059]/70">
+            <ChevronDown className="w-3.5 h-3.5" />
           </div>
         </div>
 
@@ -154,19 +154,19 @@ export function DatePickerID({
             value={month}
             onChange={handleMonthChange}
             aria-label="Pilih bulan lahir"
-            className="w-full appearance-none bg-[#1C0A04] hover:bg-[#250E06] text-amber-100 text-xs sm:text-sm font-sans font-medium px-3 py-2.5 sm:py-3 pr-8 rounded-xl border border-amber-500/30 hover:border-amber-400/60 focus:border-amber-400 focus:outline-none focus:ring-2 focus:ring-amber-500/40 transition-all cursor-pointer shadow-inner truncate"
+            className="w-full appearance-none bg-[#0C0A08] hover:bg-[#14110E] text-[#F4EFE6] text-xs font-mono px-3 py-3 pr-8 rounded-none border border-[#C5A059]/30 hover:border-[#C5A059] focus:border-[#C5A059] focus:outline-none transition-colors cursor-pointer truncate"
           >
-            <option value="" disabled className="bg-[#1C0A04] text-stone-400">
+            <option value="" disabled className="bg-[#0C0A08] text-[#A89F91]">
               Bulan
             </option>
             {INDONESIAN_MONTHS.map((m) => (
-              <option key={m.value} value={m.value} className="bg-[#1C0A04] text-amber-100 py-1">
+              <option key={m.value} value={m.value} className="bg-[#0C0A08] text-[#F4EFE6] py-1">
                 {m.label}
               </option>
             ))}
           </select>
-          <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2.5 text-amber-400/70">
-            <ChevronDown className="w-4 h-4" />
+          <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2.5 text-[#C5A059]/70">
+            <ChevronDown className="w-3.5 h-3.5" />
           </div>
         </div>
 
@@ -180,25 +180,25 @@ export function DatePickerID({
             value={year}
             onChange={handleYearChange}
             aria-label="Pilih tahun lahir"
-            className="w-full appearance-none bg-[#1C0A04] hover:bg-[#250E06] text-amber-100 text-xs sm:text-sm font-sans font-medium px-3 py-2.5 sm:py-3 pr-8 rounded-xl border border-amber-500/30 hover:border-amber-400/60 focus:border-amber-400 focus:outline-none focus:ring-2 focus:ring-amber-500/40 transition-all cursor-pointer shadow-inner"
+            className="w-full appearance-none bg-[#0C0A08] hover:bg-[#14110E] text-[#F4EFE6] text-xs font-mono px-3 py-3 pr-8 rounded-none border border-[#C5A059]/30 hover:border-[#C5A059] focus:border-[#C5A059] focus:outline-none transition-colors cursor-pointer"
           >
-            <option value="" disabled className="bg-[#1C0A04] text-stone-400">
+            <option value="" disabled className="bg-[#0C0A08] text-[#A89F91]">
               Tahun
             </option>
             {yearOptions.map((y) => (
-              <option key={y} value={String(y)} className="bg-[#1C0A04] text-amber-100 py-1">
+              <option key={y} value={String(y)} className="bg-[#0C0A08] text-[#F4EFE6] py-1">
                 {y}
               </option>
             ))}
           </select>
-          <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2.5 text-amber-400/70">
-            <ChevronDown className="w-4 h-4" />
+          <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2.5 text-[#C5A059]/70">
+            <ChevronDown className="w-3.5 h-3.5" />
           </div>
         </div>
       </div>
 
       {error && (
-        <p className="text-[11px] text-red-400 font-sans tracking-wide pt-1">
+        <p className="text-[11px] text-red-400 font-mono tracking-wide pt-1">
           {error}
         </p>
       )}

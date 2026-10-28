@@ -1,223 +1,90 @@
-
 import React from 'react';
-import { Sparkles } from 'lucide-react';
+import { FrameId, getFrameById } from '@/data/photoboothFrames';
 
 /**
- * Draw Traditional Javanese Joglo House Architecture on Canvas
+ * Cultural Viewfinder Overlay for Live Webcam
+ * Displays subtle, non-intrusive authentic Javanese corner framing marks and
+ * edition badge while user is capturing photos.
  */
-export function drawJogloHouse(
-  ctx: CanvasRenderingContext2D,
-  x: number,
-  y: number,
-  width: number,
-  height: number
-) {
-  ctx.save();
-  ctx.strokeStyle = '#FCD34D';
-  ctx.lineWidth = 2.5;
-  ctx.fillStyle = 'rgba(245, 158, 11, 0.12)';
+export function JavaneseViewfinderOverlay({ frameId }: { frameId: FrameId }) {
+  const frame = getFrameById(frameId);
 
-  // Main peaked roof (Atap Brunjung Joglo)
-  ctx.beginPath();
-  ctx.moveTo(x + width * 0.5, y);
-  ctx.lineTo(x + width * 0.35, y + height * 0.35);
-  ctx.lineTo(x + width * 0.12, y + height * 0.65);
-  ctx.lineTo(x + width * 0.88, y + height * 0.65);
-  ctx.lineTo(x + width * 0.65, y + height * 0.35);
-  ctx.closePath();
-  ctx.stroke();
-  ctx.fill();
-
-  // Crown finial / Sungu Joglo
-  ctx.beginPath();
-  ctx.moveTo(x + width * 0.5, y - 8);
-  ctx.lineTo(x + width * 0.5, y);
-  ctx.stroke();
-
-  // Lower roof tiers (Atap Penanggap)
-  ctx.beginPath();
-  ctx.moveTo(x + width * 0.05, y + height * 0.8);
-  ctx.lineTo(x + width * 0.95, y + height * 0.8);
-  ctx.stroke();
-
-  // Pillars (Soko Guru)
-  ctx.beginPath();
-  ctx.moveTo(x + width * 0.3, y + height * 0.65);
-  ctx.lineTo(x + width * 0.3, y + height);
-  ctx.moveTo(x + width * 0.7, y + height * 0.65);
-  ctx.lineTo(x + width * 0.7, y + height);
-  ctx.moveTo(x + width * 0.15, y + height * 0.8);
-  ctx.lineTo(x + width * 0.15, y + height);
-  ctx.moveTo(x + width * 0.85, y + height * 0.8);
-  ctx.lineTo(x + width * 0.85, y + height);
-  ctx.stroke();
-
-  ctx.restore();
-}
-
-/**
- * Draw Traditional Golden Triangular Tumpal / Songket Border across bottom
- */
-export function drawTumpalPattern(
-  ctx: CanvasRenderingContext2D,
-  y: number,
-  width: number,
-  height: number
-) {
-  ctx.save();
-  ctx.strokeStyle = '#FCD34D';
-  ctx.fillStyle = 'rgba(252, 211, 77, 0.15)';
-  ctx.lineWidth = 2;
-  const triangleWidth = 28;
-  const count = Math.ceil(width / triangleWidth);
-
-  for (let i = 0; i < count; i++) {
-    const startX = i * triangleWidth;
-    // Outer Triangle
-    ctx.beginPath();
-    ctx.moveTo(startX, y + height);
-    ctx.lineTo(startX + triangleWidth / 2, y);
-    ctx.lineTo(startX + triangleWidth, y + height);
-    ctx.closePath();
-    ctx.stroke();
-    ctx.fill();
-
-    // Inner small decorative chevron
-    ctx.beginPath();
-    ctx.moveTo(startX + 6, y + height);
-    ctx.lineTo(startX + triangleWidth / 2, y + 8);
-    ctx.lineTo(startX + triangleWidth - 6, y + height);
-    ctx.stroke();
-  }
-  ctx.restore();
-}
-
-/**
- * Draw Golden Botanical Leaf Flourishes flanking header
- */
-export function drawBotanicalLeaves(
-  ctx: CanvasRenderingContext2D,
-  centerX: number,
-  centerY: number
-) {
-  ctx.save();
-  ctx.strokeStyle = '#FCD34D';
-  ctx.lineWidth = 2;
-  ctx.fillStyle = 'rgba(252, 211, 77, 0.25)';
-
-  // Left leaf branch
-  ctx.beginPath();
-  ctx.moveTo(centerX - 80, centerY);
-  ctx.quadraticCurveTo(centerX - 160, centerY - 25, centerX - 260, centerY - 5);
-  ctx.stroke();
-
-  for (let offset = 100; offset <= 240; offset += 35) {
-    ctx.beginPath();
-    ctx.ellipse(centerX - offset, centerY - 15, 14, 7, -Math.PI / 6, 0, Math.PI * 2);
-    ctx.stroke();
-    ctx.fill();
-  }
-
-  // Right leaf branch
-  ctx.beginPath();
-  ctx.moveTo(centerX + 80, centerY);
-  ctx.quadraticCurveTo(centerX + 160, centerY - 25, centerX + 260, centerY - 5);
-  ctx.stroke();
-
-  for (let offset = 100; offset <= 240; offset += 35) {
-    ctx.beginPath();
-    ctx.ellipse(centerX + offset, centerY - 15, 14, 7, Math.PI / 6, 0, Math.PI * 2);
-    ctx.stroke();
-    ctx.fill();
-  }
-
-  ctx.restore();
-}
-
-/**
- * Viewfinder overlay for Ukiran Jepara
- */
-export function UkiranJeparaViewfinderOverlay() {
   return (
-    <div className="absolute inset-0 pointer-events-none z-20 flex items-center justify-center p-2">
-      <img
-        src="/frames/frame-ukiran-jepara.png"
-        alt="Bingkai Ukiran Jepara"
-        className="w-full h-full object-contain pointer-events-none drop-shadow-xl select-none"
-      />
-    </div>
-  );
-}
-
-/**
- * Viewfinder overlay for Klasik Maroon & Emas Photostrip
- */
-export function KlasikMaroonViewfinderOverlay({
-  coupleText = 'Raden & Ayu',
-  hashtagText = '#JawaEpicMoments',
-}: {
-  coupleText?: string;
-  hashtagText?: string;
-}) {
-  return (
-    <div className="absolute inset-0 pointer-events-none z-20 flex flex-col justify-between border-8 border-[#3E1210]">
-      {/* Top Maroon Header with Golden Foliage */}
-      <div className="bg-[#3E1210]/95 px-4 py-2.5 flex items-center justify-between text-amber-200 border-b border-amber-600/40 backdrop-blur-xs">
-        <div className="flex items-center gap-2">
-          <Sparkles className="w-4 h-4 text-amber-400" />
-          <span className="text-xs font-serif font-bold text-amber-200 tracking-wider">
-            SUN FLOWER • JAWA EPIC
-          </span>
+    <div className="absolute inset-0 pointer-events-none z-20 flex flex-col justify-between p-3 sm:p-5 select-none">
+      {/* Top Bar with Cultural Edition Badge */}
+      <div className="flex items-center justify-between">
+        <div
+          style={{
+            borderColor: frame.palette.accentGold,
+            backgroundColor: 'rgba(15, 12, 10, 0.75)',
+            color: frame.palette.accentGold,
+          }}
+          className="px-3 py-1 rounded-full border text-[11px] font-mono tracking-wider backdrop-blur-xs flex items-center gap-1.5 shadow-lg"
+        >
+          <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+          <span>{frame.javaneseName}</span>
         </div>
-        <span className="text-[10px] font-mono text-amber-300 uppercase tracking-widest">
-          BILIK BUDAYA
+        <div className="text-[10px] font-mono text-amber-200/80 bg-black/60 px-2.5 py-1 rounded border border-amber-500/20 backdrop-blur-xs">
+          Format 1:3 • 4-Cut Strip
+        </div>
+      </div>
+
+      {/* 4 Cultural Corner Marks */}
+      <div className="absolute inset-4 sm:inset-6 pointer-events-none">
+        {/* Top-Left */}
+        <div
+          style={{ borderColor: frame.palette.accentGold }}
+          className="absolute top-0 left-0 w-8 h-8 border-t-2 border-l-2 drop-shadow-md"
+        >
+          <div
+            style={{ backgroundColor: frame.palette.accentGold }}
+            className="w-1.5 h-1.5 absolute top-1 left-1 rounded-full"
+          />
+        </div>
+
+        {/* Top-Right */}
+        <div
+          style={{ borderColor: frame.palette.accentGold }}
+          className="absolute top-0 right-0 w-8 h-8 border-t-2 border-r-2 drop-shadow-md"
+        >
+          <div
+            style={{ backgroundColor: frame.palette.accentGold }}
+            className="w-1.5 h-1.5 absolute top-1 right-1 rounded-full"
+          />
+        </div>
+
+        {/* Bottom-Left */}
+        <div
+          style={{ borderColor: frame.palette.accentGold }}
+          className="absolute bottom-0 left-0 w-8 h-8 border-b-2 border-l-2 drop-shadow-md"
+        >
+          <div
+            style={{ backgroundColor: frame.palette.accentGold }}
+            className="w-1.5 h-1.5 absolute bottom-1 left-1 rounded-full"
+          />
+        </div>
+
+        {/* Bottom-Right */}
+        <div
+          style={{ borderColor: frame.palette.accentGold }}
+          className="absolute bottom-0 right-0 w-8 h-8 border-b-2 border-r-2 drop-shadow-md"
+        >
+          <div
+            style={{ backgroundColor: frame.palette.accentGold }}
+            className="w-1.5 h-1.5 absolute bottom-1 right-1 rounded-full"
+          />
+        </div>
+      </div>
+
+      {/* Bottom Center Framing Guide */}
+      <div className="text-center pb-1">
+        <span
+          style={{ color: frame.palette.accentGold }}
+          className="text-[10px] font-mono tracking-widest uppercase bg-black/70 px-3 py-0.5 rounded-full border border-amber-500/30 backdrop-blur-xs"
+        >
+          ✦ {frame.name} • NUSWARA PHOTOBOOTH ✦
         </span>
       </div>
-
-      {/* Bottom Maroon Footer with Celebration Signature */}
-      <div className="bg-[#3E1210]/95 px-4 py-3 flex items-center justify-between text-amber-100 border-t border-amber-600/40 backdrop-blur-xs">
-        <div>
-          <span className="text-[10px] font-mono uppercase tracking-widest text-amber-400/90 block">
-            PAWIWAHAN AGENG
-          </span>
-          <span className="text-sm font-serif italic text-white font-medium">
-            {coupleText}
-          </span>
-        </div>
-        <div className="text-right">
-          <span className="text-[10px] font-mono text-amber-300 block">
-            {hashtagText}
-          </span>
-          <span className="text-[9px] text-amber-400/70">Weton Mataram</span>
-        </div>
-      </div>
     </div>
   );
 }
-
-/**
- * Viewfinder overlay for Sugeng Ambal Warsa (Javanese Birthday Celebration)
- */
-export function SugengAmbalWarsaViewfinderOverlay({
-  birthdayName = 'Sang Sutresna',
-}: {
-  birthdayName?: string;
-}) {
-  return (
-    <div className="absolute inset-0 pointer-events-none z-20 flex items-center justify-center overflow-hidden">
-      <img
-        src="/frames/frame-sugeng-ambal-warsa.png"
-        alt="Bingkai Sugeng Ambal Warsa"
-        className="w-full h-full object-contain pointer-events-none drop-shadow-2xl select-none"
-      />
-      {birthdayName && (
-        <div className="absolute bottom-[4.2%] left-1/2 -translate-x-1/2 text-center pointer-events-none w-3/4">
-          <span className="text-[11px] sm:text-xs font-serif italic text-amber-200 font-bold tracking-wider drop-shadow-md block truncate">
-            ✦ {birthdayName} ✦
-          </span>
-        </div>
-      )}
-    </div>
-  );
-}
-
