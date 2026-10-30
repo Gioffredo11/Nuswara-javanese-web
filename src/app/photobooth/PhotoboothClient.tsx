@@ -361,14 +361,14 @@ export function PhotoboothClient({ autoStart = false }: { autoStart?: boolean } 
             </p>
           </div>
 
-          <div className="text-xs font-mono text-[#A89F91] border border-[#C5A059]/30 px-3.5 py-2 bg-[#14110E] shrink-0">
+          <div className="text-xs font-mono text-[#A89F91] border border-[#C5A059]/30 px-3.5 py-2 bg-[#14110E] rounded-xl shrink-0">
             <span className="text-[#C5A059] font-bold">FORMAT // 1:3</span> VERTICAL STRIP
           </div>
         </div>
       </div>
 
       {/* UNIFIED 3-COLUMN DARKROOM STUDIO WORKSPACE (5 : 4 : 3 GRID) */}
-      <div className="border border-[#C5A059]/30 bg-[#14110E] shadow-2xl">
+      <div className="border border-[#C5A059]/30 bg-[#14110E] shadow-2xl rounded-2xl overflow-hidden">
         {/* Studio Top Control Strip */}
         <div className="flex flex-wrap items-center justify-between px-5 py-3 border-b border-[#C5A059]/20 bg-[#0C0A08] text-xs font-mono">
           <div className="flex items-center gap-2">
@@ -381,7 +381,7 @@ export function PhotoboothClient({ autoStart = false }: { autoStart?: boolean } 
           </div>
           <div className="flex items-center gap-2">
             <span className="text-[#A89F91]">STATUS POSE:</span>
-            <span className="text-[#0C0A08] bg-[#C5A059] px-2.5 py-0.5 font-bold">
+            <span className="text-[#0C0A08] bg-[#C5A059] px-2.5 py-0.5 font-bold rounded-full">
               {photos.length} / 4 POSE
             </span>
           </div>
@@ -406,7 +406,7 @@ export function PhotoboothClient({ autoStart = false }: { autoStart?: boolean } 
               </div>
 
               {/* Viewfinder Frame with Studio Reticles */}
-              <div className="relative aspect-[4/3] bg-[#0C0A08] border border-[#C5A059]/40 overflow-hidden flex items-center justify-center">
+              <div className="relative aspect-[4/3] bg-[#0C0A08] border border-[#C5A059]/40 rounded-2xl overflow-hidden flex items-center justify-center">
                 {/* Darkroom Reticle Corner Accents */}
                 <div className="absolute top-2.5 left-2.5 w-4 h-4 border-t-2 border-l-2 border-[#C5A059] pointer-events-none z-20" />
                 <div className="absolute top-2.5 right-2.5 w-4 h-4 border-t-2 border-r-2 border-[#C5A059] pointer-events-none z-20" />
@@ -443,7 +443,7 @@ export function PhotoboothClient({ autoStart = false }: { autoStart?: boolean } 
                 {/* Fallback Screen when camera is not ready */}
                 {!cameraActive && (
                   <div className="p-6 text-center space-y-4 max-w-sm w-full z-10">
-                    <div className="w-14 h-14 bg-[#14110E] border border-[#C5A059]/30 flex items-center justify-center mx-auto">
+                    <div className="w-14 h-14 bg-[#14110E] border border-[#C5A059]/30 rounded-2xl flex items-center justify-center mx-auto">
                       <Camera className="w-6 h-6 text-[#C5A059]" />
                     </div>
                     {cameraError ? (
@@ -453,7 +453,7 @@ export function PhotoboothClient({ autoStart = false }: { autoStart?: boolean } 
                         </p>
                         <button
                           onClick={startCamera}
-                          className="px-4 py-2 bg-[#1C1610] hover:bg-[#282119] text-[#C5A059] text-xs font-mono uppercase tracking-wider border border-[#C5A059]/40 cursor-pointer transition-colors"
+                          className="px-4 py-2 bg-[#1C1610] hover:bg-[#282119] text-[#C5A059] text-xs font-mono uppercase tracking-wider border border-[#C5A059]/40 rounded-xl cursor-pointer transition-colors"
                         >
                           Coba Sambungkan Ulang
                         </button>
@@ -465,7 +465,7 @@ export function PhotoboothClient({ autoStart = false }: { autoStart?: boolean } 
                         </p>
                         <button
                           onClick={startCamera}
-                          className="px-6 py-3.5 bg-[#C5A059] hover:bg-[#D5B36E] text-[#0C0A08] font-bold text-xs font-mono uppercase tracking-wider shadow-lg transition-colors flex items-center gap-2 mx-auto cursor-pointer"
+                          className="px-6 py-3.5 bg-[#C5A059] hover:bg-[#D5B36E] text-[#0C0A08] font-bold text-xs font-mono uppercase tracking-wider shadow-lg transition-colors flex items-center gap-2 mx-auto cursor-pointer rounded-xl"
                         >
                           <Camera className="w-4 h-4" />
                           <span>Nyalakan Kamera</span>
@@ -506,7 +506,7 @@ export function PhotoboothClient({ autoStart = false }: { autoStart?: boolean } 
                   <button
                     onClick={handleTakeSnap}
                     disabled={photos.length >= 4 || isCountingDown}
-                    className="px-4 py-3 bg-[#14110E] hover:bg-[#1C1610] disabled:opacity-40 text-[#F4EFE6] text-xs font-mono uppercase tracking-wider border border-[#C5A059]/40 transition-colors flex items-center gap-2 cursor-pointer"
+                    className="px-4 py-3 bg-[#14110E] hover:bg-[#1C1610] disabled:opacity-40 text-[#F4EFE6] text-xs font-mono uppercase tracking-wider border border-[#C5A059]/40 rounded-xl transition-colors flex items-center gap-2 cursor-pointer"
                   >
                     <Camera className="w-3.5 h-3.5 text-[#C5A059]" />
                     <span>Ambil 1</span>
@@ -514,7 +514,7 @@ export function PhotoboothClient({ autoStart = false }: { autoStart?: boolean } 
                   <button
                     onClick={handleTakeFourBurst}
                     disabled={photos.length >= 4 || isCountingDown}
-                    className="flex-1 py-3 bg-[#C5A059] hover:bg-[#D5B36E] disabled:opacity-40 text-[#0C0A08] text-xs font-mono uppercase font-bold tracking-wider transition-colors flex items-center justify-center gap-2 cursor-pointer shadow-md"
+                    className="flex-1 py-3 bg-[#C5A059] hover:bg-[#D5B36E] disabled:opacity-40 text-[#0C0A08] text-xs font-mono uppercase font-bold tracking-wider transition-colors flex items-center justify-center gap-2 cursor-pointer shadow-md rounded-xl"
                   >
                     <span className="text-[#0C0A08]">❖</span>
                     <span>{isCountingDown ? 'Mengambil Pose...' : 'Burst 4 Pose'}</span>
@@ -522,7 +522,7 @@ export function PhotoboothClient({ autoStart = false }: { autoStart?: boolean } 
                   <button
                     onClick={stopCamera}
                     title="Matikan Kamera"
-                    className="p-3 text-[#A89F91] hover:text-[#F4EFE6] border border-[#C5A059]/30 hover:bg-[#14110E] transition-colors"
+                    className="p-3 text-[#A89F91] hover:text-[#F4EFE6] border border-[#C5A059]/30 hover:bg-[#14110E] transition-colors rounded-xl"
                   >
                     <RefreshCw className="w-3.5 h-3.5" />
                   </button>
@@ -539,7 +539,7 @@ export function PhotoboothClient({ autoStart = false }: { autoStart?: boolean } 
                 {photos.length > 0 && (
                   <button
                     onClick={handleRetake}
-                    className="text-[11px] text-red-400 hover:text-red-300 font-mono flex items-center gap-1 cursor-pointer"
+                    className="text-[11px] text-red-400 hover:text-red-300 font-mono flex items-center gap-1 cursor-pointer px-2 py-0.5 rounded-lg hover:bg-red-950/40 transition-colors"
                   >
                     <RotateCcw className="w-3 h-3" />
                     <span>Reset Pose</span>
@@ -552,12 +552,12 @@ export function PhotoboothClient({ autoStart = false }: { autoStart?: boolean } 
                   return (
                     <div
                       key={idx}
-                      className="relative aspect-[4/3] border border-[#C5A059]/30 bg-[#0C0A08] overflow-hidden flex items-center justify-center"
+                      className="relative aspect-[4/3] border border-[#C5A059]/30 bg-[#0C0A08] rounded-xl overflow-hidden flex items-center justify-center"
                     >
                       {photo ? (
                         <>
                           <img src={photo} alt={`Snap ${idx + 1}`} className="w-full h-full object-cover" />
-                          <span className="absolute bottom-0 right-0 bg-[#0C0A08]/90 text-[9px] text-[#C5A059] px-1 font-mono">
+                          <span className="absolute bottom-0 right-0 bg-[#0C0A08]/90 text-[9px] text-[#C5A059] px-1.5 py-0.5 rounded-tl-md font-mono">
                             #{idx + 1}
                           </span>
                         </>
@@ -599,9 +599,9 @@ export function PhotoboothClient({ autoStart = false }: { autoStart?: boolean } 
               <div className="grid grid-cols-3 gap-2">
                 <button
                   onClick={() => setActiveFilter('warm')}
-                  className={`p-2.5 border text-left text-xs transition-colors cursor-pointer ${
+                  className={`p-2.5 border text-left text-xs transition-all cursor-pointer rounded-xl ${
                     activeFilter === 'warm'
-                      ? 'border-[#C5A059] bg-[#C5A059] text-[#0C0A08] font-bold'
+                      ? 'border-[#C5A059] bg-[#C5A059] text-[#0C0A08] font-bold shadow-md'
                       : 'border-[#C5A059]/25 bg-[#0C0A08] text-[#F4EFE6] hover:border-[#C5A059]/50'
                   }`}
                 >
@@ -610,9 +610,9 @@ export function PhotoboothClient({ autoStart = false }: { autoStart?: boolean } 
                 </button>
                 <button
                   onClick={() => setActiveFilter('monochrome')}
-                  className={`p-2.5 border text-left text-xs transition-colors cursor-pointer ${
+                  className={`p-2.5 border text-left text-xs transition-all cursor-pointer rounded-xl ${
                     activeFilter === 'monochrome'
-                      ? 'border-[#C5A059] bg-[#C5A059] text-[#0C0A08] font-bold'
+                      ? 'border-[#C5A059] bg-[#C5A059] text-[#0C0A08] font-bold shadow-md'
                       : 'border-[#C5A059]/25 bg-[#0C0A08] text-[#F4EFE6] hover:border-[#C5A059]/50'
                   }`}
                 >
@@ -621,9 +621,9 @@ export function PhotoboothClient({ autoStart = false }: { autoStart?: boolean } 
                 </button>
                 <button
                   onClick={() => setActiveFilter('cyberpunk')}
-                  className={`p-2.5 border text-left text-xs transition-colors cursor-pointer ${
+                  className={`p-2.5 border text-left text-xs transition-all cursor-pointer rounded-xl ${
                     activeFilter === 'cyberpunk'
-                      ? 'border-[#C5A059] bg-[#C5A059] text-[#0C0A08] font-bold'
+                      ? 'border-[#C5A059] bg-[#C5A059] text-[#0C0A08] font-bold shadow-md'
                       : 'border-[#C5A059]/25 bg-[#0C0A08] text-[#F4EFE6] hover:border-[#C5A059]/50'
                   }`}
                 >
@@ -645,10 +645,10 @@ export function PhotoboothClient({ autoStart = false }: { autoStart?: boolean } 
                     <button
                       key={tab.id}
                       onClick={() => setSelectedCategory(tab.id)}
-                      className={`px-2.5 py-1 text-[11px] font-mono whitespace-nowrap transition-colors cursor-pointer ${
+                      className={`px-3 py-1.5 text-[11px] font-mono whitespace-nowrap rounded-full transition-all cursor-pointer ${
                         isActive
-                          ? 'bg-[#C5A059] text-[#0C0A08] font-bold'
-                          : 'bg-[#0C0A08] text-[#A89F91] border border-[#C5A059]/20 hover:text-[#F4EFE6]'
+                          ? 'bg-[#C5A059] text-[#0C0A08] font-bold shadow-md'
+                          : 'bg-[#0C0A08] text-[#A89F91] border border-[#C5A059]/25 hover:border-[#C5A059]/60 hover:text-[#F4EFE6]'
                       }`}
                     >
                       {tab.label}
@@ -666,24 +666,24 @@ export function PhotoboothClient({ autoStart = false }: { autoStart?: boolean } 
                   <button
                     key={f.id}
                     onClick={() => setActiveFrame(f.id)}
-                    className={`p-2 border text-left text-xs transition-colors relative flex flex-col justify-between cursor-pointer ${
+                    className={`p-2.5 border text-left text-xs transition-all relative flex flex-col justify-between cursor-pointer rounded-xl ${
                       isSelected
-                        ? 'border-[#C5A059] bg-[#221A12] text-[#F4EFE6] ring-1 ring-[#C5A059]'
+                        ? 'border-[#C5A059] bg-[#221A12] text-[#F4EFE6] ring-1 ring-[#C5A059] shadow-md'
                         : 'border-[#C5A059]/20 bg-[#0C0A08] text-[#A89F91] hover:border-[#C5A059]/40 hover:text-[#F4EFE6]'
                     }`}
                   >
                     <div className="flex items-center gap-1 mb-1.5">
                       <span
                         style={{ backgroundColor: f.palette.background }}
-                        className="w-3 h-3 border border-[#C5A059]/40 shadow-xs"
+                        className="w-3 h-3 rounded-full border border-[#C5A059]/40 shadow-xs"
                       />
                       <span
                         style={{ backgroundColor: f.palette.borderOuter }}
-                        className="w-2.5 h-2.5 border border-[#C5A059]/40 shadow-xs"
+                        className="w-2.5 h-2.5 rounded-full border border-[#C5A059]/40 shadow-xs"
                       />
                       <span
                         style={{ backgroundColor: f.palette.accentGold }}
-                        className="w-2 h-2 border border-[#C5A059]/40 shadow-xs"
+                        className="w-2 h-2 rounded-full border border-[#C5A059]/40 shadow-xs"
                       />
                     </div>
                     <div>
@@ -695,7 +695,7 @@ export function PhotoboothClient({ autoStart = false }: { autoStart?: boolean } 
                       </span>
                     </div>
                     {isSelected && (
-                      <span className="absolute top-1.5 right-1.5 w-1.5 h-1.5 bg-[#C5A059] animate-pulse" />
+                      <span className="absolute top-2 right-2 w-1.5 h-1.5 rounded-full bg-[#C5A059] animate-pulse" />
                     )}
                   </button>
                 );
@@ -703,7 +703,7 @@ export function PhotoboothClient({ autoStart = false }: { autoStart?: boolean } 
             </div>
 
             {/* Cultural Information of Selected Frame */}
-            <div className="p-3 bg-[#0C0A08] border border-[#C5A059]/30 space-y-2 text-xs">
+            <div className="p-3.5 bg-[#0C0A08] border border-[#C5A059]/30 rounded-xl space-y-2 text-xs">
               <div className="flex items-start justify-between gap-2 border-b border-[#C5A059]/15 pb-1.5">
                 <div>
                   <span className="text-[9px] font-mono text-[#C5A059] uppercase tracking-wider block font-bold">
@@ -717,7 +717,7 @@ export function PhotoboothClient({ autoStart = false }: { autoStart?: boolean } 
                   href={currentFrame.pinterestSearchUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1 text-[10px] font-mono text-[#C5A059] hover:text-[#F4EFE6] bg-[#14110E] px-2 py-0.5 border border-[#C5A059]/40 shrink-0 transition-colors"
+                  className="inline-flex items-center gap-1 text-[10px] font-mono text-[#C5A059] hover:text-[#F4EFE6] bg-[#14110E] px-2.5 py-1 rounded-lg border border-[#C5A059]/40 shrink-0 transition-colors"
                 >
                   <span>Pinterest</span>
                   <ExternalLink className="w-2.5 h-2.5" />
@@ -726,7 +726,7 @@ export function PhotoboothClient({ autoStart = false }: { autoStart?: boolean } 
               <p className="text-[10px] text-[#A89F91] leading-relaxed font-sans line-clamp-2">
                 {currentFrame.description}
               </p>
-              <div className="p-1.5 bg-[#14110E] border-l border-[#C5A059] flex items-start gap-1.5">
+              <div className="p-2 bg-[#14110E] border-l-2 border-[#C5A059] rounded-r-lg flex items-start gap-1.5">
                 <Info className="w-3 h-3 text-[#C5A059] shrink-0 mt-0.5" />
                 <p className="text-[10px] text-[#F4EFE6] italic leading-tight font-sans">
                   <strong className="not-italic font-bold font-mono text-[#C5A059]">FILOSOFI:</strong> {currentFrame.philosophy}
@@ -744,14 +744,14 @@ export function PhotoboothClient({ autoStart = false }: { autoStart?: boolean } 
                     value={customTitle}
                     onChange={(e) => setCustomTitle(e.target.value)}
                     placeholder={`e.g. ${currentFrame.javaneseName}`}
-                    className="w-full px-2.5 py-1.5 bg-[#14110E] border border-[#C5A059]/30 text-[#F4EFE6] text-[11px] font-mono focus:border-[#C5A059] focus:outline-none"
+                    className="w-full px-3 py-2 bg-[#14110E] border border-[#C5A059]/30 rounded-xl text-[#F4EFE6] text-[11px] font-mono focus:border-[#C5A059] focus:outline-none transition-colors"
                   />
                   <input
                     type="text"
                     value={customMessage}
                     onChange={(e) => setCustomMessage(e.target.value)}
                     placeholder="e.g. Rahayu Widodo Lestari / #Nuswara"
-                    className="w-full px-2.5 py-1.5 bg-[#14110E] border border-[#C5A059]/30 text-[#F4EFE6] text-[11px] font-mono focus:border-[#C5A059] focus:outline-none"
+                    className="w-full px-3 py-2 bg-[#14110E] border border-[#C5A059]/30 rounded-xl text-[#F4EFE6] text-[11px] font-mono focus:border-[#C5A059] focus:outline-none transition-colors"
                   />
                 </div>
               </div>
@@ -774,7 +774,7 @@ export function PhotoboothClient({ autoStart = false }: { autoStart?: boolean } 
               </div>
 
               {/* Strip Preview Container (Darkroom Presentation Stage) */}
-              <div className="flex justify-center bg-[#080705] p-3 border border-[#C5A059]/20 min-h-[460px] items-center">
+              <div className="flex justify-center bg-[#080705] p-3 border border-[#C5A059]/20 rounded-2xl min-h-[460px] items-center">
                 <PhotoboothStripPreview
                   frame={currentFrame}
                   photos={photos}
@@ -790,7 +790,7 @@ export function PhotoboothClient({ autoStart = false }: { autoStart?: boolean } 
               <div className="space-y-2 pt-2 border-t border-[#C5A059]/20">
                 <button
                   onClick={handleDownloadStrip}
-                  className="w-full py-3 bg-[#C5A059] hover:bg-[#D5B36E] text-[#0C0A08] text-xs font-mono uppercase font-bold tracking-wider transition-colors flex items-center justify-center gap-1.5 shadow-lg cursor-pointer"
+                  className="w-full py-3 bg-[#C5A059] hover:bg-[#D5B36E] text-[#0C0A08] text-xs font-mono uppercase font-bold tracking-wider rounded-xl transition-all flex items-center justify-center gap-1.5 shadow-lg cursor-pointer"
                 >
                   <Download className="w-3.5 h-3.5 text-[#0C0A08]" />
                   <span>Download Strip PNG</span>
@@ -799,7 +799,7 @@ export function PhotoboothClient({ autoStart = false }: { autoStart?: boolean } 
                 <button
                   onClick={handleShareStrip}
                   disabled={sharing}
-                  className="w-full py-2.5 bg-[#14110E] hover:bg-[#1C1610] text-[#C5A059] hover:text-[#F4EFE6] text-xs font-mono uppercase tracking-wider border border-[#C5A059]/40 transition-colors flex items-center justify-center gap-1.5 cursor-pointer"
+                  className="w-full py-2.5 bg-[#14110E] hover:bg-[#1C1610] text-[#C5A059] hover:text-[#F4EFE6] text-xs font-mono uppercase tracking-wider border border-[#C5A059]/40 rounded-xl transition-colors flex items-center justify-center gap-1.5 cursor-pointer"
                 >
                   {copied ? (
                     <>
@@ -815,7 +815,7 @@ export function PhotoboothClient({ autoStart = false }: { autoStart?: boolean } 
                 </button>
 
                 {shareCode && (
-                  <div className="p-2 bg-[#14110E] border border-[#C5A059]/30 text-center text-xs">
+                  <div className="p-2.5 bg-[#14110E] border border-[#C5A059]/30 rounded-xl text-center text-xs">
                     <span className="font-mono text-[#A89F91] text-[10px] block uppercase">
                       KODE PUBLIK:
                     </span>
@@ -829,7 +829,7 @@ export function PhotoboothClient({ autoStart = false }: { autoStart?: boolean } 
                 )}
               </div>
             ) : (
-              <div className="p-3 bg-[#14110E] border border-[#C5A059]/20 text-center text-xs font-mono text-[#A89F91] space-y-1">
+              <div className="p-3.5 bg-[#14110E] border border-[#C5A059]/20 rounded-xl text-center text-xs font-mono text-[#A89F91] space-y-1">
                 <span className="text-[#C5A059] block">❖ AMBIL 4 POSE ❖</span>
                 <p className="text-[10px] text-[#A89F91]/80">
                   Strip 4-cut resolusi tinggi akan otomatis dirender setelah 4 foto terisi.

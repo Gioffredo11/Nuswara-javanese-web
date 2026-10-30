@@ -67,7 +67,7 @@ export function TokohIdentitySection() {
             <div className="shrink-0">
               <Link
                 href="/tokoh"
-                className="inline-flex items-center gap-2 px-6 py-3.5 bg-[#14110E] hover:bg-[#C5A059] text-[#C5A059] hover:text-[#0C0A08] border border-[#C5A059]/40 hover:border-[#C5A059] font-mono text-xs font-bold uppercase tracking-wider transition-all duration-300 group cursor-pointer shadow-md rounded-none"
+                className="inline-flex items-center gap-2 px-6 py-3.5 bg-[#14110E] hover:bg-[#C5A059] text-[#C5A059] hover:text-[#0C0A08] border border-[#C5A059]/40 hover:border-[#C5A059] font-mono text-xs font-bold uppercase tracking-wider transition-all duration-300 group cursor-pointer shadow-md rounded-xl"
               >
                 <BookOpen className="w-4 h-4 text-[#C5A059] group-hover:text-[#0C0A08] transition-colors" />
                 <span>Buka Direktori ({tokohArticles.length} Tokoh)</span>
@@ -83,7 +83,7 @@ export function TokohIdentitySection() {
         <div
           role="tablist"
           aria-label="Pilih tokoh peradaban"
-          className="border-y border-[#C5A059]/20 divide-x divide-[#C5A059]/20 flex overflow-x-auto bg-[#14110E] scrollbar-none"
+          className="rounded-2xl border border-[#C5A059]/25 p-1.5 flex gap-1.5 overflow-x-auto bg-[#14110E] scrollbar-none"
         >
           {tokohArticles.map((tokoh, index) => {
             const isActive = tokoh.slug === activeFigure.slug;
@@ -96,9 +96,9 @@ export function TokohIdentitySection() {
                 aria-controls={`tokoh-panel-${tokoh.slug}`}
                 tabIndex={0}
                 onClick={() => setActiveSlug(tokoh.slug)}
-                className={`group shrink-0 px-5 py-3 text-xs font-mono transition-colors flex items-center gap-3 cursor-pointer min-h-[44px] rounded-none ${
+                className={`group shrink-0 px-4 py-2.5 text-xs font-mono transition-all flex items-center gap-2.5 cursor-pointer min-h-[42px] rounded-xl ${
                   isActive
-                    ? 'bg-[#C5A059] text-[#0C0A08] font-bold'
+                    ? 'bg-[#C5A059] text-[#0C0A08] font-bold shadow-md'
                     : 'text-[#A89F91] hover:text-[#F4EFE6] hover:bg-[#1A1612]'
                 }`}
               >
@@ -107,7 +107,7 @@ export function TokohIdentitySection() {
                 </span>
                 <span className="tracking-wider">{tokoh.name}</span>
                 <span
-                  className={`hidden sm:inline text-[9px] px-1.5 py-0.5 font-mono ${
+                  className={`hidden sm:inline text-[9px] px-2 py-0.5 rounded-full font-mono ${
                     isActive
                       ? 'bg-[#0C0A08] text-[#C5A059]'
                       : 'bg-[#1C1610] text-[#8E8271]'
@@ -216,7 +216,7 @@ export function TokohIdentitySection() {
                   <button
                     type="button"
                     onClick={() => setSelectedTokoh(activeFigure)}
-                    className="min-h-[44px] px-6 py-3.5 bg-[#C5A059] hover:bg-[#D5B36E] text-[#0C0A08] font-bold text-xs uppercase font-mono tracking-wider transition-colors shadow-lg flex items-center gap-2 cursor-pointer rounded-none"
+                    className="min-h-[44px] px-6 py-3.5 bg-[#C5A059] hover:bg-[#D5B36E] text-[#0C0A08] font-bold text-xs uppercase font-mono tracking-wider transition-colors shadow-lg flex items-center gap-2 cursor-pointer rounded-xl"
                   >
                     <FileText className="w-4 h-4 text-[#0C0A08]" />
                     <span>Buka Berkas Arsip Lengkap</span>
@@ -224,7 +224,7 @@ export function TokohIdentitySection() {
 
                   <Link
                     href={`/tokoh/${activeFigure.slug}`}
-                    className="min-h-[44px] px-6 py-3.5 bg-[#14110E] hover:bg-[#1C1610] text-[#C5A059] hover:text-[#F4EFE6] border border-[#C5A059]/40 rounded-none font-medium text-xs font-mono uppercase tracking-wider transition-colors flex items-center gap-2 cursor-pointer"
+                    className="min-h-[44px] px-6 py-3.5 bg-[#14110E] hover:bg-[#1C1610] text-[#C5A059] hover:text-[#F4EFE6] border border-[#C5A059]/40 rounded-xl font-medium text-xs font-mono uppercase tracking-wider transition-colors flex items-center gap-2 cursor-pointer"
                   >
                     <span>Baca Biografi Penuh</span>
                     <ArrowRight className="w-3.5 h-3.5" />
@@ -262,13 +262,13 @@ export function TokohIdentitySection() {
           onClick={() => setSelectedTokoh(null)}
         >
           <div
-            className="relative w-full max-w-4xl max-h-[90vh] flex flex-col rounded-none bg-[#14110E] border border-[#C5A059]/50 shadow-2xl overflow-hidden animate-in zoom-in-95 duration-200"
+            className="relative w-full max-w-4xl max-h-[90vh] flex flex-col rounded-2xl bg-[#14110E] border border-[#C5A059]/50 shadow-2xl overflow-hidden animate-in zoom-in-95 duration-200"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Modal Header: Archival Identity Stamp */}
             <div className="p-5 sm:p-6 bg-[#0C0A08] border-b border-[#C5A059]/30 flex items-center justify-between shrink-0">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-none bg-[#14110E] border border-[#C5A059]/40 flex items-center justify-center text-[#C5A059]">
+                <div className="w-10 h-10 rounded-xl bg-[#14110E] border border-[#C5A059]/40 flex items-center justify-center text-[#C5A059]">
                   <FileText className="w-5 h-5 text-[#C5A059]" />
                 </div>
                 <div>
@@ -293,7 +293,7 @@ export function TokohIdentitySection() {
                 type="button"
                 onClick={() => setSelectedTokoh(null)}
                 aria-label="Tutup berkas arsip"
-                className="w-9 h-9 rounded-none bg-[#14110E] hover:bg-[#241B12] border border-[#C5A059]/40 text-[#C5A059] flex items-center justify-center transition-colors cursor-pointer"
+                className="w-9 h-9 rounded-full bg-[#14110E] hover:bg-[#241B12] border border-[#C5A059]/40 text-[#C5A059] flex items-center justify-center transition-colors cursor-pointer"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -304,7 +304,7 @@ export function TokohIdentitySection() {
               {/* Top Summary & Identity Photo Grid */}
               <div className="grid grid-cols-1 md:grid-cols-12 gap-6 items-start">
                 <div className="md:col-span-4 flex flex-col items-center">
-                  <div className="relative w-48 sm:w-56 aspect-[3/4] rounded-none overflow-hidden border border-[#C5A059]/50 shadow-xl bg-[#0C0A08]">
+                  <div className="relative w-48 sm:w-56 aspect-[3/4] rounded-xl overflow-hidden border border-[#C5A059]/50 shadow-xl bg-[#0C0A08]">
                     <Image
                       src={selectedTokoh.photoUrl}
                       alt={selectedTokoh.name}
@@ -458,14 +458,14 @@ export function TokohIdentitySection() {
               <button
                 type="button"
                 onClick={() => setSelectedTokoh(null)}
-                className="px-6 py-3 border border-[#C5A059]/40 hover:bg-[#14110E] text-xs font-mono uppercase text-[#A89F91] hover:text-[#F4EFE6] transition-colors cursor-pointer rounded-none"
+                className="px-6 py-3 border border-[#C5A059]/40 hover:bg-[#14110E] text-xs font-mono uppercase text-[#A89F91] hover:text-[#F4EFE6] transition-colors cursor-pointer rounded-xl"
               >
                 Tutup Berkas
               </button>
 
               <Link
                 href={`/tokoh/${selectedTokoh.slug}`}
-                className="inline-flex items-center gap-2 px-6 py-3 bg-[#C5A059] hover:bg-[#D5B36E] text-[#0C0A08] font-bold text-xs font-mono uppercase tracking-wider transition-colors shadow-xl cursor-pointer rounded-none"
+                className="inline-flex items-center gap-2 px-6 py-3 bg-[#C5A059] hover:bg-[#D5B36E] text-[#0C0A08] font-bold text-xs font-mono uppercase tracking-wider transition-colors shadow-xl cursor-pointer rounded-xl"
               >
                 <span>Baca Artikel Penuh {selectedTokoh.name}</span>
                 <ArrowRight className="w-4 h-4" />

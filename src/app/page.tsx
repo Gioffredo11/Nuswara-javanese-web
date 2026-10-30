@@ -253,7 +253,7 @@ export function HomePage({ defaultSection }: HomePageProps = {}) {
                 <button
                   type="button"
                   onClick={(e) => { onRipple(e); scrollToSection('sejarah'); }}
-                  className="relative overflow-hidden px-8 py-4 bg-[#C5A059] hover:bg-[#D5B36E] text-[#0C0A08] font-bold text-xs sm:text-sm font-mono tracking-widest uppercase transition-all duration-300 shadow-xl flex items-center gap-3 cursor-pointer group"
+                  className="relative overflow-hidden px-8 py-4 bg-[#C5A059] hover:bg-[#D5B36E] text-[#0C0A08] font-bold text-xs sm:text-sm font-mono tracking-widest uppercase rounded-xl transition-all duration-300 shadow-xl flex items-center gap-3 cursor-pointer group"
                 >
                   <span>Jelajahi Jawa Tengah</span>
                   <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
@@ -288,7 +288,7 @@ export function HomePage({ defaultSection }: HomePageProps = {}) {
 
           {/* Minimalist Editorial Navigation Anchors */}
           <ScrollReveal direction="up" distance={20} delay={150}>
-            <div className="flex flex-wrap items-center gap-x-8 gap-y-3 pt-6 border-t border-[#C5A059]/15 text-xs font-mono">
+            <div className="flex flex-wrap items-center gap-3 pt-6 border-t border-[#C5A059]/15 text-xs font-mono">
               {[
                 { number: '01', label: 'Jejak Sejarah', target: 'sejarah' },
                 { number: '02', label: 'Tokoh & Pemikiran', target: 'tokoh' },
@@ -300,7 +300,7 @@ export function HomePage({ defaultSection }: HomePageProps = {}) {
                   key={pill.number}
                   type="button"
                   onClick={(e) => { onRipple(e); scrollToSection(pill.target); }}
-                  className="inline-flex items-center gap-2 text-[#A89F91] hover:text-[#C5A059] transition-colors py-1 cursor-pointer group tracking-wider uppercase"
+                  className="inline-flex items-center gap-2 text-[#A89F91] hover:text-[#C5A059] bg-[#0C0A08] border border-[#C5A059]/20 hover:border-[#C5A059]/50 rounded-full px-3.5 py-1.5 transition-all cursor-pointer group tracking-wider uppercase"
                 >
                   <span className="text-[#C5A059] font-bold">
                     [{pill.number}]
@@ -355,9 +355,9 @@ export function HomePage({ defaultSection }: HomePageProps = {}) {
                       key={ch.id}
                       type="button"
                       onClick={() => setActiveHistoryChapter(ch.id)}
-                      className={`w-full text-left pl-3 py-2 transition-colors border-l-2 cursor-pointer ${
+                      className={`w-full text-left pl-3.5 pr-2 py-2.5 transition-all border-l-2 rounded-r-xl cursor-pointer ${
                         isActive
-                          ? 'border-[#8C6D32] bg-[#EAE3D5]'
+                          ? 'border-[#8C6D32] bg-[#EAE3D5] shadow-xs'
                           : 'border-transparent hover:border-[#1C1814]/30 hover:bg-[#EAE3D5]/50'
                       }`}
                     >
@@ -376,8 +376,8 @@ export function HomePage({ defaultSection }: HomePageProps = {}) {
             {/* Kolom 2: Artefak Visual & Museum Catalog Placard (5 cols) */}
             <div className="lg:col-span-5 lg:border-r lg:border-[#1C1814]/15 lg:px-8">
               <ScrollReveal direction="up" distance={30} delay={100}>
-                <div className="border border-[#1C1814]/20 p-2.5 bg-[#EAE3D5]">
-                  <div className="relative aspect-[4/3] bg-[#1C1814]/10 overflow-hidden">
+                <div className="border border-[#1C1814]/20 p-2.5 bg-[#EAE3D5] rounded-xl overflow-hidden">
+                  <div className="relative aspect-[4/3] bg-[#1C1814]/10 rounded-lg overflow-hidden">
                     <Image
                       src={currentChapter.image}
                       alt={currentChapter.imageLabel}
@@ -504,7 +504,7 @@ export function HomePage({ defaultSection }: HomePageProps = {}) {
                       window.dispatchEvent(new CustomEvent('open-manifestation-modal'));
                     }
                   }}
-                  className="px-6 py-3.5 bg-[#C5A059] hover:bg-[#D5B36E] text-[#0C0A08] font-bold text-xs uppercase font-mono tracking-wider transition-colors shadow-md flex items-center gap-2 cursor-pointer"
+                  className="px-6 py-3.5 bg-[#C5A059] hover:bg-[#D5B36E] text-[#0C0A08] font-bold text-xs uppercase font-mono tracking-wider rounded-xl transition-all shadow-md flex items-center gap-2 cursor-pointer"
                 >
                   <span className="text-[#0C0A08]">❖</span>
                   <span>Tarik Kartu Manifestasi Hari Ini</span>
@@ -512,7 +512,7 @@ export function HomePage({ defaultSection }: HomePageProps = {}) {
                 <button
                   type="button"
                   onClick={() => scrollToSection('wayangpedia')}
-                  className="px-6 py-3.5 bg-[#14110E] hover:bg-[#1C1610] text-[#C5A059] font-mono text-xs uppercase tracking-wider border border-[#C5A059]/40 transition-colors flex items-center gap-2 cursor-pointer"
+                  className="px-6 py-3.5 bg-[#14110E] hover:bg-[#1C1610] text-[#C5A059] font-mono text-xs uppercase tracking-wider border border-[#C5A059]/40 rounded-xl transition-all flex items-center gap-2 cursor-pointer"
                 >
                   <BookOpen className="w-4 h-4" />
                   <span>Katalog Wayangpedia</span>
@@ -580,7 +580,7 @@ export function HomePage({ defaultSection }: HomePageProps = {}) {
               <div className="lg:col-span-7">
                 <Link
                   href="/kuliner/lumpia-semarang"
-                  className="group block relative aspect-[16/10] w-full border border-[#C5A059]/30 bg-[#0C0A08] overflow-hidden cursor-pointer"
+                  className="group block relative aspect-[16/10] w-full border border-[#C5A059]/30 bg-[#0C0A08] rounded-2xl overflow-hidden cursor-pointer"
                   aria-label="Lumpia Semarang — baca kisah akulturasi dan resep otentik"
                 >
                   <Image
@@ -595,10 +595,10 @@ export function HomePage({ defaultSection }: HomePageProps = {}) {
 
                   {/* Antique Gastronomic Badges */}
                   <div className="absolute top-4 left-4 flex items-center gap-2">
-                    <span className="px-2.5 py-1 bg-[#0C0A08]/90 border border-[#C5A059]/40 text-[#C5A059] text-[10px] font-mono font-bold tracking-widest uppercase">
+                    <span className="px-3 py-1 bg-[#0C0A08]/90 border border-[#C5A059]/40 text-[#C5A059] text-[10px] font-mono font-bold tracking-widest uppercase rounded-full">
                       WARISAN BUDAYA TAKBENDA
                     </span>
-                    <span className="px-2.5 py-1 bg-[#0C0A08]/90 border border-[#C5A059]/40 text-[#A89F91] text-[10px] font-mono uppercase tracking-wider">
+                    <span className="px-3 py-1 bg-[#0C0A08]/90 border border-[#C5A059]/40 text-[#A89F91] text-[10px] font-mono uppercase tracking-wider rounded-full">
                       SEMARANG • SEJAK 1870
                     </span>
                   </div>
@@ -633,7 +633,7 @@ export function HomePage({ defaultSection }: HomePageProps = {}) {
                 </p>
 
                 {/* 2x2 Bordered Grid Specification Table */}
-                <div className="grid grid-cols-2 border border-[#C5A059]/20 divide-x divide-y divide-[#C5A059]/20 bg-[#0C0A08] text-xs font-mono">
+                <div className="grid grid-cols-2 border border-[#C5A059]/20 divide-x divide-y divide-[#C5A059]/20 bg-[#0C0A08] text-xs font-mono rounded-xl overflow-hidden">
                   <div className="p-3">
                     <span className="text-[10px] text-[#C5A059]/70 uppercase tracking-widest block font-bold">01 // ISIAN UTAMA</span>
                     <span className="text-[#F4EFE6] font-medium mt-1 block">Rebung Muda &amp; Udang Segar</span>
@@ -656,7 +656,7 @@ export function HomePage({ defaultSection }: HomePageProps = {}) {
                 <div className="pt-1">
                   <Link
                     href="/kuliner/lumpia-semarang"
-                    className="inline-flex items-center gap-2 px-6 py-3.5 bg-[#C5A059] hover:bg-[#D5B36E] text-[#0C0A08] font-bold text-xs uppercase font-mono tracking-wider transition-colors shadow-lg group cursor-pointer"
+                    className="inline-flex items-center gap-2 px-6 py-3.5 bg-[#C5A059] hover:bg-[#D5B36E] text-[#0C0A08] font-bold text-xs uppercase font-mono tracking-wider rounded-xl transition-all shadow-lg group cursor-pointer"
                   >
                     <span>Pelajari Sejarah &amp; Resep Lumpia Semarang</span>
                     <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
@@ -755,7 +755,7 @@ export function HomePage({ defaultSection }: HomePageProps = {}) {
               <div className="lg:col-span-7">
                 <Link
                   href="/tempat-sakral/candi-borobudur"
-                  className="group block relative aspect-[16/10] w-full border border-[#C5A059]/30 bg-[#14110E] overflow-hidden cursor-pointer"
+                  className="group block relative aspect-[16/10] w-full border border-[#C5A059]/30 bg-[#14110E] rounded-2xl overflow-hidden cursor-pointer"
                   aria-label="Candi Borobudur — baca kisah spiritual lengkap"
                 >
                   <Image
@@ -800,7 +800,7 @@ export function HomePage({ defaultSection }: HomePageProps = {}) {
                 <div className="pt-1">
                   <Link
                     href="/tempat-sakral/candi-borobudur"
-                    className="inline-flex items-center gap-2 px-6 py-3.5 bg-[#C5A059] hover:bg-[#D5B36E] text-[#0C0A08] font-bold text-xs uppercase font-mono tracking-wider transition-colors shadow-lg group cursor-pointer"
+                    className="inline-flex items-center gap-2 px-6 py-3.5 bg-[#C5A059] hover:bg-[#D5B36E] text-[#0C0A08] font-bold text-xs uppercase font-mono tracking-wider rounded-xl transition-all shadow-lg group cursor-pointer"
                   >
                     <span>Pelajari Filosofi Spiritual Borobudur</span>
                     <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
@@ -812,7 +812,7 @@ export function HomePage({ defaultSection }: HomePageProps = {}) {
 
           {/* Monumental Metrics Bar (4 Columns Full-Width) */}
           <ScrollReveal direction="up" distance={25} delay={150}>
-            <div className="grid grid-cols-2 lg:grid-cols-4 border border-[#C5A059]/20 divide-y lg:divide-y-0 lg:divide-x divide-[#C5A059]/20 bg-[#14110E]">
+            <div className="grid grid-cols-2 lg:grid-cols-4 border border-[#C5A059]/20 divide-y lg:divide-y-0 lg:divide-x divide-[#C5A059]/20 bg-[#14110E] rounded-2xl overflow-hidden">
               <div className="p-6 text-center lg:text-left">
                 <span className="font-editorial text-3xl sm:text-4xl lg:text-5xl font-bold text-[#C5A059] block">2.672</span>
                 <span className="font-mono text-[11px] text-[#A89F91] uppercase tracking-wider mt-1 block">Panel Pahat Relief</span>

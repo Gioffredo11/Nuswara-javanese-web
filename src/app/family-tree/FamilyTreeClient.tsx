@@ -195,16 +195,16 @@ export function FamilyTreeClient() {
               placeholder="Cari tokoh wayang..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-8 pr-3 py-2 text-xs bg-[#14110E] border border-[#C5A059]/30 text-[#F4EFE6] placeholder-[#A89F91]/50 focus:border-[#C5A059] focus:outline-none w-44 sm:w-52 font-mono"
+              className="pl-8 pr-3 py-2 text-xs bg-[#14110E] border border-[#C5A059]/30 rounded-xl text-[#F4EFE6] placeholder-[#A89F91]/50 focus:border-[#C5A059] focus:outline-none w-44 sm:w-52 font-mono transition-colors"
             />
           </div>
 
-          <div className="flex bg-[#14110E] border border-[#C5A059]/30 p-1 text-xs font-mono">
+          <div className="flex bg-[#14110E] border border-[#C5A059]/30 rounded-full p-1 text-xs font-mono">
             <button
               onClick={() => setActiveTab('visual')}
-              className={`px-3 py-1.5 transition-colors cursor-pointer ${
+              className={`px-3.5 py-1.5 rounded-full transition-all cursor-pointer ${
                 activeTab === 'visual'
-                  ? 'bg-[#C5A059] text-[#0C0A08] font-bold'
+                  ? 'bg-[#C5A059] text-[#0C0A08] font-bold shadow-md'
                   : 'text-[#A89F91] hover:text-[#F4EFE6]'
               }`}
             >
@@ -212,9 +212,9 @@ export function FamilyTreeClient() {
             </button>
             <button
               onClick={() => setActiveTab('lineage')}
-              className={`px-3 py-1.5 transition-colors cursor-pointer ${
+              className={`px-3.5 py-1.5 rounded-full transition-all cursor-pointer ${
                 activeTab === 'lineage'
-                  ? 'bg-[#C5A059] text-[#0C0A08] font-bold'
+                  ? 'bg-[#C5A059] text-[#0C0A08] font-bold shadow-md'
                   : 'text-[#A89F91] hover:text-[#F4EFE6]'
               }`}
             >
@@ -223,10 +223,10 @@ export function FamilyTreeClient() {
           </div>
 
           {activeTab === 'visual' && (
-            <div className="hidden sm:flex items-center bg-[#14110E] border border-[#C5A059]/30 p-1 font-mono">
+            <div className="hidden sm:flex items-center bg-[#14110E] border border-[#C5A059]/30 rounded-xl p-1 font-mono">
               <button
                 onClick={() => setZoomLevel((z) => Math.max(0.7, z - 0.1))}
-                className="p-1.5 text-[#A89F91] hover:text-[#F4EFE6] hover:bg-[#1A1612] cursor-pointer"
+                className="p-1.5 text-[#A89F91] hover:text-[#F4EFE6] hover:bg-[#1A1612] rounded-lg cursor-pointer transition-colors"
                 title="Perkecil"
               >
                 <ZoomOut className="w-3.5 h-3.5" />
@@ -236,14 +236,14 @@ export function FamilyTreeClient() {
               </span>
               <button
                 onClick={() => setZoomLevel((z) => Math.min(1.3, z + 0.1))}
-                className="p-1.5 text-[#A89F91] hover:text-[#F4EFE6] hover:bg-[#1A1612] cursor-pointer"
+                className="p-1.5 text-[#A89F91] hover:text-[#F4EFE6] hover:bg-[#1A1612] rounded-lg cursor-pointer transition-colors"
                 title="Perbesar"
               >
                 <ZoomIn className="w-3.5 h-3.5" />
               </button>
               <button
                 onClick={() => setZoomLevel(1)}
-                className="p-1.5 text-[#A89F91] hover:text-[#F4EFE6] hover:bg-[#1A1612] ml-1 cursor-pointer"
+                className="p-1.5 text-[#A89F91] hover:text-[#F4EFE6] hover:bg-[#1A1612] ml-1 rounded-lg cursor-pointer transition-colors"
                 title="Reset Zoom"
               >
                 <Maximize2 className="w-3.5 h-3.5" />
@@ -256,9 +256,9 @@ export function FamilyTreeClient() {
       {/* Main Work Area: Tree Canvas + Inspector Drawer */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
         {/* Canvas / Tree Area */}
-        <div className="lg:col-span-8 bg-[#0C0A08] border border-[#C5A059]/30 p-4 sm:p-8 min-h-[520px] overflow-x-auto shadow-2xl relative">
+        <div className="lg:col-span-8 bg-[#0C0A08] border border-[#C5A059]/30 rounded-2xl p-4 sm:p-8 min-h-[520px] overflow-x-auto shadow-2xl relative">
           {activeTab === 'visual' && (
-            <div className="sm:hidden flex items-center justify-between text-[11px] font-mono text-[#C5A059] bg-[#14110E] border border-[#C5A059]/30 px-3 py-1.5 mb-4">
+            <div className="sm:hidden flex items-center justify-between text-[11px] font-mono text-[#C5A059] bg-[#14110E] border border-[#C5A059]/30 rounded-lg px-3 py-1.5 mb-4">
               <span>Geser horizontal untuk menelusuri bagan purwa</span>
               <span>⇄</span>
             </div>
@@ -277,7 +277,7 @@ export function FamilyTreeClient() {
                     <div className="absolute -left-6 sm:-left-8 top-3.5 w-6 sm:w-8 h-[2px] bg-[#C5A059]/40" />
 
                     <div className="flex items-center gap-3">
-                      <span className="text-[10px] font-mono uppercase tracking-widest text-[#0C0A08] bg-[#C5A059] px-2.5 py-0.5 font-bold">
+                      <span className="text-[10px] font-mono uppercase tracking-widest text-[#0C0A08] bg-[#C5A059] px-3 py-1 font-bold rounded-full shadow-xs">
                         GENERASI 01 • LELUHUR &amp; PAMOMONG ({gen1.length})
                       </span>
                       <div className="flex-1 h-[1px] bg-[#C5A059]/20" />
@@ -290,7 +290,7 @@ export function FamilyTreeClient() {
                           <button
                             key={node.id}
                             onClick={() => setSelectedNode(node)}
-                            className={`p-3.5 border text-left transition-colors cursor-pointer relative ${
+                            className={`p-3.5 border text-left transition-all cursor-pointer relative rounded-xl ${
                               isSelected
                                 ? 'bg-[#C5A059] text-[#0C0A08] border-[#C5A059] font-bold shadow-lg ring-1 ring-[#C5A059]'
                                 : 'bg-[#14110E] text-[#F4EFE6] border-[#C5A059]/25 hover:border-[#C5A059] hover:bg-[#1A1612]'
@@ -319,7 +319,7 @@ export function FamilyTreeClient() {
                     <div className="absolute -left-6 sm:-left-8 top-3.5 w-6 sm:w-8 h-[2px] bg-[#C5A059]/40" />
 
                     <div className="flex items-center gap-3">
-                      <span className="text-[10px] font-mono uppercase tracking-widest text-[#0C0A08] bg-[#C5A059] px-2.5 py-0.5 font-bold">
+                      <span className="text-[10px] font-mono uppercase tracking-widest text-[#0C0A08] bg-[#C5A059] px-3 py-1 font-bold rounded-full shadow-xs">
                         GENERASI 02 • KSATRIA UTAMA (PANDAWA &amp; KURAWA) ({gen2.length})
                       </span>
                       <div className="flex-1 h-[1px] bg-[#C5A059]/20" />
@@ -332,7 +332,7 @@ export function FamilyTreeClient() {
                           <button
                             key={node.id}
                             onClick={() => setSelectedNode(node)}
-                            className={`p-3 border text-left transition-colors cursor-pointer relative ${
+                            className={`p-3 border text-left transition-all cursor-pointer relative rounded-xl ${
                               isSelected
                                 ? 'bg-[#C5A059] text-[#0C0A08] border-[#C5A059] font-bold shadow-lg ring-1 ring-[#C5A059]'
                                 : 'bg-[#14110E] text-[#F4EFE6] border-[#C5A059]/25 hover:border-[#C5A059] hover:bg-[#1A1612]'
@@ -361,7 +361,7 @@ export function FamilyTreeClient() {
                     <div className="absolute -left-6 sm:-left-8 top-3.5 w-6 sm:w-8 h-[2px] bg-[#C5A059]/40" />
 
                     <div className="flex items-center gap-3">
-                      <span className="text-[10px] font-mono uppercase tracking-widest text-[#0C0A08] bg-[#C5A059] px-2.5 py-0.5 font-bold">
+                      <span className="text-[10px] font-mono uppercase tracking-widest text-[#0C0A08] bg-[#C5A059] px-3 py-1 font-bold rounded-full shadow-xs">
                         GENERASI 03 • PAHLAWAN MUDA &amp; PENERUS ({gen3.length})
                       </span>
                       <div className="flex-1 h-[1px] bg-[#C5A059]/20" />
@@ -374,7 +374,7 @@ export function FamilyTreeClient() {
                           <button
                             key={node.id}
                             onClick={() => setSelectedNode(node)}
-                            className={`p-3.5 border text-left transition-colors cursor-pointer relative ${
+                            className={`p-3.5 border text-left transition-all cursor-pointer relative rounded-xl ${
                               isSelected
                                 ? 'bg-[#C5A059] text-[#0C0A08] border-[#C5A059] font-bold shadow-lg ring-1 ring-[#C5A059]'
                                 : 'bg-[#14110E] text-[#F4EFE6] border-[#C5A059]/25 hover:border-[#C5A059] hover:bg-[#1A1612]'
@@ -425,7 +425,7 @@ export function FamilyTreeClient() {
                   return (
                     <div
                       key={e.id}
-                      className="p-3 bg-[#14110E] border border-[#C5A059]/25 hover:border-[#C5A059] transition-colors flex flex-col justify-between space-y-2"
+                      className="p-3.5 bg-[#14110E] border border-[#C5A059]/25 hover:border-[#C5A059] rounded-xl transition-colors flex flex-col justify-between space-y-2"
                     >
                       <div className="flex items-center justify-between gap-2">
                         <div className="flex items-center gap-1.5 text-xs font-semibold text-[#F4EFE6]">
@@ -443,7 +443,7 @@ export function FamilyTreeClient() {
                             {toDisplayName}
                           </button>
                         </div>
-                        <span className="text-[10px] font-mono px-2 py-0.5 bg-[#0C0A08] text-[#C5A059] border border-[#C5A059]/40 uppercase">
+                        <span className="text-[10px] font-mono px-2.5 py-0.5 bg-[#0C0A08] text-[#C5A059] border border-[#C5A059]/40 rounded-full uppercase">
                           {e.type}
                         </span>
                       </div>
@@ -464,9 +464,9 @@ export function FamilyTreeClient() {
         {/* Selected Node Inspector Drawer (Archival Dossier) */}
         <div className="lg:col-span-4">
           {selectedNode ? (
-            <div className="bg-[#14110E] border border-[#C5A059]/35 p-6 space-y-6 shadow-2xl sticky top-24">
+            <div className="bg-[#14110E] border border-[#C5A059]/35 rounded-2xl p-6 space-y-6 shadow-2xl sticky top-24">
               <div className="flex items-center justify-between pb-3 border-b border-[#C5A059]/20 font-mono">
-                <span className="text-[10px] uppercase tracking-widest text-[#C5A059] bg-[#0C0A08] px-2.5 py-0.5 border border-[#C5A059]/30 font-bold">
+                <span className="text-[10px] uppercase tracking-widest text-[#C5A059] bg-[#0C0A08] px-3 py-1 border border-[#C5A059]/30 rounded-full font-bold">
                   [ ARSIP DOSSIER // {getCategoryName(selectedNode.category)} ]
                 </span>
                 <span className="text-xs text-[#A89F91]">
@@ -476,7 +476,7 @@ export function FamilyTreeClient() {
 
               {/* Character Header */}
               <div className="flex items-center gap-4">
-                <div className="relative w-16 h-24 aspect-[2/3] bg-[#0C0A08] overflow-hidden shrink-0 border border-[#C5A059]/50 shadow-md">
+                <div className="relative w-16 h-24 aspect-[2/3] bg-[#0C0A08] rounded-xl overflow-hidden shrink-0 border border-[#C5A059]/50 shadow-md">
                   <Image
                     src={getTarotImagePath(selectedNode.slug)}
                     alt={selectedNode.name}
@@ -536,7 +536,7 @@ export function FamilyTreeClient() {
                       return (
                         <div
                           key={rel.id}
-                          className="p-2.5 bg-[#0C0A08] border border-[#C5A059]/20 text-xs flex items-center justify-between gap-2"
+                          className="p-2.5 bg-[#0C0A08] border border-[#C5A059]/20 rounded-xl text-xs flex items-center justify-between gap-2"
                         >
                           <div>
                             <button
@@ -549,7 +549,7 @@ export function FamilyTreeClient() {
                               <p className="text-[10px] text-[#A89F91] mt-0.5">{rel.note}</p>
                             )}
                           </div>
-                          <span className="text-[10px] font-mono bg-[#14110E] text-[#C5A059] border border-[#C5A059]/30 px-2 py-0.5 uppercase shrink-0">
+                          <span className="text-[10px] font-mono bg-[#14110E] text-[#C5A059] border border-[#C5A059]/30 rounded-full px-2.5 py-0.5 uppercase shrink-0">
                             {rel.type}
                           </span>
                         </div>
@@ -563,7 +563,7 @@ export function FamilyTreeClient() {
               <div className="pt-4 border-t border-[#C5A059]/20">
                 <Link
                   href={`/wayangpedia/${selectedNode.slug}`}
-                  className="w-full py-3 px-4 bg-[#C5A059] hover:bg-[#D5B36E] text-[#0C0A08] text-xs font-mono font-bold uppercase tracking-wider transition-colors flex items-center justify-center gap-2 min-h-[44px]"
+                  className="w-full py-3 px-4 bg-[#C5A059] hover:bg-[#D5B36E] text-[#0C0A08] text-xs font-mono font-bold uppercase tracking-wider rounded-xl transition-all flex items-center justify-center gap-2 min-h-[44px]"
                 >
                   <span>Lihat Profil Lengkap</span>
                   <ArrowRight className="w-3.5 h-3.5" />
@@ -571,7 +571,7 @@ export function FamilyTreeClient() {
               </div>
             </div>
           ) : (
-            <div className="bg-[#14110E] border border-[#C5A059]/35 p-8 text-center space-y-2">
+            <div className="bg-[#14110E] border border-[#C5A059]/35 rounded-2xl p-8 text-center space-y-2">
               <Info className="w-8 h-8 text-[#C5A059] mx-auto opacity-75" />
               <p className="text-xs text-[#A89F91] font-mono">
                 Pilih salah satu karakter di bagan silsilah untuk melihat relasi dan profilnya.

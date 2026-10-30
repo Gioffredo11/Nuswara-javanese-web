@@ -58,7 +58,7 @@ export function ManifestationModal({ isOpen, onClose }: ManifestationModalProps)
 
       {/* Modal Dialog Card */}
       <div
-        className="relative w-full max-w-2xl max-h-[92vh] flex flex-col bg-[#14110E] border border-[#C5A059]/40 rounded-none shadow-[0_25px_80px_rgba(0,0,0,0.95)] overflow-hidden z-10 animate-in zoom-in-95 duration-200 my-auto"
+        className="relative w-full max-w-2xl max-h-[92vh] flex flex-col bg-[#14110E] border border-[#C5A059]/40 rounded-2xl shadow-[0_25px_80px_rgba(0,0,0,0.95)] overflow-hidden z-10 animate-in zoom-in-95 duration-200 my-auto"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Modal Header */}
@@ -76,7 +76,7 @@ export function ManifestationModal({ isOpen, onClose }: ManifestationModalProps)
           <button
             type="button"
             onClick={onClose}
-            className="p-1.5 rounded-none text-[#A89F91] hover:text-[#F4EFE6] bg-[#14110E] hover:bg-[#1C1610] border border-[#C5A059]/30 transition-colors cursor-pointer"
+            className="p-1.5 rounded-full text-[#A89F91] hover:text-[#F4EFE6] bg-[#14110E] hover:bg-[#1C1610] border border-[#C5A059]/30 transition-colors cursor-pointer"
             aria-label="Tutup Dialog Manifestasi"
           >
             <X className="w-4 h-4" />

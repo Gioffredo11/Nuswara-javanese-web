@@ -237,7 +237,7 @@ export function OracleTeaserCards({
             onClick={handleShuffleDeck}
             disabled={isShuffling}
             title="Kocok untuk memutar 3 arketipe wayang lainnya"
-            className="self-start sm:self-auto inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-mono font-medium text-[#C5A059] hover:text-[#0C0A08] bg-[#14110E] hover:bg-[#C5A059] border border-[#C5A059]/40 transition-colors cursor-pointer shrink-0"
+            className="self-start sm:self-auto inline-flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-mono font-medium text-[#C5A059] hover:text-[#0C0A08] bg-[#14110E] hover:bg-[#C5A059] border border-[#C5A059]/40 rounded-full transition-colors cursor-pointer shrink-0"
           >
             <Shuffle className={`w-3.5 h-3.5 transition-transform duration-500 ${isShuffling ? 'rotate-180' : ''}`} />
             <span>Kocok Kartu</span>
@@ -263,7 +263,7 @@ export function OracleTeaserCards({
             >
               {/* Card Container with 3D Flip & Spin */}
               <div
-                className={`relative w-full h-64 sm:h-80 transition-transform duration-700 card-preserve-3d ${
+                className={`relative w-full h-64 sm:h-80 transition-transform duration-700 card-preserve-3d rounded-2xl ${
                   isMatch ? '[transform:rotateY(180deg)] shadow-2xl ring-1 ring-[#C5A059]' : ''
                 }`}
                 style={{
@@ -285,7 +285,7 @@ export function OracleTeaserCards({
                     backfaceVisibility: 'hidden',
                     WebkitBackfaceVisibility: 'hidden',
                   }}
-                  className={`absolute inset-0 card-backface-hidden group bg-[#14110E] p-3 sm:p-4 border border-[#C5A059]/40 hover:border-[#C5A059] shadow-md transition-all duration-300 flex flex-col items-center justify-between overflow-hidden cursor-default ${
+                  className={`absolute inset-0 card-backface-hidden group bg-[#14110E] p-3 sm:p-4 border border-[#C5A059]/40 hover:border-[#C5A059] shadow-md rounded-2xl transition-all duration-300 flex flex-col items-center justify-between overflow-hidden cursor-default ${
                     isMatch ? 'opacity-0 pointer-events-none' : 'opacity-100'
                   }`}
                 >
@@ -296,13 +296,13 @@ export function OracleTeaserCards({
                   <div className="absolute bottom-2 right-2 w-2.5 h-2.5 border-b border-r border-[#C5A059]/50" />
 
                   {/* Top Indicator */}
-                  <div className="relative z-10 w-7 h-7 sm:w-8 sm:h-8 bg-[#0C0A08] border border-[#C5A059]/60 flex items-center justify-center font-mono text-xs font-bold text-[#C5A059]">
+                  <div className="relative z-10 w-7 h-7 sm:w-8 sm:h-8 bg-[#0C0A08] border border-[#C5A059]/60 rounded-full flex items-center justify-center font-mono text-xs font-bold text-[#C5A059]">
                     ?
                   </div>
 
                   {/* Authentic Wayang Tarot Card Preview */}
                   <div className="relative z-10 flex-1 w-full flex items-center justify-center my-2">
-                    <div className="relative w-24 sm:w-28 aspect-[2/3] overflow-hidden border border-[#C5A059]/40 shadow-xl bg-black transition-all duration-300 group-hover:scale-103 group-hover:border-[#C5A059]">
+                    <div className="relative w-24 sm:w-28 aspect-[2/3] overflow-hidden border border-[#C5A059]/40 rounded-xl shadow-xl bg-black transition-all duration-300 group-hover:scale-103 group-hover:border-[#C5A059]">
                       <Image
                         src={getTarotImagePath(item.slug)}
                         alt={item.characterName}
@@ -315,7 +315,7 @@ export function OracleTeaserCards({
                   </div>
 
                   {/* Card Label */}
-                  <div className="relative z-10 text-center pt-2 pb-1 border-t border-[#C5A059]/20 w-full space-y-0.5 bg-[#0C0A08]">
+                  <div className="relative z-10 text-center pt-2 pb-1.5 px-2 border-t border-[#C5A059]/20 w-full space-y-0.5 bg-[#0C0A08] rounded-xl">
                     <span className="text-xs sm:text-sm font-editorial font-bold text-[#F4EFE6] block truncate">
                       {item.mysteryTitle}
                     </span>
@@ -333,19 +333,19 @@ export function OracleTeaserCards({
                     transform: 'rotateY(180deg)',
                     WebkitTransform: 'rotateY(180deg)',
                   }}
-                  className={`absolute inset-0 card-backface-hidden bg-[#14110E] p-3 sm:p-4 border-2 border-[#C5A059] shadow-2xl flex flex-col items-center justify-between overflow-hidden transition-opacity duration-300 ${
+                  className={`absolute inset-0 card-backface-hidden bg-[#14110E] p-3 sm:p-4 border-2 border-[#C5A059] rounded-2xl shadow-2xl flex flex-col items-center justify-between overflow-hidden transition-opacity duration-300 ${
                     isMatch ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
                   }`}
                 >
                   <div className="relative z-10 w-full flex items-center justify-between text-[10px] font-mono font-bold uppercase tracking-wider text-[#C5A059]">
                     <span>COCOK!</span>
-                    <span className="bg-[#0C0A08] px-2 py-0.5 border border-[#C5A059]/50">
+                    <span className="bg-[#0C0A08] px-2.5 py-0.5 border border-[#C5A059]/50 rounded-full">
                       {item.isSecretReveal ? 'ARKETIPE TERKUAK' : 'RESONANSI TAKDIR'}
                     </span>
                   </div>
 
                   <div className="relative z-10 flex-1 w-full flex items-center justify-center my-2">
-                    <div className="relative w-28 sm:w-32 aspect-[2/3] overflow-hidden border border-[#C5A059] shadow-2xl bg-black">
+                    <div className="relative w-28 sm:w-32 aspect-[2/3] overflow-hidden border border-[#C5A059] rounded-xl shadow-2xl bg-black">
                       <Image
                         src={getTarotImagePath(item.slug)}
                         alt={item.characterName}
@@ -357,7 +357,7 @@ export function OracleTeaserCards({
                     </div>
                   </div>
 
-                  <div className="relative z-10 text-center w-full pt-1.5 pb-1 border-t border-[#C5A059]/40 bg-[#0C0A08]">
+                  <div className="relative z-10 text-center w-full pt-1.5 pb-1 px-2 border-t border-[#C5A059]/40 bg-[#0C0A08] rounded-xl">
                     <span className="text-xs sm:text-sm font-royal font-bold text-[#F4EFE6] block truncate">
                       {item.characterName}
                     </span>

@@ -125,7 +125,7 @@ export function DatePickerID({
             value={day}
             onChange={handleDayChange}
             aria-label="Pilih tanggal lahir"
-            className="w-full appearance-none bg-[#0C0A08] hover:bg-[#14110E] text-[#F4EFE6] text-xs font-mono px-3 py-3 pr-8 rounded-none border border-[#C5A059]/30 hover:border-[#C5A059] focus:border-[#C5A059] focus:outline-none transition-colors cursor-pointer"
+            className="w-full appearance-none bg-[#0C0A08] hover:bg-[#14110E] text-[#F4EFE6] text-xs font-mono px-3 py-3 pr-8 rounded-xl border border-[#C5A059]/30 hover:border-[#C5A059] focus:border-[#C5A059] focus:outline-none transition-colors cursor-pointer"
           >
             <option value="" disabled className="bg-[#0C0A08] text-[#A89F91]">
               Tanggal
@@ -154,7 +154,7 @@ export function DatePickerID({
             value={month}
             onChange={handleMonthChange}
             aria-label="Pilih bulan lahir"
-            className="w-full appearance-none bg-[#0C0A08] hover:bg-[#14110E] text-[#F4EFE6] text-xs font-mono px-3 py-3 pr-8 rounded-none border border-[#C5A059]/30 hover:border-[#C5A059] focus:border-[#C5A059] focus:outline-none transition-colors cursor-pointer truncate"
+            className="w-full appearance-none bg-[#0C0A08] hover:bg-[#14110E] text-[#F4EFE6] text-xs font-mono px-3 py-3 pr-8 rounded-xl border border-[#C5A059]/30 hover:border-[#C5A059] focus:border-[#C5A059] focus:outline-none transition-colors cursor-pointer truncate"
           >
             <option value="" disabled className="bg-[#0C0A08] text-[#A89F91]">
               Bulan
@@ -180,7 +180,7 @@ export function DatePickerID({
             value={year}
             onChange={handleYearChange}
             aria-label="Pilih tahun lahir"
-            className="w-full appearance-none bg-[#0C0A08] hover:bg-[#14110E] text-[#F4EFE6] text-xs font-mono px-3 py-3 pr-8 rounded-none border border-[#C5A059]/30 hover:border-[#C5A059] focus:border-[#C5A059] focus:outline-none transition-colors cursor-pointer"
+            className="w-full appearance-none bg-[#0C0A08] hover:bg-[#14110E] text-[#F4EFE6] text-xs font-mono px-3 py-3 pr-8 rounded-xl border border-[#C5A059]/30 hover:border-[#C5A059] focus:border-[#C5A059] focus:outline-none transition-colors cursor-pointer"
           >
             <option value="" disabled className="bg-[#0C0A08] text-[#A89F91]">
               Tahun

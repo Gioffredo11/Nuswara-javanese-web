@@ -57,12 +57,12 @@ export function ResultCard({
   return (
     <div className="w-full max-w-xl mx-auto space-y-6 animate-in fade-in zoom-in-95 duration-500">
       {/* 2:3 ASPECT RATIO JAVANESE TAROT CARD */}
-      <div className="relative aspect-[2/3] w-full max-w-[330px] sm:max-w-[390px] mx-auto bg-[#14110E] p-3 sm:p-4 shadow-2xl border border-[#C5A059]/60 flex flex-col justify-between overflow-hidden select-none">
+      <div className="relative aspect-[2/3] w-full max-w-[330px] sm:max-w-[390px] mx-auto bg-[#14110E] p-3 sm:p-4 shadow-2xl border border-[#C5A059]/60 flex flex-col justify-between overflow-hidden select-none rounded-2xl">
         {/* Ambient Candlelight Radial Aura behind character */}
         <div className="absolute inset-0 bg-radial from-[#C5A059]/15 via-transparent to-transparent pointer-events-none" />
 
         {/* Inner Gold Frame Border */}
-        <div className="relative z-10 w-full h-full border border-[#C5A059]/30 p-4 sm:p-5 flex flex-col justify-between overflow-hidden bg-[#0C0A08]">
+        <div className="relative z-10 w-full h-full border border-[#C5A059]/30 p-4 sm:p-5 flex flex-col justify-between overflow-hidden bg-[#0C0A08] rounded-xl">
           {/* Corner Reticle Flourishes */}
           <div className="absolute top-2 left-2 w-3 h-3 border-t border-l border-[#C5A059]" />
           <div className="absolute top-2 right-2 w-3 h-3 border-t border-r border-[#C5A059]" />
@@ -100,7 +100,7 @@ export function ResultCard({
             </div>
 
             {/* Weton & Neptu Ribbon */}
-            <div className="inline-flex items-center gap-2 bg-[#14110E] border border-[#C5A059]/40 px-3 py-1 font-mono text-xs">
+            <div className="inline-flex items-center gap-2 bg-[#14110E] border border-[#C5A059]/40 px-3.5 py-1 font-mono text-xs rounded-full">
               <span className="font-bold text-[#F4EFE6]">
                 {result.wetonName || `${result.hari} ${result.pasaran}`}
               </span>
@@ -126,7 +126,7 @@ export function ResultCard({
             type="button"
             onClick={onDownload}
             disabled={downloading}
-            className="py-3.5 px-3 bg-[#C5A059] hover:bg-[#D5B36E] disabled:opacity-60 text-[#0C0A08] font-bold text-xs uppercase font-mono tracking-wider shadow-lg flex items-center justify-center gap-2 transition-colors cursor-pointer"
+            className="py-3.5 px-3 bg-[#C5A059] hover:bg-[#D5B36E] disabled:opacity-60 text-[#0C0A08] font-bold text-xs uppercase font-mono tracking-wider shadow-lg flex items-center justify-center gap-2 transition-all rounded-xl cursor-pointer"
           >
             {downloading ? (
               <>
@@ -145,7 +145,7 @@ export function ResultCard({
           <button
             type="button"
             onClick={onShare}
-            className="py-3.5 px-3 bg-[#14110E] hover:bg-[#1C1610] text-[#C5A059] hover:text-[#F4EFE6] font-mono text-xs uppercase tracking-wider border border-[#C5A059]/40 flex items-center justify-center gap-2 transition-colors cursor-pointer"
+            className="py-3.5 px-3 bg-[#14110E] hover:bg-[#1C1610] text-[#C5A059] hover:text-[#F4EFE6] font-mono text-xs uppercase tracking-wider border border-[#C5A059]/40 rounded-xl flex items-center justify-center gap-2 transition-colors cursor-pointer"
           >
             {copied ? (
               <>
@@ -167,7 +167,7 @@ export function ResultCard({
             )}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="py-3.5 px-3 bg-[#0C0A08] hover:bg-[#14110E] text-emerald-400 font-mono text-xs uppercase tracking-wider border border-emerald-500/40 flex items-center justify-center gap-1.5 transition-colors"
+            className="py-3.5 px-3 bg-[#0C0A08] hover:bg-[#14110E] text-emerald-400 font-mono text-xs uppercase tracking-wider border border-emerald-500/40 rounded-xl flex items-center justify-center gap-1.5 transition-colors"
             aria-label="Bagikan hasil ke WhatsApp"
           >
             <span>WhatsApp ↗</span>
@@ -187,7 +187,7 @@ export function ResultCard({
           <button
             type="button"
             onClick={onReset}
-            className="inline-flex items-center gap-1.5 text-[#A89F91] hover:text-[#F4EFE6] transition-colors cursor-pointer py-1.5 px-3 bg-[#14110E] hover:bg-[#1C1610] border border-[#C5A059]/30"
+            className="inline-flex items-center gap-1.5 text-[#A89F91] hover:text-[#F4EFE6] transition-colors cursor-pointer py-1.5 px-3.5 bg-[#14110E] hover:bg-[#1C1610] border border-[#C5A059]/30 rounded-xl"
           >
             <RefreshCw className="w-3.5 h-3.5 text-[#C5A059]" />
             <span>Hitung untuk Nama Lain</span>

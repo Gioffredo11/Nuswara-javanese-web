@@ -52,7 +52,7 @@ export function OracleForm({
   onRandomize,
 }: OracleFormProps) {
   return (
-    <div className="relative w-full bg-[#14110E] border border-[#C5A059]/35 p-6 sm:p-8 shadow-2xl">
+    <div className="relative w-full bg-[#14110E] border border-[#C5A059]/35 p-6 sm:p-8 shadow-2xl rounded-2xl">
       {/* 4 Corner Ornaments */}
       <div className="absolute top-2 left-2">
         <CornerOrnament position="top-left" />
@@ -88,7 +88,7 @@ export function OracleForm({
               onClick={onRandomize}
               disabled={loading}
               title="Isi acak nama dan tanggal lahir"
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-mono font-medium text-[#C5A059] hover:text-[#0C0A08] bg-[#0C0A08] hover:bg-[#C5A059] border border-[#C5A059]/40 transition-colors cursor-pointer shrink-0"
+              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-mono font-medium text-[#C5A059] hover:text-[#0C0A08] bg-[#0C0A08] hover:bg-[#C5A059] border border-[#C5A059]/40 rounded-full transition-colors cursor-pointer shrink-0"
             >
               <Dices className="w-3.5 h-3.5" />
               <span>Acak Tanggal</span>
@@ -97,13 +97,13 @@ export function OracleForm({
         </div>
 
         {/* Quick Historical Figure Presets */}
-        <div className="p-3 bg-[#0C0A08] border border-[#C5A059]/20 space-y-2">
+        <div className="p-4 bg-[#0C0A08] border border-[#C5A059]/20 rounded-xl space-y-2.5">
           <div className="flex items-center justify-between text-[11px] font-mono text-[#A89F91] font-medium">
             <span className="text-[#C5A059] font-bold uppercase tracking-wider">
               Coba Weton Tokoh Bangsa:
             </span>
           </div>
-          <div className="flex flex-wrap gap-1.5">
+          <div className="flex flex-wrap gap-2">
             {[
               { name: 'R.A. Kartini', date: '1879-04-21', label: 'R.A. Kartini (21 Apr 1879)' },
               { name: 'Ir. Soekarno', date: '1901-06-06', label: 'Soekarno (6 Jun 1901)' },
@@ -117,7 +117,7 @@ export function OracleForm({
                   onNameChange(tokoh.name);
                   onBirthDateChange(tokoh.date);
                 }}
-                className="px-2.5 py-1 bg-[#14110E] hover:bg-[#C5A059] border border-[#C5A059]/30 hover:border-[#C5A059] text-[#A89F91] hover:text-[#0C0A08] text-[11px] font-mono transition-colors cursor-pointer"
+                className="px-3 py-1.5 bg-[#14110E] hover:bg-[#C5A059] border border-[#C5A059]/30 hover:border-[#C5A059] text-[#A89F91] hover:text-[#0C0A08] text-[11px] font-mono rounded-full transition-all cursor-pointer shadow-xs"
               >
                 {tokoh.label}
               </button>
@@ -145,7 +145,7 @@ export function OracleForm({
                 value={name}
                 onChange={(e) => onNameChange(e.target.value)}
                 placeholder="Contoh: Raden Dananjaya..."
-                className="w-full pl-10 pr-4 py-3 bg-[#0C0A08] border border-[#C5A059]/30 focus:border-[#C5A059] text-xs font-mono text-[#F4EFE6] placeholder-[#A89F91]/50 focus:outline-none transition-colors"
+                className="w-full pl-10 pr-4 py-3 bg-[#0C0A08] border border-[#C5A059]/30 focus:border-[#C5A059] rounded-xl text-xs font-mono text-[#F4EFE6] placeholder-[#A89F91]/50 focus:outline-none transition-colors"
               />
             </div>
           </div>
@@ -171,7 +171,7 @@ export function OracleForm({
           {error && (
             <div
               role="alert"
-              className="p-3 bg-red-950/60 border border-red-500/50 text-xs text-red-200 font-mono animate-in fade-in duration-200 flex items-start gap-2"
+              className="p-3 bg-red-950/60 border border-red-500/50 rounded-xl text-xs text-red-200 font-mono animate-in fade-in duration-200 flex items-start gap-2"
             >
               <span className="text-red-400 font-bold shrink-0">⚠</span>
               <span>{error}</span>
@@ -182,7 +182,7 @@ export function OracleForm({
           <button
             type="submit"
             disabled={loading}
-            className="w-full py-4 px-6 bg-[#C5A059] hover:bg-[#D5B36E] disabled:opacity-50 text-[#0C0A08] font-bold text-xs uppercase font-mono tracking-widest transition-colors shadow-lg flex items-center justify-center gap-2 cursor-pointer border border-[#8C6D32]"
+            className="w-full py-4 px-6 bg-[#C5A059] hover:bg-[#D5B36E] disabled:opacity-50 text-[#0C0A08] font-bold text-xs uppercase font-mono tracking-widest rounded-xl transition-all shadow-lg flex items-center justify-center gap-2 cursor-pointer border border-[#8C6D32]"
           >
             {loading ? (
               <>
