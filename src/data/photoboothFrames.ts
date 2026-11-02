@@ -76,7 +76,7 @@ export const CULTURAL_FRAMES: PhotoboothCulturalFrame[] = [
     philosophy: 'Ombak samudra tanpa jeda melambangkan semangat pantang menyerah, ketajaman akal budi, dan kemuliaan martabat ksatria.',
     description: 'Motif lereng miring pedang kencana dengan selingan aksen emas sogan keraton, memberikan kesan agung dan berwibawa.',
     pinterestSearchUrl: 'https://www.pinterest.com/search/pins/?q=batik%20parang%20kencana%20pattern%20border%20gold',
-    directImageUrl: 'https://i.pinimg.com/736x/8f/3e/2a/8f3e2a09c2a39d891b5c00e12f9a76d8.jpg',
+    directImageUrl: '/images/batik-parang.png',
     palette: {
       background: '#19110B',
       cardBg: '#231811',
@@ -101,7 +101,7 @@ export const CULTURAL_FRAMES: PhotoboothCulturalFrame[] = [
     philosophy: 'Empat kelopak buah kolang-kaling bersilang melambangkan Sedulur Papat Lima Pancer, kesucian hati, keadilan seimbang, dan pengendalian hawa nafsu.',
     description: 'Pola geometris elips empat penjuru berpadu sogan lembut dan krim pusaka, menciptakan bingkai anggun berkarakter bersahaja.',
     pinterestSearchUrl: 'https://www.pinterest.com/search/pins/?q=batik%20kawung%20sari%20border%20vector',
-    directImageUrl: 'https://i.pinimg.com/736x/d4/82/1f/d4821ff3c43aa5c709e99a8448ec8933.jpg',
+    directImageUrl: '/images/patterns/kawung-sari.svg',
     palette: {
       background: '#F9F4EB',
       cardBg: '#FFFFFF',
@@ -126,7 +126,7 @@ export const CULTURAL_FRAMES: PhotoboothCulturalFrame[] = [
     philosophy: 'Taburan kuntum melati bintang di langit malam, perlambang cinta tulus yang terus bersemi (tumaruntum), kesetiaan abadi, dan penuntun sanubari.',
     description: 'Bintang keemasan delapan penjuru di atas latar hitam obsidian kelam, memberikan aura magis, romantis, dan penuh ketenangan.',
     pinterestSearchUrl: 'https://www.pinterest.com/search/pins/?q=batik%20truntum%20pattern%20gold%20border',
-    directImageUrl: 'https://i.pinimg.com/736x/5c/d2/94/5cd294a86b36cf46fa825bfa1fa6e9f1.jpg',
+    directImageUrl: '/images/patterns/truntum-kencana.svg',
     palette: {
       background: '#0D0C0A',
       cardBg: '#161411',
@@ -151,7 +151,7 @@ export const CULTURAL_FRAMES: PhotoboothCulturalFrame[] = [
     philosophy: 'Pintu gerbang gebyok jati bermahkota lung krawangan melambangkan pintu kebaikan, perlindungan keluarga, dan kemahiran karya cipta luhur.',
     description: 'Mahkota gapura gebyok berukir daun paku ulir dan tiang pilaster jati berpelitur cokelat tembaga mewah dengan lis prada emas.',
     pinterestSearchUrl: 'https://www.pinterest.com/search/pins/?q=gebyok%20jepara%20carved%20wood%20frame%20border',
-    directImageUrl: 'https://i.pinimg.com/736x/3a/04/b8/3a04b868e8154564ee1df843ffecb691.jpg',
+    directImageUrl: '/frames/frame-ukiran-jepara.png',
     palette: {
       background: '#24140B',
       cardBg: '#1B0E07',
@@ -176,7 +176,7 @@ export const CULTURAL_FRAMES: PhotoboothCulturalFrame[] = [
     philosophy: 'Sulur dedaunan tumbuhan menjalar berkesinambungan tanpa putus melambangkan keluwesan hidup, rezeki terus bertunas, dan tali persaudaraan lestari.',
     description: 'Pilinan sulur tanaman liar, kuncup bunga teratai, dan spiral daun pakis bersaput emas di atas hijau zamrud malam yang teduh nan sakral.',
     pinterestSearchUrl: 'https://www.pinterest.com/search/pins/?q=javanese%20lung%20lungan%20ornament%20floral%20border',
-    directImageUrl: 'https://i.pinimg.com/736x/89/68/73/8968731ff26194ca243a42eb665b6dc1.jpg',
+    directImageUrl: '/images/patterns/lung-lungan.svg',
     palette: {
       background: '#0E1712',
       cardBg: '#132119',
@@ -201,7 +201,7 @@ export const CULTURAL_FRAMES: PhotoboothCulturalFrame[] = [
     philosophy: 'Puncak Gunungan memuat Pohon Hayat Kalpataru dan gerbang suci, lambang alam semesta beserta isinya, doa keselamatan, serta awal dan akhir perjalanan manusia.',
     description: 'Siluet puncak Gunungan Kayon adiluhung bermahkota sulur lidah api pelindung jagad, berlatar arang obsidian dengan aksen prada kencana.',
     pinterestSearchUrl: 'https://www.pinterest.com/search/pins/?q=gunungan%20wayang%20pattern%20border%20strip',
-    directImageUrl: 'https://i.pinimg.com/736x/8e/3c/ef/8e3cefe5621379bb5098ffb4e9f3958c.jpg',
+    directImageUrl: '/images/patterns/gunungan-agung.svg',
     palette: {
       background: '#0B0908',
       cardBg: '#151210',
@@ -226,7 +226,7 @@ export const CULTURAL_FRAMES: PhotoboothCulturalFrame[] = [
     philosophy: 'Sido Mukti bermakna terus-menerus hidup berkecukupan dan bahagia lahir batin. Ornamen garuda, singgasana, dan bangunan melambangkan perlindungan dan kemuliaan.',
     description: 'Jalinan geometris belah ketupat wajik dengan ornamen gurda bersayap emas di atas warna cokelat sogan hangat khas upacara agung keraton.',
     pinterestSearchUrl: 'https://www.pinterest.com/search/pins/?q=batik%20sidomukti%20pattern%20traditional%20border',
-    directImageUrl: 'https://i.pinimg.com/736x/8d/8a/16/8d8a16db3332fc76406e6bf471efc562.jpg',
+    directImageUrl: '/images/patterns/sido-mukti.svg',
     palette: {
       background: '#26160F',
       cardBg: '#1B0E09',
@@ -251,7 +251,7 @@ export const CULTURAL_FRAMES: PhotoboothCulturalFrame[] = [
     philosophy: 'Awan pembawa hujan penyejuk jagad, perlambang kesabaran mendalam, kejernihan pikiran, dan ketenangan hati saat menghadapi prahara hidup.',
     description: 'Stilisasi awan meliuk berlapis bergradasi biru safir, indigo malam, dan kontur prada emas, menghadirkan aura anggun nan menyejukkan.',
     pinterestSearchUrl: 'https://www.pinterest.com/search/pins/?q=batik%20mega%20mendung%20pattern%20border%20vector',
-    directImageUrl: 'https://i.pinimg.com/736x/87/42/1d/87421d0ea62391b1fa15c1e550d53459.jpg',
+    directImageUrl: '/images/patterns/mega-mendung.svg',
     palette: {
       background: '#091326',
       cardBg: '#0F1E38',
@@ -276,7 +276,7 @@ export const CULTURAL_FRAMES: PhotoboothCulturalFrame[] = [
     philosophy: 'Karang Jagad bermakna peta bunga semesta. Melambangkan keindahan keberagaman suku, budaya, dan alam nusantara yang bersatu dalam satu kesatuan luhur.',
     description: 'Mozaik kompartemen pulau bunga dengan isen-isen ceplok, parang alit, dan sawat keemasan berlatar sogan hangat yang memesona.',
     pinterestSearchUrl: 'https://www.pinterest.com/search/pins/?q=batik%20sekar%20jagad%20pattern%20border',
-    directImageUrl: 'https://i.pinimg.com/736x/3c/ee/12/3cee12ea99a6cf5435e00ee5e2c5e533.jpg',
+    directImageUrl: '/images/patterns/sekar-jagad.svg',
     palette: {
       background: '#20130C',
       cardBg: '#2C1B12',
@@ -301,7 +301,7 @@ export const CULTURAL_FRAMES: PhotoboothCulturalFrame[] = [
     philosophy: 'Semen bermakna semi (tumbuh bersemi). Mengandung ajaran Hastha Brata (delapan watak keutamaan pemimpin: surya, candra, kartika, angkasa, bayu, samudra, geni, dan bumi).',
     description: 'Ornamen triloka suci berupa sayap garuda perkasa, gunung meru keemasan, dan sulur tumbuhan bertunas yang melambangkan kemakmuran kepemimpinan sejati.',
     pinterestSearchUrl: 'https://www.pinterest.com/search/pins/?q=batik%20semen%20rama%20hastha%20brata',
-    directImageUrl: 'https://i.pinimg.com/736x/21/df/b8/21dfb8772a514d4851213f5727196cb9.jpg',
+    directImageUrl: '/images/patterns/semen-rama.svg',
     palette: {
       background: '#16110C',
       cardBg: '#201811',
@@ -326,7 +326,7 @@ export const CULTURAL_FRAMES: PhotoboothCulturalFrame[] = [
     philosophy: 'Matahari bersudut delapan Dewata Nawasanga melambangkan keteraturan kosmik mandala, martabat kedaulatan ksatria, dan cahaya pencerahan nusantara yang tak pernah padam.',
     description: 'Mahkota lambang Surya Majapahit dengan delapan sinar dewata, ornamen sulur terakota candi, dan aksen emas prada kejayaan nusantara purba.',
     pinterestSearchUrl: 'https://www.pinterest.com/search/pins/?q=surya%20majapahit%20ornament%20vector%20gold',
-    directImageUrl: 'https://i.pinimg.com/736x/8b/63/05/8b63056efecfe14e6bca956973c79659.jpg',
+    directImageUrl: '/images/patterns/surya-majapahit.svg',
     palette: {
       background: '#220B0A',
       cardBg: '#2E100F',
@@ -351,7 +351,7 @@ export const CULTURAL_FRAMES: PhotoboothCulturalFrame[] = [
     philosophy: 'Alas bermakna rimba raya. Mengajarkan manusia untuk selalu mawas diri (introspeksi), menghormati peran setiap makhluk, dan menjaga harmoni sakral semesta.',
     description: 'Siluet anggun satwa rimba keraton (kidang kencana, burung merak, dan ayam alas) bersanding sulur dedaunan hutan bertabur rintik emas.',
     pinterestSearchUrl: 'https://www.pinterest.com/search/pins/?q=batik%20alas%20alasan%20pattern%20border',
-    directImageUrl: 'https://i.pinimg.com/736x/55/9d/b1/559db14d80a13ee44e3d366a5e1cfd8c.jpg',
+    directImageUrl: '/images/patterns/alas-alasan.svg',
     palette: {
       background: '#0D1611',
       cardBg: '#132119',

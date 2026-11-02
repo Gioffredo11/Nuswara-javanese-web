@@ -666,25 +666,33 @@ export function PhotoboothClient({ autoStart = false }: { autoStart?: boolean } 
                   <button
                     key={f.id}
                     onClick={() => setActiveFrame(f.id)}
-                    className={`p-2.5 border text-left text-xs transition-all relative flex flex-col justify-between cursor-pointer rounded-xl ${
+                    className={`p-2 border text-left text-xs transition-all relative flex flex-col justify-between cursor-pointer rounded-xl ${
                       isSelected
                         ? 'border-[#C5A059] bg-[#221A12] text-[#F4EFE6] ring-1 ring-[#C5A059] shadow-md'
                         : 'border-[#C5A059]/20 bg-[#0C0A08] text-[#A89F91] hover:border-[#C5A059]/40 hover:text-[#F4EFE6]'
                     }`}
                   >
-                    <div className="flex items-center gap-1 mb-1.5">
-                      <span
-                        style={{ backgroundColor: f.palette.background }}
-                        className="w-3 h-3 rounded-full border border-[#C5A059]/40 shadow-xs"
-                      />
-                      <span
-                        style={{ backgroundColor: f.palette.borderOuter }}
-                        className="w-2.5 h-2.5 rounded-full border border-[#C5A059]/40 shadow-xs"
-                      />
-                      <span
-                        style={{ backgroundColor: f.palette.accentGold }}
-                        className="w-2 h-2 rounded-full border border-[#C5A059]/40 shadow-xs"
-                      />
+                    {/* Visual Motif Asset Pattern Swatch */}
+                    <div
+                      className="w-full h-8 rounded-lg mb-1.5 border border-[#C5A059]/30 overflow-hidden relative"
+                      style={{
+                        backgroundColor: f.palette.background,
+                        backgroundImage: `url("/images/patterns/${f.id}.svg")`,
+                        backgroundRepeat: 'repeat',
+                        backgroundSize: '24px 24px',
+                      }}
+                    >
+                      <div className="absolute inset-0 bg-gradient-to-r from-black/50 via-transparent to-black/50" />
+                      <div className="absolute bottom-1 right-1.5 flex items-center gap-1">
+                        <span
+                          style={{ backgroundColor: f.palette.borderOuter }}
+                          className="w-2 h-2 rounded-full border border-black/40"
+                        />
+                        <span
+                          style={{ backgroundColor: f.palette.accentGold }}
+                          className="w-2 h-2 rounded-full border border-black/40"
+                        />
+                      </div>
                     </div>
                     <div>
                       <span className="font-bold block text-[11px] leading-tight text-[#F4EFE6]">
@@ -723,6 +731,37 @@ export function PhotoboothClient({ autoStart = false }: { autoStart?: boolean } 
                   <ExternalLink className="w-2.5 h-2.5" />
                 </a>
               </div>
+
+              {/* Visual Pattern & Asset Preview Banner */}
+              <div
+                className="w-full h-12 rounded-lg border border-[#C5A059]/30 relative overflow-hidden flex items-center justify-between px-3"
+                style={{
+                  backgroundColor: currentFrame.palette.background,
+                  backgroundImage: `url("/images/patterns/${currentFrame.id}.svg")`,
+                  backgroundRepeat: 'repeat',
+                  backgroundSize: '30px 30px',
+                }}
+              >
+                <div className="absolute inset-0 bg-gradient-to-r from-black/75 via-black/35 to-black/75 pointer-events-none" />
+                <span className="relative z-10 text-[9px] font-mono uppercase tracking-widest text-[#ECC47E] font-bold">
+                  ✦ CORAK RESMI NUSWARA ✦
+                </span>
+                {currentFrame.id === 'ukiran-gebyok' && (
+                  <img
+                    src="/frames/frame-ukiran-jepara.png"
+                    alt="Ukir Jepara"
+                    className="relative z-10 h-9 w-auto object-contain opacity-95 drop-shadow-md"
+                  />
+                )}
+                {currentFrame.id === 'parang-kencana' && (
+                  <img
+                    src="/images/batik-parang.png"
+                    alt="Batik Parang"
+                    className="relative z-10 h-9 w-auto object-contain opacity-95 drop-shadow-md"
+                  />
+                )}
+              </div>
+
               <p className="text-[10px] text-[#A89F91] leading-relaxed font-sans line-clamp-2">
                 {currentFrame.description}
               </p>

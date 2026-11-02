@@ -55,9 +55,9 @@ export function PhotoboothStripPreview({
     >
       {/* Background SVG Motif Watermark */}
       <div
-        className="absolute inset-0 pointer-events-none opacity-20"
+        className="absolute inset-0 pointer-events-none opacity-25"
         style={{
-          backgroundImage: `url("${frame.svgPatternUrl}")`,
+          backgroundImage: `url("/images/patterns/${frame.id}.svg")`,
           backgroundRepeat: 'repeat',
         }}
       />
