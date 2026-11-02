@@ -16,6 +16,7 @@ import {
   GitFork,
   Check,
   Share2,
+  Sparkles,
 } from 'lucide-react';
 
 // Embed all major sections into unified experience
@@ -499,15 +500,17 @@ export function HomePage({ defaultSection }: HomePageProps = {}) {
               <div className="flex flex-wrap items-center gap-3 pt-2">
                 <button
                   type="button"
-                  onClick={() => {
+                  onClick={(e) => {
+                    onRipple(e);
                     if (typeof window !== 'undefined') {
                       window.dispatchEvent(new CustomEvent('open-manifestation-modal'));
                     }
                   }}
-                  className="px-6 py-3.5 bg-[#C5A059] hover:bg-[#D5B36E] text-[#0C0A08] font-bold text-xs uppercase font-mono tracking-wider rounded-xl transition-all shadow-md flex items-center gap-2 cursor-pointer"
+                  className="group relative px-6 py-3.5 bg-gradient-to-r from-[#C5A059] via-[#E2C37E] to-[#C5A059] hover:from-[#D5B36E] hover:to-[#E0BF78] text-[#0C0A08] font-bold text-xs uppercase font-mono tracking-wider rounded-xl transition-all shadow-[0_4px_20px_rgba(197,160,89,0.3)] hover:shadow-[0_0_30px_rgba(197,160,89,0.55)] hover:scale-[1.02] active:scale-95 flex items-center gap-2.5 cursor-pointer overflow-hidden"
                 >
-                  <span className="text-[#0C0A08]">❖</span>
+                  <Sparkles className="w-4 h-4 text-[#0C0A08] animate-pulse" />
                   <span>Tarik Kartu Manifestasi Hari Ini</span>
+                  <ArrowRight className="w-3.5 h-3.5 text-[#0C0A08]/80 group-hover:translate-x-1 transition-transform" />
                 </button>
                 <button
                   type="button"
