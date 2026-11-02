@@ -665,7 +665,7 @@ export function PhotoboothClient({ autoStart = false }: { autoStart?: boolean } 
               <span className="text-[10px] font-mono uppercase tracking-wider text-[#A89F91] font-bold block">
                 KATEGORI CORAK JAWA:
               </span>
-              <div className="flex items-center gap-1.5 overflow-x-auto pb-1">
+              <div className="flex items-center gap-1.5 overflow-x-auto pb-1 px-1">
                 {CATEGORY_TABS.map((tab) => {
                   const isActive = selectedCategory === tab.id;
                   return (
@@ -699,46 +699,39 @@ export function PhotoboothClient({ autoStart = false }: { autoStart?: boolean } 
                         : 'border-[#C5A059]/20 bg-[#0E0B09] text-[#A89F91] hover:border-[#C5A059]/45 hover:bg-[#15110E]'
                     }`}
                   >
-                    {/* Visual Motif Asset Pattern Swatch Banner */}
-                    <div
-                      className="w-full h-11 rounded-lg mb-2 border overflow-hidden relative flex items-center justify-between px-2"
-                      style={{
-                        backgroundColor: f.palette.background,
-                        borderColor: isSelected ? f.palette.accentGold : 'rgba(197, 160, 89, 0.25)',
-                        backgroundImage: `url("/images/patterns/${f.id}.svg")`,
-                        backgroundRepeat: 'repeat',
-                        backgroundSize: '26px 26px',
-                      }}
-                    >
-                      {/* Subtle Vignette Gradient for Depth */}
-                      <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/25 to-black/60 pointer-events-none" />
-
-                      {/* Cultural Origin Micro Badge */}
-                      <span
-                        className="relative z-10 text-[8.5px] font-mono tracking-widest uppercase px-1.5 py-0.5 rounded backdrop-blur-xs font-semibold"
-                        style={{
-                          backgroundColor: 'rgba(12, 10, 8, 0.75)',
-                          color: f.palette.accentGold,
-                          border: '1px solid rgba(197, 160, 89, 0.3)',
-                        }}
-                      >
+                    {/* Header: Cultural Origin Tag & Selection / Catalog Number */}
+                    <div className="flex items-center justify-between mb-1.5 px-0.5">
+                      <span className="text-[9px] font-mono tracking-wider uppercase text-[#C5A059] font-bold truncate pr-1">
                         {FRAME_ORIGIN_SHORT[f.id] || 'NUSANTARA'}
                       </span>
-
-                      {/* Selection Pill Status / Catalog Index */}
                       {isSelected ? (
-                        <span className="relative z-10 px-1.5 py-0.5 bg-[#C5A059] text-[#0C0A08] text-[8.5px] font-mono font-bold tracking-wider rounded flex items-center gap-0.5 shadow-xs">
-                          <span>❖</span> TERPILIH
+                        <span className="px-1.5 py-0.5 bg-[#C5A059] text-[#0C0A08] text-[8.5px] font-mono font-bold tracking-wider rounded flex items-center gap-0.5 shadow-xs shrink-0">
+                          <span>❖</span> AKTIF
                         </span>
                       ) : (
-                        <span className="relative z-10 text-[8.5px] font-mono text-[#D1B48C]/80 bg-black/60 backdrop-blur-xs px-1.5 py-0.5 rounded border border-white/10">
+                        <span className="text-[8.5px] font-mono text-[#A89F91] shrink-0">
                           #{String(idx + 1).padStart(2, '0')}
                         </span>
                       )}
                     </div>
 
+                    {/* Visual Motif Asset Pattern Swatch Banner */}
+                    <div
+                      className="w-full h-11 rounded-lg mb-2 border overflow-hidden relative shadow-inner"
+                      style={{
+                        backgroundColor: f.palette.background,
+                        borderColor: isSelected ? f.palette.accentGold : 'rgba(197, 160, 89, 0.25)',
+                        backgroundImage: `url("/images/patterns/${f.id}.svg")`,
+                        backgroundRepeat: 'repeat',
+                        backgroundSize: '24px 24px',
+                      }}
+                    >
+                      {/* Subtle Vignette Gradient for Depth */}
+                      <div className="absolute inset-0 bg-gradient-to-r from-black/35 via-transparent to-black/35 pointer-events-none" />
+                    </div>
+
                     {/* Frame Typography & Heritage Class */}
-                    <div className="space-y-0.5">
+                    <div className="space-y-0.5 px-0.5">
                       <span className="font-bold block text-[11.5px] leading-tight text-[#F4EFE6] group-hover:text-[#ECC47E] transition-colors font-serif">
                         {f.name}
                       </span>

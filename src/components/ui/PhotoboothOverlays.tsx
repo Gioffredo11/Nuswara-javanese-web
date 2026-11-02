@@ -12,15 +12,24 @@ export function JavaneseViewfinderOverlay({ frameId }: { frameId: FrameId }) {
 
   return (
     <div className="absolute inset-0 pointer-events-none z-20 flex flex-col justify-between p-3 sm:p-5 select-none overflow-hidden">
-      {/* Authentic Visual Frame Overlay: Jepara Woodcarving Asset */}
+      {/* Authentic Visual Frame Overlay: Jepara Woodcarving Top Crown & Bottom Pedestal */}
       {frame.id === 'ukiran-gebyok' && (
-        <div className="absolute inset-0 pointer-events-none z-10 flex items-center justify-center p-1 sm:p-2">
-          <img
-            src="/frames/frame-ukiran-jepara.png"
-            alt="Bingkai Ukiran Jepara"
-            className="w-full h-full object-contain pointer-events-none drop-shadow-2xl select-none opacity-90 animate-in fade-in duration-300"
-          />
-        </div>
+        <>
+          <div className="absolute top-1 left-1/2 -translate-x-1/2 z-15 pointer-events-none w-52 sm:w-64 max-w-[70%]">
+            <img
+              src="/frames/ukiran-jepara-top.png"
+              alt="Mahkota Ukiran Gebyok Jepara"
+              className="w-full h-auto object-contain drop-shadow-2xl select-none opacity-95 animate-in fade-in duration-300 pointer-events-none"
+            />
+          </div>
+          <div className="absolute bottom-1 left-1/2 -translate-x-1/2 z-15 pointer-events-none w-48 sm:w-56 max-w-[65%]">
+            <img
+              src="/frames/ukiran-jepara-bottom.png"
+              alt="Umpak Ukiran Gebyok Jepara"
+              className="w-full h-auto object-contain drop-shadow-2xl select-none opacity-95 animate-in fade-in duration-300 pointer-events-none"
+            />
+          </div>
+        </>
       )}
 
       {/* Authentic Visual Frame Overlay: Parang Kencana Batik Border */}
