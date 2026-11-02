@@ -24,8 +24,23 @@ import { renderPhotoboothStripCanvas } from '@/components/ui/PhotoboothCanvasRen
 import { PhotoboothStripPreview } from '@/components/ui/PhotoboothStripPreview';
 import { JavaneseViewfinderOverlay } from '@/components/ui/PhotoboothOverlays';
 
-type FilterType = 'warm' | 'monochrome' | 'cyberpunk';
+type FilterType = 'warm' | 'sepia' | 'monochrome';
 type FrameType = FrameId;
+
+const FRAME_ORIGIN_SHORT: Record<FrameId, string> = {
+  'parang-kencana': 'SURAKARTA',
+  'kawung-sari': 'MATARAM',
+  'truntum-kencana': 'SOLO',
+  'ukiran-gebyok': 'JEPARA',
+  'lung-lungan': 'KLASIK JAWA',
+  'gunungan-agung': 'WAYANG',
+  'sido-mukti': 'SURAKARTA',
+  'mega-mendung': 'CIREBON',
+  'sekar-jagad': 'PEKALONGAN',
+  'semen-rama': 'YOGYAKARTA',
+  'surya-majapahit': 'MAJAPAHIT',
+  'alas-alasan': 'MANGKUNEGARAN',
+};
 
 const CATEGORY_TABS: { id: CulturalCategory; label: string }[] = [
   { id: 'semua', label: 'Semua Corak' },
@@ -122,15 +137,15 @@ export function PhotoboothClient({ autoStart = false }: { autoStart?: boolean } 
     };
   }, [autoStart, startCamera, stream]);
 
-  // Filter CSS style computation
+  // Filter CSS style computation (Warm natural tones, preserving Indonesian skin tones)
   const getFilterStyle = (filter: FilterType): string => {
     switch (filter) {
       case 'warm':
         return 'sepia(0.2) saturate(1.15) contrast(1.05) brightness(1.02)';
+      case 'sepia':
+        return 'sepia(0.55) contrast(1.1) brightness(0.98) saturate(1.08)';
       case 'monochrome':
-        return 'grayscale(1) contrast(1.25) brightness(0.95)';
-      case 'cyberpunk':
-        return 'contrast(1.3) hue-rotate(185deg) saturate(1.4) brightness(0.9)';
+        return 'grayscale(1) contrast(1.22) brightness(0.96)';
       default:
         return 'none';
     }
@@ -594,41 +609,53 @@ export function PhotoboothClient({ autoStart = false }: { autoStart?: boolean } 
                   <Sliders className="w-3.5 h-3.5 text-[#C5A059]" />
                   <span>FILTER NUANSA:</span>
                 </span>
-                <span className="text-[#C5A059] uppercase">{activeFilter}</span>
+                <span className="text-[#C5A059] uppercase font-semibold">
+                  {activeFilter === 'warm'
+                    ? 'Warm Mataram'
+                    : activeFilter === 'sepia'
+                    ? 'Sepia Keraton'
+                    : 'Batik B&W'}
+                </span>
               </div>
               <div className="grid grid-cols-3 gap-2">
                 <button
                   onClick={() => setActiveFilter('warm')}
-                  className={`p-2.5 border text-left text-xs transition-all cursor-pointer rounded-xl ${
+                  className={`p-2.5 border text-left text-xs transition-all cursor-pointer rounded-xl relative ${
                     activeFilter === 'warm'
-                      ? 'border-[#C5A059] bg-[#C5A059] text-[#0C0A08] font-bold shadow-md'
+                      ? 'border-[#C5A059] bg-[#C5A059] text-[#0C0A08] font-bold shadow-md ring-1 ring-[#C5A059]'
                       : 'border-[#C5A059]/25 bg-[#0C0A08] text-[#F4EFE6] hover:border-[#C5A059]/50'
                   }`}
                 >
                   <span className="font-bold block font-mono text-[11px]">Warm Mataram</span>
-                  <span className={`text-[9px] block ${activeFilter === 'warm' ? 'text-[#0C0A08]/80' : 'text-[#A89F91]'}`}>Sogan Klasik</span>
+                  <span className={`text-[9px] block ${activeFilter === 'warm' ? 'text-[#0C0A08]/85 font-semibold' : 'text-[#A89F91]'}`}>
+                    Sogan Klasik
+                  </span>
+                </button>
+                <button
+                  onClick={() => setActiveFilter('sepia')}
+                  className={`p-2.5 border text-left text-xs transition-all cursor-pointer rounded-xl relative ${
+                    activeFilter === 'sepia'
+                      ? 'border-[#C5A059] bg-[#C5A059] text-[#0C0A08] font-bold shadow-md ring-1 ring-[#C5A059]'
+                      : 'border-[#C5A059]/25 bg-[#0C0A08] text-[#F4EFE6] hover:border-[#C5A059]/50'
+                  }`}
+                >
+                  <span className="font-bold block font-mono text-[11px]">Sepia Keraton</span>
+                  <span className={`text-[9px] block ${activeFilter === 'sepia' ? 'text-[#0C0A08]/85 font-semibold' : 'text-[#A89F91]'}`}>
+                    Klise Lawasan
+                  </span>
                 </button>
                 <button
                   onClick={() => setActiveFilter('monochrome')}
-                  className={`p-2.5 border text-left text-xs transition-all cursor-pointer rounded-xl ${
+                  className={`p-2.5 border text-left text-xs transition-all cursor-pointer rounded-xl relative ${
                     activeFilter === 'monochrome'
-                      ? 'border-[#C5A059] bg-[#C5A059] text-[#0C0A08] font-bold shadow-md'
+                      ? 'border-[#C5A059] bg-[#C5A059] text-[#0C0A08] font-bold shadow-md ring-1 ring-[#C5A059]'
                       : 'border-[#C5A059]/25 bg-[#0C0A08] text-[#F4EFE6] hover:border-[#C5A059]/50'
                   }`}
                 >
                   <span className="font-bold block font-mono text-[11px]">Batik B&amp;W</span>
-                  <span className={`text-[9px] block ${activeFilter === 'monochrome' ? 'text-[#0C0A08]/80' : 'text-[#A89F91]'}`}>Kontras Klise</span>
-                </button>
-                <button
-                  onClick={() => setActiveFilter('cyberpunk')}
-                  className={`p-2.5 border text-left text-xs transition-all cursor-pointer rounded-xl ${
-                    activeFilter === 'cyberpunk'
-                      ? 'border-[#C5A059] bg-[#C5A059] text-[#0C0A08] font-bold shadow-md'
-                      : 'border-[#C5A059]/25 bg-[#0C0A08] text-[#F4EFE6] hover:border-[#C5A059]/50'
-                  }`}
-                >
-                  <span className="font-bold block font-mono text-[11px]">Cyberpunk</span>
-                  <span className={`text-[9px] block ${activeFilter === 'cyberpunk' ? 'text-[#0C0A08]/80' : 'text-[#A89F91]'}`}>Neon Wayang</span>
+                  <span className={`text-[9px] block ${activeFilter === 'monochrome' ? 'text-[#0C0A08]/85 font-semibold' : 'text-[#A89F91]'}`}>
+                    Kontras Wayang
+                  </span>
                 </button>
               </div>
             </div>
@@ -658,53 +685,75 @@ export function PhotoboothClient({ autoStart = false }: { autoStart?: boolean } 
               </div>
             </div>
 
-            {/* 12 Cultural Frames Grid (2 Columns in this pane) */}
-            <div className="grid grid-cols-2 gap-2 max-h-[260px] overflow-y-auto pr-1">
-              {filteredFrames.map((f) => {
+            {/* 12 Cultural Frames Grid (Museum Specimen Cards) */}
+            <div className="grid grid-cols-2 gap-2.5 max-h-[320px] overflow-y-auto pr-1">
+              {filteredFrames.map((f, idx) => {
                 const isSelected = activeFrame === f.id;
                 return (
                   <button
                     key={f.id}
                     onClick={() => setActiveFrame(f.id)}
-                    className={`p-2 border text-left text-xs transition-all relative flex flex-col justify-between cursor-pointer rounded-xl ${
+                    className={`p-2.5 border text-left text-xs transition-all relative flex flex-col justify-between cursor-pointer rounded-xl group overflow-hidden ${
                       isSelected
-                        ? 'border-[#C5A059] bg-[#221A12] text-[#F4EFE6] ring-1 ring-[#C5A059] shadow-md'
-                        : 'border-[#C5A059]/20 bg-[#0C0A08] text-[#A89F91] hover:border-[#C5A059]/40 hover:text-[#F4EFE6]'
+                        ? 'border-[#C5A059] bg-[#1E1712] text-[#F4EFE6] ring-1 ring-[#C5A059] shadow-[0_4px_16px_rgba(197,160,89,0.18)]'
+                        : 'border-[#C5A059]/20 bg-[#0E0B09] text-[#A89F91] hover:border-[#C5A059]/45 hover:bg-[#15110E]'
                     }`}
                   >
-                    {/* Visual Motif Asset Pattern Swatch */}
+                    {/* Visual Motif Asset Pattern Swatch Banner */}
                     <div
-                      className="w-full h-8 rounded-lg mb-1.5 border border-[#C5A059]/30 overflow-hidden relative"
+                      className="w-full h-11 rounded-lg mb-2 border overflow-hidden relative flex items-center justify-between px-2"
                       style={{
                         backgroundColor: f.palette.background,
+                        borderColor: isSelected ? f.palette.accentGold : 'rgba(197, 160, 89, 0.25)',
                         backgroundImage: `url("/images/patterns/${f.id}.svg")`,
                         backgroundRepeat: 'repeat',
-                        backgroundSize: '24px 24px',
+                        backgroundSize: '26px 26px',
                       }}
                     >
-                      <div className="absolute inset-0 bg-gradient-to-r from-black/50 via-transparent to-black/50" />
-                      <div className="absolute bottom-1 right-1.5 flex items-center gap-1">
-                        <span
-                          style={{ backgroundColor: f.palette.borderOuter }}
-                          className="w-2 h-2 rounded-full border border-black/40"
-                        />
-                        <span
-                          style={{ backgroundColor: f.palette.accentGold }}
-                          className="w-2 h-2 rounded-full border border-black/40"
-                        />
-                      </div>
+                      {/* Subtle Vignette Gradient for Depth */}
+                      <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/25 to-black/60 pointer-events-none" />
+
+                      {/* Cultural Origin Micro Badge */}
+                      <span
+                        className="relative z-10 text-[8.5px] font-mono tracking-widest uppercase px-1.5 py-0.5 rounded backdrop-blur-xs font-semibold"
+                        style={{
+                          backgroundColor: 'rgba(12, 10, 8, 0.75)',
+                          color: f.palette.accentGold,
+                          border: '1px solid rgba(197, 160, 89, 0.3)',
+                        }}
+                      >
+                        {FRAME_ORIGIN_SHORT[f.id] || 'NUSANTARA'}
+                      </span>
+
+                      {/* Selection Pill Status / Catalog Index */}
+                      {isSelected ? (
+                        <span className="relative z-10 px-1.5 py-0.5 bg-[#C5A059] text-[#0C0A08] text-[8.5px] font-mono font-bold tracking-wider rounded flex items-center gap-0.5 shadow-xs">
+                          <span>❖</span> TERPILIH
+                        </span>
+                      ) : (
+                        <span className="relative z-10 text-[8.5px] font-mono text-[#D1B48C]/80 bg-black/60 backdrop-blur-xs px-1.5 py-0.5 rounded border border-white/10">
+                          #{String(idx + 1).padStart(2, '0')}
+                        </span>
+                      )}
                     </div>
-                    <div>
-                      <span className="font-bold block text-[11px] leading-tight text-[#F4EFE6]">
+
+                    {/* Frame Typography & Heritage Class */}
+                    <div className="space-y-0.5">
+                      <span className="font-bold block text-[11.5px] leading-tight text-[#F4EFE6] group-hover:text-[#ECC47E] transition-colors font-serif">
                         {f.name}
                       </span>
                       <span className="text-[9px] text-[#A89F91] block truncate font-mono">
                         {f.motifCategory}
                       </span>
                     </div>
-                    {isSelected && (
-                      <span className="absolute top-2 right-2 w-1.5 h-1.5 rounded-full bg-[#C5A059] animate-pulse" />
-                    )}
+
+                    {/* Authentic Dual-Tone Frame Border Accent Ribbon */}
+                    <div
+                      className="w-full h-0.5 mt-2 rounded-full opacity-60 group-hover:opacity-100 transition-opacity"
+                      style={{
+                        background: `linear-gradient(to right, ${f.palette.borderOuter}, ${f.palette.accentGold}, transparent)`,
+                      }}
+                    />
                   </button>
                 );
               })}
