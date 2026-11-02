@@ -1,10 +1,9 @@
 'use client';
 
-import React, { useEffect, useState, useCallback, useRef } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { createPortal } from 'react-dom';
-import { X, Volume2, VolumeX, Sparkles } from 'lucide-react';
+import { X, Sparkles } from 'lucide-react';
 import { ManifestationClient } from '@/app/manifestation/ManifestationClient';
-import { playGamelanBell, isSoundMuted, setSoundMuted } from '@/lib/audio/sacredSounds';
 
 interface ManifestationModalProps {
   isOpen: boolean;
@@ -13,92 +12,46 @@ interface ManifestationModalProps {
 
 export function ManifestationModal({ isOpen, onClose }: ManifestationModalProps) {
   const [mounted, setMounted] = useState(false);
-  const [muted, setMuted] = useState(false);
-  const [isRendered, setIsRendered] = useState(false);
-  const [isClosing, setIsClosing] = useState(false);
-  const closeTimerRef = useRef<NodeJS.Timeout | null>(null);
+  const [closing, setClosing] = useState(false);
 
   useEffect(() => {
     setMounted(true);
-    setMuted(isSoundMuted());
   }, []);
 
-  // Smooth Enter and Exit State Machine
-  useEffect(() => {
-    if (isOpen) {
-      if (closeTimerRef.current) {
-        clearTimeout(closeTimerRef.current);
-        closeTimerRef.current = null;
-      }
-      setIsRendered(true);
-      setIsClosing(false);
-
-      // Play soft opening gamelan chime
-      const timer = setTimeout(() => {
-        playGamelanBell(528);
-      }, 150);
-      return () => clearTimeout(timer);
-    } else if (isRendered && !isClosing) {
-      // Parent closed modal: trigger exit transition before unmounting
-      setIsClosing(true);
-      closeTimerRef.current = setTimeout(() => {
-        setIsRendered(false);
-        setIsClosing(false);
-      }, 280);
-      return () => {
-        if (closeTimerRef.current) clearTimeout(closeTimerRef.current);
-      };
-    }
-  }, [isOpen, isRendered, isClosing]);
-
-  // Request close with smooth exit animation
-  const handleRequestClose = useCallback(() => {
-    if (isClosing) return;
-    setIsClosing(true);
-    // Subtle closing tone
-    playGamelanBell(396);
-    closeTimerRef.current = setTimeout(() => {
+  const handleClose = useCallback(() => {
+    setClosing(true);
+    setTimeout(() => {
+      setClosing(false);
       onClose();
-      setIsRendered(false);
-      setIsClosing(false);
-    }, 280);
-  }, [isClosing, onClose]);
+    }, 180);
+  }, [onClose]);
 
-  const toggleSound = () => {
-    const next = !muted;
-    setMuted(next);
-    setSoundMuted(next);
-    if (!next) {
-      playGamelanBell(660);
-    }
-  };
-
-  // Handle escape key to close modal with animation
+  // Handle escape key to close modal
   useEffect(() => {
-    if (!isOpen || isClosing) return;
+    if (!isOpen) return;
 
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
-        handleRequestClose();
+        handleClose();
       }
     };
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [isOpen, isClosing, handleRequestClose]);
+  }, [isOpen, handleClose]);
 
-  // Prevent background body scrolling while modal is active
+  // Prevent background body scrolling while modal is open
   useEffect(() => {
-    if (isRendered) {
+    if (isOpen) {
       const originalOverflow = document.body.style.overflow;
       document.body.style.overflow = 'hidden';
       return () => {
         document.body.style.overflow = originalOverflow;
       };
     }
-  }, [isRendered]);
+  }, [isOpen]);
 
-  if (!isRendered || !mounted) return null;
+  if (!isOpen || !mounted) return null;
 
   const modalContent = (
     <div
@@ -107,35 +60,28 @@ export function ManifestationModal({ isOpen, onClose }: ManifestationModalProps)
       aria-labelledby="manifestation-modal-title"
       className="fixed inset-0 z-[9990] flex items-center justify-center p-3 sm:p-5 md:p-8 overflow-y-auto"
     >
-      {/* Backdrop with smooth blur, radial glow & fade in/out */}
+      {/* Backdrop with smooth blur & fade */}
       <div
-        className={`fixed inset-0 bg-black/85 transition-all duration-300 ease-out cursor-pointer ${
-          isClosing
-            ? 'opacity-0 backdrop-blur-none pointer-events-none'
-            : 'opacity-100 backdrop-blur-md'
+        className={`fixed inset-0 bg-black/85 transition-opacity duration-200 cursor-pointer ${
+          closing ? 'opacity-0' : 'opacity-100 backdrop-blur-md animate-in fade-in'
         }`}
-        onClick={handleRequestClose}
+        onClick={handleClose}
         aria-hidden="true"
       >
-        {/* Sacred Golden Ambient Flare in Center */}
-        <div
-          className={`absolute inset-0 bg-radial from-[#C5A059]/20 via-black/40 to-black/95 transition-opacity duration-300 pointer-events-none ${
-            isClosing ? 'opacity-0' : 'opacity-100'
-          }`}
-        />
+        <div className="absolute inset-0 bg-radial from-[#C5A059]/15 via-black/40 to-black/90 pointer-events-none" />
       </div>
 
-      {/* Modal Dialog Card with Scale & Float Enter/Exit Animation */}
+      {/* Modal Dialog Card with Scale Animation */}
       <div
-        className={`relative w-full max-w-2xl max-h-[92vh] flex flex-col bg-[#14110E] border border-[#C5A059]/40 rounded-2xl shadow-[0_25px_80px_rgba(0,0,0,0.95)] overflow-hidden z-10 my-auto transition-all duration-300 ${
-          isClosing
-            ? 'opacity-0 scale-95 translate-y-4 ease-in'
-            : 'opacity-100 scale-100 translate-y-0 ease-out shadow-[0_0_60px_rgba(197,160,89,0.25)]'
+        className={`relative w-full max-w-2xl max-h-[92vh] flex flex-col bg-[#14110E] border border-[#C5A059]/40 rounded-2xl shadow-[0_25px_80px_rgba(0,0,0,0.95)] overflow-hidden z-10 my-auto transition-all duration-200 ${
+          closing
+            ? 'opacity-0 scale-95 translate-y-3'
+            : 'opacity-100 scale-100 translate-y-0 animate-in zoom-in-95'
         }`}
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Expanding Golden Aura Bloom on Entrance */}
-        <div className="absolute -top-24 left-1/2 -translate-x-1/2 w-96 h-96 bg-amber-500/20 rounded-full blur-3xl pointer-events-none" />
+        {/* Ambient Top Flare */}
+        <div className="absolute -top-24 left-1/2 -translate-x-1/2 w-96 h-96 bg-amber-500/15 rounded-full blur-3xl pointer-events-none" />
 
         {/* Background Subtle Batik Watermark */}
         <div
@@ -163,31 +109,22 @@ export function ManifestationModal({ isOpen, onClose }: ManifestationModalProps)
             </span>
           </div>
 
-          <div className="flex items-center gap-2">
-            <button
-              type="button"
-              onClick={toggleSound}
-              className="p-1.5 rounded-full text-[#A89F91] hover:text-[#ECC47E] bg-[#14110E] hover:bg-[#1C1610] border border-[#C5A059]/30 transition-colors cursor-pointer"
-              title={muted ? 'Aktifkan Suara Gamelan' : 'Bisukan Suara'}
-              aria-label={muted ? 'Aktifkan Suara Gamelan' : 'Bisukan Suara'}
-            >
-              {muted ? <VolumeX className="w-4 h-4 text-stone-500" /> : <Volume2 className="w-4 h-4 text-[#ECC47E]" />}
-            </button>
-
-            <button
-              type="button"
-              onClick={handleRequestClose}
-              className="p-1.5 rounded-full text-[#A89F91] hover:text-[#F4EFE6] bg-[#14110E] hover:bg-[#1C1610] border border-[#C5A059]/30 transition-all hover:scale-105 active:scale-95 cursor-pointer"
-              aria-label="Tutup Dialog Manifestasi"
-            >
-              <X className="w-4 h-4" />
-            </button>
-          </div>
+          {/* Close & Back to Landing Page Button (NO sound button) */}
+          <button
+            type="button"
+            onClick={handleClose}
+            className="px-3 py-1.5 rounded-full text-[#ECC47E] hover:text-[#FFF8E7] bg-[#1F1710] hover:bg-[#2A1F16] border border-[#C5A059]/40 hover:border-[#C5A059] transition-all flex items-center gap-1.5 text-xs font-mono cursor-pointer active:scale-95 shadow-sm"
+            aria-label="Tutup dan Kembali ke Beranda"
+            title="Tutup dan Kembali ke Beranda"
+          >
+            <span>Tutup</span>
+            <X className="w-3.5 h-3.5" />
+          </button>
         </div>
 
         {/* Modal Body: Embed ManifestationClient */}
         <div className="relative z-10 p-3 sm:p-5 overflow-y-auto flex-1 bg-[#14110E]/95">
-          <ManifestationClient isModal={true} onClose={handleRequestClose} />
+          <ManifestationClient isModal={true} onClose={handleClose} />
         </div>
       </div>
     </div>

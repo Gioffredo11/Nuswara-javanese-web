@@ -50,15 +50,24 @@ export default async function CharacterDetailPage({
   return (
     <div className="min-h-screen bg-[#0D0C0A] text-[#F5EFE6] pt-28 sm:pt-32 pb-16 sm:pb-24">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Breadcrumb Back */}
-        <div className="mb-8">
+        {/* Breadcrumb Back to Landing Page & Catalog */}
+        <div className="mb-8 flex flex-wrap items-center gap-2.5 text-xs font-mono">
           <Link
-            href="/#wayangpedia"
-            className="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-[#A89F91] hover:text-[#ECC47E] transition-colors py-1.5 group min-h-[44px]"
+            href="/"
+            className="inline-flex items-center gap-2 uppercase tracking-wider text-[#A89F91] hover:text-[#ECC47E] bg-[#14110E] hover:bg-[#1C1610] border border-[#C5A059]/30 hover:border-[#C5A059] px-3.5 py-2 rounded-xl transition-all group min-h-[40px] shadow-sm cursor-pointer"
           >
             <ArrowLeft className="w-4 h-4 text-[#B99A60] transition-transform group-hover:-translate-x-1" />
-            <span>Kembali ke Katalog Wayangpedia</span>
+            <span>Kembali ke Beranda</span>
           </Link>
+          <span className="text-[#C59B53]/40">/</span>
+          <Link
+            href="/#wayangpedia"
+            className="text-[#A89F91] hover:text-[#ECC47E] transition-colors uppercase tracking-wider py-1.5"
+          >
+            Katalog Wayangpedia
+          </Link>
+          <span className="text-[#C59B53]/40">/</span>
+          <span className="text-[#ECC47E] font-bold uppercase tracking-wider">{character.name}</span>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-start">
