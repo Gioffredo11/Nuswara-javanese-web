@@ -268,9 +268,9 @@ export function ManifestationClient({ isModal = false, onClose }: ManifestationC
             <button
               type="button"
               onClick={() => setHasDrawn(false)}
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-xs font-mono text-amber-900 bg-amber-100/90 hover:bg-amber-200 border border-amber-300 transition-all shadow-xs cursor-pointer active:scale-95"
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-xs font-mono text-[#ECC47E] bg-[#1C140E] hover:bg-[#281D14] border border-[#C5A059]/40 transition-all shadow-md cursor-pointer active:scale-95"
             >
-              <RefreshCw className="w-3.5 h-3.5 text-amber-700" />
+              <RefreshCw className="w-3.5 h-3.5 text-[#C5A059]" />
               <span>Tarik Ulang dari Tumpukan Kartu</span>
             </button>
           </div>
