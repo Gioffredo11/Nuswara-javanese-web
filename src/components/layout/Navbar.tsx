@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { Link } from '@/components/common/Link';
-import { Menu, X, Sparkles, BookOpen, Camera, GitFork, Compass, Layers, Heart, PenTool } from 'lucide-react';
+import { Menu, X, Sparkles, BookOpen, Camera, GitFork, Compass, Layers, Heart } from 'lucide-react';
 import { ManifestationModal } from '@/components/ui/ManifestationModal';
 import { getTarotImagePath } from '@/components/ui/WayangVectors';
 
@@ -76,7 +76,6 @@ export function Navbar() {
   // Primary Navigation Links matching reference_hero.png 1:1
   const primaryNavLinks = [
     { sectionId: 'beranda', label: 'Beranda' },
-    { sectionId: 'aksara', label: 'Alih Aksara ꦤꦸ' },
     { sectionId: 'sejarah', label: 'Sejarah' },
     { sectionId: 'tokoh', label: 'Tokoh' },
     { sectionId: 'budaya', label: 'Budaya' },
@@ -85,7 +84,6 @@ export function Navbar() {
   ];
 
   const allMobileNavLinks = [
-    { sectionId: 'aksara', label: 'Studio Alih Aksara (Latin ↔ Jawa)', icon: PenTool, highlight: true },
     { sectionId: 'manifestasi', label: 'Manifestasi Harian (Kartu Hari Ini)', icon: Sparkles, highlight: true },
     { sectionId: 'beranda', label: 'Beranda (Pameran)', icon: Compass },
     { sectionId: 'sejarah', label: 'Sejarah Jawa Tengah', icon: BookOpen },
@@ -190,10 +188,6 @@ export function Navbar() {
 
 
     // Direct route targets
-    if (sectionId === 'aksara') {
-      router.push('/aksara');
-      return;
-    }
     if (sectionId === 'manifestasi' || sectionId === 'manifestation') {
       setManifestModalOpen(true);
       return;
