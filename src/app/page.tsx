@@ -666,18 +666,6 @@ export function HomePage({ defaultSection }: HomePageProps = {}) {
             </ScrollReveal>
           </div>
 
-          {/* Monument Top Monospace Metadata Bar */}
-          <div className="flex flex-wrap items-center justify-between gap-4 text-xs font-mono text-[#A89F91] border-b border-[#C5A059]/15 pb-3">
-            <div className="flex items-center gap-2">
-              <span className="text-[#C5A059] font-bold">[ SITUS WARISAN DUNIA // UNESCO NO. 592 ]</span>
-              <span>•</span>
-              <span>LEMBAH TIDAR • DINASTI SYAILENDRA</span>
-            </div>
-            <div className="text-[#C5A059]">
-              MAGELANG • 824 MASEHI
-            </div>
-          </div>
-
           {/* PRIMARY HOOK: Candi Borobudur Monumental Panoramic Showcase */}
           <ScrollReveal direction="up" distance={35} delay={100}>
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-center">
@@ -685,7 +673,7 @@ export function HomePage({ defaultSection }: HomePageProps = {}) {
               <div className="lg:col-span-7">
                 <Link
                   href="/tempat-sakral/candi-borobudur"
-                  className="group block relative aspect-[16/10] w-full border border-[#C5A059]/30 bg-[#14110E] rounded-2xl overflow-hidden cursor-pointer"
+                  className="group block relative aspect-[16/10] w-full border border-[#C5A059]/30 bg-[#14110E] rounded-2xl overflow-hidden cursor-pointer shadow-2xl"
                   aria-label="Candi Borobudur — baca kisah spiritual lengkap"
                 >
                   <Image
@@ -696,38 +684,22 @@ export function HomePage({ defaultSection }: HomePageProps = {}) {
                     className="object-cover group-hover:scale-103 transition-transform duration-700"
                     priority={false}
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#0C0A08] via-transparent to-transparent opacity-80" />
-
-                  <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between text-xs font-mono text-[#C5A059]">
-                    <span>MANDALA KOSMIK TERBESAR DI DUNIA</span>
-                    <span className="flex items-center gap-1 group-hover:translate-x-1 transition-transform text-[#F4EFE6]">
-                      <span>Eksplorasi Monumen</span>
-                      <ArrowRight className="w-3.5 h-3.5" />
-                    </span>
-                  </div>
                 </Link>
               </div>
 
-              {/* Right: Deep Editorial Narrative & Key Hallmarks (5 cols) */}
+              {/* Right: Deep Editorial Narrative */}
               <div className="lg:col-span-5 space-y-6">
                 <div>
-                  <span className="text-[11px] font-mono text-[#C5A059] uppercase tracking-wider block">
-                    KOSMOLOGI TIGA ALAM KESADARAN
-                  </span>
-
-                  <h3 className="font-royal text-3xl sm:text-4xl lg:text-5xl font-bold text-[#F4EFE6] mt-1 leading-tight">
+                  <h3 className="font-royal text-3xl sm:text-4xl lg:text-5xl font-bold text-[#F4EFE6] leading-tight">
                     Candi Borobudur
                   </h3>
-                  <p className="font-editorial italic text-sm text-[#C5A059] mt-1">
-                    Sang Kamadhatu, Rupadhatu, tumeka Arupadhatu
-                  </p>
                 </div>
 
                 <p className="text-sm text-[#A89F91] leading-relaxed font-sans">
                   Piramida mandala terbesar di bumi yang menuntun peziarah melintasi tiga alam kesadaran batin manusia: dari belenggu hawa nafsu duniawi (<em>Kamadhatu</em>), melampaui wujud dan rupa kebajikan (<em>Rupadhatu</em>), hingga mencapai keheningan sempurna tanpa rupa (<em>Arupadhatu</em>).
                 </p>
 
-                <div className="pt-1">
+                <div className="pt-2">
                   <Link
                     href="/tempat-sakral/candi-borobudur"
                     className="inline-flex items-center gap-2 px-6 py-3.5 bg-[#C5A059] hover:bg-[#D5B36E] text-[#0C0A08] font-bold text-xs uppercase font-mono tracking-wider rounded-xl transition-all shadow-lg group cursor-pointer"
@@ -740,60 +712,12 @@ export function HomePage({ defaultSection }: HomePageProps = {}) {
             </div>
           </ScrollReveal>
 
-          {/* Monumental Metrics Bar (4 Columns Full-Width) */}
-          <ScrollReveal direction="up" distance={25} delay={150}>
-            <div className="grid grid-cols-2 lg:grid-cols-4 border border-[#C5A059]/20 divide-y lg:divide-y-0 lg:divide-x divide-[#C5A059]/20 bg-[#14110E] rounded-2xl overflow-hidden">
-              <div className="p-6 text-center lg:text-left">
-                <span className="font-editorial text-3xl sm:text-4xl lg:text-5xl font-bold text-[#C5A059] block">2.672</span>
-                <span className="font-mono text-[11px] text-[#A89F91] uppercase tracking-wider mt-1 block">Panel Pahat Relief</span>
-              </div>
-              <div className="p-6 text-center lg:text-left">
-                <span className="font-editorial text-3xl sm:text-4xl lg:text-5xl font-bold text-[#C5A059] block">504</span>
-                <span className="font-mono text-[11px] text-[#A89F91] uppercase tracking-wider mt-1 block">Arca Meditasi Buddha</span>
-              </div>
-              <div className="p-6 text-center lg:text-left">
-                <span className="font-editorial text-3xl sm:text-4xl lg:text-5xl font-bold text-[#C5A059] block">72</span>
-                <span className="font-mono text-[11px] text-[#A89F91] uppercase tracking-wider mt-1 block">Stupa Teras Berongga</span>
-              </div>
-              <div className="p-6 text-center lg:text-left">
-                <span className="font-editorial text-3xl sm:text-4xl lg:text-5xl font-bold text-[#C5A059] block">55.000 m³</span>
-                <span className="font-mono text-[11px] text-[#A89F91] uppercase tracking-wider mt-1 block">Struktur Batu Andesit</span>
-              </div>
-            </div>
-          </ScrollReveal>
-
-          {/* Minimalist Editorial Exploration Options */}
+          {/* Editorial Footnote */}
           <ScrollReveal direction="up" distance={20} delay={150}>
-            <div className="pt-6 border-t border-[#C5A059]/20 flex flex-col md:flex-row md:items-center justify-between gap-4 text-xs font-mono">
-              <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-[#A89F91]">
-                <span className="text-[#C5A059] uppercase tracking-wider font-bold">
-                  SITUS SAKRAL LAINNYA:
-                </span>
-                {[
-                  { index: '01', name: 'Dataran Tinggi Dieng', slug: 'dataran-tinggi-dieng', note: '2.093 MDPL' },
-                  { index: '02', name: 'Candi Cetho', slug: 'candi-cetho', note: 'Gunung Lawu' },
-                  { index: '03', name: 'Masjid Agung Demak', slug: 'masjid-agung-demak', note: '1479 M' },
-                  { index: '04', name: 'Candi Sukuh', slug: 'candi-sukuh', note: 'Piramida Maya' },
-                  { index: '05', name: 'Candi Gedong Songo', slug: 'candi-gedong-songo', note: 'Ungaran' },
-                ].map((site, idx) => (
-                  <React.Fragment key={site.slug}>
-                    {idx > 0 && <span className="text-[#C5A059]/30">|</span>}
-                    <Link
-                      href={`/tempat-sakral/${site.slug}`}
-                      className="hover:text-[#C5A059] transition-colors inline-flex items-center gap-1.5 group py-0.5"
-                    >
-                      <span className="text-[#C5A059] font-bold">{site.index}.</span>
-                      <span className="group-hover:underline underline-offset-4 decoration-[#C5A059]/40 text-[#F4EFE6]">
-                        {site.name}
-                      </span>
-                      <span className="text-[10px] text-[#A89F91]/70">
-                        ({site.note})
-                      </span>
-                    </Link>
-                  </React.Fragment>
-                ))}
-              </div>
-
+            <div className="pt-6 border-t border-[#C5A059]/20 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono">
+              <span className="text-[#8E8271] text-center sm:text-left">
+                Dokumentasi monumen keabadian dan ruang sakral Jawa Tengah.
+              </span>
               <Link
                 href="/tempat-sakral"
                 className="inline-flex items-center gap-1.5 text-[#C5A059] hover:text-[#F4EFE6] font-bold transition-colors group shrink-0"
