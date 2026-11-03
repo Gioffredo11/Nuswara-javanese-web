@@ -191,7 +191,7 @@ export function TokohIndexClient() {
                       alt={`Foto arsip ${tokoh.name}`}
                       fill
                       sizes="160px"
-                      className="object-cover sepia-[0.15] contrast-105 group-hover:sepia-0 transition-all duration-300"
+                      className="object-cover contrast-105 group-hover:scale-105 transition-all duration-300"
                     />
                     {/* Archival corner decorations */}
                     <div className="absolute top-1 left-1 w-3 h-3 border-t-2 border-l-2 border-[#ECC47E]/80 pointer-events-none" />

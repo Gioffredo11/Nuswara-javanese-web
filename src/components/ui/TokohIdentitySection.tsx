@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import { Link } from '@/components/common/Link';
 import {
@@ -14,6 +14,10 @@ import {
   Quote,
   CheckCircle2,
   FileText,
+  ChevronLeft,
+  ChevronRight,
+  SlidersHorizontal,
+  Sparkles,
 } from 'lucide-react';
 import { ScrollReveal } from '@/components/ui/ScrollReveal';
 
@@ -21,7 +25,54 @@ export function TokohIdentitySection() {
   const [activeSlug, setActiveSlug] = useState<string>(tokohArticles[0]?.slug || 'ra-kartini');
   const [selectedTokoh, setSelectedTokoh] = useState<TokohArticle | null>(null);
 
+  const sliderRef = useRef<HTMLDivElement>(null);
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(true);
+
   const activeFigure = tokohArticles.find((t) => t.slug === activeSlug) || tokohArticles[0];
+  const currentIndex = tokohArticles.findIndex((t) => t.slug === activeFigure.slug);
+  const prevFigure = tokohArticles[(currentIndex - 1 + tokohArticles.length) % tokohArticles.length];
+  const nextFigure = tokohArticles[(currentIndex + 1) % tokohArticles.length];
+
+  // Check scroll bounds for slide buttons
+  const checkScrollBounds = () => {
+    const el = sliderRef.current;
+    if (!el) return;
+    setCanScrollLeft(el.scrollLeft > 10);
+    setCanScrollRight(el.scrollLeft + el.clientWidth < el.scrollWidth - 10);
+  };
+
+  useEffect(() => {
+    const el = sliderRef.current;
+    if (!el) return;
+    checkScrollBounds();
+    el.addEventListener('scroll', checkScrollBounds, { passive: true });
+    window.addEventListener('resize', checkScrollBounds);
+    return () => {
+      el.removeEventListener('scroll', checkScrollBounds);
+      window.removeEventListener('resize', checkScrollBounds);
+    };
+  }, []);
+
+  const slideLeft = () => {
+    if (sliderRef.current) {
+      sliderRef.current.scrollBy({ left: -300, behavior: 'smooth' });
+    }
+  };
+
+  const slideRight = () => {
+    if (sliderRef.current) {
+      sliderRef.current.scrollBy({ left: 300, behavior: 'smooth' });
+    }
+  };
+
+  const handleSelectTokoh = (slug: string) => {
+    setActiveSlug(slug);
+    const tabEl = document.getElementById(`tokoh-tab-${slug}`);
+    if (tabEl) {
+      tabEl.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+    }
+  };
 
   // Close modal on Escape key press
   useEffect(() => {
@@ -78,46 +129,159 @@ export function TokohIdentitySection() {
         </ScrollReveal>
       </div>
 
-      {/* Full-Width Archival Index Bar (Exposed Hairline Grid) */}
+      {/* Full-Width Archival Index Bar (Exposed Hairline Grid & Slidable Photo Options) */}
       <ScrollReveal direction="up" distance={25} delay={100}>
-        <div
-          role="tablist"
-          aria-label="Pilih tokoh peradaban"
-          className="rounded-2xl border border-[#C5A059]/25 p-1.5 flex gap-1.5 overflow-x-auto bg-[#14110E] scrollbar-none"
-        >
-          {tokohArticles.map((tokoh, index) => {
-            const isActive = tokoh.slug === activeFigure.slug;
-            return (
+        <div className="space-y-3">
+          {/* Header Bar with Slide Controls */}
+          <div className="flex items-center justify-between px-1">
+            <div className="flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-[#C5A059]" />
+              <span className="text-xs font-mono uppercase tracking-[0.2em] text-[#C5A059] font-bold">
+                PILIH TOKOH PERADABAN ({tokohArticles.length})
+              </span>
+              <span className="hidden md:inline text-[11px] text-[#8E8271] font-mono">
+                — Geser foto ke kanan untuk melihat tokoh lainnya
+              </span>
+            </div>
+
+            {/* Slide Navigation Controls */}
+            <div className="flex items-center gap-2">
               <button
-                key={tokoh.slug}
-                role="tab"
-                id={`tokoh-tab-${tokoh.slug}`}
-                aria-selected={isActive}
-                aria-controls={`tokoh-panel-${tokoh.slug}`}
-                tabIndex={0}
-                onClick={() => setActiveSlug(tokoh.slug)}
-                className={`group shrink-0 px-4 py-2.5 text-xs font-mono transition-all flex items-center gap-2.5 cursor-pointer min-h-[42px] rounded-xl ${
-                  isActive
-                    ? 'bg-[#C5A059] text-[#0C0A08] font-bold shadow-md'
-                    : 'text-[#A89F91] hover:text-[#F4EFE6] hover:bg-[#1A1612]'
+                type="button"
+                onClick={slideLeft}
+                disabled={!canScrollLeft}
+                aria-label="Slide opsi tokoh ke kiri"
+                className={`p-2 rounded-xl border transition-all flex items-center justify-center cursor-pointer ${
+                  canScrollLeft
+                    ? 'bg-[#14110E] hover:bg-[#C5A059] text-[#C5A059] hover:text-[#0C0A08] border-[#C5A059]/40 shadow-sm'
+                    : 'bg-[#14110E]/40 text-[#554D42] border-[#C5A059]/15 cursor-not-allowed opacity-40'
                 }`}
               >
-                <span className={`text-[10px] font-bold ${isActive ? 'text-[#0C0A08]' : 'text-[#C5A059]'}`}>
-                  {String(index + 1).padStart(2, '0')}
-                </span>
-                <span className="tracking-wider">{tokoh.name}</span>
-                <span
-                  className={`hidden sm:inline text-[9px] px-2 py-0.5 rounded-full font-mono ${
-                    isActive
-                      ? 'bg-[#0C0A08] text-[#C5A059]'
-                      : 'bg-[#1C1610] text-[#8E8271]'
-                  }`}
-                >
-                  {tokoh.originCity.split(',')[0]}
-                </span>
+                <ChevronLeft className="w-4 h-4" />
               </button>
-            );
-          })}
+
+              <button
+                type="button"
+                onClick={slideRight}
+                disabled={!canScrollRight}
+                aria-label="Slide opsi tokoh ke kanan"
+                className={`px-3 py-2 rounded-xl border transition-all flex items-center gap-1.5 cursor-pointer font-mono text-xs ${
+                  canScrollRight
+                    ? 'bg-[#C5A059] hover:bg-[#D5B36E] text-[#0C0A08] font-bold border-[#C5A059] shadow-md shadow-[#C5A059]/15 animate-pulse hover:animate-none'
+                    : 'bg-[#14110E]/40 text-[#554D42] border-[#C5A059]/15 cursor-not-allowed opacity-40'
+                }`}
+              >
+                <span>Slide ke Kanan</span>
+                <ChevronRight className="w-4 h-4" />
+              </button>
+            </div>
+          </div>
+
+          {/* Slidable Photo Option Track with Gradient Masks */}
+          <div className="relative group/track">
+            {/* Left Gradient Edge Mask */}
+            {canScrollLeft && (
+              <div className="absolute left-0 inset-y-0 w-12 bg-gradient-to-r from-[#0C0A08] via-[#0C0A08]/80 to-transparent z-10 pointer-events-none rounded-l-2xl" />
+            )}
+
+            {/* Right Gradient Edge Mask */}
+            {canScrollRight && (
+              <div className="absolute right-0 inset-y-0 w-12 bg-gradient-to-l from-[#0C0A08] via-[#0C0A08]/80 to-transparent z-10 pointer-events-none rounded-r-2xl" />
+            )}
+
+            {/* Floating Quick-Slide Right Arrow */}
+            {canScrollRight && (
+              <button
+                type="button"
+                onClick={slideRight}
+                aria-label="Slide opsi pahlawan ke kanan"
+                className="hidden sm:flex absolute -right-3 top-1/2 -translate-y-1/2 z-20 w-10 h-10 items-center justify-center rounded-full bg-[#C5A059] hover:bg-[#D5B36E] text-[#0C0A08] shadow-2xl transition-transform hover:scale-110 cursor-pointer border-2 border-[#0C0A08]"
+              >
+                <ChevronRight className="w-5 h-5 font-bold" />
+              </button>
+            )}
+
+            {/* Floating Quick-Slide Left Arrow */}
+            {canScrollLeft && (
+              <button
+                type="button"
+                onClick={slideLeft}
+                aria-label="Slide opsi pahlawan ke kiri"
+                className="hidden sm:flex absolute -left-3 top-1/2 -translate-y-1/2 z-20 w-10 h-10 items-center justify-center rounded-full bg-[#14110E] hover:bg-[#C5A059] text-[#C5A059] hover:text-[#0C0A08] border border-[#C5A059]/60 shadow-2xl transition-transform hover:scale-110 cursor-pointer"
+              >
+                <ChevronLeft className="w-5 h-5" />
+              </button>
+            )}
+
+            {/* Track Container */}
+            <div
+              ref={sliderRef}
+              role="tablist"
+              aria-label="Pilih tokoh peradaban"
+              className="rounded-2xl border border-[#C5A059]/25 p-2 flex gap-3 overflow-x-auto bg-[#14110E]/95 scrollbar-none scroll-smooth items-stretch"
+            >
+              {tokohArticles.map((tokoh, index) => {
+                const isActive = tokoh.slug === activeFigure.slug;
+                return (
+                  <button
+                    key={tokoh.slug}
+                    role="tab"
+                    id={`tokoh-tab-${tokoh.slug}`}
+                    aria-selected={isActive}
+                    aria-controls={`tokoh-panel-${tokoh.slug}`}
+                    tabIndex={0}
+                    onClick={() => handleSelectTokoh(tokoh.slug)}
+                    className={`group shrink-0 p-2 sm:p-2.5 rounded-xl transition-all duration-300 flex items-center gap-3 cursor-pointer min-w-[230px] sm:min-w-[270px] text-left border ${
+                      isActive
+                        ? 'bg-gradient-to-r from-[#241A10] to-[#16120D] border-[#C5A059] ring-2 ring-[#C5A059]/40 shadow-xl'
+                        : 'bg-[#14110E] hover:bg-[#1C1610] border-[#C5A059]/20 hover:border-[#C5A059]/50 shadow-md'
+                    }`}
+                  >
+                    {/* Hero Photo Thumbnail (Full Color) */}
+                    <div className={`relative w-12 h-12 sm:w-14 sm:h-14 rounded-xl overflow-hidden shrink-0 border transition-all duration-300 ${
+                      isActive
+                        ? 'border-[#C5A059] ring-2 ring-[#C5A059]/60 shadow-md scale-105'
+                        : 'border-[#C5A059]/30 group-hover:border-[#C5A059]/70 group-hover:scale-102'
+                    }`}>
+                      <Image
+                        src={tokoh.photoUrl}
+                        alt={tokoh.name}
+                        fill
+                        sizes="56px"
+                        className="object-cover transition-transform duration-500 group-hover:scale-110"
+                      />
+                      {/* Index Number Badge */}
+                      <div className="absolute top-1 left-1 bg-[#0C0A08]/85 backdrop-blur-xs px-1.5 py-0.5 rounded text-[9px] font-mono font-bold text-[#C5A059]">
+                        {String(index + 1).padStart(2, '0')}
+                      </div>
+                    </div>
+
+                    {/* Hero Title & City */}
+                    <div className="flex-1 min-w-0 pr-1">
+                      <div className="flex items-center justify-between gap-1">
+                        <span className={`text-[10px] font-mono tracking-wider uppercase font-semibold ${
+                          isActive ? 'text-[#C5A059]' : 'text-[#8E8271]'
+                        }`}>
+                          {tokoh.originCity.split(',')[0]}
+                        </span>
+                        {isActive && (
+                          <span className="w-2 h-2 rounded-full bg-[#C5A059] animate-pulse" />
+                        )}
+                      </div>
+                      <div className={`font-royal text-sm sm:text-base font-bold truncate mt-0.5 ${
+                        isActive ? 'text-[#F4EFE6]' : 'text-[#D5C9B5] group-hover:text-white'
+                      }`}>
+                        {tokoh.name}
+                      </div>
+                      <div className="text-[10px] font-mono text-[#8E8271] truncate mt-0.5">
+                        {tokoh.period}
+                      </div>
+                    </div>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
         </div>
       </ScrollReveal>
 
@@ -125,35 +289,36 @@ export function TokohIdentitySection() {
       {activeFigure && (
         <ScrollReveal direction="up" distance={30} delay={150}>
           <div
+            key={activeFigure.slug}
             id={`tokoh-panel-${activeFigure.slug}`}
             role="tabpanel"
             aria-labelledby={`tokoh-tab-${activeFigure.slug}`}
-            className="py-4 relative"
+            className="py-4 relative animate-in fade-in slide-in-from-right-4 duration-300"
           >
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-center">
-              {/* Left Column: Authentic Museum Archival Portrait */}
+              {/* Left Column: Authentic Museum Archival Portrait (Full Vibrant Color) */}
               <div className="lg:col-span-5 flex flex-col items-center">
-                <div className="relative w-full max-w-sm aspect-[4/5] border border-[#C5A059]/40 bg-[#0C0A08] overflow-hidden group">
+                <div className="relative w-full max-w-sm aspect-[4/5] border-2 border-[#C5A059]/50 bg-[#0C0A08] overflow-hidden group rounded-2xl shadow-2xl">
                   <Image
                     src={activeFigure.photoUrl}
                     alt={activeFigure.name}
                     fill
                     sizes="(max-width: 1024px) 100vw, 40vw"
-                    className="object-cover filter contrast-[1.08] sepia-[0.1] group-hover:scale-102 transition-transform duration-700"
+                    className="object-cover group-hover:scale-105 transition-transform duration-700"
                     priority
                   />
                   {/* Antique framing corners */}
-                  <div className="absolute top-2 left-2 w-3.5 h-3.5 border-t border-l border-[#C5A059] pointer-events-none" />
-                  <div className="absolute top-2 right-2 w-3.5 h-3.5 border-t border-r border-[#C5A059] pointer-events-none" />
-                  <div className="absolute bottom-2 left-2 w-3.5 h-3.5 border-b border-l border-[#C5A059] pointer-events-none" />
-                  <div className="absolute bottom-2 right-2 w-3.5 h-3.5 border-b border-r border-[#C5A059] pointer-events-none" />
+                  <div className="absolute top-2 left-2 w-4 h-4 border-t-2 border-l-2 border-[#C5A059] pointer-events-none" />
+                  <div className="absolute top-2 right-2 w-4 h-4 border-t-2 border-r-2 border-[#C5A059] pointer-events-none" />
+                  <div className="absolute bottom-2 left-2 w-4 h-4 border-b-2 border-l-2 border-[#C5A059] pointer-events-none" />
+                  <div className="absolute bottom-2 right-2 w-4 h-4 border-b-2 border-r-2 border-[#C5A059] pointer-events-none" />
 
                   {/* Gradient shadow for caption readability */}
-                  <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-[#0C0A08] via-[#0C0A08]/80 to-transparent p-4 pt-10">
+                  <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-[#0C0A08] via-[#0C0A08]/85 to-transparent p-5 pt-12">
                     <span className="text-[10px] font-mono tracking-widest text-[#C5A059] uppercase font-bold block">
                       [ ARSIP VISUAL // {activeFigure.idNumber} ]
                     </span>
-                    <span className="text-xs text-[#F4EFE6] font-editorial italic block mt-0.5">
+                    <span className="text-sm text-[#F4EFE6] font-editorial italic block mt-0.5">
                       {activeFigure.originCity} • {activeFigure.period}
                     </span>
                   </div>
@@ -161,7 +326,7 @@ export function TokohIdentitySection() {
 
                 {/* Metadata caption plate below portrait */}
                 <div className="mt-3 text-center">
-                  <span className="text-[10px] font-mono uppercase tracking-widest text-[#C5A059] bg-[#14110E] px-3 py-1 border border-[#C5A059]/30 inline-block">
+                  <span className="text-[10px] font-mono uppercase tracking-widest text-[#C5A059] bg-[#14110E] px-3.5 py-1.5 border border-[#C5A059]/40 inline-block rounded-lg shadow-sm">
                     {activeFigure.badgeLabel}
                   </span>
                 </div>
@@ -186,7 +351,7 @@ export function TokohIdentitySection() {
                 </div>
 
                 {/* Semboyan Luhur: Dramatic Editorial Pullquote */}
-                <blockquote className="border-l-4 border-[#C5A059] pl-5 py-2 my-2 bg-[#14110E]/60">
+                <blockquote className="border-l-4 border-[#C5A059] pl-5 py-2.5 my-2 bg-[#14110E]/80 rounded-r-xl">
                   <div className="flex items-center gap-2 text-[10px] font-mono text-[#C5A059] uppercase font-bold mb-1">
                     <Quote className="w-3.5 h-3.5 text-[#C5A059]" />
                     <span>FALSAFAH HIDUP &amp; SEMBOYAN</span>
@@ -229,6 +394,29 @@ export function TokohIdentitySection() {
                     <span>Baca Biografi Penuh</span>
                     <ArrowRight className="w-3.5 h-3.5" />
                   </Link>
+                </div>
+
+                {/* Slide Navigation Between Heroes */}
+                <div className="pt-4 border-t border-[#C5A059]/20 flex flex-wrap items-center justify-between gap-3 text-xs font-mono">
+                  <button
+                    type="button"
+                    onClick={() => handleSelectTokoh(prevFigure.slug)}
+                    aria-label={`Slide ke tokoh sebelumnya: ${prevFigure.name}`}
+                    className="px-4 py-2.5 bg-[#14110E] hover:bg-[#1C1610] text-[#A89F91] hover:text-[#F4EFE6] border border-[#C5A059]/30 hover:border-[#C5A059]/60 rounded-xl transition-all flex items-center gap-2 cursor-pointer"
+                  >
+                    <ChevronLeft className="w-4 h-4 text-[#C5A059]" />
+                    <span>Sebelumnya: <strong className="text-[#F4EFE6]">{prevFigure.name}</strong></span>
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => handleSelectTokoh(nextFigure.slug)}
+                    aria-label={`Slide ke tokoh berikutnya: ${nextFigure.name}`}
+                    className="px-4 py-2.5 bg-[#14110E] hover:bg-[#C5A059] text-[#C5A059] hover:text-[#0C0A08] border border-[#C5A059]/40 hover:border-[#C5A059] rounded-xl font-bold transition-all flex items-center gap-2 cursor-pointer group shadow-md"
+                  >
+                    <span>Slide ke Kanan: <strong>{nextFigure.name}</strong></span>
+                    <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                  </button>
                 </div>
               </div>
             </div>
