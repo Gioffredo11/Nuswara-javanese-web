@@ -635,28 +635,8 @@ export function HomePage({ defaultSection }: HomePageProps = {}) {
                   Lahir dari kisah cinta Tjoa Thay Yoe dan Mbok Wasih di Pasar Johar abad ke-19, memadukan tradisi gulung gandum Tionghoa dengan manis gurih rebung muda dan bumbu rempah Jawa. Simbol toleransi rasa luhur yang merajut persaudaraan di tanah pesisir.
                 </p>
 
-                {/* 2x2 Bordered Grid Specification Table */}
-                <div className="grid grid-cols-2 border border-[#C5A059]/20 divide-x divide-y divide-[#C5A059]/20 bg-[#0C0A08] text-xs font-mono rounded-xl overflow-hidden">
-                  <div className="p-3">
-                    <span className="text-[10px] text-[#C5A059]/70 uppercase tracking-widest block font-bold">01 // ISIAN UTAMA</span>
-                    <span className="text-[#F4EFE6] font-medium mt-1 block">Rebung Muda &amp; Udang Segar</span>
-                  </div>
-                  <div className="p-3">
-                    <span className="text-[10px] text-[#C5A059]/70 uppercase tracking-widest block font-bold">02 // SAUS COCOLAN</span>
-                    <span className="text-[#F4EFE6] font-medium mt-1 block">Gula Aren &amp; Tauco Kental</span>
-                  </div>
-                  <div className="p-3">
-                    <span className="text-[10px] text-[#C5A059]/70 uppercase tracking-widest block font-bold">03 // TIPE SAJIAN</span>
-                    <span className="text-[#F4EFE6] font-medium mt-1 block">Goreng Renyah / Basah Klasik</span>
-                  </div>
-                  <div className="p-3">
-                    <span className="text-[10px] text-[#C5A059]/70 uppercase tracking-widest block font-bold">04 // PELENGKAP KHAS</span>
-                    <span className="text-[#F4EFE6] font-medium mt-1 block">Lokio &amp; Rawit Hijau</span>
-                  </div>
-                </div>
-
                 {/* Primary Action Button */}
-                <div className="pt-1">
+                <div className="pt-2">
                   <Link
                     href="/kuliner/lumpia-semarang"
                     className="inline-flex items-center gap-2 px-6 py-3.5 bg-[#C5A059] hover:bg-[#D5B36E] text-[#0C0A08] font-bold text-xs uppercase font-mono tracking-wider rounded-xl transition-all shadow-lg group cursor-pointer"
@@ -677,12 +657,12 @@ export function HomePage({ defaultSection }: HomePageProps = {}) {
                   KHAZANAH RASA LAINNYA:
                 </span>
                 {[
-                  { index: '01', name: 'Nasi Liwet Solo', slug: 'nasi-liwet-solo', note: 'Sajian Keraton' },
-                  { index: '02', name: 'Tempe Mendoan', slug: 'tempe-mendoan-banyumas', note: 'Banyumas' },
-                  { index: '03', name: 'Soto Kudus', slug: 'soto-kudus', note: 'Mangkuk Tradisi' },
-                  { index: '04', name: 'Dawet Ayu', slug: 'dawet-ayu-banjarnegara', note: 'Banjarnegara' },
-                  { index: '05', name: 'Sate Kere', slug: 'sate-kere-solo', note: 'Solo Hadiningrat' },
-                  { index: '06', name: 'Garang Asem', slug: 'garang-asem-kudus', note: 'Pantura' },
+                  { index: '01', name: 'Nasi Liwet Solo', slug: 'nasi-liwet-solo' },
+                  { index: '02', name: 'Tempe Mendoan', slug: 'tempe-mendoan-banyumas' },
+                  { index: '03', name: 'Soto Kudus', slug: 'soto-kudus' },
+                  { index: '04', name: 'Dawet Ayu', slug: 'dawet-ayu-banjarnegara' },
+                  { index: '05', name: 'Sate Kere', slug: 'sate-kere-solo' },
+                  { index: '06', name: 'Garang Asem', slug: 'garang-asem-kudus' },
                 ].map((dish, idx) => (
                   <React.Fragment key={dish.slug}>
                     {idx > 0 && <span className="text-[#C5A059]/30">|</span>}
@@ -693,9 +673,6 @@ export function HomePage({ defaultSection }: HomePageProps = {}) {
                       <span className="text-[#C5A059] font-bold">{dish.index}.</span>
                       <span className="group-hover:underline underline-offset-4 decoration-[#C5A059]/40 text-[#F4EFE6]">
                         {dish.name}
-                      </span>
-                      <span className="text-[10px] text-[#A89F91]/70">
-                        ({dish.note})
                       </span>
                     </Link>
                   </React.Fragment>
