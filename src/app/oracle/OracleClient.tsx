@@ -48,6 +48,10 @@ export function OracleClient() {
       setError('Silakan masukkan nama lengkapmu.');
       return;
     }
+    if (/[0-9]/.test(name)) {
+      setError('Nama hanya boleh berisi huruf, tidak boleh mengandung angka.');
+      return;
+    }
     if (!birthDate) {
       setError('Silakan lengkapi tanggal, bulan, dan tahun kelahiranmu.');
       return;

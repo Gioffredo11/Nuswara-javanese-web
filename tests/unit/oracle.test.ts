@@ -172,5 +172,22 @@ describe('Validator: OracleCalculateSchema - Birth Date Range Constraints', () =
     });
     expect(invalidAncient.success).toBe(false);
   });
+
+  it('rejects names containing numbers', () => {
+    const invalidNameWithNumber = OracleCalculateSchema.safeParse({
+      name: 'Budi 123',
+      birthDate: '1995-05-15',
+    });
+    expect(invalidNameWithNumber.success).toBe(false);
+    if (!invalidNameWithNumber.success) {
+      expect(invalidNameWithNumber.error.issues[0].message).toContain('tidak boleh mengandung angka');
+    }
+
+    const validLettersOnly = OracleCalculateSchema.safeParse({
+      name: 'Raden Dananjaya',
+      birthDate: '1995-05-15',
+    });
+    expect(validLettersOnly.success).toBe(true);
+  });
 });
 

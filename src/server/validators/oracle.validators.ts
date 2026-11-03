@@ -6,7 +6,8 @@ export const OracleCalculateSchema = z
       .string()
       .trim()
       .min(1, 'Namamu tidak boleh kosong ya.')
-      .max(60, 'Nama maksimal 60 karakter.'),
+      .max(60, 'Nama maksimal 60 karakter.')
+      .regex(/^[^0-9]+$/, 'Nama hanya boleh berupa huruf, tidak boleh mengandung angka.'),
     birthDate: z
       .string()
       .trim()

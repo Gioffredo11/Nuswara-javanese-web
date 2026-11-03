@@ -128,12 +128,17 @@ export function OracleForm({
         <form onSubmit={onSubmit} className="space-y-5">
           {/* Input Nama */}
           <div className="space-y-1.5">
-            <label
-              htmlFor="oracle-visitor-name"
-              className="block text-xs font-mono uppercase tracking-wider text-[#A89F91] font-bold"
-            >
-              Nama Lengkap / Panggilan
-            </label>
+            <div className="flex items-center justify-between">
+              <label
+                htmlFor="oracle-visitor-name"
+                className="block text-xs font-mono uppercase tracking-wider text-[#A89F91] font-bold"
+              >
+                Nama Lengkap / Panggilan
+              </label>
+              <span className="text-[10px] font-mono text-[#C5A059]/80">
+                (Hanya huruf)
+              </span>
+            </div>
             <div className="relative">
               <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-[#C5A059]/70">
                 <User className="w-4 h-4" />
@@ -143,7 +148,19 @@ export function OracleForm({
                 type="text"
                 required
                 value={name}
-                onChange={(e) => onNameChange(e.target.value)}
+                onChange={(e) => {
+                  // Filter out any numbers automatically
+                  const lettersOnly = e.target.value.replace(/[0-9]/g, '');
+                  onNameChange(lettersOnly);
+                }}
+                onKeyDown={(e) => {
+                  // Prevent entering numeric digits directly
+                  if (/^[0-9]$/.test(e.key)) {
+                    e.preventDefault();
+                  }
+                }}
+                pattern="^[A-Za-zÀ-ÿ\s'.\-]+$"
+                title="Nama hanya boleh berisi huruf (tidak boleh mengandung angka)"
                 placeholder="Contoh: Raden Dananjaya..."
                 className="w-full pl-10 pr-4 py-3 bg-[#0C0A08] border border-[#C5A059]/30 focus:border-[#C5A059] rounded-xl text-xs font-mono text-[#F4EFE6] placeholder-[#A89F91]/50 focus:outline-none transition-colors"
               />
