@@ -266,57 +266,6 @@ export function HomePage({ defaultSection }: HomePageProps = {}) {
       </section>
 
       {/* =========================================================================
-          EDITORIAL STATEMENT: "Warisan bukan hanya masa lalu..."
-          ========================================================================= */}
-      <section className="bg-[#14110E] py-14 sm:py-18 border-y border-[#C5A059]/20">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
-          <ScrollReveal direction="up" distance={30}>
-            <div className="space-y-4 max-w-3xl">
-              <span className="text-[11px] font-mono uppercase tracking-[0.25em] text-[#C5A059] font-bold">
-                [ MANIFESTO // NUSWARA ]
-              </span>
-              <h2 className="font-editorial italic text-3xl sm:text-4xl lg:text-5xl text-[#F4EFE6] leading-tight tracking-tight">
-                Warisan bukan hanya masa lalu.{' '}
-                <span className="text-gold-gradient font-normal block mt-1">
-                  Ia hidup di antara kita.
-                </span>
-              </h2>
-              <p className="text-sm sm:text-base text-[#A89F91] leading-relaxed font-sans pt-1">
-                Dari lereng gunung hingga ruang keraton, dari kisah para tokoh hingga rasa di meja makan, NUSWARA mengajakmu mengenal Jawa Tengah melalui hal-hal yang membentuk jiwa dan kesehariannya.
-              </p>
-            </div>
-          </ScrollReveal>
-
-          {/* Minimalist Editorial Navigation Anchors */}
-          <ScrollReveal direction="up" distance={20} delay={150}>
-            <div className="flex flex-wrap items-center gap-3 pt-6 border-t border-[#C5A059]/15 text-xs font-mono">
-              {[
-                { number: '01', label: 'Jejak Sejarah', target: 'sejarah' },
-                { number: '02', label: 'Tokoh & Pemikiran', target: 'tokoh' },
-                { number: '03', label: 'Seni & Tradisi', target: 'wayangpedia' },
-                { number: '04', label: 'Rasa & Cerita', target: 'kuliner' },
-                { number: '05', label: 'Ruang Sakral', target: 'monumen' },
-              ].map((pill) => (
-                <button
-                  key={pill.number}
-                  type="button"
-                  onClick={(e) => { onRipple(e); scrollToSection(pill.target); }}
-                  className="inline-flex items-center gap-2 text-[#A89F91] hover:text-[#C5A059] bg-[#0C0A08] border border-[#C5A059]/20 hover:border-[#C5A059]/50 rounded-full px-3.5 py-1.5 transition-all cursor-pointer group tracking-wider uppercase"
-                >
-                  <span className="text-[#C5A059] font-bold">
-                    [{pill.number}]
-                  </span>
-                  <span className="group-hover:underline underline-offset-4 decoration-[#C5A059]/40">
-                    {pill.label}
-                  </span>
-                </button>
-              ))}
-            </div>
-          </ScrollReveal>
-        </div>
-      </section>
-
-      {/* =========================================================================
           SEKSI SEJARAH: "KILAS SEJARAH JAWA TENGAH" (3-Column Archival Ledger)
           ========================================================================= */}
       <section id="sejarah" className="bg-[#F3EFE6] text-[#1C1814] py-20 sm:py-24 scroll-mt-20 border-b border-[#1C1814]/15">
