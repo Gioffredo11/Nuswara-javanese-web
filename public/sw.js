@@ -1,5 +1,5 @@
 // Nuswara Service Worker - Offline Studio & Font Caching
-const CACHE_NAME = 'nuswara-edge-v1';
+const CACHE_NAME = 'nuswara-edge-v2';
 const PRECACHE_URLS = [
   '/',
   '/aksara',
@@ -67,6 +67,24 @@ self.addEventListener('fetch', (event) => {
           return matching || caches.match('/aksara') || caches.match('/');
         });
       })
+    );
+    return;
+  }
+
+  // Network-first for dynamic optimized images to guarantee fresh museum assets
+  if (url.pathname.startsWith('/_next/image') || url.pathname.includes('/images/editorial/')) {
+    event.respondWith(
+      fetch(event.request)
+        .then((networkResponse) => {
+          if (networkResponse && networkResponse.status === 200) {
+            const responseClone = networkResponse.clone();
+            caches.open(CACHE_NAME).then((cache) => {
+              cache.put(event.request, responseClone);
+            });
+          }
+          return networkResponse;
+        })
+        .catch(() => caches.match(event.request))
     );
     return;
   }

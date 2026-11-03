@@ -53,7 +53,7 @@ export const tokohArticles: TokohArticle[] = [
     quote: 'Habis gelap terbitlah terang: aksara yang membuka martabat dan nurani budi pekerti.',
     summary:
       'Pahlawan perintis emansipasi wanita dan pendidikan budi pekerti dari bumi Jepara. Surat-suratnya melintasi batas samudra menegaskan bahwa kemajuan peradaban suatu bangsa bermula dari kemerdekaan batin dan kecerdasan kaum perempuan.',
-    photoUrl: '/images/editorial/tokoh-kartini.jpg',
+    photoUrl: '/images/editorial/tokoh-kartini-arsip.jpg',
     verifiedSealText: 'ARSIP KEBANGSAAN • SK PRESIDEN NO. 108 TAHUN 1964',
     personalData: {
       tempatLahir: 'Mayong, Kabupaten Jepara, Karesidenan Jepara',
@@ -126,7 +126,7 @@ export const tokohArticles: TokohArticle[] = [
     quote: 'Sadumuk bathuk, sanyari bumi: kehormatan jiwa dan jengkal tanah leluhur dipertaruhkan hingga akhir hayat.',
     summary:
       'Ksatria agung tanah Jawa yang memadukan spiritualitas mistik Islam dan kesaktian kanuragan. Memimpin koalisi rakyat, santri, kiai, dan bangsawan dalam Perang Jawa (De Java Oorlog) yang nyaris membangkrutkan kas pemerintah kolonial Hindia Belanda.',
-    photoUrl: '/images/editorial/tokoh-diponegoro.jpg',
+    photoUrl: '/images/editorial/tokoh-diponegoro-arsip.jpg',
     verifiedSealText: 'ARSIP KEBANGSAAN • SK PRESIDEN NO. 087 TAHUN 1973',
     personalData: {
       tempatLahir: 'Keraton Ngayogyakarta Hadiningrat',
@@ -199,7 +199,7 @@ export const tokohArticles: TokohArticle[] = [
     quote: 'Ing ngarsa sung tulada, ing madya mangun karsa, tut wuri handayani.',
     summary:
       'Wartawan pemberani, sastrawan kritis, dan filsuf pendidikan agung. Menanggalkan gelar kebangsawanannya untuk melebur bersama rakyat jelata, merumuskan sistem pendidikan nasional berlandaskan kemerdekaan jiwa, budi pekerti, dan cinta tanah air.',
-    photoUrl: '/images/editorial/tokoh-dewantara.jpg',
+    photoUrl: '/images/editorial/tokoh-dewantara-arsip.jpg',
     verifiedSealText: 'ARSIP KEBANGSAAN • SK PRESIDEN NO. 305 TAHUN 1959',
     personalData: {
       tempatLahir: 'Kadipaten Pakualaman, Yogyakarta',
@@ -272,7 +272,7 @@ export const tokohArticles: TokohArticle[] = [
     quote: 'Robek-robeklah badanku, potong-potonglah jasad ini, tetapi jiwaku yang dilindungi benteng Merah Putih akan tetap hidup!',
     summary:
       'Panglima Besar pertama tentara Republik Indonesia dari tlatah Purbalingga-Banyumas. Memimpin perang gerilya menembus ribuan kilometer hutan belantara dan gunung dalam keadaan satu paru-paru di atas tandu bambu, membuktikan eksistensi Republik di mata dunia.',
-    photoUrl: '/images/editorial/tokoh-soedirman.jpg',
+    photoUrl: '/images/editorial/tokoh-soedirman-arsip.jpg',
     verifiedSealText: 'ARSIP KEBANGSAAN • SK PRESIDEN NO. 314 TAHUN 1964',
     personalData: {
       tempatLahir: 'Bodas Karangjati, Rembang, Kabupaten Purbalingga, Jawa Tengah',
@@ -345,7 +345,7 @@ export const tokohArticles: TokohArticle[] = [
     quote: 'Hidup-hidupilah persyarikatan dengan kerja nyata, dan jangan pernah mencari nafkah pribadi di dalamnya.',
     summary:
       'Tokoh ulama visioner berdarah bangsawan ulama Jawa Tengah-Yogyakarta. Mentransformasikan pemahaman keagamaan dari sekadar ritual lisan menjadi aksi kemanusiaan nyata: mendirikan rumah sakit, panti asuhan, dan sekolah modern bagi kaum papa dan mustad’afin.',
-    photoUrl: '/images/editorial/tokoh-ahmaddahlan.jpg',
+    photoUrl: '/images/editorial/tokoh-ahmaddahlan-arsip.jpg',
     verifiedSealText: 'ARSIP KEBANGSAAN • SK PRESIDEN NO. 657 TAHUN 1961',
     personalData: {
       tempatLahir: 'Kampung Kauman, Yogyakarta',
@@ -417,7 +417,7 @@ export const tokohArticles: TokohArticle[] = [
     quote: 'Untuk keselamatan jiwa dan martabat tanah air, kita wajib berserah diri pada Hyang Widdhi dan berdiri teguh membela bumi pertiwi.',
     summary:
       'Panglima perang wanita legendaris dari tlatah Serang, Grobogan, Jawa Tengah. Putri dari Pangeran Natapraja, keturunan Sunan Kalijaga. Di usia senja 73 tahun, ia tetap menunggang kuda perang di atas tandu memimpin laskar gerilya dan menjadi penasihat militer utama Pangeran Diponegoro.',
-    photoUrl: '/images/editorial/tokoh-nyiagengserang.jpg',
+    photoUrl: '/images/editorial/tokoh-nyiagengserang-arsip.jpg',
     verifiedSealText: 'ARSIP KEBANGSAAN • SK PRESIDEN NO. 084 TAHUN 1974',
     personalData: {
       tempatLahir: 'Desa Serang, Kecamatan Karangrayung, Kabupaten Grobogan, Jawa Tengah',
