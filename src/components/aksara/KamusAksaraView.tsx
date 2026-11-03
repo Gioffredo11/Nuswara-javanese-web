@@ -231,3 +231,4 @@ export function KamusAksaraView({ onSelectSpecimen }: KamusAksaraViewProps) {
     </div>
   );
 }
+

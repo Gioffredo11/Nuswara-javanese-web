@@ -82,3 +82,4 @@ export function speakJavanesePhonetics(phrase: string) {
     console.debug('SpeechSynthesis notice:', err);
   }
 }
+
