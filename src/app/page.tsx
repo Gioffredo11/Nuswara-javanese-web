@@ -583,7 +583,7 @@ export function HomePage({ defaultSection }: HomePageProps = {}) {
               <div className="lg:col-span-7">
                 <Link
                   href="/kuliner/lumpia-semarang"
-                  className="group block relative aspect-[16/10] w-full border border-[#C5A059]/30 bg-[#0C0A08] rounded-2xl overflow-hidden cursor-pointer"
+                  className="group block relative aspect-[16/10] w-full border border-[#C5A059]/30 bg-[#0C0A08] rounded-2xl overflow-hidden cursor-pointer shadow-2xl"
                   aria-label="Lumpia Semarang — baca kisah akulturasi dan resep otentik"
                 >
                   <Image
@@ -594,41 +594,15 @@ export function HomePage({ defaultSection }: HomePageProps = {}) {
                     className="object-cover group-hover:scale-103 transition-transform duration-700"
                     priority={false}
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#0C0A08] via-transparent to-transparent opacity-80" />
-
-                  {/* Antique Gastronomic Badges */}
-                  <div className="absolute top-4 left-4 flex items-center gap-2">
-                    <span className="px-3 py-1 bg-[#0C0A08]/90 border border-[#C5A059]/40 text-[#C5A059] text-[10px] font-mono font-bold tracking-widest uppercase rounded-full">
-                      WARISAN BUDAYA TAKBENDA
-                    </span>
-                    <span className="px-3 py-1 bg-[#0C0A08]/90 border border-[#C5A059]/40 text-[#A89F91] text-[10px] font-mono uppercase tracking-wider rounded-full">
-                      SEMARANG • SEJAK 1870
-                    </span>
-                  </div>
-
-                  <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between text-xs font-mono text-[#C5A059]">
-                    <span>AKULTURASI RASA TIONGHOA-JAWA</span>
-                    <span className="flex items-center gap-1 group-hover:translate-x-1 transition-transform text-[#F4EFE6]">
-                      <span>Eksplorasi Kisah</span>
-                      <ArrowRight className="w-3.5 h-3.5" />
-                    </span>
-                  </div>
                 </Link>
               </div>
 
-              {/* Right: Deep Culinary Narrative & Key Flavor Hallmarks */}
+              {/* Right: Deep Culinary Narrative */}
               <div className="lg:col-span-5 space-y-6">
                 <div>
-                  <span className="text-[11px] font-mono text-[#C5A059] uppercase tracking-wider block">
-                    GANG LOMBOK • PESISIR UTARA JAWA
-                  </span>
-
-                  <h3 className="font-royal text-3xl sm:text-4xl lg:text-5xl font-bold text-[#F4EFE6] mt-1 leading-tight">
+                  <h3 className="font-royal text-3xl sm:text-4xl lg:text-5xl font-bold text-[#F4EFE6] leading-tight">
                     Lumpia Semarang
                   </h3>
-                  <p className="font-editorial italic text-sm text-[#C5A059] mt-1">
-                    Lunpia Semawis — Cita Rasa Abadi Akulturasi Dua Tradisi
-                  </p>
                 </div>
 
                 <p className="text-sm text-[#A89F91] leading-relaxed font-sans">
@@ -649,36 +623,12 @@ export function HomePage({ defaultSection }: HomePageProps = {}) {
             </div>
           </ScrollReveal>
 
-          {/* Horizontal Directory Strip (01 to 06) */}
+          {/* Editorial Footnote */}
           <ScrollReveal direction="up" distance={20} delay={150}>
-            <div className="pt-6 border-t border-[#C5A059]/20 flex flex-col md:flex-row md:items-center justify-between gap-4 text-xs font-mono">
-              <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-[#A89F91]">
-                <span className="text-[#C5A059] uppercase tracking-wider font-bold">
-                  KHAZANAH RASA LAINNYA:
-                </span>
-                {[
-                  { index: '01', name: 'Nasi Liwet Solo', slug: 'nasi-liwet-solo' },
-                  { index: '02', name: 'Tempe Mendoan', slug: 'tempe-mendoan-banyumas' },
-                  { index: '03', name: 'Soto Kudus', slug: 'soto-kudus' },
-                  { index: '04', name: 'Dawet Ayu', slug: 'dawet-ayu-banjarnegara' },
-                  { index: '05', name: 'Sate Kere', slug: 'sate-kere-solo' },
-                  { index: '06', name: 'Garang Asem', slug: 'garang-asem-kudus' },
-                ].map((dish, idx) => (
-                  <React.Fragment key={dish.slug}>
-                    {idx > 0 && <span className="text-[#C5A059]/30">|</span>}
-                    <Link
-                      href={`/kuliner/${dish.slug}`}
-                      className="hover:text-[#C5A059] transition-colors inline-flex items-center gap-1.5 group py-0.5"
-                    >
-                      <span className="text-[#C5A059] font-bold">{dish.index}.</span>
-                      <span className="group-hover:underline underline-offset-4 decoration-[#C5A059]/40 text-[#F4EFE6]">
-                        {dish.name}
-                      </span>
-                    </Link>
-                  </React.Fragment>
-                ))}
-              </div>
-
+            <div className="pt-6 border-t border-[#C5A059]/20 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono">
+              <span className="text-[#8E8271] text-center sm:text-left">
+                Dokumentasi gastronomi dan kuliner otentik Jawa Tengah.
+              </span>
               <Link
                 href="/kuliner"
                 className="inline-flex items-center gap-1.5 text-[#C5A059] hover:text-[#F4EFE6] font-bold transition-colors group shrink-0"
