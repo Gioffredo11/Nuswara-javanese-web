@@ -11,8 +11,6 @@ import {
   RefreshCw,
   Sliders,
   Image as ImageIcon,
-  ExternalLink,
-  Info,
 } from 'lucide-react';
 import {
   CULTURAL_FRAMES,
@@ -730,13 +728,10 @@ export function PhotoboothClient({ autoStart = false }: { autoStart?: boolean } 
                       <div className="absolute inset-0 bg-gradient-to-r from-black/35 via-transparent to-black/35 pointer-events-none" />
                     </div>
 
-                    {/* Frame Typography & Heritage Class */}
-                    <div className="space-y-0.5 px-0.5">
+                    {/* Frame Typography */}
+                    <div className="px-0.5">
                       <span className="font-bold block text-[11.5px] leading-tight text-[#F4EFE6] group-hover:text-[#ECC47E] transition-colors font-serif">
                         {f.name}
-                      </span>
-                      <span className="text-[9px] text-[#A89F91] block truncate font-mono">
-                        {f.motifCategory}
                       </span>
                     </div>
 
@@ -752,89 +747,26 @@ export function PhotoboothClient({ autoStart = false }: { autoStart?: boolean } 
               })}
             </div>
 
-            {/* Cultural Information of Selected Frame */}
-            <div className="p-3.5 bg-[#0C0A08] border border-[#C5A059]/30 rounded-xl space-y-2 text-xs">
-              <div className="flex items-start justify-between gap-2 border-b border-[#C5A059]/15 pb-1.5">
-                <div>
-                  <span className="text-[9px] font-mono text-[#C5A059] uppercase tracking-wider block font-bold">
-                    [ {currentFrame.origin} ]
-                  </span>
-                  <h4 className="font-royal font-bold text-sm text-[#F4EFE6]">
-                    {currentFrame.javaneseName}
-                  </h4>
-                </div>
-                <a
-                  href={currentFrame.pinterestSearchUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1 text-[10px] font-mono text-[#C5A059] hover:text-[#F4EFE6] bg-[#14110E] px-2.5 py-1 rounded-lg border border-[#C5A059]/40 shrink-0 transition-colors"
-                >
-                  <span>Pinterest</span>
-                  <ExternalLink className="w-2.5 h-2.5" />
-                </a>
-              </div>
-
-              {/* Visual Pattern & Asset Preview Banner */}
-              <div
-                className="w-full h-12 rounded-lg border border-[#C5A059]/30 relative overflow-hidden flex items-center justify-between px-3"
-                style={{
-                  backgroundColor: currentFrame.palette.background,
-                  backgroundImage: `url("/images/patterns/${currentFrame.id}.svg")`,
-                  backgroundRepeat: 'repeat',
-                  backgroundSize: '30px 30px',
-                }}
-              >
-                <div className="absolute inset-0 bg-gradient-to-r from-black/75 via-black/35 to-black/75 pointer-events-none" />
-                <span className="relative z-10 text-[9px] font-mono uppercase tracking-widest text-[#ECC47E] font-bold">
-                  ✦ CORAK RESMI NUSWARA ✦
-                </span>
-                {currentFrame.id === 'ukiran-gebyok' && (
-                  <img
-                    src="/frames/frame-ukiran-jepara.png"
-                    alt="Ukir Jepara"
-                    className="relative z-10 h-9 w-auto object-contain opacity-95 drop-shadow-md"
-                  />
-                )}
-                {currentFrame.id === 'parang-kencana' && (
-                  <img
-                    src="/images/batik-parang.png"
-                    alt="Batik Parang"
-                    className="relative z-10 h-9 w-auto object-contain opacity-95 drop-shadow-md"
-                  />
-                )}
-              </div>
-
-              <p className="text-[10px] text-[#A89F91] leading-relaxed font-sans line-clamp-2">
-                {currentFrame.description}
-              </p>
-              <div className="p-2 bg-[#14110E] border-l-2 border-[#C5A059] rounded-r-lg flex items-start gap-1.5">
-                <Info className="w-3 h-3 text-[#C5A059] shrink-0 mt-0.5" />
-                <p className="text-[10px] text-[#F4EFE6] italic leading-tight font-sans">
-                  <strong className="not-italic font-bold font-mono text-[#C5A059]">FILOSOFI:</strong> {currentFrame.philosophy}
-                </p>
-              </div>
-
-              {/* Personalization Inputs */}
-              <div className="pt-2 border-t border-[#C5A059]/15 space-y-1.5">
-                <label className="text-[10px] text-[#A89F91] font-mono uppercase block">
-                  Teks Kustom Strip (Opsional):
-                </label>
-                <div className="space-y-1.5">
-                  <input
-                    type="text"
-                    value={customTitle}
-                    onChange={(e) => setCustomTitle(e.target.value)}
-                    placeholder={`e.g. ${currentFrame.javaneseName}`}
-                    className="w-full px-3 py-2 bg-[#14110E] border border-[#C5A059]/30 rounded-xl text-[#F4EFE6] text-[11px] font-mono focus:border-[#C5A059] focus:outline-none transition-colors"
-                  />
-                  <input
-                    type="text"
-                    value={customMessage}
-                    onChange={(e) => setCustomMessage(e.target.value)}
-                    placeholder="e.g. Rahayu Widodo Lestari / #Nuswara"
-                    className="w-full px-3 py-2 bg-[#14110E] border border-[#C5A059]/30 rounded-xl text-[#F4EFE6] text-[11px] font-mono focus:border-[#C5A059] focus:outline-none transition-colors"
-                  />
-                </div>
+            {/* Personalization Inputs */}
+            <div className="p-3.5 bg-[#0C0A08] border border-[#C5A059]/30 rounded-xl space-y-1.5 text-xs">
+              <label className="text-[10px] text-[#A89F91] font-mono uppercase block">
+                Teks Kustom Strip (Opsional):
+              </label>
+              <div className="space-y-1.5">
+                <input
+                  type="text"
+                  value={customTitle}
+                  onChange={(e) => setCustomTitle(e.target.value)}
+                  placeholder={`e.g. ${currentFrame.javaneseName}`}
+                  className="w-full px-3 py-2 bg-[#14110E] border border-[#C5A059]/30 rounded-xl text-[#F4EFE6] text-[11px] font-mono focus:border-[#C5A059] focus:outline-none transition-colors"
+                />
+                <input
+                  type="text"
+                  value={customMessage}
+                  onChange={(e) => setCustomMessage(e.target.value)}
+                  placeholder="e.g. Rahayu Widodo Lestari / #Nuswara"
+                  className="w-full px-3 py-2 bg-[#14110E] border border-[#C5A059]/30 rounded-xl text-[#F4EFE6] text-[11px] font-mono focus:border-[#C5A059] focus:outline-none transition-colors"
+                />
               </div>
             </div>
           </div>
