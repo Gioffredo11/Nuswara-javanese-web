@@ -249,8 +249,8 @@ export function HomePage({ defaultSection }: HomePageProps = {}) {
                 </p>
               </div>
 
-              {/* Primary Antique Gold Metal CTA Button */}
-              <div className="pt-2 sm:pt-4 flex items-center">
+              {/* Primary Antique Gold Metal CTA Button + Aksara Studio Link */}
+              <div className="pt-2 sm:pt-4 flex flex-wrap items-center gap-4">
                 <button
                   type="button"
                   onClick={(e) => { onRipple(e); scrollToSection('sejarah'); }}
@@ -259,6 +259,15 @@ export function HomePage({ defaultSection }: HomePageProps = {}) {
                   <span>Jelajahi Jawa Tengah</span>
                   <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
                 </button>
+
+                <Link
+                  href="/aksara"
+                  className="px-6 py-4 bg-[#14110E]/90 hover:bg-[#1E1914] text-[#F4EFE6] border border-[#C5A059]/40 hover:border-[#C5A059] text-xs sm:text-sm font-mono tracking-widest uppercase rounded-xl transition-all duration-300 flex items-center gap-2.5 group"
+                >
+                  <span className="aksara-jawa text-base text-[#C5A059]">ꦤꦸ</span>
+                  <span>Studio Alih Aksara</span>
+                  <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1 text-[#C5A059]" />
+                </Link>
               </div>
             </div>
           </ScrollReveal>

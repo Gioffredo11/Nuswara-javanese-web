@@ -5,6 +5,7 @@ import { Navbar } from '@/components/layout/Navbar';
 import { Footer } from '@/components/layout/Footer';
 import { ScrollToTop } from '@/components/ui/ScrollToTop';
 import { PageTransition } from '@/components/ui/PageTransition';
+import { ServiceWorkerRegister } from '@/components/common/ServiceWorkerRegister';
 
 const cinzel = Cinzel({
   subsets: ['latin'],
@@ -83,7 +84,16 @@ export default function RootLayout({
       data-scroll-behavior="smooth"
       className={`${cinzel.variable} ${cormorant.variable} ${plusJakarta.variable} scroll-smooth`}
     >
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Newsreader:ital,opsz,wght@0,6..72,400..700;1,6..72,400..700&family=Noto+Sans+Javanese:wght@400..700&family=Plus+Jakarta+Sans:ital,wght@0,400..800;1,400..800&display=swap"
+          rel="stylesheet"
+        />
+      </head>
       <body className="min-h-screen flex flex-col bg-[#0D0C0A] text-[#F5EFE6] font-sans selection:bg-[#C59B53]/35 selection:text-[#FFF8EC]">
+        <ServiceWorkerRegister />
         {/* WCAG AA Accessible Skip to Main Content Link */}
         <a
           href="#main-content"

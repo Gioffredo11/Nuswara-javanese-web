@@ -10,18 +10,64 @@
    ========================================================================= */
 @layer base {
   :root {
-    /* Backgrounds */
+    /* 60% Dominant Surface: Warm Lontar Parchment */
+    --bg-canvas: #FBF9F5;
+    /* 30% Supporting Surfaces: Archival Stone & Elevated Paper */
+    --bg-surface: #F3EFE6;
+    --bg-elevated: #FFFFFF;
+    --bg-glass: rgba(251, 249, 245, 0.90);
+
+    /* High-Contrast Calligraphic Ink (WCAG 2.1 AA/AAA Verified) */
+    --text-primary: #181615;      /* 16.2:1 contrast */
+    --text-secondary: #57534E;    /* 6.8:1 contrast */
+    --text-muted: #78716C;        /* 4.6:1 contrast */
+
+    /* 10% Cultural Accents: Batik Soga Terracotta & Kraton Indigo */
+    --accent-primary: #B84A27;
+    --accent-primary-hover: #9A3B1C;
+    --accent-primary-soft: rgba(184, 74, 39, 0.12);
+
+    --accent-secondary: #1E3A5F;
+    --accent-secondary-soft: rgba(30, 58, 95, 0.10);
+
+    /* Exposed Hairline Structural Grid (Stripe / Geist Pattern) */
+    --border-subtle: #E5DEC9;
+    --border-strong: #D4CBB3;
+    --border-focus: #B84A27;
+
+    /* Semantic Feedback Tokens */
+    --status-success: #15803D;
+    --status-warning: #B45309;
+    --status-danger: #B91C1C;
+    --status-info: #1D4ED8;
+
+    /* Font Stacks */
+    --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-serif: 'Newsreader', 'Instrument Serif', Georgia, serif;
+    --font-aksara: 'Tuladha Jejeg', 'Noto Sans Javanese', 'Aturra Web', 'Javanese Text', sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+
+    /* 8pt Spatial System */
+    --space-1: 4px;
+    --space-2: 8px;
+    --space-3: 12px;
+    --space-4: 16px;
+    --space-6: 24px;
+    --space-8: 32px;
+    --space-12: 48px;
+    --radius-sm: 6px;
+    --radius-md: 10px;
+    --radius-lg: 14px;
+    --shadow-subtle: 0 1px 3px rgba(24, 22, 21, 0.05);
+    --shadow-floating: 0 12px 32px -4px rgba(24, 22, 21, 0.12);
+
+    /* Legacy compatibility Backgrounds */
     --bg-obsidian:        #0d0c0a;
     --bg-espresso:        #14110e;
     --bg-midnight:        #100d20;
     --bg-plum:            #24142f;
     --bg-charcoal-violet: #1c1524;
     --bg-parchment:       #f4ede2;
-
-    /* Text */
-    --text-primary: #f5efe6;
-    --text-muted:   #a39888;
-    --text-dark:    #231e17;
 
     /* Gold accent family */
     --gold-main:  #c5a36a;
@@ -37,6 +83,25 @@
     --transition-fast:   150ms;
     --transition-base:   220ms;
     --transition-slow:   350ms;
+  }
+
+  [data-theme="dark"] {
+    /* Kraton Obsidian Dark Mode */
+    --bg-canvas: #121316;
+    --bg-surface: #1A1D24;
+    --bg-elevated: #222630;
+    --bg-glass: rgba(18, 19, 22, 0.90);
+    --text-primary: #F4F1EA;
+    --text-secondary: #A8A29E;
+    --text-muted: #8C857B;
+    --accent-primary: #E06D44;
+    --accent-primary-hover: #F0825B;
+    --accent-primary-soft: rgba(224, 109, 68, 0.16);
+    --accent-secondary: #60A5FA;
+    --accent-secondary-soft: rgba(96, 165, 250, 0.14);
+    --border-subtle: #2E3340;
+    --border-strong: #3E4556;
+    --border-focus: #E06D44;
   }
 
   body {
@@ -838,3 +903,65 @@ img[loading="lazy"][data-nimg] {
     letter-spacing: inherit !important;
   }
 }
+
+/* =========================================================================
+   ARCHIVAL MODERNISM & ZERO-CLIPPING JAVANESE TYPOGRAPHY
+   ========================================================================= */
+@font-face {
+  font-family: 'Tuladha Jejeg';
+  src: local('Tuladha Jejeg'), local('TuladhaJejeg'),
+       url('https://cdn.jsdelivr.net/gh/bennylin/transliterasijawa@master/fonts/TuladhaJejeg_gr.ttf') format('truetype');
+  font-display: swap;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.aksara-jawa {
+  font-family: var(--font-aksara);
+  line-height: 2.35 !important;
+  padding-block: 0.45em;
+  letter-spacing: 0.02em;
+  font-feature-settings: "kern" 1, "liga" 1, "clig" 1;
+  overflow: visible;
+  overflow-wrap: break-word;
+}
+
+.aksara-word-token {
+  display: inline-block;
+  padding: 0.1em 0.35em;
+  margin: 0.1em;
+  border-radius: var(--radius-sm);
+  transition: background-color 150ms ease, transform 120ms ease;
+  cursor: pointer;
+  background-color: transparent;
+  border: 1px solid transparent;
+}
+
+.aksara-word-token:hover,
+.aksara-word-token:focus-visible {
+  background-color: var(--accent-primary-soft);
+  border-color: var(--accent-primary);
+  outline: none;
+}
+
+.aksara-word-token.is-active {
+  background-color: var(--accent-primary-soft);
+  border-color: var(--accent-primary);
+}
+
+.archival-hairline {
+  border: 1px solid var(--border-subtle);
+}
+
+.archival-studio-container {
+  max-width: 1280px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Biometric focus outlines */
+:focus-visible {
+  outline: 2px solid var(--border-focus) !important;
+  outline-offset: 2px !important;
+}
+

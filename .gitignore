@@ -49,7 +49,7 @@ install.ps1
 .codebase-memory/
 
 # AI agent directories & prompts
-.agents/
+!.agents/
 .augment/
 .claude/
 .codebuddy/
