@@ -14,10 +14,6 @@ import {
   Quote,
   CheckCircle2,
   FileText,
-  ChevronLeft,
-  ChevronRight,
-  SlidersHorizontal,
-  Sparkles,
 } from 'lucide-react';
 import { ScrollReveal } from '@/components/ui/ScrollReveal';
 
@@ -26,43 +22,38 @@ export function TokohIdentitySection() {
   const [selectedTokoh, setSelectedTokoh] = useState<TokohArticle | null>(null);
 
   const sliderRef = useRef<HTMLDivElement>(null);
-  const [canScrollLeft, setCanScrollLeft] = useState(false);
-  const [canScrollRight, setCanScrollRight] = useState(true);
+  const [scrollProgress, setScrollProgress] = useState(0);
 
   const activeFigure = tokohArticles.find((t) => t.slug === activeSlug) || tokohArticles[0];
-  const currentIndex = tokohArticles.findIndex((t) => t.slug === activeFigure.slug);
-  const prevFigure = tokohArticles[(currentIndex - 1 + tokohArticles.length) % tokohArticles.length];
-  const nextFigure = tokohArticles[(currentIndex + 1) % tokohArticles.length];
 
-  // Check scroll bounds for slide buttons
-  const checkScrollBounds = () => {
+  const handleScroll = () => {
     const el = sliderRef.current;
     if (!el) return;
-    setCanScrollLeft(el.scrollLeft > 10);
-    setCanScrollRight(el.scrollLeft + el.clientWidth < el.scrollWidth - 10);
+    const maxScroll = el.scrollWidth - el.clientWidth;
+    if (maxScroll > 0) {
+      const progress = Math.min(100, Math.max(0, (el.scrollLeft / maxScroll) * 100));
+      setScrollProgress(progress);
+    }
   };
 
   useEffect(() => {
     const el = sliderRef.current;
     if (!el) return;
-    checkScrollBounds();
-    el.addEventListener('scroll', checkScrollBounds, { passive: true });
-    window.addEventListener('resize', checkScrollBounds);
+    handleScroll();
+    el.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener('resize', handleScroll);
     return () => {
-      el.removeEventListener('scroll', checkScrollBounds);
-      window.removeEventListener('resize', checkScrollBounds);
+      el.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', handleScroll);
     };
   }, []);
 
-  const slideLeft = () => {
+  const handleSliderChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const val = Number(e.target.value);
+    setScrollProgress(val);
     if (sliderRef.current) {
-      sliderRef.current.scrollBy({ left: -300, behavior: 'smooth' });
-    }
-  };
-
-  const slideRight = () => {
-    if (sliderRef.current) {
-      sliderRef.current.scrollBy({ left: 300, behavior: 'smooth' });
+      const maxScroll = sliderRef.current.scrollWidth - sliderRef.current.clientWidth;
+      sliderRef.current.scrollLeft = (val / 100) * maxScroll;
     }
   };
 
@@ -132,7 +123,7 @@ export function TokohIdentitySection() {
       {/* Full-Width Archival Index Bar (Exposed Hairline Grid & Slidable Photo Options) */}
       <ScrollReveal direction="up" distance={25} delay={100}>
         <div className="space-y-3">
-          {/* Header Bar with Slide Controls */}
+          {/* Header Bar */}
           <div className="flex items-center justify-between px-1">
             <div className="flex items-center gap-2">
               <span className="w-2 h-2 rounded-full bg-[#C5A059]" />
@@ -140,85 +131,19 @@ export function TokohIdentitySection() {
                 PILIH TOKOH PERADABAN ({tokohArticles.length})
               </span>
               <span className="hidden md:inline text-[11px] text-[#8E8271] font-mono">
-                — Geser foto ke kanan untuk melihat tokoh lainnya
+                — Geser sliderbar untuk menelusuri tokoh lainnya
               </span>
-            </div>
-
-            {/* Slide Navigation Controls */}
-            <div className="flex items-center gap-2">
-              <button
-                type="button"
-                onClick={slideLeft}
-                disabled={!canScrollLeft}
-                aria-label="Slide opsi tokoh ke kiri"
-                className={`p-2 rounded-xl border transition-all flex items-center justify-center cursor-pointer ${
-                  canScrollLeft
-                    ? 'bg-[#14110E] hover:bg-[#C5A059] text-[#C5A059] hover:text-[#0C0A08] border-[#C5A059]/40 shadow-sm'
-                    : 'bg-[#14110E]/40 text-[#554D42] border-[#C5A059]/15 cursor-not-allowed opacity-40'
-                }`}
-              >
-                <ChevronLeft className="w-4 h-4" />
-              </button>
-
-              <button
-                type="button"
-                onClick={slideRight}
-                disabled={!canScrollRight}
-                aria-label="Slide opsi tokoh ke kanan"
-                className={`px-3 py-2 rounded-xl border transition-all flex items-center gap-1.5 cursor-pointer font-mono text-xs ${
-                  canScrollRight
-                    ? 'bg-[#C5A059] hover:bg-[#D5B36E] text-[#0C0A08] font-bold border-[#C5A059] shadow-md shadow-[#C5A059]/15 animate-pulse hover:animate-none'
-                    : 'bg-[#14110E]/40 text-[#554D42] border-[#C5A059]/15 cursor-not-allowed opacity-40'
-                }`}
-              >
-                <span>Slide ke Kanan</span>
-                <ChevronRight className="w-4 h-4" />
-              </button>
             </div>
           </div>
 
-          {/* Slidable Photo Option Track with Gradient Masks */}
-          <div className="relative group/track">
-            {/* Left Gradient Edge Mask */}
-            {canScrollLeft && (
-              <div className="absolute left-0 inset-y-0 w-12 bg-gradient-to-r from-[#0C0A08] via-[#0C0A08]/80 to-transparent z-10 pointer-events-none rounded-l-2xl" />
-            )}
-
-            {/* Right Gradient Edge Mask */}
-            {canScrollRight && (
-              <div className="absolute right-0 inset-y-0 w-12 bg-gradient-to-l from-[#0C0A08] via-[#0C0A08]/80 to-transparent z-10 pointer-events-none rounded-r-2xl" />
-            )}
-
-            {/* Floating Quick-Slide Right Arrow */}
-            {canScrollRight && (
-              <button
-                type="button"
-                onClick={slideRight}
-                aria-label="Slide opsi pahlawan ke kanan"
-                className="hidden sm:flex absolute -right-3 top-1/2 -translate-y-1/2 z-20 w-10 h-10 items-center justify-center rounded-full bg-[#C5A059] hover:bg-[#D5B36E] text-[#0C0A08] shadow-2xl transition-transform hover:scale-110 cursor-pointer border-2 border-[#0C0A08]"
-              >
-                <ChevronRight className="w-5 h-5 font-bold" />
-              </button>
-            )}
-
-            {/* Floating Quick-Slide Left Arrow */}
-            {canScrollLeft && (
-              <button
-                type="button"
-                onClick={slideLeft}
-                aria-label="Slide opsi pahlawan ke kiri"
-                className="hidden sm:flex absolute -left-3 top-1/2 -translate-y-1/2 z-20 w-10 h-10 items-center justify-center rounded-full bg-[#14110E] hover:bg-[#C5A059] text-[#C5A059] hover:text-[#0C0A08] border border-[#C5A059]/60 shadow-2xl transition-transform hover:scale-110 cursor-pointer"
-              >
-                <ChevronLeft className="w-5 h-5" />
-              </button>
-            )}
-
+          {/* Slidable Photo Option Track */}
+          <div className="space-y-2">
             {/* Track Container */}
             <div
               ref={sliderRef}
               role="tablist"
               aria-label="Pilih tokoh peradaban"
-              className="rounded-2xl border border-[#C5A059]/25 p-2 flex gap-3 overflow-x-auto bg-[#14110E]/95 scrollbar-none scroll-smooth items-stretch"
+              className="rounded-2xl border border-[#C5A059]/25 p-2 flex gap-3 overflow-x-auto bg-[#14110E]/95 tokoh-sliderbar scroll-smooth items-stretch"
             >
               {tokohArticles.map((tokoh, index) => {
                 const isActive = tokoh.slug === activeFigure.slug;
@@ -280,6 +205,23 @@ export function TokohIdentitySection() {
                   </button>
                 );
               })}
+            </div>
+
+            {/* Synchronized Archival Range Sliderbar */}
+            <div className="pt-2 px-1 flex items-center gap-3">
+              <span className="text-[10px] font-mono text-[#C5A059] font-bold shrink-0">01</span>
+              <div className="relative flex-1 flex items-center">
+                <input
+                  type="range"
+                  min={0}
+                  max={100}
+                  value={scrollProgress}
+                  onChange={handleSliderChange}
+                  aria-label="Sliderbar posisi tokoh peradaban"
+                  className="w-full h-1.5 sm:h-2 bg-[#1C1610] rounded-full appearance-none cursor-pointer accent-[#C5A059] border border-[#C5A059]/30 focus:outline-none hover:border-[#C5A059] transition-colors"
+                />
+              </div>
+              <span className="text-[10px] font-mono text-[#A89F91] font-bold shrink-0">0{tokohArticles.length}</span>
             </div>
           </div>
         </div>
@@ -394,29 +336,6 @@ export function TokohIdentitySection() {
                     <span>Baca Biografi Penuh</span>
                     <ArrowRight className="w-3.5 h-3.5" />
                   </Link>
-                </div>
-
-                {/* Slide Navigation Between Heroes */}
-                <div className="pt-4 border-t border-[#C5A059]/20 flex flex-wrap items-center justify-between gap-3 text-xs font-mono">
-                  <button
-                    type="button"
-                    onClick={() => handleSelectTokoh(prevFigure.slug)}
-                    aria-label={`Slide ke tokoh sebelumnya: ${prevFigure.name}`}
-                    className="px-4 py-2.5 bg-[#14110E] hover:bg-[#1C1610] text-[#A89F91] hover:text-[#F4EFE6] border border-[#C5A059]/30 hover:border-[#C5A059]/60 rounded-xl transition-all flex items-center gap-2 cursor-pointer"
-                  >
-                    <ChevronLeft className="w-4 h-4 text-[#C5A059]" />
-                    <span>Sebelumnya: <strong className="text-[#F4EFE6]">{prevFigure.name}</strong></span>
-                  </button>
-
-                  <button
-                    type="button"
-                    onClick={() => handleSelectTokoh(nextFigure.slug)}
-                    aria-label={`Slide ke tokoh berikutnya: ${nextFigure.name}`}
-                    className="px-4 py-2.5 bg-[#14110E] hover:bg-[#C5A059] text-[#C5A059] hover:text-[#0C0A08] border border-[#C5A059]/40 hover:border-[#C5A059] rounded-xl font-bold transition-all flex items-center gap-2 cursor-pointer group shadow-md"
-                  >
-                    <span>Slide ke Kanan: <strong>{nextFigure.name}</strong></span>
-                    <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                  </button>
                 </div>
               </div>
             </div>

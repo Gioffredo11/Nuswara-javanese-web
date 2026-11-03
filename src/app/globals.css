@@ -965,3 +965,25 @@ img[loading="lazy"][data-nimg] {
   outline-offset: 2px !important;
 }
 
+/* Custom Archival Gold Sliderbar for Tokoh */
+.tokoh-sliderbar {
+  scrollbar-width: thin;
+  scrollbar-color: #C5A059 #14110E;
+}
+.tokoh-sliderbar::-webkit-scrollbar {
+  height: 6px;
+}
+.tokoh-sliderbar::-webkit-scrollbar-track {
+  background: #14110E;
+  border-radius: 9999px;
+  border: 1px solid rgba(197, 160, 89, 0.2);
+}
+.tokoh-sliderbar::-webkit-scrollbar-thumb {
+  background: #C5A059;
+  border-radius: 9999px;
+}
+.tokoh-sliderbar::-webkit-scrollbar-thumb:hover {
+  background: #D5B36E;
+}
+
+
