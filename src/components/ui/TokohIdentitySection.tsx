@@ -105,13 +105,13 @@ export function TokohIdentitySection() {
               </p>
             </div>
 
-            {/* Primary Action Button */}
+            {/* Primary Action Button: Direktori Tokoh (BERWARNA) */}
             <div className="shrink-0">
               <Link
                 href="/tokoh"
-                className="inline-flex items-center gap-2 px-6 py-3.5 bg-[#14110E] hover:bg-[#C5A059] text-[#C5A059] hover:text-[#0C0A08] border border-[#C5A059]/40 hover:border-[#C5A059] font-mono text-xs font-bold uppercase tracking-wider transition-all duration-300 group cursor-pointer shadow-md rounded-xl"
+                className="inline-flex items-center gap-2 px-6 py-3.5 bg-[#C5A059] hover:bg-[#D5B36E] text-[#0C0A08] font-mono text-xs font-bold uppercase tracking-wider transition-all duration-300 group cursor-pointer shadow-lg rounded-xl"
               >
-                <BookOpen className="w-4 h-4 text-[#C5A059] group-hover:text-[#0C0A08] transition-colors" />
+                <BookOpen className="w-4 h-4 text-[#0C0A08]" />
                 <span>Buka Direktori ({tokohArticles.length} Tokoh)</span>
                 <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
               </Link>
@@ -318,24 +318,36 @@ export function TokohIdentitySection() {
                   </span>
                 </div>
 
-                {/* Action Buttons: Inspect Archival Dossier or Full Article */}
+                {/* Action Buttons: Primary Directory (Colored) & Figure Biography (Uncolored) */}
                 <div className="pt-2 flex flex-wrap items-center gap-3">
-                  <button
-                    type="button"
-                    onClick={() => setSelectedTokoh(activeFigure)}
-                    className="min-h-[44px] px-6 py-3.5 bg-[#C5A059] hover:bg-[#D5B36E] text-[#0C0A08] font-bold text-xs uppercase font-mono tracking-wider transition-colors shadow-lg flex items-center gap-2 cursor-pointer rounded-xl"
+                  {/* Primary Colored Button: Direktori Tokoh */}
+                  <Link
+                    href="/tokoh"
+                    className="min-h-[44px] px-6 py-3.5 bg-[#C5A059] hover:bg-[#D5B36E] text-[#0C0A08] font-bold text-xs uppercase font-mono tracking-wider transition-colors shadow-lg flex items-center gap-2 cursor-pointer rounded-xl group"
                   >
-                    <FileText className="w-4 h-4 text-[#0C0A08]" />
-                    <span>Buka Berkas Arsip Lengkap</span>
-                  </button>
+                    <BookOpen className="w-4 h-4 text-[#0C0A08]" />
+                    <span>Buka Direktori Tokoh</span>
+                    <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                  </Link>
 
+                  {/* Secondary Uncolored Button: Biografi Tokoh */}
                   <Link
                     href={`/tokoh/${activeFigure.slug}`}
                     className="min-h-[44px] px-6 py-3.5 bg-[#14110E] hover:bg-[#1C1610] text-[#C5A059] hover:text-[#F4EFE6] border border-[#C5A059]/40 rounded-xl font-medium text-xs font-mono uppercase tracking-wider transition-colors flex items-center gap-2 cursor-pointer"
                   >
-                    <span>Baca Biografi Penuh</span>
+                    <span>Baca Biografi {activeFigure.name}</span>
                     <ArrowRight className="w-3.5 h-3.5" />
                   </Link>
+
+                  {/* Secondary Modal Trigger: Dossier Ringkas */}
+                  <button
+                    type="button"
+                    onClick={() => setSelectedTokoh(activeFigure)}
+                    className="min-h-[44px] px-4 py-3.5 bg-[#14110E] hover:bg-[#1C1610] text-[#A89F91] hover:text-[#F4EFE6] border border-[#C5A059]/20 rounded-xl font-mono text-xs uppercase tracking-wider transition-colors flex items-center gap-1.5 cursor-pointer"
+                  >
+                    <FileText className="w-3.5 h-3.5" />
+                    <span>Dossier</span>
+                  </button>
                 </div>
               </div>
             </div>

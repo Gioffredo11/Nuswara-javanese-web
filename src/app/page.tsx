@@ -427,20 +427,23 @@ export function HomePage({ defaultSection }: HomePageProps = {}) {
                 </blockquote>
 
                 <div className="pt-3 flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+                  {/* Primary Colored Button: Direktori Sejarah */}
+                  <Link
+                    href="/sejarah"
+                    className="inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-[#8C6D32] hover:bg-[#6D5424] text-[#F3EFE6] font-bold text-xs font-mono uppercase tracking-wider transition-all shadow-md cursor-pointer rounded-xl group"
+                  >
+                    <BookOpen className="w-4 h-4 text-[#F3EFE6]" />
+                    <span>Buka Direktori Sejarah</span>
+                    <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                  </Link>
+
+                  {/* Secondary Uncolored Button: Bab Terpilih */}
                   <Link
                     href={currentChapter.ctaLink}
-                    className="inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-[#1C1814] hover:bg-[#8C6D32] text-[#F3EFE6] text-xs font-mono uppercase tracking-wider transition-colors"
+                    className="inline-flex items-center justify-center gap-2 px-6 py-3.5 border border-[#1C1814]/30 hover:border-[#1C1814] text-[#1C1814] hover:bg-[#1C1814]/5 text-xs font-mono uppercase tracking-wider transition-colors rounded-xl cursor-pointer"
                   >
                     <span>{currentChapter.ctaLabel}</span>
                     <ArrowRight className="w-4 h-4" />
-                  </Link>
-
-                  <Link
-                    href="/sejarah"
-                    className="inline-flex items-center justify-center gap-2 px-6 py-3.5 border border-[#1C1814]/30 hover:border-[#1C1814] text-[#1C1814] hover:bg-[#1C1814]/5 text-xs font-mono uppercase tracking-wider transition-colors"
-                  >
-                    <BookOpen className="w-4 h-4 text-[#8C6D32]" />
-                    <span>Buka Arsip Lengkap</span>
                   </Link>
                 </div>
               </ScrollReveal>
@@ -498,6 +501,18 @@ export function HomePage({ defaultSection }: HomePageProps = {}) {
               </p>
 
               <div className="flex flex-wrap items-center gap-3 pt-2">
+                {/* Primary Colored Button: Direktori Wayangpedia */}
+                <button
+                  type="button"
+                  onClick={() => scrollToSection('wayangpedia')}
+                  className="px-6 py-3.5 bg-[#C5A059] hover:bg-[#D5B36E] text-[#0C0A08] font-mono text-xs uppercase font-bold tracking-wider rounded-xl transition-all shadow-lg flex items-center gap-2 group cursor-pointer"
+                >
+                  <BookOpen className="w-4 h-4 text-[#0C0A08]" />
+                  <span>Buka Direktori Wayangpedia</span>
+                  <ArrowRight className="w-3.5 h-3.5 text-[#0C0A08]/80 group-hover:translate-x-1 transition-transform" />
+                </button>
+
+                {/* Secondary Uncolored Button: Tarik Kartu Manifestasi */}
                 <button
                   type="button"
                   onClick={(e) => {
@@ -506,19 +521,10 @@ export function HomePage({ defaultSection }: HomePageProps = {}) {
                       window.dispatchEvent(new CustomEvent('open-manifestation-modal'));
                     }
                   }}
-                  className="group relative px-6 py-3.5 bg-gradient-to-r from-[#C5A059] via-[#E2C37E] to-[#C5A059] hover:from-[#D5B36E] hover:to-[#E0BF78] text-[#0C0A08] font-bold text-xs uppercase font-mono tracking-wider rounded-xl transition-all shadow-[0_4px_20px_rgba(197,160,89,0.3)] hover:shadow-[0_0_30px_rgba(197,160,89,0.55)] hover:scale-[1.02] active:scale-95 flex items-center gap-2.5 cursor-pointer overflow-hidden"
+                  className="px-6 py-3.5 bg-[#14110E] hover:bg-[#1C1610] text-[#C5A059] hover:text-[#F4EFE6] font-mono text-xs uppercase tracking-wider border border-[#C5A059]/40 rounded-xl transition-all flex items-center gap-2 cursor-pointer"
                 >
-                  <Sparkles className="w-4 h-4 text-[#0C0A08] animate-pulse" />
-                  <span>Tarik Kartu Manifestasi Hari Ini</span>
-                  <ArrowRight className="w-3.5 h-3.5 text-[#0C0A08]/80 group-hover:translate-x-1 transition-transform" />
-                </button>
-                <button
-                  type="button"
-                  onClick={() => scrollToSection('wayangpedia')}
-                  className="px-6 py-3.5 bg-[#14110E] hover:bg-[#1C1610] text-[#C5A059] font-mono text-xs uppercase tracking-wider border border-[#C5A059]/40 rounded-xl transition-all flex items-center gap-2 cursor-pointer"
-                >
-                  <BookOpen className="w-4 h-4" />
-                  <span>Katalog Wayangpedia</span>
+                  <Sparkles className="w-4 h-4 text-[#C5A059]" />
+                  <span>Tarik Kartu Manifestasi</span>
                 </button>
               </div>
             </ScrollReveal>
@@ -609,14 +615,24 @@ export function HomePage({ defaultSection }: HomePageProps = {}) {
                   Lahir dari kisah cinta Tjoa Thay Yoe dan Mbok Wasih di Pasar Johar abad ke-19, memadukan tradisi gulung gandum Tionghoa dengan manis gurih rebung muda dan bumbu rempah Jawa. Simbol toleransi rasa luhur yang merajut persaudaraan di tanah pesisir.
                 </p>
 
-                {/* Primary Action Button */}
-                <div className="pt-2">
+                {/* Action Buttons: Primary Directory (Colored) & Featured Recipe (Uncolored) */}
+                <div className="pt-2 flex flex-wrap items-center gap-3">
+                  {/* Primary Colored Button: Direktori Kuliner */}
                   <Link
-                    href="/kuliner/lumpia-semarang"
+                    href="/kuliner"
                     className="inline-flex items-center gap-2 px-6 py-3.5 bg-[#C5A059] hover:bg-[#D5B36E] text-[#0C0A08] font-bold text-xs uppercase font-mono tracking-wider rounded-xl transition-all shadow-lg group cursor-pointer"
                   >
-                    <span>Pelajari Sejarah &amp; Resep Lumpia Semarang</span>
+                    <span>Buka Direktori Kuliner</span>
                     <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                  </Link>
+
+                  {/* Secondary Uncolored Button: Lumpia Semarang */}
+                  <Link
+                    href="/kuliner/lumpia-semarang"
+                    className="inline-flex items-center gap-2 px-6 py-3.5 bg-[#14110E] hover:bg-[#1C1610] text-[#C5A059] hover:text-[#F4EFE6] border border-[#C5A059]/40 rounded-xl font-medium text-xs font-mono uppercase tracking-wider transition-colors cursor-pointer"
+                  >
+                    <span>Pelajari Lumpia Semarang</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
                   </Link>
                 </div>
               </div>
@@ -625,17 +641,10 @@ export function HomePage({ defaultSection }: HomePageProps = {}) {
 
           {/* Editorial Footnote */}
           <ScrollReveal direction="up" distance={20} delay={150}>
-            <div className="pt-6 border-t border-[#C5A059]/20 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono">
-              <span className="text-[#8E8271] text-center sm:text-left">
+            <div className="pt-6 border-t border-[#C5A059]/20 flex items-center justify-between text-xs font-mono">
+              <span className="text-[#8E8271]">
                 Dokumentasi gastronomi dan kuliner otentik Jawa Tengah.
               </span>
-              <Link
-                href="/kuliner"
-                className="inline-flex items-center gap-1.5 text-[#C5A059] hover:text-[#F4EFE6] font-bold transition-colors group shrink-0"
-              >
-                <span>Buka Direktori Kuliner</span>
-                <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
-              </Link>
             </div>
           </ScrollReveal>
         </div>
@@ -699,13 +708,24 @@ export function HomePage({ defaultSection }: HomePageProps = {}) {
                   Piramida mandala terbesar di bumi yang menuntun peziarah melintasi tiga alam kesadaran batin manusia: dari belenggu hawa nafsu duniawi (<em>Kamadhatu</em>), melampaui wujud dan rupa kebajikan (<em>Rupadhatu</em>), hingga mencapai keheningan sempurna tanpa rupa (<em>Arupadhatu</em>).
                 </p>
 
-                <div className="pt-2">
+                {/* Action Buttons: Primary Directory (Colored) & Featured Monument (Uncolored) */}
+                <div className="pt-2 flex flex-wrap items-center gap-3">
+                  {/* Primary Colored Button: Direktori Tempat Sakral */}
                   <Link
-                    href="/tempat-sakral/candi-borobudur"
+                    href="/tempat-sakral"
                     className="inline-flex items-center gap-2 px-6 py-3.5 bg-[#C5A059] hover:bg-[#D5B36E] text-[#0C0A08] font-bold text-xs uppercase font-mono tracking-wider rounded-xl transition-all shadow-lg group cursor-pointer"
                   >
-                    <span>Pelajari Filosofi Spiritual Borobudur</span>
+                    <span>Buka Direktori Tempat Sakral</span>
                     <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                  </Link>
+
+                  {/* Secondary Uncolored Button: Candi Borobudur */}
+                  <Link
+                    href="/tempat-sakral/candi-borobudur"
+                    className="inline-flex items-center gap-2 px-6 py-3.5 bg-[#14110E] hover:bg-[#1C1610] text-[#C5A059] hover:text-[#F4EFE6] border border-[#C5A059]/40 rounded-xl font-medium text-xs font-mono uppercase tracking-wider transition-colors cursor-pointer"
+                  >
+                    <span>Pelajari Filosofi Borobudur</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
                   </Link>
                 </div>
               </div>
@@ -714,17 +734,10 @@ export function HomePage({ defaultSection }: HomePageProps = {}) {
 
           {/* Editorial Footnote */}
           <ScrollReveal direction="up" distance={20} delay={150}>
-            <div className="pt-6 border-t border-[#C5A059]/20 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono">
-              <span className="text-[#8E8271] text-center sm:text-left">
+            <div className="pt-6 border-t border-[#C5A059]/20 flex items-center justify-between text-xs font-mono">
+              <span className="text-[#8E8271]">
                 Dokumentasi monumen keabadian dan ruang sakral Jawa Tengah.
               </span>
-              <Link
-                href="/tempat-sakral"
-                className="inline-flex items-center gap-1.5 text-[#C5A059] hover:text-[#F4EFE6] font-bold transition-colors group shrink-0"
-              >
-                <span>Buka Direktori Tempat Sakral</span>
-                <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
-              </Link>
             </div>
           </ScrollReveal>
         </div>
