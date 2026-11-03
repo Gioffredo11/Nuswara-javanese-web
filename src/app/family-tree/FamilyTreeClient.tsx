@@ -5,9 +5,6 @@ import { Link } from '@/components/common/Link';
 import Image from 'next/image';
 import { getTarotImagePath, GununganSvg } from '@/components/ui/WayangVectors';
 import {
-  ZoomIn,
-  ZoomOut,
-  Maximize2,
   GitFork,
   ArrowRight,
   Info,
@@ -38,7 +35,6 @@ export function FamilyTreeClient() {
   const [selectedNode, setSelectedNode] = useState<TreeNode | null>(() => {
     return INITIAL_TREE_NODES.find((n) => n.slug === 'arjuna') || INITIAL_TREE_NODES[0] || null;
   });
-  const [zoomLevel, setZoomLevel] = useState(1);
   const [activeTab, setActiveTab] = useState<'visual' | 'lineage'>('visual');
   const [searchQuery, setSearchQuery] = useState('');
 
@@ -185,7 +181,7 @@ export function FamilyTreeClient() {
           </p>
         </div>
 
-        {/* View Switcher, Search & Zoom Controls */}
+        {/* View Switcher & Search Filter */}
         <div className="flex flex-wrap items-center gap-3">
           {/* Search filter input */}
           <div className="relative">
@@ -222,34 +218,6 @@ export function FamilyTreeClient() {
             </button>
           </div>
 
-          {activeTab === 'visual' && (
-            <div className="hidden sm:flex items-center bg-[#14110E] border border-[#C5A059]/30 rounded-xl p-1 font-mono">
-              <button
-                onClick={() => setZoomLevel((z) => Math.max(0.7, z - 0.1))}
-                className="p-1.5 text-[#A89F91] hover:text-[#F4EFE6] hover:bg-[#1A1612] rounded-lg cursor-pointer transition-colors"
-                title="Perkecil"
-              >
-                <ZoomOut className="w-3.5 h-3.5" />
-              </button>
-              <span className="text-[11px] font-mono px-2 text-[#C5A059]">
-                {Math.round(zoomLevel * 100)}%
-              </span>
-              <button
-                onClick={() => setZoomLevel((z) => Math.min(1.3, z + 0.1))}
-                className="p-1.5 text-[#A89F91] hover:text-[#F4EFE6] hover:bg-[#1A1612] rounded-lg cursor-pointer transition-colors"
-                title="Perbesar"
-              >
-                <ZoomIn className="w-3.5 h-3.5" />
-              </button>
-              <button
-                onClick={() => setZoomLevel(1)}
-                className="p-1.5 text-[#A89F91] hover:text-[#F4EFE6] hover:bg-[#1A1612] ml-1 rounded-lg cursor-pointer transition-colors"
-                title="Reset Zoom"
-              >
-                <Maximize2 className="w-3.5 h-3.5" />
-              </button>
-            </div>
-          )}
         </div>
       </div>
 
@@ -264,10 +232,7 @@ export function FamilyTreeClient() {
             </div>
           )}
           {activeTab === 'visual' ? (
-            <div
-              style={{ transform: `scale(${zoomLevel})`, transformOrigin: 'top left' }}
-              className="transition-transform duration-200 min-w-[500px]"
-            >
+            <div className="min-w-[500px]">
               {/* CONNECTED LINEAGE TREE WITH ORTHOGONAL SPINE */}
               <div className="relative border-l-2 border-[#C5A059]/35 ml-4 sm:ml-6 pl-6 sm:pl-8 space-y-12">
                 {/* GENERASI 1: Sesepuh & Pamomong */}
