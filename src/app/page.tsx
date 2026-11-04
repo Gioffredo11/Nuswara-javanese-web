@@ -351,15 +351,11 @@ export function HomePage({ defaultSection }: HomePageProps = {}) {
                       className="object-cover hover:scale-102 transition-transform duration-700"
                     />
                   </div>
-                  <div className="pt-4 pb-1 px-1">
-                    <div className="flex items-center justify-between text-[10px] font-mono uppercase tracking-wider text-[#8C6D32] font-semibold border-b border-[#1C1814]/10 pb-2 mb-2.5">
-                      <span>[ ARSIP VISUAL // KATALOG NO. {currentChapter.catalogNo} ]</span>
-                      <span>{currentChapter.location}</span>
-                    </div>
+                  <div className="pt-3.5 pb-1 px-1">
                     <span className="text-xs sm:text-sm font-mono uppercase tracking-wider text-[#1C1814] font-bold block">
                       {currentChapter.imageLabel}
                     </span>
-                    <p className="font-editorial italic text-xs sm:text-sm text-[#574F44] mt-2 leading-relaxed">
+                    <p className="font-editorial italic text-xs sm:text-sm text-[#574F44] mt-1.5 leading-relaxed">
                       {currentChapter.imageCaption}
                     </p>
                   </div>
