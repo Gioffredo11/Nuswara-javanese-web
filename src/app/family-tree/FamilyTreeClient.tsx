@@ -307,17 +307,6 @@ export function FamilyTreeClient() {
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 pt-0.5">
                       {gen1.map((node) => {
                         const isSelected = selectedNode?.id === node.id;
-                        const directRel = selectedNode && node.id !== selectedNode.id
-                          ? activeRelationships.find(
-                              (r) =>
-                                (r.fromSlug === selectedNode.slug && r.toSlug === node.slug) ||
-                                (r.toSlug === selectedNode.slug && r.fromSlug === node.slug)
-                            )
-                          : null;
-                        const relInfo = directRel
-                          ? getRelationInfo(directRel.type, true, directRel.fromSlug === selectedNode?.slug)
-                          : null;
-
                         return (
                           <button
                             key={node.id}
@@ -325,8 +314,6 @@ export function FamilyTreeClient() {
                             className={`p-2.5 border text-left transition-all duration-300 cursor-pointer relative rounded-xl flex items-center gap-3 ${
                               isSelected
                                 ? 'bg-gradient-to-r from-[#241A10] to-[#16120D] text-[#F4EFE6] border-[#C5A059] font-bold shadow-lg ring-2 ring-[#C5A059]/50 scale-[1.02]'
-                                : relInfo
-                                ? 'bg-[#1C1610] text-[#F4EFE6] border-[#C5A059]/60 hover:border-[#C5A059] shadow-sm'
                                 : 'bg-[#14110E] text-[#D5C9B5] border-[#C5A059]/25 hover:border-[#C5A059]/60 hover:bg-[#1A1612]'
                             }`}
                           >
@@ -334,8 +321,6 @@ export function FamilyTreeClient() {
                             <div className={`relative w-11 h-14 rounded-lg overflow-hidden shrink-0 border transition-all ${
                               isSelected
                                 ? 'border-[#C5A059] ring-1 ring-[#C5A059]/60 shadow-md'
-                                : relInfo
-                                ? 'border-[#C5A059]/60 ring-1 ring-[#C5A059]/30'
                                 : 'border-[#C5A059]/30'
                             }`}>
                               <Image
@@ -349,18 +334,11 @@ export function FamilyTreeClient() {
 
                             {/* Identity Info */}
                             <div className="min-w-0 flex-1">
-                              <div className="flex items-center justify-between gap-1">
-                                <span className={`text-[9px] font-mono uppercase tracking-wider block truncate ${
-                                  isSelected ? 'text-[#C5A059]' : 'text-[#8E8271]'
-                                }`}>
-                                  {node.kingdom || getCategoryName(node.category)}
-                                </span>
-                                {relInfo && (
-                                  <span className={`text-[8px] font-mono px-1.5 py-0.2 rounded-full uppercase font-bold shrink-0 border ${relInfo.badgeColor}`}>
-                                    {relInfo.label}
-                                  </span>
-                                )}
-                              </div>
+                              <span className={`text-[9px] font-mono uppercase tracking-wider block truncate ${
+                                isSelected ? 'text-[#C5A059]' : 'text-[#8E8271]'
+                              }`}>
+                                {node.kingdom || getCategoryName(node.category)}
+                              </span>
                               <div className={`font-royal font-bold text-sm block truncate mt-0.5 ${
                                 isSelected ? 'text-[#F4EFE6]' : 'text-[#D5C9B5]'
                               }`}>
@@ -401,17 +379,6 @@ export function FamilyTreeClient() {
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 pt-0.5">
                       {gen2.map((node) => {
                         const isSelected = selectedNode?.id === node.id;
-                        const directRel = selectedNode && node.id !== selectedNode.id
-                          ? activeRelationships.find(
-                              (r) =>
-                                (r.fromSlug === selectedNode.slug && r.toSlug === node.slug) ||
-                                (r.toSlug === selectedNode.slug && r.fromSlug === node.slug)
-                            )
-                          : null;
-                        const relInfo = directRel
-                          ? getRelationInfo(directRel.type, true, directRel.fromSlug === selectedNode?.slug)
-                          : null;
-
                         return (
                           <button
                             key={node.id}
@@ -419,8 +386,6 @@ export function FamilyTreeClient() {
                             className={`p-2.5 border text-left transition-all duration-300 cursor-pointer relative rounded-xl flex items-center gap-3 ${
                               isSelected
                                 ? 'bg-gradient-to-r from-[#241A10] to-[#16120D] text-[#F4EFE6] border-[#C5A059] font-bold shadow-lg ring-2 ring-[#C5A059]/50 scale-[1.02]'
-                                : relInfo
-                                ? 'bg-[#1C1610] text-[#F4EFE6] border-[#C5A059]/60 hover:border-[#C5A059] shadow-sm'
                                 : 'bg-[#14110E] text-[#D5C9B5] border-[#C5A059]/25 hover:border-[#C5A059]/60 hover:bg-[#1A1612]'
                             }`}
                           >
@@ -428,8 +393,6 @@ export function FamilyTreeClient() {
                             <div className={`relative w-11 h-14 rounded-lg overflow-hidden shrink-0 border transition-all ${
                               isSelected
                                 ? 'border-[#C5A059] ring-1 ring-[#C5A059]/60 shadow-md'
-                                : relInfo
-                                ? 'border-[#C5A059]/60 ring-1 ring-[#C5A059]/30'
                                 : 'border-[#C5A059]/30'
                             }`}>
                               <Image
@@ -443,18 +406,11 @@ export function FamilyTreeClient() {
 
                             {/* Identity Info */}
                             <div className="min-w-0 flex-1">
-                              <div className="flex items-center justify-between gap-1">
-                                <span className={`text-[9px] font-mono uppercase tracking-wider block truncate ${
-                                  isSelected ? 'text-[#C5A059]' : 'text-[#8E8271]'
-                                }`}>
-                                  {node.kingdom || getCategoryName(node.category)}
-                                </span>
-                                {relInfo && (
-                                  <span className={`text-[8px] font-mono px-1.5 py-0.2 rounded-full uppercase font-bold shrink-0 border ${relInfo.badgeColor}`}>
-                                    {relInfo.label}
-                                  </span>
-                                )}
-                              </div>
+                              <span className={`text-[9px] font-mono uppercase tracking-wider block truncate ${
+                                isSelected ? 'text-[#C5A059]' : 'text-[#8E8271]'
+                              }`}>
+                                {node.kingdom || getCategoryName(node.category)}
+                              </span>
                               <div className={`font-royal font-bold text-sm block truncate mt-0.5 ${
                                 isSelected ? 'text-[#F4EFE6]' : 'text-[#D5C9B5]'
                               }`}>
@@ -495,17 +451,6 @@ export function FamilyTreeClient() {
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 pt-0.5">
                       {gen3.map((node) => {
                         const isSelected = selectedNode?.id === node.id;
-                        const directRel = selectedNode && node.id !== selectedNode.id
-                          ? activeRelationships.find(
-                              (r) =>
-                                (r.fromSlug === selectedNode.slug && r.toSlug === node.slug) ||
-                                (r.toSlug === selectedNode.slug && r.fromSlug === node.slug)
-                            )
-                          : null;
-                        const relInfo = directRel
-                          ? getRelationInfo(directRel.type, true, directRel.fromSlug === selectedNode?.slug)
-                          : null;
-
                         return (
                           <button
                             key={node.id}
@@ -513,8 +458,6 @@ export function FamilyTreeClient() {
                             className={`p-2.5 border text-left transition-all duration-300 cursor-pointer relative rounded-xl flex items-center gap-3 ${
                               isSelected
                                 ? 'bg-gradient-to-r from-[#241A10] to-[#16120D] text-[#F4EFE6] border-[#C5A059] font-bold shadow-lg ring-2 ring-[#C5A059]/50 scale-[1.02]'
-                                : relInfo
-                                ? 'bg-[#1C1610] text-[#F4EFE6] border-[#C5A059]/60 hover:border-[#C5A059] shadow-sm'
                                 : 'bg-[#14110E] text-[#D5C9B5] border-[#C5A059]/25 hover:border-[#C5A059]/60 hover:bg-[#1A1612]'
                             }`}
                           >
@@ -522,8 +465,6 @@ export function FamilyTreeClient() {
                             <div className={`relative w-11 h-14 rounded-lg overflow-hidden shrink-0 border transition-all ${
                               isSelected
                                 ? 'border-[#C5A059] ring-1 ring-[#C5A059]/60 shadow-md'
-                                : relInfo
-                                ? 'border-[#C5A059]/60 ring-1 ring-[#C5A059]/30'
                                 : 'border-[#C5A059]/30'
                             }`}>
                               <Image
@@ -537,18 +478,11 @@ export function FamilyTreeClient() {
 
                             {/* Identity Info */}
                             <div className="min-w-0 flex-1">
-                              <div className="flex items-center justify-between gap-1">
-                                <span className={`text-[9px] font-mono uppercase tracking-wider block truncate ${
-                                  isSelected ? 'text-[#C5A059]' : 'text-[#8E8271]'
-                                }`}>
-                                  {node.kingdom || getCategoryName(node.category)}
-                                </span>
-                                {relInfo && (
-                                  <span className={`text-[8px] font-mono px-1.5 py-0.2 rounded-full uppercase font-bold shrink-0 border ${relInfo.badgeColor}`}>
-                                    {relInfo.label}
-                                  </span>
-                                )}
-                              </div>
+                              <span className={`text-[9px] font-mono uppercase tracking-wider block truncate ${
+                                isSelected ? 'text-[#C5A059]' : 'text-[#8E8271]'
+                              }`}>
+                                {node.kingdom || getCategoryName(node.category)}
+                              </span>
                               <div className={`font-royal font-bold text-sm block truncate mt-0.5 ${
                                 isSelected ? 'text-[#F4EFE6]' : 'text-[#D5C9B5]'
                               }`}>
