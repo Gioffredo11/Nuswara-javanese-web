@@ -223,7 +223,7 @@ export function FamilyTreeClient() {
       {/* Main Work Area: Tree Canvas + Inspector Drawer */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
         {/* Canvas / Tree Area */}
-        <div className="lg:col-span-8 bg-[#0C0A08] border border-[#C5A059]/30 rounded-2xl p-4 sm:p-6 min-h-[480px] overflow-x-auto shadow-2xl relative">
+        <div className="lg:col-span-8 bg-[#0C0A08] border border-[#C5A059]/30 rounded-2xl p-4 sm:p-6 overflow-x-auto shadow-2xl relative">
           {activeTab === 'visual' && (
             <div className="sm:hidden flex items-center justify-between text-[11px] font-mono text-[#C5A059] bg-[#14110E] border border-[#C5A059]/30 rounded-lg px-3 py-1.5 mb-4">
               <span>Geser horizontal untuk menelusuri bagan purwa</span>
@@ -236,9 +236,9 @@ export function FamilyTreeClient() {
               <div className="relative border-l-2 border-[#C5A059]/35 ml-4 sm:ml-6 pl-6 sm:pl-8 space-y-8">
                 {/* GENERASI 1: Sesepuh & Pamomong */}
                 {gen1.length > 0 && (
-                  <div className="relative space-y-2.5">
+                  <div className="relative space-y-3">
                     {/* Orthogonal connector arm */}
-                    <div className="absolute -left-6 sm:-left-8 top-3 w-6 sm:w-8 h-[2px] bg-[#C5A059]/40" />
+                    <div className="absolute -left-6 sm:-left-8 top-3.5 w-6 sm:w-8 h-[2px] bg-[#C5A059]/40" />
 
                     <div className="flex items-center gap-3">
                       <span className="text-[10px] font-mono uppercase tracking-widest text-[#0C0A08] bg-[#C5A059] px-2.5 py-0.5 font-bold rounded-full shadow-xs">
@@ -247,22 +247,58 @@ export function FamilyTreeClient() {
                       <div className="flex-1 h-[1px] bg-[#C5A059]/20" />
                     </div>
 
-                    <div className="flex flex-wrap gap-2.5 pt-0.5">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 pt-0.5">
                       {gen1.map((node) => {
                         const isSelected = selectedNode?.id === node.id;
                         return (
                           <button
                             key={node.id}
                             onClick={() => setSelectedNode(node)}
-                            className={`px-3.5 py-2 border text-center transition-all cursor-pointer relative rounded-xl ${
+                            className={`p-2.5 border text-left transition-all duration-300 cursor-pointer relative rounded-xl flex items-center gap-3 ${
                               isSelected
-                                ? 'bg-[#C5A059] text-[#0C0A08] border-[#C5A059] font-bold shadow-md ring-2 ring-[#C5A059]/40'
-                                : 'bg-[#14110E] text-[#F4EFE6] border-[#C5A059]/25 hover:border-[#C5A059] hover:bg-[#1A1612]'
+                                ? 'bg-gradient-to-r from-[#241A10] to-[#16120D] text-[#F4EFE6] border-[#C5A059] font-bold shadow-lg ring-2 ring-[#C5A059]/50 scale-[1.02]'
+                                : 'bg-[#14110E] text-[#D5C9B5] border-[#C5A059]/25 hover:border-[#C5A059]/60 hover:bg-[#1A1612]'
                             }`}
                           >
-                            <span className="font-royal font-bold text-xs sm:text-sm tracking-wide block truncate">
-                              {node.name}
-                            </span>
+                            {/* Visual Tarot Artwork */}
+                            <div className={`relative w-11 h-14 rounded-lg overflow-hidden shrink-0 border transition-all ${
+                              isSelected
+                                ? 'border-[#C5A059] ring-1 ring-[#C5A059]/60 shadow-md'
+                                : 'border-[#C5A059]/30'
+                            }`}>
+                              <Image
+                                src={getTarotImagePath(node.slug)}
+                                alt={node.name}
+                                fill
+                                sizes="44px"
+                                className="object-cover"
+                              />
+                            </div>
+
+                            {/* Identity Info */}
+                            <div className="min-w-0 flex-1">
+                              <span className={`text-[9px] font-mono uppercase tracking-wider block truncate ${
+                                isSelected ? 'text-[#C5A059]' : 'text-[#8E8271]'
+                              }`}>
+                                {node.kingdom || getCategoryName(node.category)}
+                              </span>
+                              <div className={`font-royal font-bold text-sm block truncate mt-0.5 ${
+                                isSelected ? 'text-[#F4EFE6]' : 'text-[#D5C9B5]'
+                              }`}>
+                                {node.name}
+                              </div>
+                              {node.title && (
+                                <div className={`text-[10px] font-sans truncate mt-0.5 ${
+                                  isSelected ? 'text-[#C5A059]/90' : 'text-[#8E8271]'
+                                }`}>
+                                  {node.title}
+                                </div>
+                              )}
+                            </div>
+
+                            {isSelected && (
+                              <span className="w-1.5 h-1.5 rounded-full bg-[#C5A059] animate-pulse shrink-0" />
+                            )}
                           </button>
                         );
                       })}
@@ -272,9 +308,9 @@ export function FamilyTreeClient() {
 
                 {/* GENERASI 2: Pandawa & Kurawa */}
                 {gen2.length > 0 && (
-                  <div className="relative space-y-2.5">
+                  <div className="relative space-y-3">
                     {/* Orthogonal connector arm */}
-                    <div className="absolute -left-6 sm:-left-8 top-3 w-6 sm:w-8 h-[2px] bg-[#C5A059]/40" />
+                    <div className="absolute -left-6 sm:-left-8 top-3.5 w-6 sm:w-8 h-[2px] bg-[#C5A059]/40" />
 
                     <div className="flex items-center gap-3">
                       <span className="text-[10px] font-mono uppercase tracking-widest text-[#0C0A08] bg-[#C5A059] px-2.5 py-0.5 font-bold rounded-full shadow-xs">
@@ -283,22 +319,58 @@ export function FamilyTreeClient() {
                       <div className="flex-1 h-[1px] bg-[#C5A059]/20" />
                     </div>
 
-                    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2.5 pt-0.5">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 pt-0.5">
                       {gen2.map((node) => {
                         const isSelected = selectedNode?.id === node.id;
                         return (
                           <button
                             key={node.id}
                             onClick={() => setSelectedNode(node)}
-                            className={`px-3 py-2 border text-center transition-all cursor-pointer relative rounded-xl ${
+                            className={`p-2.5 border text-left transition-all duration-300 cursor-pointer relative rounded-xl flex items-center gap-3 ${
                               isSelected
-                                ? 'bg-[#C5A059] text-[#0C0A08] border-[#C5A059] font-bold shadow-md ring-2 ring-[#C5A059]/40'
-                                : 'bg-[#14110E] text-[#F4EFE6] border-[#C5A059]/25 hover:border-[#C5A059] hover:bg-[#1A1612]'
+                                ? 'bg-gradient-to-r from-[#241A10] to-[#16120D] text-[#F4EFE6] border-[#C5A059] font-bold shadow-lg ring-2 ring-[#C5A059]/50 scale-[1.02]'
+                                : 'bg-[#14110E] text-[#D5C9B5] border-[#C5A059]/25 hover:border-[#C5A059]/60 hover:bg-[#1A1612]'
                             }`}
                           >
-                            <span className="font-royal font-bold text-xs sm:text-sm tracking-wide block truncate">
-                              {node.name}
-                            </span>
+                            {/* Visual Tarot Artwork */}
+                            <div className={`relative w-11 h-14 rounded-lg overflow-hidden shrink-0 border transition-all ${
+                              isSelected
+                                ? 'border-[#C5A059] ring-1 ring-[#C5A059]/60 shadow-md'
+                                : 'border-[#C5A059]/30'
+                            }`}>
+                              <Image
+                                src={getTarotImagePath(node.slug)}
+                                alt={node.name}
+                                fill
+                                sizes="44px"
+                                className="object-cover"
+                              />
+                            </div>
+
+                            {/* Identity Info */}
+                            <div className="min-w-0 flex-1">
+                              <span className={`text-[9px] font-mono uppercase tracking-wider block truncate ${
+                                isSelected ? 'text-[#C5A059]' : 'text-[#8E8271]'
+                              }`}>
+                                {node.kingdom || getCategoryName(node.category)}
+                              </span>
+                              <div className={`font-royal font-bold text-sm block truncate mt-0.5 ${
+                                isSelected ? 'text-[#F4EFE6]' : 'text-[#D5C9B5]'
+                              }`}>
+                                {node.name}
+                              </div>
+                              {node.title && (
+                                <div className={`text-[10px] font-sans truncate mt-0.5 ${
+                                  isSelected ? 'text-[#C5A059]/90' : 'text-[#8E8271]'
+                                }`}>
+                                  {node.title}
+                                </div>
+                              )}
+                            </div>
+
+                            {isSelected && (
+                              <span className="w-1.5 h-1.5 rounded-full bg-[#C5A059] animate-pulse shrink-0" />
+                            )}
                           </button>
                         );
                       })}
@@ -308,9 +380,9 @@ export function FamilyTreeClient() {
 
                 {/* GENERASI 3: Penerus & Ksatria Muda */}
                 {gen3.length > 0 && (
-                  <div className="relative space-y-2.5">
+                  <div className="relative space-y-3">
                     {/* Orthogonal connector arm */}
-                    <div className="absolute -left-6 sm:-left-8 top-3 w-6 sm:w-8 h-[2px] bg-[#C5A059]/40" />
+                    <div className="absolute -left-6 sm:-left-8 top-3.5 w-6 sm:w-8 h-[2px] bg-[#C5A059]/40" />
 
                     <div className="flex items-center gap-3">
                       <span className="text-[10px] font-mono uppercase tracking-widest text-[#0C0A08] bg-[#C5A059] px-2.5 py-0.5 font-bold rounded-full shadow-xs">
@@ -319,22 +391,58 @@ export function FamilyTreeClient() {
                       <div className="flex-1 h-[1px] bg-[#C5A059]/20" />
                     </div>
 
-                    <div className="flex flex-wrap gap-2.5 pt-0.5">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 pt-0.5">
                       {gen3.map((node) => {
                         const isSelected = selectedNode?.id === node.id;
                         return (
                           <button
                             key={node.id}
                             onClick={() => setSelectedNode(node)}
-                            className={`px-3.5 py-2 border text-center transition-all cursor-pointer relative rounded-xl ${
+                            className={`p-2.5 border text-left transition-all duration-300 cursor-pointer relative rounded-xl flex items-center gap-3 ${
                               isSelected
-                                ? 'bg-[#C5A059] text-[#0C0A08] border-[#C5A059] font-bold shadow-md ring-2 ring-[#C5A059]/40'
-                                : 'bg-[#14110E] text-[#F4EFE6] border-[#C5A059]/25 hover:border-[#C5A059] hover:bg-[#1A1612]'
+                                ? 'bg-gradient-to-r from-[#241A10] to-[#16120D] text-[#F4EFE6] border-[#C5A059] font-bold shadow-lg ring-2 ring-[#C5A059]/50 scale-[1.02]'
+                                : 'bg-[#14110E] text-[#D5C9B5] border-[#C5A059]/25 hover:border-[#C5A059]/60 hover:bg-[#1A1612]'
                             }`}
                           >
-                            <span className="font-royal font-bold text-xs sm:text-sm tracking-wide block truncate">
-                              {node.name}
-                            </span>
+                            {/* Visual Tarot Artwork */}
+                            <div className={`relative w-11 h-14 rounded-lg overflow-hidden shrink-0 border transition-all ${
+                              isSelected
+                                ? 'border-[#C5A059] ring-1 ring-[#C5A059]/60 shadow-md'
+                                : 'border-[#C5A059]/30'
+                            }`}>
+                              <Image
+                                src={getTarotImagePath(node.slug)}
+                                alt={node.name}
+                                fill
+                                sizes="44px"
+                                className="object-cover"
+                              />
+                            </div>
+
+                            {/* Identity Info */}
+                            <div className="min-w-0 flex-1">
+                              <span className={`text-[9px] font-mono uppercase tracking-wider block truncate ${
+                                isSelected ? 'text-[#C5A059]' : 'text-[#8E8271]'
+                              }`}>
+                                {node.kingdom || getCategoryName(node.category)}
+                              </span>
+                              <div className={`font-royal font-bold text-sm block truncate mt-0.5 ${
+                                isSelected ? 'text-[#F4EFE6]' : 'text-[#D5C9B5]'
+                              }`}>
+                                {node.name}
+                              </div>
+                              {node.title && (
+                                <div className={`text-[10px] font-sans truncate mt-0.5 ${
+                                  isSelected ? 'text-[#C5A059]/90' : 'text-[#8E8271]'
+                                }`}>
+                                  {node.title}
+                                </div>
+                              )}
+                            </div>
+
+                            {isSelected && (
+                              <span className="w-1.5 h-1.5 rounded-full bg-[#C5A059] animate-pulse shrink-0" />
+                            )}
                           </button>
                         );
                       })}
@@ -402,7 +510,7 @@ export function FamilyTreeClient() {
         {/* Selected Node Inspector Drawer (Compact & Clean) */}
         <div className="lg:col-span-4">
           {selectedNode ? (
-            <div className="bg-[#14110E] border border-[#C5A059]/35 rounded-2xl p-5 space-y-5 shadow-2xl sticky top-24">
+            <div className="bg-[#14110E] border border-[#C5A059]/35 rounded-2xl p-5 space-y-4 shadow-2xl sticky top-24">
               <div className="flex items-center justify-between pb-2.5 border-b border-[#C5A059]/20 font-mono text-[10px]">
                 <span className="uppercase tracking-widest text-[#C5A059] font-bold">
                   {getCategoryName(selectedNode.category)}
@@ -416,18 +524,18 @@ export function FamilyTreeClient() {
 
               {/* Character Header */}
               <div className="flex items-center gap-3.5">
-                <div className="relative w-14 h-20 aspect-[2/3] bg-[#0C0A08] rounded-xl overflow-hidden shrink-0 border border-[#C5A059]/50 shadow-md">
+                <div className="relative w-16 h-22 aspect-[2/3] bg-[#0C0A08] rounded-xl overflow-hidden shrink-0 border border-[#C5A059]/50 shadow-md">
                   <Image
                     src={getTarotImagePath(selectedNode.slug)}
                     alt={selectedNode.name}
                     fill
-                    sizes="56px"
+                    sizes="64px"
                     className="object-cover"
                   />
                 </div>
 
                 <div className="min-w-0 flex-1">
-                  <h3 className="font-royal text-lg sm:text-xl font-bold text-[#F4EFE6] truncate">
+                  <h3 className="font-royal text-xl sm:text-2xl font-bold text-[#F4EFE6] truncate">
                     {selectedNode.name}
                   </h3>
                   {selectedNode.javaneseName && (
@@ -443,11 +551,30 @@ export function FamilyTreeClient() {
                 </div>
               </div>
 
-              {/* Short explanation (single crisp sentence) */}
+              {/* Short explanation */}
               {selectedNode.shortDescription && (
                 <p className="text-xs text-[#A89F91] leading-relaxed font-sans border-b border-[#C5A059]/15 pb-3">
-                  {selectedNode.shortDescription.split('.')[0]}.
+                  {selectedNode.shortDescription}
                 </p>
+              )}
+
+              {/* Character Personality / Karakter Tags */}
+              {selectedNode.personality && selectedNode.personality.length > 0 && (
+                <div className="space-y-1.5 pt-0.5">
+                  <span className="text-[10px] font-mono uppercase tracking-wider text-[#C5A059] font-bold block">
+                    Watak &amp; Karakter
+                  </span>
+                  <div className="flex flex-wrap gap-1.5">
+                    {selectedNode.personality.map((trait, idx) => (
+                      <span
+                        key={idx}
+                        className="text-[10px] font-mono px-2 py-0.5 bg-[#0C0A08] border border-[#C5A059]/30 text-[#D5C9B5] rounded-md"
+                      >
+                        {trait}
+                      </span>
+                    ))}
+                  </div>
+                </div>
               )}
 
               {/* Relationships related to this node */}

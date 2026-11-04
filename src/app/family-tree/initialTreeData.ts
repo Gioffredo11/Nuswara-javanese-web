@@ -8,6 +8,8 @@ export interface TreeNode {
   javaneseName?: string | null;
   title?: string | null;
   shortDescription?: string | null;
+  personality?: string[];
+  uniqueFacts?: string | null;
   generationLevel: number;
   kingdom?: string | null;
   category: string;
@@ -54,6 +56,8 @@ export const INITIAL_TREE_NODES: TreeNode[] = sortedChars.map((c, idx) => {
     javaneseName: c.javaneseName ?? null,
     title: c.title ?? null,
     shortDescription: c.shortDescription ?? null,
+    personality: Array.isArray(c.personality) ? c.personality : [],
+    uniqueFacts: (c as any).uniqueFacts ?? null,
     category: catLookup[c.categorySlug] || 'Tokoh Wayang',
     categorySlug: c.categorySlug,
     generationLevel: c.generationLevel,
