@@ -168,16 +168,16 @@ export function FamilyTreeClient() {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
       {/* Header Editorial */}
-      <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4 border-b border-[#C5A059]/20 pb-6">
-        <div className="space-y-2">
+      <div className="flex flex-col md:flex-row md:items-end justify-between mb-6 gap-4 border-b border-[#C5A059]/20 pb-5">
+        <div className="space-y-1">
           <span className="text-xs font-mono uppercase tracking-[0.25em] text-[#C5A059] font-bold block">
-            [ SILSILAH // 02 ] — MAHABHARATA JAWA PURWA LINEAGE
+            [ SILSILAH // 02 ] — MAHABHARATA JAWA PURWA
           </span>
-          <h2 className="text-3xl sm:text-4xl font-royal font-bold text-[#F4EFE6] tracking-tight">
+          <h2 className="text-2xl sm:text-3xl font-royal font-bold text-[#F4EFE6] tracking-tight">
             Silsilah Wayang Interaktif
           </h2>
-          <p className="text-xs sm:text-sm text-[#A89F91] max-w-xl font-sans leading-relaxed">
-            Peta hubungan kekerabatan, guru-murid, dan ikatan darah para ksatria. Klik pada kartu tokoh untuk menelaah relasi dan profil lengkapnya.
+          <p className="text-xs text-[#A89F91] max-w-xl font-sans">
+            Peta relasi kekerabatan dan silsilah para ksatria peradaban Jawa Purwa.
           </p>
         </div>
 
@@ -188,17 +188,17 @@ export function FamilyTreeClient() {
             <Search className="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-[#A89F91]" />
             <input
               type="text"
-              placeholder="Cari tokoh wayang..."
+              placeholder="Cari tokoh..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-8 pr-3 py-2 text-xs bg-[#14110E] border border-[#C5A059]/30 rounded-xl text-[#F4EFE6] placeholder-[#A89F91]/50 focus:border-[#C5A059] focus:outline-none w-44 sm:w-52 font-mono transition-colors"
+              className="pl-8 pr-3 py-1.5 text-xs bg-[#14110E] border border-[#C5A059]/30 rounded-xl text-[#F4EFE6] placeholder-[#A89F91]/50 focus:border-[#C5A059] focus:outline-none w-40 sm:w-48 font-mono transition-colors"
             />
           </div>
 
           <div className="flex bg-[#14110E] border border-[#C5A059]/30 rounded-full p-1 text-xs font-mono">
             <button
               onClick={() => setActiveTab('visual')}
-              className={`px-3.5 py-1.5 rounded-full transition-all cursor-pointer ${
+              className={`px-3 py-1 rounded-full transition-all cursor-pointer text-xs ${
                 activeTab === 'visual'
                   ? 'bg-[#C5A059] text-[#0C0A08] font-bold shadow-md'
                   : 'text-[#A89F91] hover:text-[#F4EFE6]'
@@ -208,23 +208,22 @@ export function FamilyTreeClient() {
             </button>
             <button
               onClick={() => setActiveTab('lineage')}
-              className={`px-3.5 py-1.5 rounded-full transition-all cursor-pointer ${
+              className={`px-3 py-1 rounded-full transition-all cursor-pointer text-xs ${
                 activeTab === 'lineage'
                   ? 'bg-[#C5A059] text-[#0C0A08] font-bold shadow-md'
                   : 'text-[#A89F91] hover:text-[#F4EFE6]'
               }`}
             >
-              Daftar Kekerabatan
+              Daftar Relasi
             </button>
           </div>
-
         </div>
       </div>
 
       {/* Main Work Area: Tree Canvas + Inspector Drawer */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
         {/* Canvas / Tree Area */}
-        <div className="lg:col-span-8 bg-[#0C0A08] border border-[#C5A059]/30 rounded-2xl p-4 sm:p-8 min-h-[520px] overflow-x-auto shadow-2xl relative">
+        <div className="lg:col-span-8 bg-[#0C0A08] border border-[#C5A059]/30 rounded-2xl p-4 sm:p-6 min-h-[480px] overflow-x-auto shadow-2xl relative">
           {activeTab === 'visual' && (
             <div className="sm:hidden flex items-center justify-between text-[11px] font-mono text-[#C5A059] bg-[#14110E] border border-[#C5A059]/30 rounded-lg px-3 py-1.5 mb-4">
               <span>Geser horizontal untuk menelusuri bagan purwa</span>
@@ -232,44 +231,38 @@ export function FamilyTreeClient() {
             </div>
           )}
           {activeTab === 'visual' ? (
-            <div className="min-w-[500px]">
+            <div className="min-w-[480px]">
               {/* CONNECTED LINEAGE TREE WITH ORTHOGONAL SPINE */}
-              <div className="relative border-l-2 border-[#C5A059]/35 ml-4 sm:ml-6 pl-6 sm:pl-8 space-y-12">
+              <div className="relative border-l-2 border-[#C5A059]/35 ml-4 sm:ml-6 pl-6 sm:pl-8 space-y-8">
                 {/* GENERASI 1: Sesepuh & Pamomong */}
                 {gen1.length > 0 && (
-                  <div className="relative space-y-3">
+                  <div className="relative space-y-2.5">
                     {/* Orthogonal connector arm */}
-                    <div className="absolute -left-6 sm:-left-8 top-3.5 w-6 sm:w-8 h-[2px] bg-[#C5A059]/40" />
+                    <div className="absolute -left-6 sm:-left-8 top-3 w-6 sm:w-8 h-[2px] bg-[#C5A059]/40" />
 
                     <div className="flex items-center gap-3">
-                      <span className="text-[10px] font-mono uppercase tracking-widest text-[#0C0A08] bg-[#C5A059] px-3 py-1 font-bold rounded-full shadow-xs">
-                        GENERASI 01 • LELUHUR &amp; PAMOMONG ({gen1.length})
+                      <span className="text-[10px] font-mono uppercase tracking-widest text-[#0C0A08] bg-[#C5A059] px-2.5 py-0.5 font-bold rounded-full shadow-xs">
+                        01. LELUHUR &amp; PAMOMONG
                       </span>
                       <div className="flex-1 h-[1px] bg-[#C5A059]/20" />
                     </div>
 
-                    <div className="flex flex-wrap gap-3 pt-1">
+                    <div className="flex flex-wrap gap-2.5 pt-0.5">
                       {gen1.map((node) => {
                         const isSelected = selectedNode?.id === node.id;
                         return (
                           <button
                             key={node.id}
                             onClick={() => setSelectedNode(node)}
-                            className={`p-3.5 border text-left transition-all cursor-pointer relative rounded-xl ${
+                            className={`px-3.5 py-2 border text-center transition-all cursor-pointer relative rounded-xl ${
                               isSelected
-                                ? 'bg-[#C5A059] text-[#0C0A08] border-[#C5A059] font-bold shadow-lg ring-1 ring-[#C5A059]'
+                                ? 'bg-[#C5A059] text-[#0C0A08] border-[#C5A059] font-bold shadow-md ring-2 ring-[#C5A059]/40'
                                 : 'bg-[#14110E] text-[#F4EFE6] border-[#C5A059]/25 hover:border-[#C5A059] hover:bg-[#1A1612]'
                             }`}
                           >
-                            <div className={`text-[10px] font-mono ${isSelected ? 'text-[#0C0A08]/80' : 'text-[#C5A059]'}`}>
-                              {getCategoryName(node.category)}
-                            </div>
-                            <div className="font-royal font-bold text-sm">{node.name}</div>
-                            {node.title && (
-                              <div className={`text-[10px] mt-0.5 ${isSelected ? 'text-[#0C0A08]/90' : 'text-[#A89F91]'}`}>
-                                {node.title}
-                              </div>
-                            )}
+                            <span className="font-royal font-bold text-xs sm:text-sm tracking-wide block truncate">
+                              {node.name}
+                            </span>
                           </button>
                         );
                       })}
@@ -279,39 +272,33 @@ export function FamilyTreeClient() {
 
                 {/* GENERASI 2: Pandawa & Kurawa */}
                 {gen2.length > 0 && (
-                  <div className="relative space-y-3">
+                  <div className="relative space-y-2.5">
                     {/* Orthogonal connector arm */}
-                    <div className="absolute -left-6 sm:-left-8 top-3.5 w-6 sm:w-8 h-[2px] bg-[#C5A059]/40" />
+                    <div className="absolute -left-6 sm:-left-8 top-3 w-6 sm:w-8 h-[2px] bg-[#C5A059]/40" />
 
                     <div className="flex items-center gap-3">
-                      <span className="text-[10px] font-mono uppercase tracking-widest text-[#0C0A08] bg-[#C5A059] px-3 py-1 font-bold rounded-full shadow-xs">
-                        GENERASI 02 • KSATRIA UTAMA (PANDAWA &amp; KURAWA) ({gen2.length})
+                      <span className="text-[10px] font-mono uppercase tracking-widest text-[#0C0A08] bg-[#C5A059] px-2.5 py-0.5 font-bold rounded-full shadow-xs">
+                        02. PANDAWA &amp; KURAWA
                       </span>
                       <div className="flex-1 h-[1px] bg-[#C5A059]/20" />
                     </div>
 
-                    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 pt-1">
+                    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2.5 pt-0.5">
                       {gen2.map((node) => {
                         const isSelected = selectedNode?.id === node.id;
                         return (
                           <button
                             key={node.id}
                             onClick={() => setSelectedNode(node)}
-                            className={`p-3 border text-left transition-all cursor-pointer relative rounded-xl ${
+                            className={`px-3 py-2 border text-center transition-all cursor-pointer relative rounded-xl ${
                               isSelected
-                                ? 'bg-[#C5A059] text-[#0C0A08] border-[#C5A059] font-bold shadow-lg ring-1 ring-[#C5A059]'
+                                ? 'bg-[#C5A059] text-[#0C0A08] border-[#C5A059] font-bold shadow-md ring-2 ring-[#C5A059]/40'
                                 : 'bg-[#14110E] text-[#F4EFE6] border-[#C5A059]/25 hover:border-[#C5A059] hover:bg-[#1A1612]'
                             }`}
                           >
-                            <div className={`text-[10px] font-mono ${isSelected ? 'text-[#0C0A08]/80' : 'text-[#C5A059]'}`}>
-                              {node.kingdom || 'Astina'}
-                            </div>
-                            <div className="font-royal font-bold text-sm truncate">{node.name}</div>
-                            {node.title && (
-                              <div className={`text-[10px] line-clamp-1 mt-0.5 ${isSelected ? 'text-[#0C0A08]/90' : 'text-[#A89F91]'}`}>
-                                {node.title}
-                              </div>
-                            )}
+                            <span className="font-royal font-bold text-xs sm:text-sm tracking-wide block truncate">
+                              {node.name}
+                            </span>
                           </button>
                         );
                       })}
@@ -321,39 +308,33 @@ export function FamilyTreeClient() {
 
                 {/* GENERASI 3: Penerus & Ksatria Muda */}
                 {gen3.length > 0 && (
-                  <div className="relative space-y-3">
+                  <div className="relative space-y-2.5">
                     {/* Orthogonal connector arm */}
-                    <div className="absolute -left-6 sm:-left-8 top-3.5 w-6 sm:w-8 h-[2px] bg-[#C5A059]/40" />
+                    <div className="absolute -left-6 sm:-left-8 top-3 w-6 sm:w-8 h-[2px] bg-[#C5A059]/40" />
 
                     <div className="flex items-center gap-3">
-                      <span className="text-[10px] font-mono uppercase tracking-widest text-[#0C0A08] bg-[#C5A059] px-3 py-1 font-bold rounded-full shadow-xs">
-                        GENERASI 03 • PAHLAWAN MUDA &amp; PENERUS ({gen3.length})
+                      <span className="text-[10px] font-mono uppercase tracking-widest text-[#0C0A08] bg-[#C5A059] px-2.5 py-0.5 font-bold rounded-full shadow-xs">
+                        03. PENERUS &amp; KESATRIA MUDA
                       </span>
                       <div className="flex-1 h-[1px] bg-[#C5A059]/20" />
                     </div>
 
-                    <div className="flex flex-wrap gap-3 pt-1">
+                    <div className="flex flex-wrap gap-2.5 pt-0.5">
                       {gen3.map((node) => {
                         const isSelected = selectedNode?.id === node.id;
                         return (
                           <button
                             key={node.id}
                             onClick={() => setSelectedNode(node)}
-                            className={`p-3.5 border text-left transition-all cursor-pointer relative rounded-xl ${
+                            className={`px-3.5 py-2 border text-center transition-all cursor-pointer relative rounded-xl ${
                               isSelected
-                                ? 'bg-[#C5A059] text-[#0C0A08] border-[#C5A059] font-bold shadow-lg ring-1 ring-[#C5A059]'
+                                ? 'bg-[#C5A059] text-[#0C0A08] border-[#C5A059] font-bold shadow-md ring-2 ring-[#C5A059]/40'
                                 : 'bg-[#14110E] text-[#F4EFE6] border-[#C5A059]/25 hover:border-[#C5A059] hover:bg-[#1A1612]'
                             }`}
                           >
-                            <div className={`text-[10px] font-mono ${isSelected ? 'text-[#0C0A08]/80' : 'text-[#C5A059]'}`}>
-                              {getCategoryName(node.category)}
-                            </div>
-                            <div className="font-royal font-bold text-sm">{node.name}</div>
-                            {node.title && (
-                              <div className={`text-[10px] mt-0.5 ${isSelected ? 'text-[#0C0A08]/90' : 'text-[#A89F91]'}`}>
-                                {node.title}
-                              </div>
-                            )}
+                            <span className="font-royal font-bold text-xs sm:text-sm tracking-wide block truncate">
+                              {node.name}
+                            </span>
                           </button>
                         );
                       })}
@@ -373,14 +354,14 @@ export function FamilyTreeClient() {
             <div className="space-y-4">
               <div className="flex items-center justify-between pb-3 border-b border-[#C5A059]/20 font-mono">
                 <span className="text-xs font-bold uppercase text-[#C5A059]">
-                  Daftar Relasi Kekerabatan Terdata ({edges.length})
+                  Daftar Relasi Kekerabatan ({edges.length})
                 </span>
                 <span className="text-xs text-[#A89F91]">
                   Total {nodes.length} Tokoh
                 </span>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 max-h-[580px] overflow-y-auto pr-2">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 max-h-[520px] overflow-y-auto pr-2">
                 {edges.map((e) => {
                   const fromNode = nodes.find((n) => n.id === e.fromId || n.slug === e.fromSlug);
                   const toNode = nodes.find((n) => n.id === e.toId || n.slug === e.toSlug);
@@ -390,34 +371,26 @@ export function FamilyTreeClient() {
                   return (
                     <div
                       key={e.id}
-                      className="p-3.5 bg-[#14110E] border border-[#C5A059]/25 hover:border-[#C5A059] rounded-xl transition-colors flex flex-col justify-between space-y-2"
+                      className="px-3.5 py-2.5 bg-[#14110E] border border-[#C5A059]/25 hover:border-[#C5A059] rounded-xl transition-colors flex items-center justify-between gap-3"
                     >
-                      <div className="flex items-center justify-between gap-2">
-                        <div className="flex items-center gap-1.5 text-xs font-semibold text-[#F4EFE6]">
-                          <button
-                            onClick={() => fromNode && setSelectedNode(fromNode)}
-                            className="hover:text-[#C5A059] underline-offset-2 hover:underline cursor-pointer"
-                          >
-                            {fromDisplayName}
-                          </button>
-                          <span className="text-[#C5A059] font-mono text-[10px]">↔</span>
-                          <button
-                            onClick={() => toNode && setSelectedNode(toNode)}
-                            className="hover:text-[#C5A059] underline-offset-2 hover:underline cursor-pointer"
-                          >
-                            {toDisplayName}
-                          </button>
-                        </div>
-                        <span className="text-[10px] font-mono px-2.5 py-0.5 bg-[#0C0A08] text-[#C5A059] border border-[#C5A059]/40 rounded-full uppercase">
-                          {e.type}
-                        </span>
+                      <div className="flex items-center gap-2 text-xs font-semibold text-[#F4EFE6] truncate">
+                        <button
+                          onClick={() => fromNode && setSelectedNode(fromNode)}
+                          className="hover:text-[#C5A059] cursor-pointer truncate"
+                        >
+                          {fromDisplayName}
+                        </button>
+                        <span className="text-[#C5A059] font-mono text-[10px] shrink-0">↔</span>
+                        <button
+                          onClick={() => toNode && setSelectedNode(toNode)}
+                          className="hover:text-[#C5A059] cursor-pointer truncate"
+                        >
+                          {toDisplayName}
+                        </button>
                       </div>
-
-                      {e.note && (
-                        <p className="text-[11px] text-[#A89F91] leading-snug font-sans">
-                          {e.note}
-                        </p>
-                      )}
+                      <span className="text-[10px] font-mono px-2 py-0.5 bg-[#0C0A08] text-[#C5A059] border border-[#C5A059]/40 rounded-full uppercase shrink-0 font-semibold">
+                        {e.type}
+                      </span>
                     </div>
                   );
                 })}
@@ -426,57 +399,59 @@ export function FamilyTreeClient() {
           )}
         </div>
 
-        {/* Selected Node Inspector Drawer (Archival Dossier) */}
+        {/* Selected Node Inspector Drawer (Compact & Clean) */}
         <div className="lg:col-span-4">
           {selectedNode ? (
-            <div className="bg-[#14110E] border border-[#C5A059]/35 rounded-2xl p-6 space-y-6 shadow-2xl sticky top-24">
-              <div className="flex items-center justify-between pb-3 border-b border-[#C5A059]/20 font-mono">
-                <span className="text-[10px] uppercase tracking-widest text-[#C5A059] bg-[#0C0A08] px-3 py-1 border border-[#C5A059]/30 rounded-full font-bold">
-                  [ ARSIP DOSSIER // {getCategoryName(selectedNode.category)} ]
+            <div className="bg-[#14110E] border border-[#C5A059]/35 rounded-2xl p-5 space-y-5 shadow-2xl sticky top-24">
+              <div className="flex items-center justify-between pb-2.5 border-b border-[#C5A059]/20 font-mono text-[10px]">
+                <span className="uppercase tracking-widest text-[#C5A059] font-bold">
+                  {getCategoryName(selectedNode.category)}
                 </span>
-                <span className="text-xs text-[#A89F91]">
-                  GEN-{selectedNode.generationLevel} {selectedNode.kingdom ? `• ${selectedNode.kingdom}` : ''}
-                </span>
+                {selectedNode.kingdom && (
+                  <span className="text-[#A89F91] uppercase tracking-wider">
+                    {selectedNode.kingdom}
+                  </span>
+                )}
               </div>
 
               {/* Character Header */}
-              <div className="flex items-center gap-4">
-                <div className="relative w-16 h-24 aspect-[2/3] bg-[#0C0A08] rounded-xl overflow-hidden shrink-0 border border-[#C5A059]/50 shadow-md">
+              <div className="flex items-center gap-3.5">
+                <div className="relative w-14 h-20 aspect-[2/3] bg-[#0C0A08] rounded-xl overflow-hidden shrink-0 border border-[#C5A059]/50 shadow-md">
                   <Image
                     src={getTarotImagePath(selectedNode.slug)}
                     alt={selectedNode.name}
                     fill
-                    sizes="64px"
+                    sizes="56px"
                     className="object-cover"
                   />
                 </div>
 
-                <div>
-                  <h3 className="font-royal text-xl font-bold text-[#F4EFE6]">
+                <div className="min-w-0 flex-1">
+                  <h3 className="font-royal text-lg sm:text-xl font-bold text-[#F4EFE6] truncate">
                     {selectedNode.name}
                   </h3>
                   {selectedNode.javaneseName && (
-                    <span className="text-xs text-[#C5A059] italic font-editorial block">
+                    <span className="text-xs text-[#C5A059] italic font-editorial block truncate">
                       {selectedNode.javaneseName}
                     </span>
                   )}
                   {selectedNode.title && (
-                    <p className="text-xs text-[#A89F91] font-mono mt-0.5">
+                    <p className="text-xs text-[#A89F91] font-sans mt-0.5 line-clamp-1">
                       {selectedNode.title}
                     </p>
                   )}
                 </div>
               </div>
 
-              {/* Short explanation */}
+              {/* Short explanation (single crisp sentence) */}
               {selectedNode.shortDescription && (
-                <p className="text-xs text-[#A89F91] leading-relaxed font-sans border-b border-[#C5A059]/15 pb-4">
-                  {selectedNode.shortDescription}
+                <p className="text-xs text-[#A89F91] leading-relaxed font-sans border-b border-[#C5A059]/15 pb-3">
+                  {selectedNode.shortDescription.split('.')[0]}.
                 </p>
               )}
 
               {/* Relationships related to this node */}
-              <div className="space-y-2 pt-1">
+              <div className="space-y-2 pt-0.5">
                 <div className="flex items-center justify-between">
                   <h4 className="text-xs font-mono uppercase tracking-wider text-[#C5A059] font-bold">
                     Ikatan &amp; Relasi ({activeRelationships.length})
@@ -486,10 +461,10 @@ export function FamilyTreeClient() {
 
                 {activeRelationships.length === 0 ? (
                   <p className="text-xs text-[#A89F91] italic font-mono">
-                    Belum ada data relasi terhubung untuk tokoh ini.
+                    Belum ada data relasi terhubung.
                   </p>
                 ) : (
-                  <div className="space-y-2 max-h-56 overflow-y-auto pr-1">
+                  <div className="space-y-1.5 max-h-48 overflow-y-auto pr-1">
                     {activeRelationships.map((rel) => {
                       const isFrom = rel.fromId === selectedNode.id || rel.fromSlug === selectedNode.slug;
                       const otherSlug = isFrom ? rel.toSlug : rel.fromSlug;
@@ -501,20 +476,15 @@ export function FamilyTreeClient() {
                       return (
                         <div
                           key={rel.id}
-                          className="p-2.5 bg-[#0C0A08] border border-[#C5A059]/20 rounded-xl text-xs flex items-center justify-between gap-2"
+                          className="px-3 py-2 bg-[#0C0A08] border border-[#C5A059]/20 hover:border-[#C5A059]/50 rounded-xl text-xs flex items-center justify-between gap-2 transition-colors"
                         >
-                          <div>
-                            <button
-                              onClick={() => otherNode && setSelectedNode(otherNode)}
-                              className="font-semibold text-[#F4EFE6] hover:text-[#C5A059] text-left underline-offset-2 hover:underline cursor-pointer font-mono"
-                            >
-                              {otherName}
-                            </button>
-                            {rel.note && (
-                              <p className="text-[10px] text-[#A89F91] mt-0.5">{rel.note}</p>
-                            )}
-                          </div>
-                          <span className="text-[10px] font-mono bg-[#14110E] text-[#C5A059] border border-[#C5A059]/30 rounded-full px-2.5 py-0.5 uppercase shrink-0">
+                          <button
+                            onClick={() => otherNode && setSelectedNode(otherNode)}
+                            className="font-medium text-[#F4EFE6] hover:text-[#C5A059] text-left cursor-pointer truncate font-mono text-[11px]"
+                          >
+                            {otherName}
+                          </button>
+                          <span className="text-[9px] font-mono bg-[#14110E] text-[#C5A059] border border-[#C5A059]/30 rounded-full px-2 py-0.5 uppercase shrink-0 font-semibold">
                             {rel.type}
                           </span>
                         </div>
@@ -525,10 +495,10 @@ export function FamilyTreeClient() {
               </div>
 
               {/* CTA to Wayangpedia */}
-              <div className="pt-4 border-t border-[#C5A059]/20">
+              <div className="pt-3 border-t border-[#C5A059]/20">
                 <Link
                   href={`/wayangpedia/${selectedNode.slug}`}
-                  className="w-full py-3 px-4 bg-[#C5A059] hover:bg-[#D5B36E] text-[#0C0A08] text-xs font-mono font-bold uppercase tracking-wider rounded-xl transition-all flex items-center justify-center gap-2 min-h-[44px]"
+                  className="w-full py-2.5 px-4 bg-[#C5A059] hover:bg-[#D5B36E] text-[#0C0A08] text-xs font-mono font-bold uppercase tracking-wider rounded-xl transition-all flex items-center justify-center gap-2 min-h-[42px]"
                 >
                   <span>Lihat Profil Lengkap</span>
                   <ArrowRight className="w-3.5 h-3.5" />
