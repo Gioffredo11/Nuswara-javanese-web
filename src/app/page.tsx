@@ -290,61 +290,76 @@ export function HomePage({ defaultSection }: HomePageProps = {}) {
             </ScrollReveal>
           </div>
 
-          {/* 3-Column Asymmetrical Archival Ledger (2 : 5 : 5 on desktop) */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-0 items-start">
-            {/* Kolom 1: Indeks Kronologi Babak (2 cols) */}
-            <div className="lg:col-span-2 space-y-4 lg:border-r lg:border-[#1C1814]/15 lg:pr-6">
-              <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-[#8C6D32] block font-bold">
-                INDEKS KRONOLOGI
-              </span>
-              <div className="space-y-2">
-                {HISTORY_CHAPTERS.map((ch) => {
-                  const isActive = ch.id === activeHistoryChapter;
-                  return (
-                    <button
-                      key={ch.id}
-                      type="button"
-                      onClick={() => setActiveHistoryChapter(ch.id)}
-                      className={`w-full text-left pl-3.5 pr-2 py-2.5 transition-all border-l-2 rounded-r-xl cursor-pointer ${
+          {/* Chronology Navigation Tabs (Horizontal Stepper) */}
+          <ScrollReveal direction="up" distance={20} delay={50}>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mb-10 border border-[#1C1814]/15 p-2 bg-[#EAE3D5]/60 rounded-2xl">
+              {HISTORY_CHAPTERS.map((ch, idx) => {
+                const isActive = ch.id === activeHistoryChapter;
+                return (
+                  <button
+                    key={ch.id}
+                    type="button"
+                    onClick={() => setActiveHistoryChapter(ch.id)}
+                    className={`flex items-center gap-3.5 px-4 py-3 rounded-xl text-left transition-all duration-300 cursor-pointer border ${
+                      isActive
+                        ? 'bg-[#F3EFE6] border-[#8C6D32]/50 shadow-sm text-[#1C1814]'
+                        : 'border-transparent text-[#574F44] hover:bg-[#EAE3D5] hover:text-[#1C1814]'
+                    }`}
+                  >
+                    <span
+                      className={`w-8 h-8 rounded-lg flex items-center justify-center font-mono text-xs font-bold shrink-0 transition-colors ${
                         isActive
-                          ? 'border-[#8C6D32] bg-[#EAE3D5] shadow-xs'
-                          : 'border-transparent hover:border-[#1C1814]/30 hover:bg-[#EAE3D5]/50'
+                          ? 'bg-[#8C6D32] text-[#F3EFE6]'
+                          : 'bg-[#1C1814]/10 text-[#574F44]'
                       }`}
                     >
-                      <span className={`text-[11px] font-mono font-bold block ${isActive ? 'text-[#1C1814]' : 'text-[#574F44]'}`}>
-                        {ch.chronology}
+                      0{idx + 1}
+                    </span>
+                    <div className="min-w-0 flex-1">
+                      <span
+                        className={`text-xs sm:text-sm font-royal font-bold block truncate ${
+                          isActive ? 'text-[#1C1814]' : 'text-[#574F44]'
+                        }`}
+                      >
+                        {ch.chronology.replace(/^\d+\.\s*/, '')}
                       </span>
-                      <span className={`text-[10px] font-mono block ${isActive ? 'text-[#8C6D32]' : 'text-[#8C6D32]/70'}`}>
+                      <span className="text-[10px] font-mono text-[#8C6D32] block truncate">
                         {ch.period}
                       </span>
-                    </button>
-                  );
-                })}
-              </div>
+                    </div>
+                    {isActive && (
+                      <span className="w-2 h-2 rounded-full bg-[#8C6D32] animate-pulse shrink-0" />
+                    )}
+                  </button>
+                );
+              })}
             </div>
+          </ScrollReveal>
 
-            {/* Kolom 2: Artefak Visual & Museum Catalog Placard (5 cols) */}
-            <div className="lg:col-span-5 lg:border-r lg:border-[#1C1814]/15 lg:px-8">
+          {/* 2-Column Balanced Editorial Stage (Visual Artifact Placard + Rich Story & Actions) */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+            {/* Kolom Kiri: Artefak Visual & Museum Catalog Placard (6 cols) */}
+            <div className="lg:col-span-6">
               <ScrollReveal direction="up" distance={30} delay={100}>
-                <div className="border border-[#1C1814]/20 p-2.5 bg-[#EAE3D5] rounded-xl overflow-hidden">
-                  <div className="relative aspect-[4/3] bg-[#1C1814]/10 rounded-lg overflow-hidden">
+                <div className="border border-[#1C1814]/20 p-3 sm:p-4 bg-[#EAE3D5] rounded-2xl shadow-sm overflow-hidden">
+                  <div className="relative aspect-[16/11] bg-[#1C1814]/10 rounded-xl overflow-hidden">
                     <Image
                       src={currentChapter.image}
                       alt={currentChapter.imageLabel}
                       fill
-                      sizes="(max-width: 1024px) 100vw, 40vw"
+                      sizes="(max-width: 1024px) 100vw, 50vw"
                       className="object-cover hover:scale-102 transition-transform duration-700"
                     />
                   </div>
-                  <div className="pt-3.5 pb-1 px-1">
-                    <div className="flex items-center justify-between text-[10px] font-mono uppercase tracking-wider text-[#8C6D32] font-semibold border-b border-[#1C1814]/10 pb-1.5 mb-2">
+                  <div className="pt-4 pb-1 px-1">
+                    <div className="flex items-center justify-between text-[10px] font-mono uppercase tracking-wider text-[#8C6D32] font-semibold border-b border-[#1C1814]/10 pb-2 mb-2.5">
                       <span>[ ARSIP VISUAL // KATALOG NO. {currentChapter.catalogNo} ]</span>
                       <span>{currentChapter.location}</span>
                     </div>
-                    <span className="text-xs font-mono uppercase tracking-wider text-[#1C1814] font-bold block">
+                    <span className="text-xs sm:text-sm font-mono uppercase tracking-wider text-[#1C1814] font-bold block">
                       {currentChapter.imageLabel}
                     </span>
-                    <p className="font-editorial italic text-xs text-[#574F44] mt-1.5 leading-relaxed">
+                    <p className="font-editorial italic text-xs sm:text-sm text-[#574F44] mt-2 leading-relaxed">
                       {currentChapter.imageCaption}
                     </p>
                   </div>
@@ -352,30 +367,30 @@ export function HomePage({ defaultSection }: HomePageProps = {}) {
               </ScrollReveal>
             </div>
 
-            {/* Kolom 3: Narasi Editorial & Aksi (5 cols) */}
-            <div className="lg:col-span-5 lg:pl-8 space-y-6">
+            {/* Kolom Kanan: Narasi Editorial & Aksi (6 cols) */}
+            <div className="lg:col-span-6 space-y-6">
               <ScrollReveal direction="up" distance={30} delay={150}>
                 <div>
                   <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-[#8C6D32] font-bold block">
                     {currentChapter.chapterTag}
                   </span>
-                  <h3 className="font-editorial text-2xl sm:text-3xl lg:text-4xl font-bold text-[#1C1814] leading-tight mt-1">
+                  <h3 className="font-editorial text-2xl sm:text-3xl lg:text-4xl font-bold text-[#1C1814] leading-tight mt-1.5">
                     {currentChapter.title}
                   </h3>
                 </div>
 
-                <p className="text-sm text-[#4A3F35] leading-relaxed font-sans">
+                <p className="text-sm sm:text-base text-[#4A3F35] leading-relaxed font-sans">
                   <span className="float-left text-4xl sm:text-5xl font-editorial font-bold leading-none pr-3 pt-1 text-[#8C6D32]">
                     {currentChapter.dropCapLetter}
                   </span>
                   {currentChapter.narrative}
                 </p>
 
-                <blockquote className="border-l-2 border-[#8C6D32] pl-4 py-1 italic font-editorial text-xs sm:text-sm text-[#4A3F35] leading-relaxed">
+                <blockquote className="border-l-2 border-[#8C6D32] pl-4 py-1 italic font-editorial text-sm sm:text-base text-[#4A3F35] leading-relaxed">
                   &ldquo;{currentChapter.philosophicalQuote}&rdquo;
                 </blockquote>
 
-                <div className="pt-3 flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+                <div className="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
                   {/* Primary Colored Button: Direktori Sejarah */}
                   <Link
                     href="/sejarah"
