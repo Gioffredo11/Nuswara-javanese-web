@@ -70,7 +70,7 @@ export const tokohArticles: TokohArticle[] = [
     summary:
       'Pahlawan perintis emansipasi wanita dan pendidikan budi pekerti dari bumi Jepara. Surat-suratnya melintasi batas samudra menegaskan bahwa kemajuan peradaban suatu bangsa bermula dari kemerdekaan batin dan kecerdasan kaum perempuan.',
     photoUrl: '/images/editorial/tokoh-kartini-arsip.jpg',
-    colorPhotoUrl: '/images/editorial/tokoh-kartini-color.jpg',
+    colorPhotoUrl: '/images/editorial/tokoh-kartini-ikonik-color.jpg',
     isSupremeHero: true,
     bidangIdentity: {
       bidangName: 'Emansipasi & Literasi Perempuan',
