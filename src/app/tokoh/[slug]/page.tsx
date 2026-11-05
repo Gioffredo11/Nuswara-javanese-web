@@ -116,13 +116,19 @@ export default async function TokohDetailPage({
               <div className="lg:col-span-5 flex flex-col items-center">
                 <div className="relative w-60 sm:w-72 aspect-[3/4] rounded-2xl overflow-hidden border-2 border-[#C59B53] shadow-2xl bg-[#0D0B08]">
                   <Image
-                    src={tokoh.photoUrl}
+                    src={tokoh.colorPhotoUrl || tokoh.photoUrl}
                     alt={`Potret arsip bersejarah ${tokoh.name}`}
                     fill
                     priority
                     sizes="(max-width: 640px) 240px, 288px"
                     className="object-cover contrast-105"
                   />
+                  {tokoh.isSupremeHero && (
+                    <div className="absolute top-2.5 left-2.5 px-2.5 py-1 rounded-lg bg-[#0C0A08]/90 border border-[#C59B53] text-[9px] font-mono font-bold text-amber-300 flex items-center gap-1.5 shadow-lg z-10">
+                      <span>★</span>
+                      <span>{tokoh.bidangIdentity.specialMeritBadge}</span>
+                    </div>
+                  )}
                   {/* Ornate Photo Mounting Corners */}
                   <div className="absolute top-2 left-2 w-5 h-5 border-t-2 border-l-2 border-[#ECC47E] pointer-events-none" />
                   <div className="absolute top-2 right-2 w-5 h-5 border-t-2 border-r-2 border-[#ECC47E] pointer-events-none" />

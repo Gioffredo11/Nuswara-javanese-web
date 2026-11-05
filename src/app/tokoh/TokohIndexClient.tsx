@@ -187,12 +187,18 @@ export function TokohIndexClient() {
                 <div className="pt-6 pb-4">
                   <div className="relative mx-auto w-40 aspect-[3/4] rounded-xl overflow-hidden border-2 border-[#C59B53]/50 shadow-inner group-hover:scale-[1.02] transition-transform duration-300">
                     <Image
-                      src={tokoh.photoUrl}
+                      src={tokoh.colorPhotoUrl || tokoh.photoUrl}
                       alt={`Foto arsip ${tokoh.name}`}
                       fill
                       sizes="160px"
                       className="object-cover contrast-105 group-hover:scale-105 transition-all duration-300"
                     />
+                    {tokoh.isSupremeHero && (
+                      <div className="absolute top-1.5 left-1.5 px-1.5 py-0.5 rounded bg-[#0C0A08]/90 border border-[#C59B53] text-[8px] font-mono font-bold text-amber-300 flex items-center gap-1 shadow z-10">
+                        <span>★</span>
+                        <span>UTAMA</span>
+                      </div>
+                    )}
                     {/* Archival corner decorations */}
                     <div className="absolute top-1 left-1 w-3 h-3 border-t-2 border-l-2 border-[#ECC47E]/80 pointer-events-none" />
                     <div className="absolute top-1 right-1 w-3 h-3 border-t-2 border-r-2 border-[#ECC47E]/80 pointer-events-none" />
