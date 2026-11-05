@@ -4,19 +4,6 @@ export interface TokohSection {
   highlightQuote?: string;
 }
 
-export interface BidangIdentity {
-  bidangName: string;
-  bidangTag: string;
-  accentColor: string;
-  accentBadgeClass: string;
-  glowClass: string;
-  borderClass: string;
-  specialMeritBadge: string;
-  iconName: 'feather' | 'shield' | 'book-open' | 'swords' | 'sun' | 'compass';
-  highlightAttribute: string;
-  falsafahSingkat: string;
-}
-
 export interface TokohArticle {
   slug: string;
   idNumber: string;
@@ -32,9 +19,6 @@ export interface TokohArticle {
   quote: string;
   summary: string;
   photoUrl: string;
-  colorPhotoUrl?: string;
-  isSupremeHero?: boolean;
-  bidangIdentity: BidangIdentity;
   verifiedSealText: string;
   personalData: {
     tempatLahir: string;
@@ -70,20 +54,6 @@ export const tokohArticles: TokohArticle[] = [
     summary:
       'Pahlawan perintis emansipasi wanita dan pendidikan budi pekerti dari bumi Jepara. Surat-suratnya melintasi batas samudra menegaskan bahwa kemajuan peradaban suatu bangsa bermula dari kemerdekaan batin dan kecerdasan kaum perempuan.',
     photoUrl: '/images/editorial/tokoh-kartini-arsip.jpg',
-    colorPhotoUrl: '/images/editorial/tokoh-kartini-ikonik-color.jpg',
-    isSupremeHero: true,
-    bidangIdentity: {
-      bidangName: 'Emansipasi & Literasi Perempuan',
-      bidangTag: 'LITERASI & EMANSIPASI AKSARA',
-      accentColor: '#E07A5F',
-      accentBadgeClass: 'bg-[#3D1E16]/80 text-[#F4A261] border-[#E07A5F]/40',
-      glowClass: 'from-[#E07A5F]/25 via-[#C5A059]/10 to-transparent',
-      borderClass: 'border-[#E07A5F]/60',
-      specialMeritBadge: 'BINTANG MAHASATYA // PERINTIS EMANSIPASI',
-      iconName: 'feather',
-      highlightAttribute: 'Pena Emas Aksara & Surat Korespondensi Kartini',
-      falsafahSingkat: 'Habis Gelap Terbitlah Terang (Door Duisternis tot Licht)',
-    },
     verifiedSealText: 'ARSIP KEBANGSAAN • SK PRESIDEN NO. 108 TAHUN 1964',
     personalData: {
       tempatLahir: 'Mayong, Kabupaten Jepara, Karesidenan Jepara',
@@ -157,20 +127,6 @@ export const tokohArticles: TokohArticle[] = [
     summary:
       'Ksatria agung tanah Jawa yang memadukan spiritualitas mistik Islam dan kesaktian kanuragan. Memimpin koalisi rakyat, santri, kiai, dan bangsawan dalam Perang Jawa (De Java Oorlog) yang nyaris membangkrutkan kas pemerintah kolonial Hindia Belanda.',
     photoUrl: '/images/editorial/tokoh-diponegoro-arsip.jpg',
-    colorPhotoUrl: '/images/editorial/tokoh-diponegoro-color.jpg',
-    isSupremeHero: true,
-    bidangIdentity: {
-      bidangName: 'Perlawanan Rakyat & Kepemimpinan Spiritual',
-      bidangTag: 'PERANG JAWA & KSATRIA SPIRITUAL',
-      accentColor: '#2D6A4F',
-      accentBadgeClass: 'bg-[#142A1E]/80 text-[#52B788] border-[#2D6A4F]/50',
-      glowClass: 'from-[#2D6A4F]/25 via-[#C5A059]/15 to-transparent',
-      borderClass: 'border-[#52B788]/60',
-      specialMeritBadge: 'BINTANG MAHAPUTERA // PANGLIMA PERANG JAWA',
-      iconName: 'shield',
-      highlightAttribute: 'Keris Kyai Nogo Siluman & Jubah Ksatria Serban Putih',
-      falsafahSingkat: 'Sadumuk Bathuk Sanyari Bumi Ditohi Tekan Pati',
-    },
     verifiedSealText: 'ARSIP KEBANGSAAN • SK PRESIDEN NO. 087 TAHUN 1973',
     personalData: {
       tempatLahir: 'Keraton Ngayogyakarta Hadiningrat',
@@ -244,20 +200,6 @@ export const tokohArticles: TokohArticle[] = [
     summary:
       'Wartawan pemberani, sastrawan kritis, dan filsuf pendidikan agung. Menanggalkan gelar kebangsawanannya untuk melebur bersama rakyat jelata, merumuskan sistem pendidikan nasional berlandaskan kemerdekaan jiwa, budi pekerti, dan cinta tanah air.',
     photoUrl: '/images/editorial/tokoh-dewantara-arsip.jpg',
-    colorPhotoUrl: '/images/editorial/tokoh-dewantara-color.jpg',
-    isSupremeHero: true,
-    bidangIdentity: {
-      bidangName: 'Filsafat Pendidikan Nasional & Pers',
-      bidangTag: 'BAPAK PENDIDIKAN & TAMAN SISWA',
-      accentColor: '#3A6EA5',
-      accentBadgeClass: 'bg-[#132238]/80 text-[#70A5E0] border-[#3A6EA5]/50',
-      glowClass: 'from-[#3A6EA5]/25 via-[#C5A059]/15 to-transparent',
-      borderClass: 'border-[#70A5E0]/60',
-      specialMeritBadge: 'BAPAK HARDIKNAS // TRISAKTI PENDIDIKAN',
-      iconName: 'book-open',
-      highlightAttribute: 'Semboyan Tut Wuri Handayani & Suluh Ilmu Taman Siswa',
-      falsafahSingkat: 'Ing Ngarsa Sung Tulada, Ing Madya Mangun Karsa, Tut Wuri Handayani',
-    },
     verifiedSealText: 'ARSIP KEBANGSAAN • SK PRESIDEN NO. 305 TAHUN 1959',
     personalData: {
       tempatLahir: 'Kadipaten Pakualaman, Yogyakarta',
@@ -331,20 +273,6 @@ export const tokohArticles: TokohArticle[] = [
     summary:
       'Panglima Besar pertama tentara Republik Indonesia dari tlatah Purbalingga-Banyumas. Memimpin perang gerilya menembus ribuan kilometer hutan belantara dan gunung dalam keadaan satu paru-paru di atas tandu bambu, membuktikan eksistensi Republik di mata dunia.',
     photoUrl: '/images/editorial/tokoh-soedirman-arsip.jpg',
-    colorPhotoUrl: '/images/editorial/tokoh-soedirman-color.jpg',
-    isSupremeHero: true,
-    bidangIdentity: {
-      bidangName: 'Panglima Gerilya & Pertahanan Kemerdekaan',
-      bidangTag: 'PANGLIMA BESAR TNI PERTAMA',
-      accentColor: '#C1121F',
-      accentBadgeClass: 'bg-[#300C0F]/80 text-[#FF6B6B] border-[#C1121F]/50',
-      glowClass: 'from-[#C1121F]/30 via-[#C5A059]/15 to-transparent',
-      borderClass: 'border-[#FF6B6B]/60',
-      specialMeritBadge: 'JENDERAL BESAR BINTANG 5 // PAHLAWAN GERILYA',
-      iconName: 'swords',
-      highlightAttribute: 'Tandu Bambu Gerilya Hutan & Palagan Ambarawa',
-      falsafahSingkat: 'Jiwa yang Dilindungi Benteng Merah Putih Akan Tetap Hidup Abadi',
-    },
     verifiedSealText: 'ARSIP KEBANGSAAN • SK PRESIDEN NO. 314 TAHUN 1964',
     personalData: {
       tempatLahir: 'Bodas Karangjati, Rembang, Kabupaten Purbalingga, Jawa Tengah',
@@ -418,19 +346,6 @@ export const tokohArticles: TokohArticle[] = [
     summary:
       'Tokoh ulama visioner berdarah bangsawan ulama Jawa Tengah-Yogyakarta. Mentransformasikan pemahaman keagamaan dari sekadar ritual lisan menjadi aksi kemanusiaan nyata: mendirikan rumah sakit, panti asuhan, dan sekolah modern bagi kaum papa dan mustad’afin.',
     photoUrl: '/images/editorial/tokoh-ahmaddahlan-arsip.jpg',
-    isSupremeHero: false,
-    bidangIdentity: {
-      bidangName: 'Pembaruan Sosial, Kesehatan & Pencerahan Umat',
-      bidangTag: 'PEMBARUAN SOSIAL & DAKWAH INKLUSIF',
-      accentColor: '#DDA15E',
-      accentBadgeClass: 'bg-[#2E1E0C]/80 text-[#E9C46A] border-[#DDA15E]/40',
-      glowClass: 'from-[#DDA15E]/20 via-[#2D6A4F]/10 to-transparent',
-      borderClass: 'border-[#DDA15E]/50',
-      specialMeritBadge: 'PELOPOR KESEJAHTERAAN UMAT // MUHAMMADIYAH',
-      iconName: 'sun',
-      highlightAttribute: 'Surya Dua Belas & Gerakan Penolong Kesengsaraan Oemoem (PKO)',
-      falsafahSingkat: 'Teologi Al-Ma’un: Iman Sejati Dibuktikan Lewat Kasih Sayang',
-    },
     verifiedSealText: 'ARSIP KEBANGSAAN • SK PRESIDEN NO. 657 TAHUN 1961',
     personalData: {
       tempatLahir: 'Kampung Kauman, Yogyakarta',
@@ -503,19 +418,6 @@ export const tokohArticles: TokohArticle[] = [
     summary:
       'Panglima perang wanita legendaris dari tlatah Serang, Grobogan, Jawa Tengah. Putri dari Pangeran Natapraja, keturunan Sunan Kalijaga. Di usia senja 73 tahun, ia tetap menunggang kuda perang di atas tandu memimpin laskar gerilya dan menjadi penasihat militer utama Pangeran Diponegoro.',
     photoUrl: '/images/editorial/tokoh-nyiagengserang-arsip.jpg',
-    isSupremeHero: false,
-    bidangIdentity: {
-      bidangName: 'Srikandi Militer & Pertahanan Rakyat',
-      bidangTag: 'SRIKANDI GERILYA TANAH MENOREH',
-      accentColor: '#9D4EDD',
-      accentBadgeClass: 'bg-[#25103A]/80 text-[#C77DFF] border-[#9D4EDD]/40',
-      glowClass: 'from-[#9D4EDD]/20 via-[#C5A059]/10 to-transparent',
-      borderClass: 'border-[#9D4EDD]/50',
-      specialMeritBadge: 'PANGLIMA PERANG WANITA // PENASIHAT GERILYA',
-      iconName: 'compass',
-      highlightAttribute: 'Taktik Kamuflase Daun Keladi (Lumbu) & Tombak Pusaka',
-      falsafahSingkat: 'Ksatria Putri Penjaga Kedaulatan Bumi Leluhur Jawa',
-    },
     verifiedSealText: 'ARSIP KEBANGSAAN • SK PRESIDEN NO. 084 TAHUN 1974',
     personalData: {
       tempatLahir: 'Desa Serang, Kecamatan Karangrayung, Kabupaten Grobogan, Jawa Tengah',
