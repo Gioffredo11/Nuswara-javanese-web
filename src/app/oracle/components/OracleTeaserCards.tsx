@@ -156,7 +156,7 @@ interface OracleTeaserCardsProps {
   onCardClick?: (slug: string) => void;
 }
 
-export function OracleTeaserCards({
+ export function OracleTeaserCards({
   matchedSlug = null,
   characterName,
   isRevealing = false,
