@@ -7,6 +7,25 @@ import { tokohArticles } from '@/data/tokohArticles';
 import { ArrowRight, BookOpen } from 'lucide-react';
 import { ScrollReveal } from '@/components/ui/ScrollReveal';
 
+const getTokohMeta = (slug: string) => {
+  switch (slug) {
+    case 'ra-kartini':
+      return { tag: 'EMANSIPASI & LITERASI', role: 'Pelopor Emansipasi Perempuan' };
+    case 'pangeran-diponegoro':
+      return { tag: 'PERANG JAWA & KSATRIA', role: 'Panglima Perang Jawa (1825)' };
+    case 'ki-hadjar-dewantara':
+      return { tag: 'FILSAFAT PENDIDIKAN', role: 'Bapak Pendidikan Nasional' };
+    case 'jenderal-soedirman':
+      return { tag: 'STRATEGI MILITER', role: 'Panglima Besar TNI Pertama' };
+    case 'kh-ahmad-dahlan':
+      return { tag: 'PEMBARUAN SOSIAL', role: 'Pelopor Reformasi & PKO' };
+    case 'nyi-ageng-serang':
+      return { tag: 'SRIKANDI GERILYA', role: 'Panglima Perang Srikandi' };
+    default:
+      return { tag: 'TOKOH BANGSA', role: 'Pahlawan Peradaban' };
+  }
+};
+
 export function TokohIdentitySection() {
   const [activeSlug, setActiveSlug] = useState<string>(tokohArticles[0]?.slug || 'ra-kartini');
   const sliderRef = useRef<HTMLDivElement>(null);
@@ -63,6 +82,8 @@ export function TokohIdentitySection() {
         >
           {tokohArticles.map((tokoh, index) => {
             const isActive = tokoh.slug === activeFigure.slug;
+            const meta = getTokohMeta(tokoh.slug);
+
             return (
               <button
                 key={tokoh.slug}
@@ -72,7 +93,7 @@ export function TokohIdentitySection() {
                 aria-controls={`tokoh-panel-${tokoh.slug}`}
                 tabIndex={0}
                 onClick={() => handleSelectTokoh(tokoh.slug)}
-                className={`group shrink-0 p-2 rounded-xl transition-all duration-300 flex items-center gap-2.5 cursor-pointer min-w-[170px] sm:min-w-[200px] text-left border ${
+                className={`group shrink-0 p-2.5 sm:p-3 rounded-xl transition-all duration-300 flex items-center gap-3 cursor-pointer min-w-[210px] sm:min-w-[240px] text-left border ${
                   isActive
                     ? 'bg-gradient-to-r from-[#241A10] to-[#16120D] border-[#C5A059] ring-2 ring-[#C5A059]/40 shadow-xl'
                     : 'bg-[#14110E] hover:bg-[#1C1610] border-[#C5A059]/20 hover:border-[#C5A059]/50 shadow-md'
@@ -80,7 +101,7 @@ export function TokohIdentitySection() {
               >
                 {/* Hero Photo Thumbnail */}
                 <div
-                  className={`relative w-11 h-11 sm:w-12 sm:h-12 rounded-lg overflow-hidden shrink-0 border transition-all duration-300 ${
+                  className={`relative w-12 h-14 sm:w-13 sm:h-16 rounded-xl overflow-hidden shrink-0 border transition-all duration-300 ${
                     isActive
                       ? 'border-[#C5A059] ring-1 ring-[#C5A059]/60 shadow-md scale-105'
                       : 'border-[#C5A059]/30 group-hover:border-[#C5A059]/70'
@@ -90,28 +111,38 @@ export function TokohIdentitySection() {
                     src={tokoh.photoUrl}
                     alt={tokoh.name}
                     fill
-                    sizes="48px"
+                    sizes="56px"
                     className="object-cover transition-transform duration-500 group-hover:scale-110"
                   />
-                  <div className="absolute top-0.5 left-0.5 bg-[#0C0A08]/85 px-1 py-0.5 rounded text-[8px] font-mono font-bold text-[#C5A059]">
+                  <div className="absolute top-1 left-1 bg-[#0C0A08]/85 px-1.5 py-0.5 rounded text-[8px] font-mono font-bold text-[#C5A059]">
                     0{index + 1}
                   </div>
                 </div>
 
-                {/* Hero Title Only */}
+                {/* Hero Identity Stack */}
                 <div className="flex-1 min-w-0 pr-1">
-                  <div className="flex items-center justify-between gap-1">
+                  <div className="flex items-center justify-between gap-1 mb-0.5">
                     <span
-                      className={`font-royal text-xs sm:text-sm font-bold truncate ${
-                        isActive ? 'text-[#F4EFE6]' : 'text-[#D5C9B5] group-hover:text-white'
+                      className={`text-[9px] font-mono uppercase tracking-wider font-semibold block truncate ${
+                        isActive ? 'text-[#C5A059]' : 'text-[#8E8271]'
                       }`}
                     >
-                      {tokoh.name}
+                      {meta.tag}
                     </span>
                     {isActive && (
                       <span className="w-1.5 h-1.5 rounded-full bg-[#C5A059] shrink-0" />
                     )}
                   </div>
+                  <span
+                    className={`font-royal text-xs sm:text-sm font-bold truncate block ${
+                      isActive ? 'text-[#F4EFE6]' : 'text-[#D5C9B5] group-hover:text-white'
+                    }`}
+                  >
+                    {tokoh.name}
+                  </span>
+                  <span className="text-[10px] text-[#8E8271] truncate block mt-0.5 font-sans">
+                    {meta.role}
+                  </span>
                 </div>
               </button>
             );
