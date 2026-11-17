@@ -101,27 +101,27 @@ const IMAGES = [
   },
   {
     target: 'kuliner-lumpia.jpg',
-    url: 'https://upload.wikimedia.org/wikipedia/commons/2/26/Loenpia_Semarang_with_sauce.JPG',
-    title: 'Lumpia Goreng Khas Semarang dengan Saus Manis Bawang',
+    url: 'https://upload.wikimedia.org/wikipedia/commons/7/77/Lumpia_Lunpia_Semarang.jpg',
+    title: 'Lumpia Goreng Khas Semarang dengan Saus Manis Bawang & Lokio',
     author: 'Wikimedia Commons Contributor',
     source: 'Wikimedia Commons',
-    license: 'CC BY-SA 3.0'
+    license: 'CC BY-SA 4.0'
   },
   {
     target: 'kuliner-liwet.jpg',
-    url: 'https://upload.wikimedia.org/wikipedia/commons/f/fc/Nasi_Liwet_Solo.jpg',
-    title: 'Nasi Liwet Solo Gurih Tradisional Berdaun Pisang',
+    url: 'https://upload.wikimedia.org/wikipedia/commons/7/70/Nasi_Liwet.jpg',
+    title: 'Nasi Liwet Surakarta Solo di Atas Daun Pisang',
     author: 'Wikimedia Commons Contributor',
     source: 'Wikimedia Commons',
     license: 'CC BY-SA 4.0'
   },
   {
     target: 'kuliner-mendoan.jpg',
-    url: 'https://upload.wikimedia.org/wikipedia/commons/b/b7/Mendoan.jpg',
-    title: 'Tempe Mendoan Hangat Khas Banyumas',
-    author: 'Wikimedia Commons Contributor',
+    url: 'https://upload.wikimedia.org/wikipedia/commons/e/eb/Mendoan_dan_Kopi_Tubruk.jpg',
+    title: 'Tempe Mendoan Hangat dan Kopi Tubruk Khas Banyumasan',
+    author: 'Wiki Cinta Budaya 2020 / Wikimedia Commons',
     source: 'Wikimedia Commons',
-    license: 'CC BY-SA 3.0'
+    license: 'CC BY-SA 4.0'
   },
   {
     target: 'kuliner-sotokudus.jpg',
@@ -133,24 +133,24 @@ const IMAGES = [
   },
   {
     target: 'kuliner-dawetayu.jpg',
-    url: 'https://upload.wikimedia.org/wikipedia/commons/3/3e/Es_dawet_ayu_banjarnegara.jpg',
-    title: 'Es Dawet Ayu Segar Khas Banjarnegara',
-    author: 'Wikimedia Commons Contributor',
+    url: 'https://upload.wikimedia.org/wikipedia/commons/3/36/Es_Dawet_Ayu.jpg',
+    title: 'Es Dawet Ayu Segar Tiga Lapis Khas Banjarnegara',
+    author: 'Wiki Cinta Budaya 2018 / Wikimedia Commons',
     source: 'Wikimedia Commons',
     license: 'CC BY-SA 4.0'
   },
   {
     target: 'kuliner-satekere.jpg',
-    url: 'https://upload.wikimedia.org/wikipedia/commons/7/71/Sate_Kere_daging_sapi.jpg',
-    title: 'Sate Kere Tradisional Solo dengan Bumbu Kacang',
-    author: 'Wikimedia Commons Contributor',
+    url: 'https://upload.wikimedia.org/wikipedia/commons/2/24/Sate_tempe04_suhardi.jpg',
+    title: 'Sate Tempe Bakar Khas Jawa dengan Bumbu Kacang & Bawang Merah',
+    author: 'Wiki Kaleidoskop Indonesia 2021 / Wikimedia Commons',
     source: 'Wikimedia Commons',
     license: 'CC BY-SA 4.0'
   },
   {
     target: 'kuliner-garangasem.jpg',
-    url: 'https://upload.wikimedia.org/wikipedia/commons/8/8b/Garang_asem_Pj.JPG',
-    title: 'Garang Asem Ayam Daun Pisang Khas Kudus & Grobogan',
+    url: 'https://upload.wikimedia.org/wikipedia/commons/f/ff/Garang_asem.jpg',
+    title: 'Garang Asem Ayam Daun Pisang Segar Khas Kudus & Sukoharjo',
     author: 'Wikimedia Commons Contributor',
     source: 'Wikimedia Commons',
     license: 'CC BY-SA 4.0'

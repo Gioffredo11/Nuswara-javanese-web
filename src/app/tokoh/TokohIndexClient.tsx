@@ -110,7 +110,7 @@ export function TokohIndexClient() {
 
             {/* Quick Stats */}
             <div className="text-xs font-mono text-[#A89F91] flex items-center gap-2 self-end md:self-center px-2">
-              <span className="w-2 h-2 rounded-full bg-[#C59B53] animate-pulse" />
+              <span className="w-2 h-2 rounded-full bg-[#C59B53]" />
               <span>
                 Menampilkan <strong className="text-[#ECC47E]">{filteredTokoh.length}</strong> dari {tokohArticles.length} Berkas
               </span>

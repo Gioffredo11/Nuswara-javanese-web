@@ -770,7 +770,7 @@ img.sunset-valley-fallback {
   container-type: inline-size;
   color: #ecece8;
   background: #0b0b0b;
-  font-family: "Geist", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: var(--font-sans), 'Plus Jakarta Sans', system-ui, sans-serif;
 }
 
 .article-headings-component {

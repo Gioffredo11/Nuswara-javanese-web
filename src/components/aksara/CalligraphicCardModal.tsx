@@ -131,7 +131,7 @@ export function CalligraphicCardModal({
     });
 
     // Latin Transliteration
-    ctx.font = 'italic 20px "Newsreader", "Instrument Serif", Georgia, serif';
+    ctx.font = 'italic 20px "Poppins", sans-serif';
     ctx.fillStyle = palette.latin;
     ctx.fillText(`"${latinText || 'Nuswara'}"`, width / 2, height / 2 + (lines.length * 40) + 40);
 

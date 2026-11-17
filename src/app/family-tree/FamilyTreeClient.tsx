@@ -354,7 +354,7 @@ export function FamilyTreeClient() {
                             </div>
 
                             {isSelected && (
-                              <span className="w-1.5 h-1.5 rounded-full bg-[#C5A059] animate-pulse shrink-0" />
+                              <span className="w-1.5 h-1.5 rounded-full bg-[#C5A059] shrink-0" />
                             )}
                           </button>
                         );
@@ -426,7 +426,7 @@ export function FamilyTreeClient() {
                             </div>
 
                             {isSelected && (
-                              <span className="w-1.5 h-1.5 rounded-full bg-[#C5A059] animate-pulse shrink-0" />
+                              <span className="w-1.5 h-1.5 rounded-full bg-[#C5A059] shrink-0" />
                             )}
                           </button>
                         );
@@ -498,7 +498,7 @@ export function FamilyTreeClient() {
                             </div>
 
                             {isSelected && (
-                              <span className="w-1.5 h-1.5 rounded-full bg-[#C5A059] animate-pulse shrink-0" />
+                              <span className="w-1.5 h-1.5 rounded-full bg-[#C5A059] shrink-0" />
                             )}
                           </button>
                         );

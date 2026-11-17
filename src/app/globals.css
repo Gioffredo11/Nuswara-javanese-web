@@ -41,11 +41,14 @@
     --status-danger: #B91C1C;
     --status-info: #1D4ED8;
 
-    /* Font Stacks */
-    --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-    --font-serif: 'Newsreader', 'Instrument Serif', Georgia, serif;
+    /* Font Stacks — Modern Sans-Serif System: Poppins (Headings/Display) + Plus Jakarta Sans (Body/UI) */
+    --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    --font-serif: var(--font-poppins), 'Poppins', sans-serif;
+    --font-editorial: var(--font-poppins), 'Poppins', sans-serif;
+    --font-mono: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    --font-cinzel: var(--font-poppins), 'Poppins', sans-serif;
+    --font-cormorant: var(--font-poppins), 'Poppins', sans-serif;
     --font-aksara: 'Tuladha Jejeg', 'Noto Sans Javanese', 'Aturra Web', 'Javanese Text', sans-serif;
-    --font-mono: 'JetBrains Mono', monospace;
 
     /* 8pt Spatial System */
     --space-1: 4px;
@@ -130,19 +133,50 @@
   --color-text-muted:      var(--text-muted);
   --color-text-dark:       var(--text-dark);
   --color-terracotta:      var(--terracotta);
+
+  /* Modern Sans-Serif System in Tailwind v4 utilities: Poppins (Headings) + Plus Jakarta Sans (Body/UI) */
+  --font-sans:             var(--font-sans), 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  --font-serif:            var(--font-poppins), 'Poppins', sans-serif;
+  --font-mono:             var(--font-sans), 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+
+  /* Tamed weight scale: softens thick geometric bold to refined weights */
+  --font-weight-bold:      500;
+  --font-weight-semibold:  500;
+  --font-weight-extrabold: 600;
+  --font-weight-black:     600;
 }
 
-/* Custom Editorial & Royal Classes */
+/* Tame bold weight across website (avoiding bulky/heavy geometric shapes) */
+.font-bold,
+.font-semibold {
+  font-weight: 500 !important;
+}
+
+.font-extrabold,
+.font-black {
+  font-weight: 600 !important;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 500;
+  letter-spacing: -0.015em;
+}
+
+strong, b {
+  font-weight: 500;
+}
+
+/* Custom Editorial & Royal Classes — Modern Sans-Serif System */
 .font-royal {
-  font-family: var(--font-cinzel), serif;
+  font-family: var(--font-poppins), 'Poppins', sans-serif;
 }
 
 .font-editorial {
-  font-family: var(--font-cormorant), 'Times New Roman', serif;
+  font-family: var(--font-poppins), 'Poppins', sans-serif;
 }
 
 .font-serif {
-  font-family: var(--font-cormorant), Georgia, serif;
+  font-family: var(--font-poppins), 'Poppins', sans-serif;
 }
 
 .font-sans-modern {
@@ -901,6 +935,19 @@ img[loading="lazy"][data-nimg] {
     transform: none !important;
     clip-path: none !important;
     letter-spacing: inherit !important;
+  }
+
+  /* Tailwind animate utilities — disable dekoratif loops */
+  .animate-pulse,
+  .animate-bounce,
+  .animate-ping,
+  .animate-spin:not(.animate-spin-active),
+  .animate-float-dust {
+    animation: none !important;
+  }
+  /* Khusus animate-pulse: tetap tampil, hanya stop bergerak */
+  .animate-pulse {
+    opacity: 1 !important;
   }
 }
 

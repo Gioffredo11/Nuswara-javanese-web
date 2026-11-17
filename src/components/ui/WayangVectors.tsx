@@ -1427,8 +1427,10 @@ export function getTarotImagePath(slug: string): string {
     case 'kurupati':
     case 'suyodhana':
       return '/images/tarot/duryodana.jpg';
+    case 'kumbakarna':
+      return '/images/tarot/kumbakarna.jpg';
     default:
-      return `/images/tarot/${s}.jpg`;
+      return '/images/tarot/gatotkaca.jpg';
   }
 }
 

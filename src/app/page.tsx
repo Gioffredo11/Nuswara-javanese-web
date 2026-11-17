@@ -198,11 +198,11 @@ export function HomePage({ defaultSection }: HomePageProps = {}) {
   };
 
   return (
-    <div id="beranda" className="flex flex-col min-h-screen relative bg-[#0C0A08] text-[#F4EFE6] overflow-x-hidden">
+    <div id="beranda" className="flex flex-col min-h-dvh relative bg-[#0C0A08] text-[#F4EFE6] overflow-x-hidden">
       {/* =========================================================================
           0. CINEMATIC HERO SECTION: NUSWARA MUSEUM DIGITAL JAWA TENGAH
           ========================================================================= */}
-      <section className="relative overflow-hidden min-h-screen flex flex-col justify-center pt-20 sm:pt-24 pb-12 sm:pb-16">
+      <section className="relative overflow-hidden min-h-dvh flex flex-col justify-center pt-20 sm:pt-24 pb-12 sm:pb-16">
         {/* Background Landscape Atmosphere */}
         <ParallaxHero className="absolute inset-0 pointer-events-none z-0 overflow-hidden" speed={0.15}>
           <div data-parallax className="absolute inset-0 scale-[1.12] origin-center">
@@ -328,7 +328,7 @@ export function HomePage({ defaultSection }: HomePageProps = {}) {
                       </span>
                     </div>
                     {isActive && (
-                      <span className="w-2 h-2 rounded-full bg-[#8C6D32] animate-pulse shrink-0" />
+                      <span className="w-2 h-2 rounded-full bg-[#8C6D32] shrink-0" />
                     )}
                   </button>
                 );

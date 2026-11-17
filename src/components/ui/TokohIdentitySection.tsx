@@ -10,19 +10,19 @@ import { ScrollReveal } from '@/components/ui/ScrollReveal';
 const getTokohSubtitle = (slug: string) => {
   switch (slug) {
     case 'ra-kartini':
-      return 'Pelopor Emansipasi';
+      return 'Pejuang Hak Wanita';
     case 'pangeran-diponegoro':
-      return 'Panglima Perang Jawa';
+      return 'Pemimpin Perang Jawa';
     case 'ki-hadjar-dewantara':
-      return 'Bapak Pendidikan';
+      return 'Bapak Pendidikan Nasional';
     case 'jenderal-soedirman':
       return 'Panglima Besar TNI';
     case 'kh-ahmad-dahlan':
-      return 'Pembaruan Sosial';
+      return 'Pendiri Muhammadiyah';
     case 'nyi-ageng-serang':
-      return 'Srikandi Gerilya';
+      return 'Panglima Perang Wanita';
     default:
-      return 'Tokoh Peradaban';
+      return 'Tokoh Pahlawan';
   }
 };
 
@@ -46,10 +46,10 @@ export function TokohIdentitySection() {
         <ScrollReveal direction="up" distance={30}>
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
             <div className="space-y-1.5">
-              <span className="text-xs font-mono uppercase tracking-[0.25em] text-[#C5A059] font-bold block">
+              <span className="text-xs font-mono uppercase tracking-[0.2em] text-[#C5A059] font-medium block">
                 [ ARSIP // 02 ] — WARISAN KETELADANAN BANGSA
               </span>
-              <h2 className="font-editorial text-3xl sm:text-4xl lg:text-5xl font-bold text-[#F4EFE6] leading-[1.05]">
+              <h2 className="font-editorial text-3xl sm:text-4xl lg:text-5xl font-semibold text-[#F4EFE6] leading-[1.05]">
                 Mereka meninggalkan jejak.{' '}
                 <span className="italic font-normal text-gold-gradient block mt-1">
                   Kita meneruskan makna.
@@ -61,7 +61,7 @@ export function TokohIdentitySection() {
             <div className="shrink-0">
               <Link
                 href="/tokoh"
-                className="inline-flex items-center gap-2 px-5 py-3 bg-[#C5A059] hover:bg-[#D5B36E] text-[#0C0A08] font-mono text-xs font-bold uppercase tracking-wider transition-all duration-300 group cursor-pointer shadow-lg rounded-xl"
+                className="inline-flex items-center gap-2 px-5 py-3 bg-[#C5A059] hover:bg-[#D5B36E] text-[#0C0A08] font-mono text-xs font-semibold uppercase tracking-wider transition-all duration-300 group cursor-pointer shadow-lg rounded-xl"
               >
                 <BookOpen className="w-4 h-4 text-[#0C0A08]" />
                 <span>Buka Direktori Tokoh</span>
@@ -114,27 +114,24 @@ export function TokohIdentitySection() {
                     sizes="44px"
                     className="object-cover transition-transform duration-500 group-hover:scale-105"
                   />
-                  <div className="absolute top-0.5 left-0.5 bg-[#0C0A08]/85 px-1 py-0.2 rounded text-[7.5px] font-mono font-bold text-[#C5A059] leading-none">
+                  <div className="absolute top-0.5 left-0.5 bg-[#0C0A08]/85 px-1 py-0.2 rounded text-[7.5px] font-sans font-medium text-[#C5A059] leading-none">
                     0{index + 1}
                   </div>
                 </div>
 
-                {/* Hero Identity Stack (Compact 2-Line) */}
+                {/* Hero Identity Stack */}
                 <div className="flex-1 min-w-0 pr-0.5">
                   <div className="flex items-center gap-1.5">
                     <span
-                      className={`font-royal text-xs sm:text-[13px] font-bold truncate block ${
+                      className={`font-sans text-xs sm:text-[13px] font-medium truncate block leading-snug tracking-normal ${
                         isActive ? 'text-[#F4EFE6]' : 'text-[#D5C9B5] group-hover:text-white'
                       }`}
                     >
                       {tokoh.name}
                     </span>
-                    {isActive && (
-                      <span className="w-1.5 h-1.5 rounded-full bg-[#C5A059] shrink-0" />
-                    )}
                   </div>
                   <span
-                    className={`text-[9.5px] sm:text-[10px] font-mono tracking-wider uppercase block truncate mt-0.5 ${
+                    className={`text-[9.5px] sm:text-[10px] font-sans font-normal tracking-normal block truncate mt-0.5 transition-colors ${
                       isActive ? 'text-[#C5A059]' : 'text-[#8E8271]'
                     }`}
                   >
@@ -180,10 +177,10 @@ export function TokohIdentitySection() {
               {/* Right Column: Editorial Bio & Actions */}
               <div className="lg:col-span-7 space-y-5">
                 <div>
-                  <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-[#C5A059] font-bold block">
+                  <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-[#C5A059] font-medium block">
                     {activeFigure.category}
                   </span>
-                  <h3 className="font-royal text-2xl sm:text-3xl lg:text-4xl font-bold text-[#F4EFE6] mt-1 leading-tight">
+                  <h3 className="font-royal text-2xl sm:text-3xl lg:text-4xl font-semibold text-[#F4EFE6] mt-1 leading-tight">
                     {activeFigure.name}
                   </h3>
                   <p className="font-editorial italic text-xs sm:text-sm text-[#C5A059]/90 mt-1">
@@ -206,7 +203,7 @@ export function TokohIdentitySection() {
                   {/* Primary Colored Button: Direktori Tokoh */}
                   <Link
                     href="/tokoh"
-                    className="min-h-[42px] px-5 py-3 bg-[#C5A059] hover:bg-[#D5B36E] text-[#0C0A08] font-bold text-xs uppercase font-mono tracking-wider transition-colors shadow-lg flex items-center gap-2 cursor-pointer rounded-xl group"
+                    className="min-h-[42px] px-5 py-3 bg-[#C5A059] hover:bg-[#D5B36E] text-[#0C0A08] font-medium text-xs uppercase font-mono tracking-wider transition-colors shadow-lg flex items-center gap-2 cursor-pointer rounded-xl group"
                   >
                     <BookOpen className="w-4 h-4 text-[#0C0A08]" />
                     <span>Buka Direktori Tokoh</span>
