@@ -41,13 +41,13 @@
     --status-danger: #B91C1C;
     --status-info: #1D4ED8;
 
-    /* Font Stacks: Cinzel (Royal Display), Cormorant (Editorial Serif), Plus Jakarta Sans (Body/UI) */
+    /* Font Stacks — Modern Sans-Serif System: Poppins (Headings/Display) + Plus Jakarta Sans (Body/UI) */
     --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
-    --font-serif: var(--font-cormorant), 'Cormorant Garamond', Georgia, serif;
-    --font-editorial: var(--font-cormorant), 'Cormorant Garamond', Georgia, serif;
+    --font-serif: var(--font-poppins), 'Poppins', sans-serif;
+    --font-editorial: var(--font-poppins), 'Poppins', sans-serif;
     --font-mono: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
-    --font-cinzel: var(--font-cinzel), 'Cinzel', serif;
-    --font-cormorant: var(--font-cormorant), 'Cormorant Garamond', serif;
+    --font-cinzel: var(--font-poppins), 'Poppins', sans-serif;
+    --font-cormorant: var(--font-poppins), 'Poppins', sans-serif;
     --font-aksara: 'Tuladha Jejeg', 'Noto Sans Javanese', 'Aturra Web', 'Javanese Text', sans-serif;
 
     /* 8pt Spatial System */
@@ -166,17 +166,17 @@ strong, b {
   font-weight: 500;
 }
 
-/* Custom Editorial & Royal Classes — Authentic Classical Serif */
+/* Custom Editorial & Royal Classes — Modern Sans-Serif System */
 .font-royal {
-  font-family: var(--font-cinzel), 'Cinzel', serif;
+  font-family: var(--font-poppins), 'Poppins', sans-serif;
 }
 
 .font-editorial {
-  font-family: var(--font-cormorant), 'Cormorant Garamond', Georgia, serif;
+  font-family: var(--font-poppins), 'Poppins', sans-serif;
 }
 
 .font-serif {
-  font-family: var(--font-cormorant), 'Cormorant Garamond', Georgia, serif;
+  font-family: var(--font-poppins), 'Poppins', sans-serif;
 }
 
 .font-sans-modern {
