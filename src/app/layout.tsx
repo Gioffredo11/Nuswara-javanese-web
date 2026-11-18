@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from 'next';
 import { Poppins, Plus_Jakarta_Sans } from 'next/font/google';
 import './globals.css';
 import { Navbar } from '@/components/layout/Navbar';
+import { ScrollProgressSidebar } from '@/components/layout/ScrollProgressSidebar';
 import { Footer } from '@/components/layout/Footer';
 import { ScrollToTop } from '@/components/ui/ScrollToTop';
 import { PageTransition } from '@/components/ui/PageTransition';
@@ -98,6 +99,7 @@ export default function RootLayout({
         </a>
 
         <Navbar />
+        <ScrollProgressSidebar />
 
         {/* Cinematic ink-wash page transition veil */}
         <PageTransition>

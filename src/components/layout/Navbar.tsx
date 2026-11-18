@@ -21,6 +21,7 @@ export function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState<string>('beranda');
   const [isScrolled, setIsScrolled] = useState(false);
+  const [scrollProgress, setScrollProgress] = useState(0);
   const [manifestModalOpen, setManifestModalOpen] = useState(false);
   const [drawnManifestation, setDrawnManifestation] = useState<DrawnManifestationState | null>(null);
 
@@ -100,11 +101,22 @@ export function Navbar() {
   // Track scroll position to transition header background and active section
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 40);
+      const scrollY = window.scrollY;
+      const windowHeight = window.innerHeight;
+      const scrollHeight = document.documentElement.scrollHeight;
+      const totalScrollable = scrollHeight - windowHeight;
+
+      setIsScrolled(scrollY > 20);
+
+      if (totalScrollable > 0) {
+        setScrollProgress(Math.min(100, Math.max(0, (scrollY / totalScrollable) * 100)));
+      } else {
+        setScrollProgress(0);
+      }
 
       if (pathname !== '/') return;
 
-      const scrollPos = window.scrollY + 200;
+      const scrollPos = scrollY + 200;
 
       // Bottom of page highlights photobooth
       if (
@@ -275,233 +287,238 @@ export function Navbar() {
   return (
     <>
       <header
-      className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 ${
-        isScrolled
-          ? 'bg-[#0D0C0A]/92 backdrop-blur-lg border-b border-[#C59B53]/20 py-3 shadow-[0_4px_40px_-10px_rgba(0,0,0,0.9)]'
-          : 'bg-transparent py-6 sm:py-8'
-      }`}
-    >
-      <div className="w-full max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 flex items-center justify-between">
-        {/* Left: Brand "NUSWARA" matching photo typography */}
-        <Link
-          href="/"
-          onClick={handleLogoClick}
-          className="font-royal text-2xl sm:text-3xl tracking-[0.18em] text-[#F0E6D4] hover:text-white transition-colors rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C59B53] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0D0C0A]"
+        className="fixed top-3 sm:top-5 inset-x-0 z-50 flex justify-center pointer-events-none px-4 sm:px-6 transition-all duration-300"
+      >
+        <div
+          className={`pointer-events-auto relative w-full max-w-5xl rounded-full transition-all duration-300 flex items-center justify-between px-4 sm:px-6 py-2 sm:py-2.5 ${
+            isScrolled
+              ? 'bg-[#0D0C0A]/95 backdrop-blur-2xl border border-[#C59B53]/45 shadow-[0_12px_44px_rgba(0,0,0,0.85),0_0_24px_rgba(197,155,83,0.15)]'
+              : 'bg-[#0D0C0A]/80 backdrop-blur-xl border border-[#C59B53]/25 shadow-[0_8px_32px_rgba(0,0,0,0.65)]'
+          }`}
         >
-          NUSWARA
-        </Link>
+          {/* Left: Brand "NUSWARA" matching photo typography */}
+          <Link
+            href="/"
+            onClick={handleLogoClick}
+            className="font-royal text-xl sm:text-2xl tracking-[0.18em] text-[#F0E6D4] hover:text-[#ECC47E] transition-colors rounded-full px-2 py-0.5 flex items-center gap-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C59B53]"
+          >
+            <span>NUSWARA</span>
+          </Link>
 
-        {/* Right: Desktop Links & Actions */}
-        <div className="hidden lg:flex items-center gap-4 xl:gap-6">
-          <nav className="flex items-center gap-4 xl:gap-6.5" aria-label="Navigasi Utama">
-            {primaryNavLinks.map((item) => {
-              const active = isLinkActive(item.sectionId);
-              return (
-                <button
-                  key={item.sectionId}
-                  type="button"
-                  onClick={() => handleNavClick(item.sectionId)}
-                  className={`relative text-xs xl:text-sm tracking-wide transition-colors py-1 cursor-pointer font-serif whitespace-nowrap press-scale ${
-                    active ? 'text-[#ECC47E] font-bold' : 'text-[#B9B0A3] hover:text-[#F0E6D4]'
-                  }`}
-                >
-                  <span>{item.label}</span>
-                  {/* Animated active indicator — slides in from left */}
-                  <span
-                    className="absolute -bottom-1 left-0 w-full h-[2.5px] bg-[#ECC47E] rounded-full origin-left transition-transform duration-300"
-                    style={{ transform: active ? 'scaleX(1)' : 'scaleX(0)' }}
-                  />
+          {/* Right: Desktop Links & Actions */}
+          <div className="hidden lg:flex items-center gap-2 xl:gap-3">
+            <nav className="flex items-center gap-1 xl:gap-1.5" aria-label="Navigasi Utama">
+              {primaryNavLinks.map((item) => {
+                const active = isLinkActive(item.sectionId);
+                return (
+                  <button
+                    key={item.sectionId}
+                    type="button"
+                    onClick={() => handleNavClick(item.sectionId)}
+                    className={`relative px-3.5 py-1.5 rounded-full text-xs xl:text-sm tracking-wide transition-all duration-200 cursor-pointer font-serif whitespace-nowrap press-scale ${
+                      active
+                        ? 'bg-[#C59B53]/25 text-[#ECC47E] font-bold border border-[#ECC47E]/40 shadow-[0_0_12px_rgba(236,196,126,0.25)]'
+                        : 'text-[#B9B0A3] hover:text-[#F0E6D4] hover:bg-[#C59B53]/10 border border-transparent'
+                    }`}
+                  >
+                    <span>{item.label}</span>
+                  </button>
+                );
+              })}
+            </nav>
 
-                </button>
-              );
-            })}
-          </nav>
+            {/* Desktop Textless Card Button: Manifestasi Harian */}
+            <div className="flex items-center pl-2 border-l border-[#C59B53]/25">
+              <button
+                type="button"
+                onClick={() => setManifestModalOpen(true)}
+                className={`group relative w-8.5 h-11 rounded-[6px] border ${
+                  drawnManifestation
+                    ? 'border-[#ECC47E] shadow-[0_0_16px_rgba(236,196,126,0.5)] hover:shadow-[0_0_24px_rgba(236,196,126,0.8)] hover:border-[#FFF0D4]'
+                    : 'border-[#C59B53]/80 hover:border-[#ECC47E] shadow-md hover:shadow-[0_0_20px_rgba(236,196,126,0.5)]'
+                } bg-gradient-to-b from-[#2E2014] via-[#1B130D] to-[#100A06] p-[2.5px] transition-all duration-300 hover:scale-105 active:scale-95 cursor-pointer overflow-hidden press-scale`}
+                title={
+                  drawnManifestation
+                    ? `Kartu Manifestasi Hari Ini: ${drawnManifestation.characterName} (${drawnManifestation.philosophyTitle})`
+                    : 'Buka Kartu Manifestasi Harian'
+                }
+                aria-label={
+                  drawnManifestation
+                    ? `Kartu Manifestasi Hari Ini: ${drawnManifestation.characterName}`
+                    : 'Buka Kartu Manifestasi Harian'
+                }
+              >
+                {drawnManifestation ? (
+                  /* Unlocked Character Card Face */
+                  <div className="relative w-full h-full rounded-[3px] overflow-hidden border border-[#ECC47E]/70 bg-[#0D0B09]">
+                    <Image
+                      src={getTarotImagePath(drawnManifestation.characterSlug)}
+                      alt={drawnManifestation.characterName}
+                      fill
+                      sizes="34px"
+                      className="object-cover object-top transition-transform duration-500 group-hover:scale-115"
+                    />
+                    {/* Subtle dark vignette & golden highlight frame */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/20 pointer-events-none" />
+                    <div className="absolute inset-0 border border-[#ECC47E]/40 rounded-[2px] pointer-events-none" />
 
-          {/* Desktop Textless Card Button: Manifestasi Harian */}
-          <div className="flex items-center pl-3 border-l border-[#C59B53]/25">
+                    {/* Top Pip - Glowing Gold */}
+                    <span className="absolute top-0.5 right-0.5 w-1.5 h-1.5 rounded-full bg-[#ECC47E] shadow-[0_0_6px_#ECC47E] z-10 animate-pulse" />
+
+                    {/* Shimmer Light Reflection Sweep on Hover */}
+                    <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 bg-gradient-to-tr from-transparent via-white/35 to-transparent pointer-events-none z-10" />
+                  </div>
+                ) : (
+                  /* Mystery Card Back */
+                  <div className="w-full h-full rounded-[3px] border border-[#C59B53]/45 bg-[#17110C] flex flex-col items-center justify-between p-1 relative overflow-hidden group-hover:border-[#ECC47E]/80 transition-colors">
+                    {/* Top Card Pip */}
+                    <span className="w-1 h-1 rounded-full bg-[#ECC47E]/90 shadow-[0_0_4px_rgba(236,196,126,0.8)]" />
+
+                    {/* Center Glowing Mystical Sparkle Motif */}
+                    <Sparkles className="w-3.5 h-3.5 text-[#ECC47E] group-hover:scale-125 transition-transform duration-300" />
+
+                    {/* Bottom Card Base Line */}
+                    <span className="w-2.5 h-[1.5px] bg-[#C59B53]/70 rounded-full" />
+
+                    {/* Shimmer Light Reflection Sweep on Hover */}
+                    <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 bg-gradient-to-tr from-transparent via-white/25 to-transparent pointer-events-none" />
+                  </div>
+                )}
+              </button>
+            </div>
+          </div>
+
+          {/* Mobile & Tablet Right Controls */}
+          <div className="lg:hidden flex items-center gap-2">
             <button
               type="button"
               onClick={() => setManifestModalOpen(true)}
-              className={`group relative w-8.5 h-11.5 rounded-[5px] border ${
+              className={`group relative w-8 h-10 rounded-[5px] border ${
                 drawnManifestation
-                  ? 'border-[#ECC47E] shadow-[0_0_16px_rgba(236,196,126,0.5)] hover:shadow-[0_0_24px_rgba(236,196,126,0.8)] hover:border-[#FFF0D4]'
-                  : 'border-[#C59B53]/80 hover:border-[#ECC47E] shadow-md hover:shadow-[0_0_20px_rgba(236,196,126,0.5)]'
-              } bg-gradient-to-b from-[#2E2014] via-[#1B130D] to-[#100A06] p-[2.5px] transition-all duration-300 hover:scale-110 active:scale-95 cursor-pointer overflow-hidden press-scale`}
+                  ? 'border-[#ECC47E] shadow-[0_0_12px_rgba(236,196,126,0.45)]'
+                  : 'border-[#C59B53]/80 hover:border-[#ECC47E] shadow-sm'
+              } bg-gradient-to-b from-[#2E2014] via-[#1B130D] to-[#100A06] p-[2px] active:scale-95 cursor-pointer overflow-hidden`}
               title={
                 drawnManifestation
-                  ? `Kartu Manifestasi Hari Ini: ${drawnManifestation.characterName} (${drawnManifestation.philosophyTitle})`
+                  ? `Kartu Manifestasi: ${drawnManifestation.characterName}`
                   : 'Buka Kartu Manifestasi Harian'
               }
               aria-label={
                 drawnManifestation
-                  ? `Kartu Manifestasi Hari Ini: ${drawnManifestation.characterName}`
+                  ? `Kartu Manifestasi: ${drawnManifestation.characterName}`
                   : 'Buka Kartu Manifestasi Harian'
               }
             >
               {drawnManifestation ? (
-                /* Unlocked Character Card Face */
-                <div className="relative w-full h-full rounded-[2.5px] overflow-hidden border border-[#ECC47E]/70 bg-[#0D0B09]">
+                <div className="relative w-full h-full rounded-[2px] overflow-hidden border border-[#ECC47E]/70 bg-[#0D0B09]">
                   <Image
                     src={getTarotImagePath(drawnManifestation.characterSlug)}
                     alt={drawnManifestation.characterName}
                     fill
-                    sizes="34px"
-                    className="object-cover object-top transition-transform duration-500 group-hover:scale-115"
+                    sizes="32px"
+                    className="object-cover object-top"
                   />
-                  {/* Subtle dark vignette & golden highlight frame */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/20 pointer-events-none" />
-                  <div className="absolute inset-0 border border-[#ECC47E]/40 rounded-[2px] pointer-events-none" />
-
-                  {/* Top Pip - Glowing Gold */}
-                  <span className="absolute top-0.5 right-0.5 w-1.5 h-1.5 rounded-full bg-[#ECC47E] shadow-[0_0_6px_#ECC47E] z-10 animate-pulse" />
-
-                  {/* Shimmer Light Reflection Sweep on Hover */}
-                  <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 bg-gradient-to-tr from-transparent via-white/35 to-transparent pointer-events-none z-10" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-black/20 pointer-events-none" />
+                  <span className="absolute top-0.5 right-0.5 w-1 h-1 rounded-full bg-[#ECC47E] shadow-[0_0_4px_#ECC47E] z-10" />
                 </div>
               ) : (
-                /* Mystery Card Back */
-                <div className="w-full h-full rounded-[2.5px] border border-[#C59B53]/45 bg-[#17110C] flex flex-col items-center justify-between p-1 relative overflow-hidden group-hover:border-[#ECC47E]/80 transition-colors">
-                  {/* Top Card Pip */}
-                  <span className="w-1 h-1 rounded-full bg-[#ECC47E]/90 shadow-[0_0_4px_rgba(236,196,126,0.8)]" />
-                  
-                  {/* Center Glowing Mystical Sparkle Motif */}
-                  <Sparkles className="w-3.5 h-3.5 text-[#ECC47E] group-hover:scale-125 transition-transform duration-300" />
-                  
-                  {/* Bottom Card Base Line */}
-                  <span className="w-2.5 h-[1.5px] bg-[#C59B53]/70 rounded-full" />
-
-                  {/* Shimmer Light Reflection Sweep on Hover */}
-                  <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 bg-gradient-to-tr from-transparent via-white/25 to-transparent pointer-events-none" />
+                <div className="w-full h-full rounded-[2px] border border-[#C59B53]/50 bg-[#17110C] flex flex-col items-center justify-between p-1 relative overflow-hidden">
+                  <span className="w-1 h-1 rounded-full bg-[#ECC47E]" />
+                  <Sparkles className="w-3 h-3 text-[#ECC47E]" />
+                  <span className="w-2 h-[1px] bg-[#C59B53]/70 rounded-full" />
                 </div>
               )}
             </button>
+            <button
+              type="button"
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="p-1.5 rounded-full text-[#F0E6D4] hover:text-white hover:bg-[#241E15] focus:outline-none focus:ring-2 focus:ring-[#C59B53] cursor-pointer transition-colors"
+              aria-expanded={mobileMenuOpen}
+              aria-label="Buka Menu Navigasi"
+            >
+              {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+            </button>
+          </div>
+
+          {/* Micro Scroll Progress indicator along bottom curvature of floating pill */}
+          <div className="absolute -bottom-px left-8 right-8 h-[2px] bg-transparent overflow-hidden rounded-full pointer-events-none">
+            <div
+              className="h-full bg-gradient-to-r from-[#C59B53] via-[#ECC47E] to-[#FFF0D4] rounded-full transition-all duration-150 shadow-[0_0_8px_#ECC47E]"
+              style={{ width: `${scrollProgress}%` }}
+            />
           </div>
         </div>
 
-        {/* Mobile & Tablet Textless Card Button for Manifestasi */}
-        <div className="lg:hidden flex items-center gap-2">
-          <button
-            type="button"
-            onClick={() => setManifestModalOpen(true)}
-            className={`group relative w-8 h-10.5 rounded-[4.5px] border ${
-              drawnManifestation
-                ? 'border-[#ECC47E] shadow-[0_0_12px_rgba(236,196,126,0.45)]'
-                : 'border-[#C59B53]/80 hover:border-[#ECC47E] shadow-sm'
-            } bg-gradient-to-b from-[#2E2014] via-[#1B130D] to-[#100A06] p-[2px] active:scale-95 cursor-pointer overflow-hidden`}
-            title={
-              drawnManifestation
-                ? `Kartu Manifestasi: ${drawnManifestation.characterName}`
-                : 'Buka Kartu Manifestasi Harian'
-            }
-            aria-label={
-              drawnManifestation
-                ? `Kartu Manifestasi: ${drawnManifestation.characterName}`
-                : 'Buka Kartu Manifestasi Harian'
-            }
-          >
-            {drawnManifestation ? (
-              <div className="relative w-full h-full rounded-[2px] overflow-hidden border border-[#ECC47E]/70 bg-[#0D0B09]">
-                <Image
-                  src={getTarotImagePath(drawnManifestation.characterSlug)}
-                  alt={drawnManifestation.characterName}
-                  fill
-                  sizes="32px"
-                  className="object-cover object-top"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-black/20 pointer-events-none" />
-                <span className="absolute top-0.5 right-0.5 w-1 h-1 rounded-full bg-[#ECC47E] shadow-[0_0_4px_#ECC47E] z-10" />
+        {/* Mobile & Tablet Drawer Menu positioned below floating pill */}
+        {mobileMenuOpen && (
+          <>
+            {/* Backdrop overlay to close on outside tap */}
+            <div
+              className="lg:hidden fixed inset-0 bg-black/80 backdrop-blur-sm z-40 transition-opacity duration-200 pointer-events-auto"
+              onClick={() => setMobileMenuOpen(false)}
+              aria-hidden="true"
+            />
+            <div className="lg:hidden fixed inset-x-4 top-18 sm:top-20 max-w-lg mx-auto bg-[#120F0C]/98 border border-[#C59B53]/35 rounded-3xl p-5 shadow-2xl backdrop-blur-xl animate-in fade-in zoom-in-95 duration-200 z-50 pointer-events-auto">
+              <div className="text-[10px] font-mono uppercase tracking-widest text-[#B99A60] pb-2 border-b border-[#C59B53]/20 flex items-center justify-between">
+                <span>MUSEUM DIGITAL JAWA TENGAH</span>
+                <span>NUSWARA</span>
               </div>
-            ) : (
-              <div className="w-full h-full rounded-[2px] border border-[#C59B53]/50 bg-[#17110C] flex flex-col items-center justify-between p-1 relative overflow-hidden">
-                <span className="w-1 h-1 rounded-full bg-[#ECC47E]" />
-                <Sparkles className="w-3 h-3 text-[#ECC47E]" />
-                <span className="w-2 h-[1px] bg-[#C59B53]/70 rounded-full" />
+
+              <div className="space-y-1 mt-3 max-h-[60vh] overflow-y-auto">
+                {allMobileNavLinks.map((item) => {
+                  const active = isLinkActive(item.sectionId);
+                  const Icon = item.icon;
+                  return (
+                    <button
+                      key={item.sectionId}
+                      type="button"
+                      onClick={() => handleNavClick(item.sectionId)}
+                      className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-medium transition-all cursor-pointer text-left ${
+                        active
+                          ? 'bg-[#B99A60] text-[#100D0A] font-bold shadow-md'
+                          : 'text-[#EAE0D0] hover:bg-[#1F1912] hover:text-white'
+                      }`}
+                    >
+                      <div className="flex items-center gap-2.5">
+                        <Icon className={`w-4 h-4 ${active ? 'text-[#100D0A]' : 'text-[#ECC47E]'}`} />
+                        <span>
+                          {item.sectionId === 'manifestasi' && drawnManifestation
+                            ? `Manifestasi: ${drawnManifestation.characterName}`
+                            : item.label}
+                        </span>
+                      </div>
+                      {item.highlight && !active && (
+                        <span className="text-[9px] font-mono bg-[#241A0E] text-[#ECC47E] border border-[#C59B53]/40 px-2 py-0.5 rounded-full">
+                          Interaktif
+                        </span>
+                      )}
+                    </button>
+                  );
+                })}
               </div>
-            )}
-          </button>
-          <button
-            type="button"
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="p-2 rounded-lg text-[#F0E6D4] hover:text-white hover:bg-[#241E15] focus:outline-none focus:ring-2 focus:ring-[#C59B53] cursor-pointer transition-colors"
-            aria-expanded={mobileMenuOpen}
-            aria-label="Buka Menu Navigasi"
-          >
-            {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-          </button>
-        </div>
-      </div>
 
-      {/* Mobile & Tablet Drawer Menu */}
-      {mobileMenuOpen && (
-        <>
-          {/* Backdrop overlay to close on outside tap */}
-          <div
-            className="lg:hidden fixed inset-0 bg-black/75 backdrop-blur-sm z-40 transition-opacity duration-200"
-            onClick={() => setMobileMenuOpen(false)}
-            aria-hidden="true"
-          />
-          <div className="lg:hidden fixed inset-x-4 top-20 bg-[#120F0C]/98 border border-[#C59B53]/35 rounded-2xl p-5 shadow-2xl backdrop-blur-xl animate-in slide-in-from-top-3 duration-200 z-50">
-            <div className="text-[10px] font-mono uppercase tracking-widest text-[#B99A60] pb-2 border-b border-[#C59B53]/20 flex items-center justify-between">
-              <span>MUSEUM DIGITAL JAWA TENGAH</span>
-              <span>NUSWARA</span>
-            </div>
-
-
-          <div className="space-y-1 mt-3 max-h-[60vh] overflow-y-auto">
-            {allMobileNavLinks.map((item) => {
-              const active = isLinkActive(item.sectionId);
-              const Icon = item.icon;
-              return (
+              <div className="pt-3 grid grid-cols-2 gap-2 border-t border-[#C59B53]/20 mt-3">
                 <button
-                  key={item.sectionId}
                   type="button"
-                  onClick={() => handleNavClick(item.sectionId)}
-                  className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-medium transition-all cursor-pointer text-left ${
-                    active
-                      ? 'bg-[#B99A60] text-[#100D0A] font-bold shadow-md'
-                      : 'text-[#EAE0D0] hover:bg-[#1F1912] hover:text-white'
-                  }`}
+                  onClick={() => handleNavClick('oracle')}
+                  className="py-2.5 px-3 text-xs font-semibold border border-[#C59B53]/40 rounded-xl text-[#ECC47E] bg-[#1C160F] hover:bg-[#2A2015] transition-colors cursor-pointer flex items-center justify-center gap-1.5"
                 >
-                  <div className="flex items-center gap-2.5">
-                    <Icon className={`w-4 h-4 ${active ? 'text-[#100D0A]' : 'text-[#ECC47E]'}`} />
-                    <span>
-                      {item.sectionId === 'manifestasi' && drawnManifestation
-                        ? `Manifestasi: ${drawnManifestation.characterName}`
-                        : item.label}
-                    </span>
-                  </div>
-                  {item.highlight && !active && (
-                    <span className="text-[9px] font-mono bg-[#241A0E] text-[#ECC47E] border border-[#C59B53]/40 px-2 py-0.5 rounded-full">
-                      Interaktif
-                    </span>
-                  )}
+                  <Sparkles className="w-3.5 h-3.5 text-[#ECC47E]" />
+                  <span>Cek Weton</span>
                 </button>
-              );
-            })}
-          </div>
-
-          <div className="pt-3 grid grid-cols-2 gap-2 border-t border-[#C59B53]/20 mt-3">
-            <button
-              type="button"
-              onClick={() => handleNavClick('oracle')}
-              className="py-2.5 px-3 text-xs font-semibold border border-[#C59B53]/40 rounded-xl text-[#ECC47E] bg-[#1C160F] hover:bg-[#2A2015] transition-colors cursor-pointer flex items-center justify-center gap-1.5"
-            >
-              <Sparkles className="w-3.5 h-3.5 text-[#ECC47E]" />
-              <span>Cek Weton</span>
-            </button>
-            <button
-              type="button"
-              onClick={() => handleNavClick('photobooth')}
-              className="py-2.5 px-3 text-xs font-bold bg-[#B99A60] hover:bg-[#C9A96E] text-[#100D0A] rounded-xl shadow-md transition-all cursor-pointer flex items-center justify-center gap-1.5"
-            >
-              <Camera className="w-3.5 h-3.5 text-[#100D0A]" />
-              <span>Photobooth</span>
-            </button>
-          </div>
-        </div>
-      </>
-    )}
-  </header>
+                <button
+                  type="button"
+                  onClick={() => handleNavClick('photobooth')}
+                  className="py-2.5 px-3 text-xs font-bold bg-[#B99A60] hover:bg-[#C9A96E] text-[#100D0A] rounded-xl shadow-md transition-all cursor-pointer flex items-center justify-center gap-1.5"
+                >
+                  <Camera className="w-3.5 h-3.5 text-[#100D0A]" />
+                  <span>Photobooth</span>
+                </button>
+              </div>
+            </div>
+          </>
+        )}
+      </header>
 
       {/* Manifestation Modal (Rendered outside header) */}
       <ManifestationModal
