@@ -395,8 +395,8 @@ export function Navbar() {
         <div
           className={`pointer-events-auto relative w-full max-w-5xl rounded-full transition-all duration-300 flex items-center justify-between px-3.5 sm:px-6 py-2 sm:py-2.5 ${
             isScrolled
-              ? 'bg-[#0D0C0A]/95 backdrop-blur-2xl border border-[#C59B53]/45 shadow-[0_12px_44px_rgba(0,0,0,0.85),0_0_24px_rgba(197,155,83,0.15)]'
-              : 'bg-[#0D0C0A]/80 backdrop-blur-xl border border-[#C59B53]/25 shadow-[0_8px_32px_rgba(0,0,0,0.65)]'
+              ? 'bg-[#0D0C0A]/95 backdrop-blur-2xl border border-[#C59B53]/45'
+              : 'bg-[#0D0C0A]/80 backdrop-blur-xl border border-[#C59B53]/25'
           }`}
         >
           {/* Brand "NUSWARA" Official Logo */}
@@ -438,15 +438,13 @@ export function Navbar() {
                   transitionTimingFunction: 'cubic-bezier(0.22, 1, 0.36, 1)',
                 }}
               >
-                {/* Luminous Liquid Glass Core */}
-                <div className="relative w-full h-full rounded-full bg-gradient-to-b from-[#F5DE9B]/35 via-[#C59B53]/25 to-[#7E5718]/40 border border-[#ECC47E]/65 backdrop-blur-md shadow-[0_0_20px_rgba(236,196,126,0.35),inset_0_1px_1.5px_rgba(255,245,220,0.65),inset_0_-1px_1px_rgba(0,0,0,0.4)] overflow-hidden">
+                {/* Luminous Liquid Glass Core (Clean, No Dirty Shadows) */}
+                <div className="relative w-full h-full rounded-full bg-gradient-to-b from-[#F5DE9B]/35 via-[#C59B53]/25 to-[#7E5718]/40 border border-[#ECC47E]/65 backdrop-blur-md overflow-hidden">
                   {/* Top Specular Sheen (Curved Glass Highlight) */}
                   <div className="absolute inset-x-2 top-0.5 h-[42%] rounded-t-full bg-gradient-to-b from-white/35 to-transparent pointer-events-none" />
                   {/* Ambient Amber Core */}
                   <div className="absolute inset-0 bg-radial from-[#ECC47E]/20 to-transparent pointer-events-none" />
                 </div>
-                {/* Ambient glow bloom behind the glass pill */}
-                <div className="absolute -inset-1 rounded-full bg-[#ECC47E]/25 blur-sm pointer-events-none -z-10" />
               </div>
 
               {PRIMARY_NAV_LINKS.map((item) => {
@@ -461,7 +459,7 @@ export function Navbar() {
                     onClick={() => handleNavClick(item.sectionId)}
                     className={`relative z-10 px-3.5 py-1.5 rounded-full text-xs xl:text-sm tracking-wide transition-colors duration-300 cursor-pointer font-sans whitespace-nowrap select-none ${
                       active
-                        ? 'text-[#FFF2DC] font-semibold drop-shadow-[0_1px_3px_rgba(0,0,0,0.8)]'
+                        ? 'text-[#FFF2DC] font-semibold'
                         : 'text-[#B9B0A3] hover:text-[#F0E6D4]'
                     }`}
                   >
@@ -478,8 +476,8 @@ export function Navbar() {
                 onClick={() => setManifestModalOpen(true)}
                 className={`group relative w-8.5 h-11 rounded-[6px] border ${
                   drawnManifestation
-                    ? 'border-[#ECC47E] shadow-[0_0_16px_rgba(236,196,126,0.5)] hover:shadow-[0_0_24px_rgba(236,196,126,0.8)] hover:border-[#FFF0D4]'
-                    : 'border-[#C59B53]/80 hover:border-[#ECC47E] shadow-md hover:shadow-[0_0_20px_rgba(236,196,126,0.5)]'
+                    ? 'border-[#ECC47E] hover:border-[#FFF0D4]'
+                    : 'border-[#C59B53]/80 hover:border-[#ECC47E]'
                 } bg-gradient-to-b from-[#2E2014] via-[#1B130D] to-[#100A06] p-[2.5px] transition-all duration-300 hover:scale-105 active:scale-95 cursor-pointer overflow-hidden press-scale`}
                 title={
                   drawnManifestation
@@ -503,12 +501,12 @@ export function Navbar() {
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/20 pointer-events-none" />
                     <div className="absolute inset-0 border border-[#ECC47E]/40 rounded-[2px] pointer-events-none" />
-                    <span className="absolute top-0.5 right-0.5 w-1.5 h-1.5 rounded-full bg-[#ECC47E] shadow-[0_0_6px_#ECC47E] z-10 animate-pulse" />
+                    <span className="absolute top-0.5 right-0.5 w-1.5 h-1.5 rounded-full bg-[#ECC47E] z-10 animate-pulse" />
                     <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 bg-gradient-to-tr from-transparent via-white/35 to-transparent pointer-events-none z-10" />
                   </div>
                 ) : (
                   <div className="w-full h-full rounded-[3px] border border-[#C59B53]/45 bg-[#17110C] flex flex-col items-center justify-between p-1 relative overflow-hidden group-hover:border-[#ECC47E]/80 transition-colors">
-                    <span className="w-1 h-1 rounded-full bg-[#ECC47E]/90 shadow-[0_0_4px_rgba(236,196,126,0.8)]" />
+                    <span className="w-1 h-1 rounded-full bg-[#ECC47E]/90" />
                     <Sparkles className="w-3.5 h-3.5 text-[#ECC47E] group-hover:scale-125 transition-transform duration-300" />
                     <span className="w-2.5 h-[1.5px] bg-[#C59B53]/70 rounded-full" />
                     <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 bg-gradient-to-tr from-transparent via-white/25 to-transparent pointer-events-none" />
@@ -525,8 +523,8 @@ export function Navbar() {
               onClick={() => setManifestModalOpen(true)}
               className={`group relative w-7.5 h-9 rounded-[5px] border ${
                 drawnManifestation
-                  ? 'border-[#ECC47E] shadow-[0_0_12px_rgba(236,196,126,0.45)]'
-                  : 'border-[#C59B53]/80 hover:border-[#ECC47E] shadow-sm'
+                  ? 'border-[#ECC47E]'
+                  : 'border-[#C59B53]/80 hover:border-[#ECC47E]'
               } bg-gradient-to-b from-[#2E2014] via-[#1B130D] to-[#100A06] p-[2px] active:scale-95 cursor-pointer overflow-hidden`}
               title={
                 drawnManifestation
@@ -549,7 +547,7 @@ export function Navbar() {
                     className="object-cover object-top"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-black/20 pointer-events-none" />
-                  <span className="absolute top-0.5 right-0.5 w-1 h-1 rounded-full bg-[#ECC47E] shadow-[0_0_4px_#ECC47E] z-10" />
+                  <span className="absolute top-0.5 right-0.5 w-1 h-1 rounded-full bg-[#ECC47E] z-10" />
                 </div>
               ) : (
                 <div className="w-full h-full rounded-[2px] border border-[#C59B53]/50 bg-[#17110C] flex flex-col items-center justify-between p-1 relative overflow-hidden">
@@ -570,7 +568,7 @@ export function Navbar() {
         aria-label="Navigasi Bawah Ponsel"
         className="lg:hidden fixed bottom-0 inset-x-0 z-50 pointer-events-auto sm:bottom-3 sm:inset-x-4 sm:max-w-lg sm:mx-auto transition-all duration-300"
       >
-        <div className="relative w-full sm:rounded-2xl bg-[#0D0C0A]/96 backdrop-blur-2xl border-t sm:border border-[#C59B53]/30 shadow-[0_-8px_32px_rgba(0,0,0,0.85),0_0_24px_rgba(197,155,83,0.08)] px-1.5 sm:px-3 pt-2 pb-[calc(0.6rem+env(safe-area-inset-bottom,0px))] sm:pb-2 flex items-center justify-between">
+        <div className="relative w-full sm:rounded-2xl bg-[#0D0C0A]/96 backdrop-blur-2xl border-t sm:border border-[#C59B53]/30 px-1.5 sm:px-3 pt-2 pb-[calc(0.6rem+env(safe-area-inset-bottom,0px))] sm:pb-2 flex items-center justify-between">
           {PRIMARY_NAV_LINKS.map((item) => {
             const active = isLinkActive(item.sectionId);
             const Icon = item.icon;
@@ -581,15 +579,15 @@ export function Navbar() {
                 onClick={() => handleNavClick(item.sectionId)}
                 className={`relative flex flex-col items-center justify-center flex-1 py-1 px-1 rounded-xl transition-all duration-200 cursor-pointer select-none group ${
                   active
-                    ? 'text-[#FFF2DC] bg-[#C59B53]/25 border border-[#ECC47E]/40 shadow-[0_0_12px_rgba(236,196,126,0.3)]'
+                    ? 'text-[#FFF2DC] bg-[#C59B53]/25 border border-[#ECC47E]/40'
                     : 'text-[#8C8273] hover:text-[#ECC47E] hover:bg-white/[0.02] border border-transparent'
                 }`}
                 aria-current={active ? 'page' : undefined}
                 aria-label={item.label}
               >
-                {/* Active Top Accent Glow Bar */}
+                {/* Active Top Accent Bar */}
                 {active && (
-                  <span className="absolute top-0 inset-x-2 sm:inset-x-3 h-[2px] rounded-full bg-gradient-to-r from-[#C59B53] via-[#ECC47E] to-[#C59B53] shadow-[0_0_10px_#ECC47E]" />
+                  <span className="absolute top-0 inset-x-2 sm:inset-x-3 h-[2px] rounded-full bg-gradient-to-r from-[#C59B53] via-[#ECC47E] to-[#C59B53]" />
                 )}
                 <Icon
                   className={`w-5 h-5 transition-transform duration-200 ${
