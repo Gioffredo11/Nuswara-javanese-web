@@ -1,6 +1,6 @@
 import React from 'react';
+import Image from 'next/image';
 import { Link } from '@/components/common/Link';
-import { GununganSvg } from '@/components/ui/WayangVectors';
 
 export function Footer() {
   return (
@@ -9,17 +9,20 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-10 pb-12 border-b border-[#C59B53]/15">
           {/* Brand & Cultural Manifesto */}
           <div className="md:col-span-1 space-y-4">
-            <div className="flex items-center gap-3">
-              <GununganSvg className="w-8 h-12 text-[#ECC47E] animate-blencong-glow" />
-              <div>
-                <span className="font-royal tracking-[0.25em] text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#F4DE9B] via-[#E2BC73] to-[#C59B53] uppercase block">
-                  NUSWARA
-                </span>
-                <p className="text-[10px] text-[#A89F91] font-serif italic tracking-wider">
-                  Menelusuri Jejak, Merawat Suara
-                </p>
+            <Link href="/" className="inline-block group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C59B53] rounded-lg">
+              <div className="relative h-10 sm:h-11 w-auto aspect-[870/250] transition-transform duration-300 group-hover:scale-105">
+                <Image
+                  src="/images/logo/nuswara-logo.png"
+                  alt="NUSWARA - Menelusuri Jejak, Merawat Warisan"
+                  width={140}
+                  height={40}
+                  className="h-full w-auto object-contain"
+                />
               </div>
-            </div>
+              <p className="text-[10px] text-[#A89F91] font-serif italic tracking-wider mt-1.5">
+                Menelusuri Jejak, Merawat Suara
+              </p>
+            </Link>
             <p className="text-xs text-[#8C8273] leading-relaxed font-sans">
               Menelusuri jejak, merawat suara. Platform kurasi dan eksplorasi digital sejarah peradaban Jawa Tengah, filsafat pakeliran wayang kulit, dan kearifan adiluhung Nusantara untuk generasi masa depan.
             </p>

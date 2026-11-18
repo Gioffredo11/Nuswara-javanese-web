@@ -351,13 +351,23 @@ export function Navbar() {
               : 'bg-[#0D0C0A]/80 backdrop-blur-xl border border-[#C59B53]/25 shadow-[0_8px_32px_rgba(0,0,0,0.65)]'
           }`}
         >
-          {/* Brand "NUSWARA" */}
+          {/* Brand "NUSWARA" Official Logo */}
           <Link
             href="/"
             onClick={handleLogoClick}
-            className="font-royal text-xl sm:text-2xl tracking-[0.18em] text-[#F0E6D4] hover:text-[#ECC47E] transition-colors rounded-full px-2 py-0.5 flex items-center gap-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C59B53]"
+            className="group relative flex items-center rounded-full py-0.5 px-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C59B53]"
+            aria-label="NUSWARA - Beranda"
           >
-            <span>NUSWARA</span>
+            <div className="relative h-7 sm:h-8 w-auto aspect-[870/250] transition-transform duration-300 group-hover:scale-105">
+              <Image
+                src="/images/logo/nuswara-logo.png"
+                alt="NUSWARA"
+                width={125}
+                height={36}
+                priority
+                className="h-full w-auto object-contain"
+              />
+            </div>
           </Link>
 
           {/* DESKTOP NAV: Pill Links & Daily Manifestation Tarot Card */}
