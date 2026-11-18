@@ -438,13 +438,15 @@ export function Navbar() {
                   transitionTimingFunction: 'cubic-bezier(0.22, 1, 0.36, 1)',
                 }}
               >
-                {/* Luminous Liquid Glass Core (Clean, No Dirty Shadows) */}
-                <div className="relative w-full h-full rounded-full bg-gradient-to-b from-[#F5DE9B]/35 via-[#C59B53]/25 to-[#7E5718]/40 border border-[#ECC47E]/65 backdrop-blur-md overflow-hidden">
+                {/* Luminous Liquid Glass Core with Warm Amber Glow Shadow */}
+                <div className="relative w-full h-full rounded-full bg-gradient-to-b from-[#F5DE9B]/35 via-[#C59B53]/25 to-[#7E5718]/40 border border-[#ECC47E]/65 backdrop-blur-md shadow-[0_0_18px_rgba(236,196,126,0.45),inset_0_1px_1.5px_rgba(255,245,220,0.65)] overflow-hidden">
                   {/* Top Specular Sheen (Curved Glass Highlight) */}
                   <div className="absolute inset-x-2 top-0.5 h-[42%] rounded-t-full bg-gradient-to-b from-white/35 to-transparent pointer-events-none" />
                   {/* Ambient Amber Core */}
                   <div className="absolute inset-0 bg-radial from-[#ECC47E]/20 to-transparent pointer-events-none" />
                 </div>
+                {/* Ambient gold glow bloom behind the active pill */}
+                <div className="absolute -inset-1 rounded-full bg-[#ECC47E]/25 blur-sm pointer-events-none -z-10" />
               </div>
 
               {PRIMARY_NAV_LINKS.map((item) => {
@@ -457,9 +459,9 @@ export function Navbar() {
                     }}
                     type="button"
                     onClick={() => handleNavClick(item.sectionId)}
-                    className={`relative z-10 px-3.5 py-1.5 rounded-full text-xs xl:text-sm tracking-wide transition-colors duration-300 cursor-pointer font-sans whitespace-nowrap select-none ${
+                    className={`relative z-10 px-4 py-1.5 rounded-full text-xs xl:text-sm tracking-wide transition-colors duration-300 cursor-pointer font-sans whitespace-nowrap select-none ${
                       active
-                        ? 'text-[#FFF2DC] font-semibold'
+                        ? 'text-[#FFF2DC] font-semibold drop-shadow-[0_1px_3px_rgba(0,0,0,0.6)]'
                         : 'text-[#B9B0A3] hover:text-[#F0E6D4]'
                     }`}
                   >
