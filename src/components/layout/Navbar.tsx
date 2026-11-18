@@ -39,7 +39,15 @@ const ALL_MOBILE_NAV_LINKS = [
   { sectionId: 'photobooth', label: 'Web Photobooth 4-Cut', icon: Camera },
 ];
 
+// Compatibility aliases for hot reloading and external references
+const primaryNavLinks = PRIMARY_NAV_LINKS;
+const allMobileNavLinks = ALL_MOBILE_NAV_LINKS;
+
 export function Navbar() {
+  // Local aliases for stale HMR closures
+  const primaryNavLinks = PRIMARY_NAV_LINKS;
+  const allMobileNavLinks = ALL_MOBILE_NAV_LINKS;
+
   const pathname = usePathname();
   const router = useRouter();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
