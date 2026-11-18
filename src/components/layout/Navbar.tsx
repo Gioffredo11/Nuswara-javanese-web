@@ -15,6 +15,30 @@ interface DrawnManifestationState {
   localDate?: string;
 }
 
+// Primary Navigation Links matching reference_hero.png 1:1
+const PRIMARY_NAV_LINKS = [
+  { sectionId: 'beranda', label: 'Beranda' },
+  { sectionId: 'sejarah', label: 'Sejarah' },
+  { sectionId: 'tokoh', label: 'Tokoh' },
+  { sectionId: 'budaya', label: 'Budaya' },
+  { sectionId: 'kuliner', label: 'Kuliner' },
+  { sectionId: 'monumen', label: 'Tempat Sakral' },
+] as const;
+
+const ALL_MOBILE_NAV_LINKS = [
+  { sectionId: 'manifestasi', label: 'Manifestasi Harian (Kartu Hari Ini)', icon: Sparkles, highlight: true },
+  { sectionId: 'beranda', label: 'Beranda (Pameran)', icon: Compass },
+  { sectionId: 'sejarah', label: 'Sejarah Jawa Tengah', icon: BookOpen },
+  { sectionId: 'tokoh', label: 'Tokoh & Pahlawan', icon: Compass },
+  { sectionId: 'budaya', label: 'Budaya & Wayangpedia', icon: BookOpen },
+  { sectionId: 'family-tree', label: 'Silsilah Purwa', icon: GitFork },
+  { sectionId: 'ragam-rupa', label: 'Ragam Rupa Wayang', icon: Layers },
+  { sectionId: 'kuliner', label: 'Khazanah Kuliner Jawa', icon: Layers },
+  { sectionId: 'monumen', label: 'Tempat Sakral & Candi', icon: Compass },
+  { sectionId: 'oracle', label: 'Javanese Oracle (Weton)', icon: Sparkles },
+  { sectionId: 'photobooth', label: 'Web Photobooth 4-Cut', icon: Camera },
+];
+
 export function Navbar() {
   const pathname = usePathname();
   const router = useRouter();
@@ -73,34 +97,11 @@ export function Navbar() {
     };
   }, []);
 
-  // Primary Navigation Links matching reference_hero.png 1:1
-  const primaryNavLinks = [
-    { sectionId: 'beranda', label: 'Beranda' },
-    { sectionId: 'sejarah', label: 'Sejarah' },
-    { sectionId: 'tokoh', label: 'Tokoh' },
-    { sectionId: 'budaya', label: 'Budaya' },
-    { sectionId: 'kuliner', label: 'Kuliner' },
-    { sectionId: 'monumen', label: 'Tempat Sakral' },
-  ];
-
-  const allMobileNavLinks = [
-    { sectionId: 'manifestasi', label: 'Manifestasi Harian (Kartu Hari Ini)', icon: Sparkles, highlight: true },
-    { sectionId: 'beranda', label: 'Beranda (Pameran)', icon: Compass },
-    { sectionId: 'sejarah', label: 'Sejarah Jawa Tengah', icon: BookOpen },
-    { sectionId: 'tokoh', label: 'Tokoh & Pahlawan', icon: Compass },
-    { sectionId: 'budaya', label: 'Budaya & Wayangpedia', icon: BookOpen },
-    { sectionId: 'family-tree', label: 'Silsilah Purwa', icon: GitFork },
-    { sectionId: 'ragam-rupa', label: 'Ragam Rupa Wayang', icon: Layers },
-    { sectionId: 'kuliner', label: 'Khazanah Kuliner Jawa', icon: Layers },
-    { sectionId: 'monumen', label: 'Tempat Sakral & Candi', icon: Compass },
-    { sectionId: 'oracle', label: 'Javanese Oracle (Weton)', icon: Sparkles },
-    { sectionId: 'photobooth', label: 'Web Photobooth 4-Cut', icon: Camera },
-  ];
-
   // Track scroll position to transition header background and active section
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
+      const isNowScrolled = window.scrollY > 20;
+      setIsScrolled((prev) => (prev !== isNowScrolled ? isNowScrolled : prev));
 
       if (pathname !== '/') return;
 
@@ -111,16 +112,16 @@ export function Navbar() {
         window.innerHeight + window.scrollY >=
         document.documentElement.scrollHeight - 150
       ) {
-        setActiveSection('photobooth');
+        setActiveSection((prev) => (prev !== 'photobooth' ? 'photobooth' : prev));
         return;
       }
 
       if (window.scrollY < 200) {
-        setActiveSection('beranda');
+        setActiveSection((prev) => (prev !== 'beranda' ? 'beranda' : prev));
         return;
       }
 
-      const sectionMappings: { id: string; target: string }[] = [
+      const sectionMappings = [
         { id: 'photobooth', target: 'photobooth' },
         { id: 'monumen', target: 'monumen' },
         { id: 'kuliner', target: 'kuliner' },
@@ -138,7 +139,7 @@ export function Navbar() {
           const top = el.offsetTop;
           const height = el.offsetHeight;
           if (scrollPos >= top && scrollPos < top + height) {
-            setActiveSection(item.target);
+            setActiveSection((prev) => (prev !== item.target ? item.target : prev));
             return;
           }
         }
@@ -299,7 +300,7 @@ export function Navbar() {
     const nav = navRef.current;
     if (!nav) return;
 
-    const activeItem = primaryNavLinks.find((item) => isLinkActive(item.sectionId));
+    const activeItem = PRIMARY_NAV_LINKS.find((item) => isLinkActive(item.sectionId));
     if (!activeItem) {
       setIndicator((prev) => (prev.opacity === 0 ? prev : { ...prev, opacity: 0 }));
       return;
@@ -313,22 +314,39 @@ export function Navbar() {
 
     const navRect = nav.getBoundingClientRect();
     const btnRect = btn.getBoundingClientRect();
+    const nextLeft = btnRect.left - navRect.left;
+    const nextWidth = btnRect.width;
+    const nextHeight = btnRect.height;
 
-    setIndicator({
-      left: btnRect.left - navRect.left,
-      width: btnRect.width,
-      height: btnRect.height,
-      opacity: 1,
+    setIndicator((prev) => {
+      if (
+        prev.opacity === 1 &&
+        Math.abs(prev.left - nextLeft) < 0.5 &&
+        Math.abs(prev.width - nextWidth) < 0.5 &&
+        Math.abs(prev.height - nextHeight) < 0.5
+      ) {
+        return prev;
+      }
+      return {
+        left: nextLeft,
+        width: nextWidth,
+        height: nextHeight,
+        opacity: 1,
+      };
     });
-  }, [isLinkActive, primaryNavLinks]);
+  }, [isLinkActive]);
 
   useEffect(() => {
     updateIndicator();
+  }, [updateIndicator]);
+
+  useEffect(() => {
+    const onResize = () => updateIndicator();
+    window.addEventListener('resize', onResize);
     if (typeof document !== 'undefined' && 'fonts' in document) {
-      document.fonts.ready.then(updateIndicator);
+      document.fonts.ready.then(onResize);
     }
-    window.addEventListener('resize', updateIndicator);
-    return () => window.removeEventListener('resize', updateIndicator);
+    return () => window.removeEventListener('resize', onResize);
   }, [updateIndicator]);
 
   return (
@@ -383,7 +401,7 @@ export function Navbar() {
                 <div className="absolute -inset-1 rounded-full bg-[#ECC47E]/25 blur-sm pointer-events-none -z-10" />
               </div>
 
-              {primaryNavLinks.map((item) => {
+              {PRIMARY_NAV_LINKS.map((item) => {
                 const active = isLinkActive(item.sectionId);
                 return (
                   <button
@@ -535,7 +553,7 @@ export function Navbar() {
               </div>
 
               <div className="space-y-1 mt-3 max-h-[60vh] overflow-y-auto">
-                {allMobileNavLinks.map((item) => {
+                {ALL_MOBILE_NAV_LINKS.map((item) => {
                   const active = isLinkActive(item.sectionId);
                   const Icon = item.icon;
                   return (
