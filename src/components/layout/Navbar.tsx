@@ -21,7 +21,6 @@ export function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState<string>('beranda');
   const [isScrolled, setIsScrolled] = useState(false);
-  const [scrollProgress, setScrollProgress] = useState(0);
   const [manifestModalOpen, setManifestModalOpen] = useState(false);
   const [drawnManifestation, setDrawnManifestation] = useState<DrawnManifestationState | null>(null);
 
@@ -101,22 +100,11 @@ export function Navbar() {
   // Track scroll position to transition header background and active section
   useEffect(() => {
     const handleScroll = () => {
-      const scrollY = window.scrollY;
-      const windowHeight = window.innerHeight;
-      const scrollHeight = document.documentElement.scrollHeight;
-      const totalScrollable = scrollHeight - windowHeight;
-
-      setIsScrolled(scrollY > 20);
-
-      if (totalScrollable > 0) {
-        setScrollProgress(Math.min(100, Math.max(0, (scrollY / totalScrollable) * 100)));
-      } else {
-        setScrollProgress(0);
-      }
+      setIsScrolled(window.scrollY > 20);
 
       if (pathname !== '/') return;
 
-      const scrollPos = scrollY + 200;
+      const scrollPos = window.scrollY + 200;
 
       // Bottom of page highlights photobooth
       if (
@@ -438,14 +426,6 @@ export function Navbar() {
             >
               {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
             </button>
-          </div>
-
-          {/* Micro Scroll Progress indicator along bottom curvature of floating pill */}
-          <div className="absolute -bottom-px left-8 right-8 h-[2px] bg-transparent overflow-hidden rounded-full pointer-events-none">
-            <div
-              className="h-full bg-gradient-to-r from-[#C59B53] via-[#ECC47E] to-[#FFF0D4] rounded-full transition-all duration-150 shadow-[0_0_8px_#ECC47E]"
-              style={{ width: `${scrollProgress}%` }}
-            />
           </div>
         </div>
 
