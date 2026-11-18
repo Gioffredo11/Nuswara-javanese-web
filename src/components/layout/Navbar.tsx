@@ -425,7 +425,7 @@ export function Navbar() {
               className="relative flex items-center gap-1 xl:gap-1.5 p-0.5 rounded-full"
               aria-label="Navigasi Utama"
             >
-              {/* Liquid Glass Sliding Active Pill Indicator */}
+              {/* Deep Espresso / Bronze (Minimalis & Kalem) Active Pill Indicator */}
               <div
                 className="absolute top-0.5 left-0 rounded-full pointer-events-none will-change-transform z-0"
                 style={{
@@ -438,15 +438,8 @@ export function Navbar() {
                   transitionTimingFunction: 'cubic-bezier(0.22, 1, 0.36, 1)',
                 }}
               >
-                {/* Luminous Liquid Glass Core with Warm Amber Glow Shadow */}
-                <div className="relative w-full h-full rounded-full bg-gradient-to-b from-[#F5DE9B]/35 via-[#C59B53]/25 to-[#7E5718]/40 border border-[#ECC47E]/65 backdrop-blur-md shadow-[0_0_18px_rgba(236,196,126,0.45),inset_0_1px_1.5px_rgba(255,245,220,0.65)] overflow-hidden">
-                  {/* Top Specular Sheen (Curved Glass Highlight) */}
-                  <div className="absolute inset-x-2 top-0.5 h-[42%] rounded-t-full bg-gradient-to-b from-white/35 to-transparent pointer-events-none" />
-                  {/* Ambient Amber Core */}
-                  <div className="absolute inset-0 bg-radial from-[#ECC47E]/20 to-transparent pointer-events-none" />
-                </div>
-                {/* Ambient gold glow bloom behind the active pill */}
-                <div className="absolute -inset-1 rounded-full bg-[#ECC47E]/25 blur-sm pointer-events-none -z-10" />
+                {/* Matte Deep Espresso Fill (#332818 -> #2A2216) & Pale Gold Stroke (#7A6238) */}
+                <div className="relative w-full h-full rounded-full bg-gradient-to-b from-[#332818] to-[#2A2216] border border-[#7A6238] shadow-[0_2px_8px_rgba(0,0,0,0.35)] overflow-hidden" />
               </div>
 
               {PRIMARY_NAV_LINKS.map((item) => {
@@ -459,10 +452,10 @@ export function Navbar() {
                     }}
                     type="button"
                     onClick={() => handleNavClick(item.sectionId)}
-                    className={`relative z-10 px-4 py-1.5 rounded-full text-xs xl:text-sm tracking-wide transition-colors duration-300 cursor-pointer font-sans whitespace-nowrap select-none ${
+                    className={`relative z-10 px-4 py-1.5 rounded-full text-xs xl:text-sm tracking-wide transition-colors duration-200 cursor-pointer font-sans whitespace-nowrap select-none ${
                       active
-                        ? 'text-[#FFF2DC] font-semibold drop-shadow-[0_1px_3px_rgba(0,0,0,0.6)]'
-                        : 'text-[#B9B0A3] hover:text-[#F0E6D4]'
+                        ? 'text-[#E5C17B] font-semibold'
+                        : 'text-[#9E9E9E] hover:text-[#E5C17B]'
                     }`}
                   >
                     <span>{item.label}</span>
@@ -581,24 +574,24 @@ export function Navbar() {
                 onClick={() => handleNavClick(item.sectionId)}
                 className={`relative flex flex-col items-center justify-center flex-1 py-1 px-1 rounded-xl transition-all duration-200 cursor-pointer select-none group ${
                   active
-                    ? 'text-[#FFF2DC] bg-[#C59B53]/25 border border-[#ECC47E]/40'
-                    : 'text-[#8C8273] hover:text-[#ECC47E] hover:bg-white/[0.02] border border-transparent'
+                    ? 'text-[#E5C17B] bg-gradient-to-b from-[#332818] to-[#2A2216] border border-[#7A6238]'
+                    : 'text-[#9E9E9E] hover:text-[#E5C17B] hover:bg-white/[0.02] border border-transparent'
                 }`}
                 aria-current={active ? 'page' : undefined}
                 aria-label={item.label}
               >
                 {/* Active Top Accent Bar */}
                 {active && (
-                  <span className="absolute top-0 inset-x-2 sm:inset-x-3 h-[2px] rounded-full bg-gradient-to-r from-[#C59B53] via-[#ECC47E] to-[#C59B53]" />
+                  <span className="absolute top-0 inset-x-2 sm:inset-x-3 h-[2px] rounded-full bg-[#E5C17B]" />
                 )}
                 <Icon
                   className={`w-5 h-5 transition-transform duration-200 ${
-                    active ? 'scale-110 text-[#ECC47E]' : 'text-[#8C8273] group-hover:scale-105 group-hover:text-[#C59B53]'
+                    active ? 'scale-110 text-[#E5C17B]' : 'text-[#9E9E9E] group-hover:scale-105 group-hover:text-[#E5C17B]'
                   }`}
                 />
                 <span
                   className={`text-[10px] sm:text-[10.5px] font-sans tracking-tight leading-none mt-1 truncate max-w-full ${
-                    active ? 'font-semibold text-[#ECC47E]' : 'font-medium text-[#8C8273] group-hover:text-[#C59B53]'
+                    active ? 'font-semibold text-[#E5C17B]' : 'font-medium text-[#9E9E9E] group-hover:text-[#E5C17B]'
                   }`}
                 >
                   {item.shortLabel}
