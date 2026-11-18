@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { Link } from '@/components/common/Link';
@@ -247,30 +247,89 @@ export function Navbar() {
     }
   };
 
-  const isLinkActive = (sectionId: string) => {
-    if (
-      (sectionId === 'manifestasi' || sectionId === 'manifestation') &&
-      pathname.startsWith('/manifestation')
-    ) {
-      return true;
+  const isLinkActive = useCallback(
+    (sectionId: string) => {
+      if (
+        (sectionId === 'manifestasi' || sectionId === 'manifestation') &&
+        pathname.startsWith('/manifestation')
+      ) {
+        return true;
+      }
+      if (sectionId === 'oracle' && pathname.startsWith('/oracle')) return true;
+      if (sectionId === 'photobooth' && pathname.startsWith('/photobooth')) return true;
+      if (sectionId === 'tokoh' && pathname.startsWith('/tokoh')) return true;
+      if (sectionId === 'family-tree' && pathname.startsWith('/family-tree')) return true;
+      if (sectionId === 'lakon' && pathname.startsWith('/lakon')) return true;
+      if ((sectionId === 'ragam-rupa' || sectionId === 'batik') && pathname.startsWith('/ragam-rupa')) return true;
+      if (sectionId === 'sejarah' && pathname.startsWith('/sejarah')) return true;
+      if (sectionId === 'kuliner' && pathname.startsWith('/kuliner')) return true;
+      if (sectionId === 'monumen' && (pathname.startsWith('/tempat-sakral') || pathname.startsWith('/monumen'))) return true;
+      if (pathname === '/') {
+        return activeSection === sectionId;
+      }
+      if (
+        sectionId === 'budaya' &&
+        (pathname.startsWith('/wayangpedia') ||
+          pathname.startsWith('/family-tree') ||
+          pathname.startsWith('/lakon') ||
+          pathname.startsWith('/ragam-rupa'))
+      ) {
+        return true;
+      }
+      return false;
+    },
+    [pathname, activeSection]
+  );
+
+  const navRef = useRef<HTMLElement>(null);
+  const itemRefs = useRef<Record<string, HTMLButtonElement | null>>({});
+  const [indicator, setIndicator] = useState<{
+    left: number;
+    width: number;
+    height: number;
+    opacity: number;
+  }>({
+    left: 0,
+    width: 0,
+    height: 0,
+    opacity: 0,
+  });
+
+  const updateIndicator = useCallback(() => {
+    const nav = navRef.current;
+    if (!nav) return;
+
+    const activeItem = primaryNavLinks.find((item) => isLinkActive(item.sectionId));
+    if (!activeItem) {
+      setIndicator((prev) => (prev.opacity === 0 ? prev : { ...prev, opacity: 0 }));
+      return;
     }
-    if (sectionId === 'oracle' && pathname.startsWith('/oracle')) return true;
-    if (sectionId === 'photobooth' && pathname.startsWith('/photobooth')) return true;
-    if (sectionId === 'tokoh' && pathname.startsWith('/tokoh')) return true;
-    if (sectionId === 'family-tree' && pathname.startsWith('/family-tree')) return true;
-    if (sectionId === 'lakon' && pathname.startsWith('/lakon')) return true;
-    if ((sectionId === 'ragam-rupa' || sectionId === 'batik') && pathname.startsWith('/ragam-rupa')) return true;
-    if (sectionId === 'sejarah' && pathname.startsWith('/sejarah')) return true;
-    if (sectionId === 'kuliner' && pathname.startsWith('/kuliner')) return true;
-    if (sectionId === 'monumen' && (pathname.startsWith('/tempat-sakral') || pathname.startsWith('/monumen'))) return true;
-    if (pathname === '/') {
-      return activeSection === sectionId;
+
+    const btn = itemRefs.current[activeItem.sectionId];
+    if (!btn) {
+      setIndicator((prev) => (prev.opacity === 0 ? prev : { ...prev, opacity: 0 }));
+      return;
     }
-    if (sectionId === 'budaya' && (pathname.startsWith('/wayangpedia') || pathname.startsWith('/family-tree') || pathname.startsWith('/lakon') || pathname.startsWith('/ragam-rupa'))) {
-      return true;
+
+    const navRect = nav.getBoundingClientRect();
+    const btnRect = btn.getBoundingClientRect();
+
+    setIndicator({
+      left: btnRect.left - navRect.left,
+      width: btnRect.width,
+      height: btnRect.height,
+      opacity: 1,
+    });
+  }, [isLinkActive, primaryNavLinks]);
+
+  useEffect(() => {
+    updateIndicator();
+    if (typeof document !== 'undefined' && 'fonts' in document) {
+      document.fonts.ready.then(updateIndicator);
     }
-    return false;
-  };
+    window.addEventListener('resize', updateIndicator);
+    return () => window.removeEventListener('resize', updateIndicator);
+  }, [updateIndicator]);
 
   return (
     <>
@@ -295,18 +354,49 @@ export function Navbar() {
 
           {/* Right: Desktop Links & Actions */}
           <div className="hidden lg:flex items-center gap-2 xl:gap-3">
-            <nav className="flex items-center gap-1 xl:gap-1.5" aria-label="Navigasi Utama">
+            <nav
+              ref={navRef}
+              className="relative flex items-center gap-1 xl:gap-1.5 p-0.5 rounded-full"
+              aria-label="Navigasi Utama"
+            >
+              {/* Liquid Glass Sliding Active Pill Indicator */}
+              <div
+                className="absolute top-0.5 left-0 rounded-full pointer-events-none transition-all will-change-transform z-0"
+                style={{
+                  transform: `translate3d(${indicator.left}px, 0, 0)`,
+                  width: `${indicator.width}px`,
+                  height: `${indicator.height}px`,
+                  opacity: indicator.opacity,
+                  transitionProperty: 'transform, width, height, opacity',
+                  transitionDuration: '450ms',
+                  transitionTimingFunction: 'cubic-bezier(0.25, 1.15, 0.35, 1)',
+                }}
+              >
+                {/* Luminous Liquid Glass Core */}
+                <div className="relative w-full h-full rounded-full bg-gradient-to-b from-[#F5DE9B]/35 via-[#C59B53]/25 to-[#7E5718]/40 border border-[#ECC47E]/65 backdrop-blur-md shadow-[0_0_20px_rgba(236,196,126,0.35),inset_0_1px_1.5px_rgba(255,245,220,0.65),inset_0_-1px_1px_rgba(0,0,0,0.4)] overflow-hidden">
+                  {/* Top Specular Sheen (Curved Glass Highlight) */}
+                  <div className="absolute inset-x-2 top-0.5 h-[42%] rounded-t-full bg-gradient-to-b from-white/35 to-transparent pointer-events-none" />
+                  {/* Ambient Amber Core */}
+                  <div className="absolute inset-0 bg-radial from-[#ECC47E]/20 to-transparent pointer-events-none" />
+                </div>
+                {/* Ambient glow bloom behind the glass pill */}
+                <div className="absolute -inset-1 rounded-full bg-[#ECC47E]/25 blur-sm pointer-events-none -z-10" />
+              </div>
+
               {primaryNavLinks.map((item) => {
                 const active = isLinkActive(item.sectionId);
                 return (
                   <button
                     key={item.sectionId}
+                    ref={(el) => {
+                      itemRefs.current[item.sectionId] = el;
+                    }}
                     type="button"
                     onClick={() => handleNavClick(item.sectionId)}
-                    className={`relative px-3.5 py-1.5 rounded-full text-xs xl:text-sm tracking-wide transition-all duration-200 cursor-pointer font-serif whitespace-nowrap press-scale ${
+                    className={`relative z-10 px-3.5 py-1.5 rounded-full text-xs xl:text-sm tracking-wide transition-colors duration-300 cursor-pointer font-serif whitespace-nowrap select-none ${
                       active
-                        ? 'bg-[#C59B53]/25 text-[#ECC47E] font-bold border border-[#ECC47E]/40 shadow-[0_0_12px_rgba(236,196,126,0.25)]'
-                        : 'text-[#B9B0A3] hover:text-[#F0E6D4] hover:bg-[#C59B53]/10 border border-transparent'
+                        ? 'text-[#FFF2DC] font-semibold drop-shadow-[0_1px_3px_rgba(0,0,0,0.8)]'
+                        : 'text-[#B9B0A3] hover:text-[#F0E6D4]'
                     }`}
                   >
                     <span>{item.label}</span>
