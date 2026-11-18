@@ -65,6 +65,35 @@ export function Navbar() {
   const [manifestModalOpen, setManifestModalOpen] = useState(false);
   const [drawnManifestation, setDrawnManifestation] = useState<DrawnManifestationState | null>(null);
 
+  // Lock scroll-triggered activeSection updates during programmatic click-to-scroll
+  const isNavigatingRef = useRef<NodeJS.Timeout | null>(null);
+
+  const startNavigatingLock = useCallback((duration = 1100) => {
+    if (isNavigatingRef.current) {
+      clearTimeout(isNavigatingRef.current);
+    }
+    isNavigatingRef.current = setTimeout(() => {
+      isNavigatingRef.current = null;
+    }, duration);
+  }, []);
+
+  // Cancel navigation lock immediately if user manually interacts (wheel or touch)
+  useEffect(() => {
+    const cancelNavigationLock = () => {
+      if (isNavigatingRef.current) {
+        clearTimeout(isNavigatingRef.current);
+        isNavigatingRef.current = null;
+      }
+    };
+
+    window.addEventListener('wheel', cancelNavigationLock, { passive: true });
+    window.addEventListener('touchmove', cancelNavigationLock, { passive: true });
+    return () => {
+      window.removeEventListener('wheel', cancelNavigationLock);
+      window.removeEventListener('touchmove', cancelNavigationLock);
+    };
+  }, []);
+
   // Synchronize drawn manifestation from localStorage and API
   useEffect(() => {
     try {
@@ -121,6 +150,9 @@ export function Navbar() {
       setIsScrolled((prev) => (prev !== isNowScrolled ? isNowScrolled : prev));
 
       if (pathname !== '/') return;
+
+      // Ignore scroll-driven active section changes during programmatic smooth navigation
+      if (isNavigatingRef.current) return;
 
       const scrollPos = window.scrollY + 200;
 
@@ -204,6 +236,7 @@ export function Navbar() {
 
     if (pathname === '/') {
       if (sectionId === 'beranda') {
+        startNavigatingLock(1100);
         window.scrollTo({ top: 0, behavior: 'smooth' });
         window.history.pushState(null, '', '/');
         setActiveSection('beranda');
@@ -212,6 +245,7 @@ export function Navbar() {
 
       const el = document.getElementById(sectionId);
       if (el) {
+        startNavigatingLock(1100);
         el.scrollIntoView({ behavior: 'smooth', block: 'start' });
         window.history.pushState(null, '', `#${sectionId}`);
         setActiveSection(sectionId);
@@ -229,6 +263,7 @@ export function Navbar() {
   const handleLogoClick = (e: React.MouseEvent) => {
     if (pathname === '/') {
       e.preventDefault();
+      startNavigatingLock(1100);
       window.scrollTo({ top: 0, behavior: 'smooth' });
       window.history.pushState(null, '', '/');
       setActiveSection('beranda');
@@ -279,11 +314,13 @@ export function Navbar() {
     width: number;
     height: number;
     opacity: number;
+    duration: number;
   }>({
     left: 0,
     width: 0,
     height: 0,
     opacity: 0,
+    duration: 380,
   });
 
   const updateIndicator = useCallback(() => {
@@ -317,11 +354,19 @@ export function Navbar() {
       ) {
         return prev;
       }
+
+      const distance = prev.opacity === 0 ? 0 : Math.abs(nextLeft - prev.left);
+      // Dynamic duration based on travel distance across navbar:
+      // ~380ms for adjacent items up to ~620ms for skipping across multiple items (longkap-longkap)
+      const duration =
+        prev.opacity === 0 ? 0 : Math.min(620, Math.max(380, 320 + Math.round(distance * 0.75)));
+
       return {
         left: nextLeft,
         width: nextWidth,
         height: nextHeight,
         opacity: 1,
+        duration,
       };
     });
   }, [isLinkActive]);
@@ -382,15 +427,15 @@ export function Navbar() {
             >
               {/* Liquid Glass Sliding Active Pill Indicator */}
               <div
-                className="absolute top-0.5 left-0 rounded-full pointer-events-none transition-all will-change-transform z-0"
+                className="absolute top-0.5 left-0 rounded-full pointer-events-none will-change-transform z-0"
                 style={{
                   transform: `translate3d(${indicator.left}px, 0, 0)`,
                   width: `${indicator.width}px`,
                   height: `${indicator.height}px`,
                   opacity: indicator.opacity,
                   transitionProperty: 'transform, width, height, opacity',
-                  transitionDuration: '450ms',
-                  transitionTimingFunction: 'cubic-bezier(0.25, 1.15, 0.35, 1)',
+                  transitionDuration: `${indicator.duration}ms`,
+                  transitionTimingFunction: 'cubic-bezier(0.22, 1, 0.36, 1)',
                 }}
               >
                 {/* Luminous Liquid Glass Core */}
@@ -414,7 +459,7 @@ export function Navbar() {
                     }}
                     type="button"
                     onClick={() => handleNavClick(item.sectionId)}
-                    className={`relative z-10 px-3.5 py-1.5 rounded-full text-xs xl:text-sm tracking-wide transition-colors duration-300 cursor-pointer font-serif whitespace-nowrap select-none ${
+                    className={`relative z-10 px-3.5 py-1.5 rounded-full text-xs xl:text-sm tracking-wide transition-colors duration-300 cursor-pointer font-sans whitespace-nowrap select-none ${
                       active
                         ? 'text-[#FFF2DC] font-semibold drop-shadow-[0_1px_3px_rgba(0,0,0,0.8)]'
                         : 'text-[#B9B0A3] hover:text-[#F0E6D4]'
