@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from 'next';
-import { Poppins, Plus_Jakarta_Sans } from 'next/font/google';
+import { Cinzel, Cormorant_Garamond, Poppins, Plus_Jakarta_Sans } from 'next/font/google';
 import './globals.css';
 import { Navbar } from '@/components/layout/Navbar';
 import { ScrollProgressSidebar } from '@/components/layout/ScrollProgressSidebar';
@@ -7,7 +7,23 @@ import { Footer } from '@/components/layout/Footer';
 import { PageTransition } from '@/components/ui/PageTransition';
 import { ServiceWorkerRegister } from '@/components/common/ServiceWorkerRegister';
 
-// Core Heading & Display Font: Poppins (Geometris kuat, rapi, modern untuk headings & titles)
+// Classical Roman & Royal Headline Font: Cinzel (As seen in the official hero design)
+const cinzel = Cinzel({
+  subsets: ['latin'],
+  variable: '--font-cinzel',
+  display: 'swap',
+});
+
+// Literary Luxury Editorial Serif: Cormorant Garamond (As seen in the subtitle)
+const cormorant = Cormorant_Garamond({
+  subsets: ['latin'],
+  variable: '--font-cormorant',
+  weight: ['300', '400', '500', '600', '700'],
+  style: ['normal', 'italic'],
+  display: 'swap',
+});
+
+// Modern Heading Font: Poppins
 const poppins = Poppins({
   subsets: ['latin'],
   variable: '--font-poppins',
@@ -77,7 +93,7 @@ export default function RootLayout({
     <html
       lang="id"
       data-scroll-behavior="smooth"
-      className={`${poppins.variable} ${plusJakarta.variable} scroll-smooth`}
+      className={`${cinzel.variable} ${cormorant.variable} ${poppins.variable} ${plusJakarta.variable} scroll-smooth`}
     >
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
