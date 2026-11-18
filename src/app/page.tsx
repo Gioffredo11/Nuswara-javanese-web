@@ -234,14 +234,14 @@ export function HomePage({ defaultSection }: HomePageProps = {}) {
                 </span>
               </div>
 
-              {/* Classical Serif Title */}
-              <h1 className="font-royal text-5xl sm:text-7xl md:text-8xl lg:text-[7.5rem] xl:text-[8.5rem] font-normal tracking-[0.06em] text-[#F4EFE6] leading-none select-none headline-enter">
+              {/* Modern Sans-Serif Hero Title */}
+              <h1 className="font-royal text-6xl sm:text-7xl md:text-8xl lg:text-[7.5rem] xl:text-[8.5rem] font-bold tracking-tight text-[#F4EFE6] leading-none select-none headline-enter">
                 NUSWARA
               </h1>
 
               {/* Subtitle & Literary Lead */}
               <div className="space-y-3.5 max-w-xl">
-                <p className="font-editorial text-2xl sm:text-3xl md:text-[2.25rem] text-[#F4EFE6] leading-snug font-normal tracking-wide">
+                <p className="font-editorial text-2xl sm:text-3xl md:text-[2.25rem] text-[#F4EFE6] leading-snug font-semibold tracking-normal max-w-lg">
                   Menelusuri Jejak, Merawat Warisan.
                 </p>
                 <p className="font-sans text-sm sm:text-base md:text-lg text-[#A89F91] leading-relaxed font-light">
