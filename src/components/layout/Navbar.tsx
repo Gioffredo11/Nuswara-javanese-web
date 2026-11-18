@@ -124,12 +124,12 @@ export function Navbar() {
 
       const scrollPos = window.scrollY + 200;
 
-      // Bottom of page highlights photobooth
+      // Bottom of page highlights Tempat Sakral (including photobooth)
       if (
         window.innerHeight + window.scrollY >=
         document.documentElement.scrollHeight - 150
       ) {
-        setActiveSection((prev) => (prev !== 'photobooth' ? 'photobooth' : prev));
+        setActiveSection((prev) => (prev !== 'monumen' ? 'monumen' : prev));
         return;
       }
 
@@ -139,10 +139,10 @@ export function Navbar() {
       }
 
       const sectionMappings = [
-        { id: 'photobooth', target: 'photobooth' },
+        { id: 'photobooth', target: 'monumen' },
         { id: 'monumen', target: 'monumen' },
         { id: 'kuliner', target: 'kuliner' },
-        { id: 'oracle', target: 'oracle' },
+        { id: 'oracle', target: 'budaya' },
         { id: 'family-tree', target: 'budaya' },
         { id: 'wayangpedia', target: 'budaya' },
         { id: 'budaya', target: 'budaya' },
@@ -243,26 +243,29 @@ export function Navbar() {
       ) {
         return true;
       }
-      if (sectionId === 'oracle' && pathname.startsWith('/oracle')) return true;
-      if (sectionId === 'photobooth' && pathname.startsWith('/photobooth')) return true;
       if (sectionId === 'tokoh' && pathname.startsWith('/tokoh')) return true;
-      if (sectionId === 'family-tree' && pathname.startsWith('/family-tree')) return true;
-      if (sectionId === 'lakon' && pathname.startsWith('/lakon')) return true;
-      if ((sectionId === 'ragam-rupa' || sectionId === 'batik') && pathname.startsWith('/ragam-rupa')) return true;
       if (sectionId === 'sejarah' && pathname.startsWith('/sejarah')) return true;
       if (sectionId === 'kuliner' && pathname.startsWith('/kuliner')) return true;
-      if (sectionId === 'monumen' && (pathname.startsWith('/tempat-sakral') || pathname.startsWith('/monumen'))) return true;
-      if (pathname === '/') {
-        return activeSection === sectionId;
+      if (
+        sectionId === 'monumen' &&
+        (pathname.startsWith('/tempat-sakral') ||
+          pathname.startsWith('/monumen') ||
+          pathname.startsWith('/photobooth'))
+      ) {
+        return true;
       }
       if (
         sectionId === 'budaya' &&
         (pathname.startsWith('/wayangpedia') ||
           pathname.startsWith('/family-tree') ||
           pathname.startsWith('/lakon') ||
-          pathname.startsWith('/ragam-rupa'))
+          pathname.startsWith('/ragam-rupa') ||
+          pathname.startsWith('/oracle'))
       ) {
         return true;
+      }
+      if (pathname === '/') {
+        return activeSection === sectionId;
       }
       return false;
     },
