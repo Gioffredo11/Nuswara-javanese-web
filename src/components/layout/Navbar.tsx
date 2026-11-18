@@ -380,7 +380,7 @@ export function Navbar() {
               className="relative flex items-center gap-1 xl:gap-1.5 p-0.5 rounded-full"
               aria-label="Navigasi Utama"
             >
-              {/* Refined Matte Antique Gold Sliding Pill Indicator */}
+              {/* Liquid Glass Sliding Active Pill Indicator */}
               <div
                 className="absolute top-0.5 left-0 rounded-full pointer-events-none transition-all will-change-transform z-0"
                 style={{
@@ -389,11 +389,19 @@ export function Navbar() {
                   height: `${indicator.height}px`,
                   opacity: indicator.opacity,
                   transitionProperty: 'transform, width, height, opacity',
-                  transitionDuration: '380ms',
-                  transitionTimingFunction: 'cubic-bezier(0.22, 1, 0.36, 1)',
+                  transitionDuration: '450ms',
+                  transitionTimingFunction: 'cubic-bezier(0.25, 1.15, 0.35, 1)',
                 }}
               >
-                <div className="w-full h-full rounded-full bg-[#C59B53]/15 border border-[#C59B53]/40 shadow-[0_2px_12px_rgba(0,0,0,0.5)]" />
+                {/* Luminous Liquid Glass Core */}
+                <div className="relative w-full h-full rounded-full bg-gradient-to-b from-[#F5DE9B]/35 via-[#C59B53]/25 to-[#7E5718]/40 border border-[#ECC47E]/65 backdrop-blur-md shadow-[0_0_20px_rgba(236,196,126,0.35),inset_0_1px_1.5px_rgba(255,245,220,0.65),inset_0_-1px_1px_rgba(0,0,0,0.4)] overflow-hidden">
+                  {/* Top Specular Sheen (Curved Glass Highlight) */}
+                  <div className="absolute inset-x-2 top-0.5 h-[42%] rounded-t-full bg-gradient-to-b from-white/35 to-transparent pointer-events-none" />
+                  {/* Ambient Amber Core */}
+                  <div className="absolute inset-0 bg-radial from-[#ECC47E]/20 to-transparent pointer-events-none" />
+                </div>
+                {/* Ambient glow bloom behind the glass pill */}
+                <div className="absolute -inset-1 rounded-full bg-[#ECC47E]/25 blur-sm pointer-events-none -z-10" />
               </div>
 
               {PRIMARY_NAV_LINKS.map((item) => {
@@ -406,10 +414,10 @@ export function Navbar() {
                     }}
                     type="button"
                     onClick={() => handleNavClick(item.sectionId)}
-                    className={`relative z-10 px-3.5 py-1.5 rounded-full text-xs xl:text-sm tracking-wide transition-colors duration-200 cursor-pointer font-serif whitespace-nowrap select-none ${
+                    className={`relative z-10 px-3.5 py-1.5 rounded-full text-xs xl:text-sm tracking-wide transition-colors duration-300 cursor-pointer font-serif whitespace-nowrap select-none ${
                       active
-                        ? 'text-[#ECC47E] font-medium'
-                        : 'text-[#A89F91] hover:text-[#F4EFE6]'
+                        ? 'text-[#FFF2DC] font-semibold drop-shadow-[0_1px_3px_rgba(0,0,0,0.8)]'
+                        : 'text-[#B9B0A3] hover:text-[#F0E6D4]'
                     }`}
                   >
                     <span>{item.label}</span>
@@ -528,8 +536,8 @@ export function Navbar() {
                 onClick={() => handleNavClick(item.sectionId)}
                 className={`relative flex flex-col items-center justify-center flex-1 py-1 px-1 rounded-xl transition-all duration-200 cursor-pointer select-none group ${
                   active
-                    ? 'text-[#ECC47E] bg-white/[0.04]'
-                    : 'text-[#8C8273] hover:text-[#C59B53] hover:bg-white/[0.02]'
+                    ? 'text-[#FFF2DC] bg-[#C59B53]/25 border border-[#ECC47E]/40 shadow-[0_0_12px_rgba(236,196,126,0.3)]'
+                    : 'text-[#8C8273] hover:text-[#ECC47E] hover:bg-white/[0.02] border border-transparent'
                 }`}
                 aria-current={active ? 'page' : undefined}
                 aria-label={item.label}
