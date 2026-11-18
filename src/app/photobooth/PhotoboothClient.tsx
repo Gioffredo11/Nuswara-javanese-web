@@ -11,6 +11,7 @@ import {
   RefreshCw,
   Sliders,
   Image as ImageIcon,
+  Printer,
 } from 'lucide-react';
 import {
   CULTURAL_FRAMES,
@@ -21,6 +22,7 @@ import {
 import { renderPhotoboothStripCanvas } from '@/components/ui/PhotoboothCanvasRenderer';
 import { PhotoboothStripPreview } from '@/components/ui/PhotoboothStripPreview';
 import { JavaneseViewfinderOverlay } from '@/components/ui/PhotoboothOverlays';
+import { PhotoboothPrintModal } from '@/components/ui/PhotoboothPrintModal';
 
 type FilterType = 'warm' | 'sepia' | 'monochrome';
 type FrameType = FrameId;
@@ -71,6 +73,7 @@ export function PhotoboothClient({ autoStart = false }: { autoStart?: boolean } 
   const [shareCode, setShareCode] = useState<string | null>(null);
   const [sharing, setSharing] = useState(false);
   const [copied, setCopied] = useState(false);
+  const [printModalOpen, setPrintModalOpen] = useState(false);
 
   const videoRef = useRef<HTMLVideoElement>(null);
   const streamCanvasRef = useRef<HTMLCanvasElement>(null);
@@ -801,18 +804,32 @@ export function PhotoboothClient({ autoStart = false }: { autoStart?: boolean } 
             {/* Action Buttons */}
             {photos.length === 4 && stripUrl ? (
               <div className="space-y-2 pt-2 border-t border-[#C5A059]/20">
+                {/* Print to Printer Button (Primary Action) */}
                 <button
-                  onClick={handleDownloadStrip}
-                  className="w-full py-3 bg-[#C5A059] hover:bg-[#D5B36E] text-[#0C0A08] text-xs font-mono uppercase font-bold tracking-wider rounded-xl transition-all flex items-center justify-center gap-1.5 shadow-lg cursor-pointer"
+                  type="button"
+                  onClick={() => setPrintModalOpen(true)}
+                  className="w-full py-3 bg-[#C5A059] hover:bg-[#D5B36E] text-[#0C0A08] text-xs font-mono uppercase font-bold tracking-wider rounded-xl transition-all flex items-center justify-center gap-2 shadow-lg cursor-pointer hover:shadow-[0_0_20px_rgba(197,160,89,0.35)]"
                 >
-                  <Download className="w-3.5 h-3.5 text-[#0C0A08]" />
+                  <Printer className="w-4 h-4 text-[#0C0A08]" />
+                  <span>Cetak ke Printer</span>
+                </button>
+
+                {/* Download Strip PNG Button */}
+                <button
+                  type="button"
+                  onClick={handleDownloadStrip}
+                  className="w-full py-2.5 bg-[#1E1712] hover:bg-[#2A2018] text-[#ECC47E] hover:text-[#FFF2DC] text-xs font-mono uppercase font-semibold tracking-wider border border-[#C5A059]/40 rounded-xl transition-all flex items-center justify-center gap-1.5 cursor-pointer"
+                >
+                  <Download className="w-3.5 h-3.5 text-[#ECC47E]" />
                   <span>Download Strip PNG</span>
                 </button>
 
+                {/* Share Strip Button */}
                 <button
+                  type="button"
                   onClick={handleShareStrip}
                   disabled={sharing}
-                  className="w-full py-2.5 bg-[#14110E] hover:bg-[#1C1610] text-[#C5A059] hover:text-[#F4EFE6] text-xs font-mono uppercase tracking-wider border border-[#C5A059]/40 rounded-xl transition-colors flex items-center justify-center gap-1.5 cursor-pointer"
+                  className="w-full py-2 bg-[#14110E] hover:bg-[#1C1610] text-[#A89F91] hover:text-[#F4EFE6] text-xs font-mono uppercase tracking-wider border border-[#C5A059]/25 rounded-xl transition-colors flex items-center justify-center gap-1.5 cursor-pointer"
                 >
                   {copied ? (
                     <>
@@ -852,6 +869,14 @@ export function PhotoboothClient({ autoStart = false }: { autoStart?: boolean } 
           </div>
         </div>
       </div>
+
+      {/* Photobooth Dedicated Printer Dialog Modal */}
+      <PhotoboothPrintModal
+        isOpen={printModalOpen}
+        onClose={() => setPrintModalOpen(false)}
+        stripUrl={stripUrl}
+        frameName={currentFrame.name}
+      />
     </div>
   );
 }
