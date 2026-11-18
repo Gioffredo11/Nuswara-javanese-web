@@ -4,7 +4,19 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { Link } from '@/components/common/Link';
-import { Menu, X, Sparkles, BookOpen, Camera, GitFork, Compass, Layers, Heart } from 'lucide-react';
+import {
+  Sparkles,
+  BookOpen,
+  Camera,
+  GitFork,
+  Compass,
+  Layers,
+  Heart,
+  Home,
+  Users,
+  Utensils,
+  Landmark,
+} from 'lucide-react';
 import { ManifestationModal } from '@/components/ui/ManifestationModal';
 import { getTarotImagePath } from '@/components/ui/WayangVectors';
 
@@ -15,42 +27,39 @@ interface DrawnManifestationState {
   localDate?: string;
 }
 
-// Primary Navigation Links matching reference_hero.png 1:1
-const PRIMARY_NAV_LINKS = [
-  { sectionId: 'beranda', label: 'Beranda' },
-  { sectionId: 'sejarah', label: 'Sejarah' },
-  { sectionId: 'tokoh', label: 'Tokoh' },
-  { sectionId: 'budaya', label: 'Budaya' },
-  { sectionId: 'kuliner', label: 'Kuliner' },
-  { sectionId: 'monumen', label: 'Tempat Sakral' },
+// Primary Navigation Links matching hero architecture & mobile icon dock
+export const PRIMARY_NAV_LINKS = [
+  { sectionId: 'beranda', label: 'Beranda', shortLabel: 'Beranda', icon: Home },
+  { sectionId: 'sejarah', label: 'Sejarah', shortLabel: 'Sejarah', icon: BookOpen },
+  { sectionId: 'tokoh', label: 'Tokoh', shortLabel: 'Tokoh', icon: Users },
+  { sectionId: 'budaya', label: 'Budaya', shortLabel: 'Budaya', icon: Layers },
+  { sectionId: 'kuliner', label: 'Kuliner', shortLabel: 'Kuliner', icon: Utensils },
+  { sectionId: 'monumen', label: 'Tempat Sakral', shortLabel: 'Sakral', icon: Landmark },
 ] as const;
 
-const ALL_MOBILE_NAV_LINKS = [
-  { sectionId: 'manifestasi', label: 'Manifestasi Harian (Kartu Hari Ini)', icon: Sparkles, highlight: true },
-  { sectionId: 'beranda', label: 'Beranda (Pameran)', icon: Compass },
+export const ALL_MOBILE_NAV_LINKS = [
+  { sectionId: 'beranda', label: 'Beranda (Pameran)', icon: Home },
   { sectionId: 'sejarah', label: 'Sejarah Jawa Tengah', icon: BookOpen },
-  { sectionId: 'tokoh', label: 'Tokoh & Pahlawan', icon: Compass },
-  { sectionId: 'budaya', label: 'Budaya & Wayangpedia', icon: BookOpen },
+  { sectionId: 'tokoh', label: 'Tokoh & Pahlawan', icon: Users },
+  { sectionId: 'budaya', label: 'Budaya & Wayangpedia', icon: Layers },
+  { sectionId: 'kuliner', label: 'Khazanah Kuliner Jawa', icon: Utensils },
+  { sectionId: 'monumen', label: 'Tempat Sakral & Candi', icon: Landmark },
   { sectionId: 'family-tree', label: 'Silsilah Purwa', icon: GitFork },
   { sectionId: 'ragam-rupa', label: 'Ragam Rupa Wayang', icon: Layers },
-  { sectionId: 'kuliner', label: 'Khazanah Kuliner Jawa', icon: Layers },
-  { sectionId: 'monumen', label: 'Tempat Sakral & Candi', icon: Compass },
   { sectionId: 'oracle', label: 'Javanese Oracle (Weton)', icon: Sparkles },
   { sectionId: 'photobooth', label: 'Web Photobooth 4-Cut', icon: Camera },
 ];
 
 // Compatibility aliases for hot reloading and external references
-const primaryNavLinks = PRIMARY_NAV_LINKS;
-const allMobileNavLinks = ALL_MOBILE_NAV_LINKS;
+export const primaryNavLinks = PRIMARY_NAV_LINKS;
+export const allMobileNavLinks = ALL_MOBILE_NAV_LINKS;
 
 export function Navbar() {
-  // Local aliases for stale HMR closures
   const primaryNavLinks = PRIMARY_NAV_LINKS;
   const allMobileNavLinks = ALL_MOBILE_NAV_LINKS;
 
   const pathname = usePathname();
   const router = useRouter();
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState<string>('beranda');
   const [isScrolled, setIsScrolled] = useState(false);
   const [manifestModalOpen, setManifestModalOpen] = useState(false);
@@ -166,36 +175,7 @@ export function Navbar() {
     return () => window.removeEventListener('open-manifestation-modal', handleOpenModal);
   }, []);
 
-  // Handle Escape key to close mobile menu
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') setMobileMenuOpen(false);
-    };
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, []);
-
-  // Prevent background scrolling when mobile drawer is open
-  useEffect(() => {
-    if (mobileMenuOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = '';
-    }
-    return () => {
-      document.body.style.overflow = '';
-    };
-  }, [mobileMenuOpen]);
-
-  // Close mobile menu on route change
-  useEffect(() => {
-    setMobileMenuOpen(false);
-  }, [pathname]);
-
   const handleNavClick = (sectionId: string) => {
-    setMobileMenuOpen(false);
-
-
     // Direct route targets
     if (sectionId === 'manifestasi' || sectionId === 'manifestation') {
       setManifestModalOpen(true);
@@ -247,7 +227,6 @@ export function Navbar() {
   };
 
   const handleLogoClick = (e: React.MouseEvent) => {
-    setMobileMenuOpen(false);
     if (pathname === '/') {
       e.preventDefault();
       window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -359,17 +338,20 @@ export function Navbar() {
 
   return (
     <>
+      {/* ============================================================ */}
+      {/* 1. TOP HEADER (Desktop Floating Pill & Mobile Minimal Header) */}
+      {/* ============================================================ */}
       <header
-        className="fixed top-3 sm:top-5 inset-x-0 z-50 flex justify-center pointer-events-none px-4 sm:px-6 transition-all duration-300"
+        className="fixed top-3 sm:top-5 inset-x-0 z-40 flex justify-center pointer-events-none px-3 sm:px-6 transition-all duration-300"
       >
         <div
-          className={`pointer-events-auto relative w-full max-w-5xl rounded-full transition-all duration-300 flex items-center justify-between px-4 sm:px-6 py-2 sm:py-2.5 ${
+          className={`pointer-events-auto relative w-full max-w-5xl rounded-full transition-all duration-300 flex items-center justify-between px-3.5 sm:px-6 py-2 sm:py-2.5 ${
             isScrolled
               ? 'bg-[#0D0C0A]/95 backdrop-blur-2xl border border-[#C59B53]/45 shadow-[0_12px_44px_rgba(0,0,0,0.85),0_0_24px_rgba(197,155,83,0.15)]'
               : 'bg-[#0D0C0A]/80 backdrop-blur-xl border border-[#C59B53]/25 shadow-[0_8px_32px_rgba(0,0,0,0.65)]'
           }`}
         >
-          {/* Left: Brand "NUSWARA" matching photo typography */}
+          {/* Brand "NUSWARA" */}
           <Link
             href="/"
             onClick={handleLogoClick}
@@ -378,7 +360,7 @@ export function Navbar() {
             <span>NUSWARA</span>
           </Link>
 
-          {/* Right: Desktop Links & Actions */}
+          {/* DESKTOP NAV: Pill Links & Daily Manifestation Tarot Card */}
           <div className="hidden lg:flex items-center gap-2 xl:gap-3">
             <nav
               ref={navRef}
@@ -398,7 +380,6 @@ export function Navbar() {
                   transitionTimingFunction: 'cubic-bezier(0.22, 1, 0.36, 1)',
                 }}
               >
-                {/* Understated Antique Gold Pill — Matte, Clean & Anti-Slop */}
                 <div className="w-full h-full rounded-full bg-[#C59B53]/15 border border-[#C59B53]/40 shadow-[0_2px_12px_rgba(0,0,0,0.5)]" />
               </div>
 
@@ -424,7 +405,7 @@ export function Navbar() {
               })}
             </nav>
 
-            {/* Desktop Textless Card Button: Manifestasi Harian */}
+            {/* Desktop Tarot Card Button */}
             <div className="flex items-center pl-2 border-l border-[#C59B53]/25">
               <button
                 type="button"
@@ -446,7 +427,6 @@ export function Navbar() {
                 }
               >
                 {drawnManifestation ? (
-                  /* Unlocked Character Card Face */
                   <div className="relative w-full h-full rounded-[3px] overflow-hidden border border-[#ECC47E]/70 bg-[#0D0B09]">
                     <Image
                       src={getTarotImagePath(drawnManifestation.characterSlug)}
@@ -455,29 +435,16 @@ export function Navbar() {
                       sizes="34px"
                       className="object-cover object-top transition-transform duration-500 group-hover:scale-115"
                     />
-                    {/* Subtle dark vignette & golden highlight frame */}
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/20 pointer-events-none" />
                     <div className="absolute inset-0 border border-[#ECC47E]/40 rounded-[2px] pointer-events-none" />
-
-                    {/* Top Pip - Glowing Gold */}
                     <span className="absolute top-0.5 right-0.5 w-1.5 h-1.5 rounded-full bg-[#ECC47E] shadow-[0_0_6px_#ECC47E] z-10 animate-pulse" />
-
-                    {/* Shimmer Light Reflection Sweep on Hover */}
                     <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 bg-gradient-to-tr from-transparent via-white/35 to-transparent pointer-events-none z-10" />
                   </div>
                 ) : (
-                  /* Mystery Card Back */
                   <div className="w-full h-full rounded-[3px] border border-[#C59B53]/45 bg-[#17110C] flex flex-col items-center justify-between p-1 relative overflow-hidden group-hover:border-[#ECC47E]/80 transition-colors">
-                    {/* Top Card Pip */}
                     <span className="w-1 h-1 rounded-full bg-[#ECC47E]/90 shadow-[0_0_4px_rgba(236,196,126,0.8)]" />
-
-                    {/* Center Glowing Mystical Sparkle Motif */}
                     <Sparkles className="w-3.5 h-3.5 text-[#ECC47E] group-hover:scale-125 transition-transform duration-300" />
-
-                    {/* Bottom Card Base Line */}
                     <span className="w-2.5 h-[1.5px] bg-[#C59B53]/70 rounded-full" />
-
-                    {/* Shimmer Light Reflection Sweep on Hover */}
                     <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 bg-gradient-to-tr from-transparent via-white/25 to-transparent pointer-events-none" />
                   </div>
                 )}
@@ -485,8 +452,8 @@ export function Navbar() {
             </div>
           </div>
 
-          {/* Mobile & Tablet Right Controls */}
-          <div className="lg:hidden flex items-center gap-2">
+          {/* MOBILE TOP CONTROLS: Manifestasi Tarot Card Only (No Hamburger) */}
+          <div className="lg:hidden flex items-center">
             <button
               type="button"
               onClick={() => setManifestModalOpen(true)}
@@ -526,88 +493,55 @@ export function Navbar() {
                 </div>
               )}
             </button>
-            <button
-              type="button"
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-1.5 rounded-full text-[#F0E6D4] hover:text-white hover:bg-[#241E15] focus:outline-none focus:ring-2 focus:ring-[#C59B53] cursor-pointer transition-colors"
-              aria-expanded={mobileMenuOpen}
-              aria-label="Buka Menu Navigasi"
-            >
-              {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-            </button>
           </div>
         </div>
-
-        {/* Mobile & Tablet Drawer Menu positioned below floating pill */}
-        {mobileMenuOpen && (
-          <>
-            {/* Backdrop overlay to close on outside tap */}
-            <div
-              className="lg:hidden fixed inset-0 bg-black/80 backdrop-blur-sm z-40 transition-opacity duration-200 pointer-events-auto"
-              onClick={() => setMobileMenuOpen(false)}
-              aria-hidden="true"
-            />
-            <div className="lg:hidden fixed inset-x-4 top-18 sm:top-20 max-w-lg mx-auto bg-[#120F0C]/98 border border-[#C59B53]/35 rounded-3xl p-5 shadow-2xl backdrop-blur-xl animate-in fade-in zoom-in-95 duration-200 z-50 pointer-events-auto">
-              <div className="text-[10px] font-mono uppercase tracking-widest text-[#B99A60] pb-2 border-b border-[#C59B53]/20 flex items-center justify-between">
-                <span>MUSEUM DIGITAL JAWA TENGAH</span>
-                <span>NUSWARA</span>
-              </div>
-
-              <div className="space-y-1 mt-3 max-h-[60vh] overflow-y-auto">
-                {ALL_MOBILE_NAV_LINKS.map((item) => {
-                  const active = isLinkActive(item.sectionId);
-                  const Icon = item.icon;
-                  return (
-                    <button
-                      key={item.sectionId}
-                      type="button"
-                      onClick={() => handleNavClick(item.sectionId)}
-                      className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-medium transition-all cursor-pointer text-left ${
-                        active
-                          ? 'bg-[#B99A60] text-[#100D0A] font-bold shadow-md'
-                          : 'text-[#EAE0D0] hover:bg-[#1F1912] hover:text-white'
-                      }`}
-                    >
-                      <div className="flex items-center gap-2.5">
-                        <Icon className={`w-4 h-4 ${active ? 'text-[#100D0A]' : 'text-[#ECC47E]'}`} />
-                        <span>
-                          {item.sectionId === 'manifestasi' && drawnManifestation
-                            ? `Manifestasi: ${drawnManifestation.characterName}`
-                            : item.label}
-                        </span>
-                      </div>
-                      {item.highlight && !active && (
-                        <span className="text-[9px] font-mono bg-[#241A0E] text-[#ECC47E] border border-[#C59B53]/40 px-2 py-0.5 rounded-full">
-                          Interaktif
-                        </span>
-                      )}
-                    </button>
-                  );
-                })}
-              </div>
-
-              <div className="pt-3 grid grid-cols-2 gap-2 border-t border-[#C59B53]/20 mt-3">
-                <button
-                  type="button"
-                  onClick={() => handleNavClick('oracle')}
-                  className="py-2.5 px-3 text-xs font-semibold border border-[#C59B53]/40 rounded-xl text-[#ECC47E] bg-[#1C160F] hover:bg-[#2A2015] transition-colors cursor-pointer flex items-center justify-center gap-1.5"
-                >
-                  <Sparkles className="w-3.5 h-3.5 text-[#ECC47E]" />
-                  <span>Cek Weton</span>
-                </button>
-                <button
-                  type="button"
-                  onClick={() => handleNavClick('photobooth')}
-                  className="py-2.5 px-3 text-xs font-bold bg-[#B99A60] hover:bg-[#C9A96E] text-[#100D0A] rounded-xl shadow-md transition-all cursor-pointer flex items-center justify-center gap-1.5"
-                >
-                  <Camera className="w-3.5 h-3.5 text-[#100D0A]" />
-                  <span>Photobooth</span>
-                </button>
-              </div>
-            </div>
-          </>
-        )}
       </header>
+
+      {/* ============================================================ */}
+      {/* 2. MOBILE BOTTOM NAVIGATION DOCK (Icons side-by-side) */}
+      {/* ============================================================ */}
+      <nav
+        aria-label="Navigasi Bawah Ponsel"
+        className="lg:hidden fixed bottom-3 sm:bottom-4 inset-x-3 sm:inset-x-6 max-w-lg mx-auto z-50 pointer-events-auto"
+      >
+        <div className="relative w-full rounded-2xl bg-[#0D0C0A]/95 backdrop-blur-2xl border border-[#C59B53]/35 shadow-[0_12px_36px_rgba(0,0,0,0.85),0_0_20px_rgba(197,155,83,0.12)] px-1 sm:px-2 py-1.5 flex items-center justify-between gap-1">
+          {PRIMARY_NAV_LINKS.map((item) => {
+            const active = isLinkActive(item.sectionId);
+            const Icon = item.icon;
+            return (
+              <button
+                key={item.sectionId}
+                type="button"
+                onClick={() => handleNavClick(item.sectionId)}
+                className={`relative flex flex-col items-center justify-center flex-1 py-1.5 px-0.5 rounded-xl transition-all duration-200 cursor-pointer select-none ${
+                  active
+                    ? 'text-[#ECC47E] bg-[#C59B53]/15 border border-[#C59B53]/35 shadow-sm'
+                    : 'text-[#A89F91] hover:text-[#F4EFE6] hover:bg-white/[0.03] border border-transparent'
+                }`}
+                aria-current={active ? 'page' : undefined}
+                aria-label={item.label}
+              >
+                {/* Active Glowing Pip */}
+                {active && (
+                  <span className="absolute -top-1 w-1 h-1 rounded-full bg-[#ECC47E] shadow-[0_0_6px_#ECC47E]" />
+                )}
+                <Icon
+                  className={`w-4 h-4 transition-transform duration-200 ${
+                    active ? 'scale-110 text-[#ECC47E]' : 'text-[#A89F91]'
+                  }`}
+                />
+                <span
+                  className={`text-[9.5px] sm:text-[10px] tracking-tight leading-tight mt-1 truncate max-w-full font-serif ${
+                    active ? 'font-semibold text-[#ECC47E]' : 'text-[#A89F91]'
+                  }`}
+                >
+                  {item.shortLabel}
+                </span>
+              </button>
+            );
+          })}
+        </div>
+      </nav>
 
       {/* Manifestation Modal (Rendered outside header) */}
       <ManifestationModal
