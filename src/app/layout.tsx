@@ -4,7 +4,6 @@ import './globals.css';
 import { Navbar } from '@/components/layout/Navbar';
 import { ScrollProgressSidebar } from '@/components/layout/ScrollProgressSidebar';
 import { Footer } from '@/components/layout/Footer';
-import { ScrollToTop } from '@/components/ui/ScrollToTop';
 import { PageTransition } from '@/components/ui/PageTransition';
 import { ServiceWorkerRegister } from '@/components/common/ServiceWorkerRegister';
 
@@ -109,7 +108,6 @@ export default function RootLayout({
         </PageTransition>
 
         <Footer />
-        <ScrollToTop />
       </body>
     </html>
   );
