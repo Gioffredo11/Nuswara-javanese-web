@@ -235,7 +235,7 @@ export function HomePage({ defaultSection }: HomePageProps = {}) {
               </div>
 
               {/* Classical Serif Title */}
-              <h1 className="font-royal text-6xl sm:text-7xl md:text-8xl lg:text-[7.5rem] xl:text-[8.5rem] font-normal tracking-[0.06em] text-[#F4EFE6] leading-none select-none headline-enter">
+              <h1 className="font-royal text-5xl sm:text-7xl md:text-8xl lg:text-[7.5rem] xl:text-[8.5rem] font-normal tracking-[0.06em] text-[#F4EFE6] leading-none select-none headline-enter">
                 NUSWARA
               </h1>
 

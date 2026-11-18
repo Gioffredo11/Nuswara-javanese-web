@@ -470,7 +470,7 @@ export function Navbar() {
             <button
               type="button"
               onClick={() => setManifestModalOpen(true)}
-              className={`group relative w-8 h-10 rounded-[5px] border ${
+              className={`group relative w-7.5 h-9 rounded-[5px] border ${
                 drawnManifestation
                   ? 'border-[#ECC47E] shadow-[0_0_12px_rgba(236,196,126,0.45)]'
                   : 'border-[#C59B53]/80 hover:border-[#ECC47E] shadow-sm'
@@ -511,13 +511,13 @@ export function Navbar() {
       </header>
 
       {/* ============================================================ */}
-      {/* 2. MOBILE BOTTOM NAVIGATION DOCK (Icons side-by-side) */}
+      {/* 2. MOBILE BOTTOM NAVIGATION DOCK (Spacious, Airy & Native) */}
       {/* ============================================================ */}
       <nav
         aria-label="Navigasi Bawah Ponsel"
-        className="lg:hidden fixed bottom-3 sm:bottom-4 inset-x-3 sm:inset-x-6 max-w-lg mx-auto z-50 pointer-events-auto"
+        className="lg:hidden fixed bottom-0 inset-x-0 z-50 pointer-events-auto sm:bottom-3 sm:inset-x-4 sm:max-w-lg sm:mx-auto transition-all duration-300"
       >
-        <div className="relative w-full rounded-2xl bg-[#0D0C0A]/95 backdrop-blur-2xl border border-[#C59B53]/35 shadow-[0_12px_36px_rgba(0,0,0,0.85),0_0_20px_rgba(197,155,83,0.12)] px-1 sm:px-2 py-1.5 flex items-center justify-between gap-1">
+        <div className="relative w-full sm:rounded-2xl bg-[#0D0C0A]/96 backdrop-blur-2xl border-t sm:border border-[#C59B53]/30 shadow-[0_-8px_32px_rgba(0,0,0,0.85),0_0_24px_rgba(197,155,83,0.08)] px-1.5 sm:px-3 pt-2 pb-[calc(0.6rem+env(safe-area-inset-bottom,0px))] sm:pb-2 flex items-center justify-between">
           {PRIMARY_NAV_LINKS.map((item) => {
             const active = isLinkActive(item.sectionId);
             const Icon = item.icon;
@@ -526,26 +526,26 @@ export function Navbar() {
                 key={item.sectionId}
                 type="button"
                 onClick={() => handleNavClick(item.sectionId)}
-                className={`relative flex flex-col items-center justify-center flex-1 py-1.5 px-0.5 rounded-xl transition-all duration-200 cursor-pointer select-none ${
+                className={`relative flex flex-col items-center justify-center flex-1 py-1 px-1 rounded-xl transition-all duration-200 cursor-pointer select-none group ${
                   active
-                    ? 'text-[#ECC47E] bg-[#C59B53]/15 border border-[#C59B53]/35 shadow-sm'
-                    : 'text-[#A89F91] hover:text-[#F4EFE6] hover:bg-white/[0.03] border border-transparent'
+                    ? 'text-[#ECC47E] bg-white/[0.04]'
+                    : 'text-[#8C8273] hover:text-[#C59B53] hover:bg-white/[0.02]'
                 }`}
                 aria-current={active ? 'page' : undefined}
                 aria-label={item.label}
               >
-                {/* Active Glowing Pip */}
+                {/* Active Top Accent Glow Bar */}
                 {active && (
-                  <span className="absolute -top-1 w-1 h-1 rounded-full bg-[#ECC47E] shadow-[0_0_6px_#ECC47E]" />
+                  <span className="absolute top-0 inset-x-2 sm:inset-x-3 h-[2px] rounded-full bg-gradient-to-r from-[#C59B53] via-[#ECC47E] to-[#C59B53] shadow-[0_0_10px_#ECC47E]" />
                 )}
                 <Icon
-                  className={`w-4 h-4 transition-transform duration-200 ${
-                    active ? 'scale-110 text-[#ECC47E]' : 'text-[#A89F91]'
+                  className={`w-5 h-5 transition-transform duration-200 ${
+                    active ? 'scale-110 text-[#ECC47E]' : 'text-[#8C8273] group-hover:scale-105 group-hover:text-[#C59B53]'
                   }`}
                 />
                 <span
-                  className={`text-[9.5px] sm:text-[10px] tracking-tight leading-tight mt-1 truncate max-w-full font-serif ${
-                    active ? 'font-semibold text-[#ECC47E]' : 'text-[#A89F91]'
+                  className={`text-[10px] sm:text-[10.5px] font-sans tracking-tight leading-none mt-1 truncate max-w-full ${
+                    active ? 'font-semibold text-[#ECC47E]' : 'font-medium text-[#8C8273] group-hover:text-[#C59B53]'
                   }`}
                 >
                   {item.shortLabel}
