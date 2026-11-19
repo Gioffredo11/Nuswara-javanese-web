@@ -62,30 +62,14 @@ export function PhotoboothStripPreview({
         className="absolute inset-1.5 border pointer-events-none rounded-lg opacity-70"
       />
 
-      {/* Top Header Branding */}
-      <div className="relative text-center pt-2 pb-2.5 z-10">
-        <span
-          style={{ color: frame.palette.accentGold }}
-          className="text-[9px] font-mono uppercase tracking-widest block font-semibold"
-        >
-          ✦ BILIK NUSWARA ✦
-        </span>
+      {/* Top Header Branding - Minimalist NUSWARA only */}
+      <div className="relative text-center py-2.5 z-10">
         <h4
           style={{ color: frame.palette.textPrimary }}
-          className="font-serif font-bold text-base tracking-wider leading-tight"
+          className="font-serif font-bold text-base tracking-widest leading-none"
         >
           NUSWARA
         </h4>
-        <span
-          style={{
-            backgroundColor: frame.palette.badgeBg,
-            color: frame.palette.badgeText,
-            borderColor: frame.palette.borderInner,
-          }}
-          className="text-[9px] font-mono px-2 py-0.5 rounded-full inline-block mt-0.5 border"
-        >
-          {frame.name}
-        </span>
       </div>
 
       {/* 4 Photo Cut Slots */}

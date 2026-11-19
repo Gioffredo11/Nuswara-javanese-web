@@ -713,48 +713,24 @@ export async function renderPhotoboothStripCanvas(
   drawCornerFlourish(ctx, stripCanvas.width - 28, stripCanvas.height - 28, cornerSize, Math.PI, frame.palette.accentGold);
   drawCornerFlourish(ctx, 28, stripCanvas.height - 28, cornerSize, -Math.PI / 2, frame.palette.accentGold);
 
-  // 4. HEADER BRANDING & MOTIF CROWN
+  // 4. HEADER BRANDING (Minimalist - NUSWARA only)
   ctx.textAlign = 'center';
 
   if (frame.id === 'gunungan-agung') {
     drawGununganPeak(ctx, 400, 28, 110, 68, frame.palette.accentGold);
     ctx.fillStyle = frame.palette.textPrimary;
-    ctx.font = 'bold 32px serif';
-    ctx.fillText('NUSWARA', 400, 122);
-    ctx.fillStyle = frame.palette.accentGold;
-    ctx.font = 'bold 15px monospace';
-    ctx.fillText('✦ EDISI GUNUNGAN WAYANG AGUNG ✦', 400, 146);
+    ctx.font = 'bold 36px serif';
+    ctx.fillText('NUSWARA', 400, 134);
   } else if (frame.id === 'surya-majapahit') {
-    drawSuryaMajapahitPeak(ctx, 400, 52, 28, frame.palette.accentGold, frame.palette.borderOuter);
-    ctx.fillStyle = frame.palette.textPrimary;
-    ctx.font = 'bold 34px serif';
-    ctx.fillText('NUSWARA', 400, 112);
-    ctx.fillStyle = frame.palette.accentGold;
-    ctx.font = 'bold 14px monospace';
-    ctx.fillText('✦ SURYA MAJAPAHIT KENCANA ✦', 400, 138);
-  } else if (frame.id === 'ukiran-gebyok') {
-    ctx.fillStyle = frame.palette.textPrimary;
-    ctx.font = 'bold 32px serif';
-    ctx.fillText('NUSWARA', 400, 85);
-    ctx.fillStyle = frame.palette.accentGold;
-    ctx.font = 'bold 16px serif';
-    ctx.fillText('GAPURA GEBYOK JEPARA EDITION', 400, 114);
-    ctx.font = 'italic 13px serif';
-    ctx.fillStyle = frame.palette.textSecondary;
-    ctx.fillText('Kriya Seni Kayu Jati Adiluhung Jawa Tengah', 400, 138);
-  } else {
-    // Elegant standard cultural header
-    ctx.fillStyle = frame.palette.accentGold;
-    ctx.font = 'bold 14px monospace';
-    ctx.fillText('✦ BILIK BUDAYA NUSWANTARA ✦', 400, 62);
-
+    drawSuryaMajapahitPeak(ctx, 400, 48, 28, frame.palette.accentGold, frame.palette.borderOuter);
     ctx.fillStyle = frame.palette.textPrimary;
     ctx.font = 'bold 36px serif';
-    ctx.fillText('NUSWARA', 400, 102);
-
-    ctx.fillStyle = frame.palette.accentGold;
-    ctx.font = 'bold 15px monospace';
-    ctx.fillText(`✦ EDISI ${frame.name.toUpperCase()} ✦`, 400, 132);
+    ctx.fillText('NUSWARA', 400, 130);
+  } else {
+    // Elegant minimalist header
+    ctx.fillStyle = frame.palette.textPrimary;
+    ctx.font = 'bold 42px serif';
+    ctx.fillText('NUSWARA', 400, 108);
   }
 
   // 5. DRAW THE 4 PHOTOS
