@@ -2,16 +2,11 @@
 
 import React, { useState, useEffect, useRef, useMemo, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 import {
   Search,
   X,
-  Landmark,
-  Utensils,
-  Users,
-  Layers,
-  BookOpen,
-  ArrowRight,
-  Sparkles,
+  History,
   Command,
 } from 'lucide-react';
 import { tempatSakralArticles } from '@/data/tempatSakralArticles';
@@ -19,6 +14,7 @@ import { kulinerArticles } from '@/data/kulinerArticles';
 import { tokohArticles } from '@/data/tokohArticles';
 import { sejarahArticles } from '@/data/sejarahArticles';
 import { defaultCharactersSeed } from '@/data/charactersSeed';
+import { getTarotImagePath } from '@/components/ui/WayangVectors';
 
 export type SearchCategory = 'all' | 'sakral' | 'kuliner' | 'tokoh' | 'sejarah' | 'wayang';
 
@@ -29,12 +25,13 @@ export interface SearchItem {
   category: 'sakral' | 'kuliner' | 'tokoh' | 'sejarah' | 'wayang';
   categoryLabel: string;
   href: string;
+  image?: string;
   city?: string;
   keywords: string;
 }
 
 /**
- * Precompiled unified search index from official static datasets
+ * Precompiled unified search index with thumbnail preview images
  */
 export function useSearchIndex(): SearchItem[] {
   return useMemo(() => {
@@ -49,6 +46,7 @@ export function useSearchIndex(): SearchItem[] {
         category: 'sakral',
         categoryLabel: 'Tempat Sakral',
         href: `/tempat-sakral/${art.slug}`,
+        image: art.heroImage,
         city: art.city,
         keywords: `${art.name} ${art.city} ${art.region} ${art.categoryLabel} ${art.spiritualTheme} ${(art.highlights || []).join(' ')} ${art.shortSummary}`,
       });
@@ -63,6 +61,7 @@ export function useSearchIndex(): SearchItem[] {
         category: 'kuliner',
         categoryLabel: 'Kuliner',
         href: `/kuliner/${art.slug}`,
+        image: art.heroImage,
         city: art.city,
         keywords: `${art.name} ${art.city} ${art.region} ${art.categoryLabel} ${art.culturalTheme} ${(art.flavorProfile || []).join(' ')} ${art.shortSummary}`,
       });
@@ -77,6 +76,7 @@ export function useSearchIndex(): SearchItem[] {
         category: 'tokoh',
         categoryLabel: 'Tokoh',
         href: `/tokoh/${art.slug}`,
+        image: art.photoUrl,
         city: art.originCity,
         keywords: `${art.name} ${art.fullName} ${art.honorificTitle} ${art.originCity} ${art.badgeLabel} ${art.summary}`,
       });
@@ -91,6 +91,7 @@ export function useSearchIndex(): SearchItem[] {
         category: 'sejarah',
         categoryLabel: 'Sejarah',
         href: `/sejarah/${art.slug}`,
+        image: art.heroImage,
         keywords: `${art.title} ${art.eraSubheading} ${art.eraPeriod} ${art.shortSummary} ${(art.historicalFigures || []).join(' ')}`,
       });
     });
@@ -104,6 +105,7 @@ export function useSearchIndex(): SearchItem[] {
         category: 'wayang',
         categoryLabel: 'Wayang',
         href: `/wayangpedia/${char.slug}`,
+        image: getTarotImagePath(char.slug),
         keywords: `${char.name} ${char.javaneseName || ''} ${char.title || ''} ${char.shortDescription} ${char.category?.name || ''}`,
       });
     });
@@ -112,48 +114,13 @@ export function useSearchIndex(): SearchItem[] {
   }, []);
 }
 
-export function getCategoryIcon(category: string) {
-  switch (category) {
-    case 'sakral':
-      return <Landmark className="w-3.5 h-3.5 text-amber-400" />;
-    case 'kuliner':
-      return <Utensils className="w-3.5 h-3.5 text-orange-400" />;
-    case 'tokoh':
-      return <Users className="w-3.5 h-3.5 text-yellow-400" />;
-    case 'sejarah':
-      return <BookOpen className="w-3.5 h-3.5 text-stone-300" />;
-    case 'wayang':
-      return <Layers className="w-3.5 h-3.5 text-[#ECC47E]" />;
-    default:
-      return <Sparkles className="w-3.5 h-3.5 text-[#ECC47E]" />;
-  }
-}
-
-export function getCategoryBadgeClass(category: string) {
-  switch (category) {
-    case 'sakral':
-      return 'bg-amber-950/70 border-amber-600/50 text-amber-300';
-    case 'kuliner':
-      return 'bg-orange-950/70 border-orange-600/50 text-orange-300';
-    case 'tokoh':
-      return 'bg-yellow-950/70 border-yellow-600/50 text-yellow-300';
-    case 'sejarah':
-      return 'bg-stone-900/70 border-stone-600/50 text-stone-300';
-    case 'wayang':
-      return 'bg-[#2E1D10]/80 border-[#C59B53]/50 text-[#ECC47E]';
-    default:
-      return 'bg-amber-950/70 border-amber-500/40 text-amber-300';
-  }
-}
-
 /**
- * Desktop Navbar Search Bar (with dropdown)
+ * YouTube-style search dropdown for desktop navbar
  */
 export function NavbarSearchBar() {
   const router = useRouter();
   const [query, setQuery] = useState('');
   const [isOpen, setIsOpen] = useState(false);
-  const [activeCategory, setActiveCategory] = useState<SearchCategory>('all');
   const [selectedIndex, setSelectedIndex] = useState(0);
 
   const containerRef = useRef<HTMLDivElement>(null);
@@ -162,14 +129,11 @@ export function NavbarSearchBar() {
 
   const searchIndex = useSearchIndex();
 
-  // Filter items according to search query and active category
+  // Filter items according to search query
   const filteredResults = useMemo(() => {
     const q = query.toLowerCase().trim();
+    if (!q) return [];
     return searchIndex.filter((item) => {
-      const matchesCategory = activeCategory === 'all' || item.category === activeCategory;
-      if (!matchesCategory) return false;
-      if (!q) return true;
-
       return (
         item.title.toLowerCase().includes(q) ||
         (item.city && item.city.toLowerCase().includes(q)) ||
@@ -177,17 +141,32 @@ export function NavbarSearchBar() {
         item.keywords.toLowerCase().includes(q)
       );
     });
-  }, [searchIndex, query, activeCategory]);
+  }, [searchIndex, query]);
 
-  // Quick recommendations when query is empty
-  const quickRecommendations = useMemo(() => [
-    { title: 'Candi Borobudur', href: '/tempat-sakral/candi-borobudur', category: 'sakral' as const },
-    { title: 'Lumpia Semarang', href: '/kuliner/lumpia-semarang', category: 'kuliner' as const },
-    { title: 'Kompleks Dieng', href: '/tempat-sakral/dataran-tinggi-dieng', category: 'sakral' as const },
-    { title: 'Tempe Mendoan', href: '/kuliner/tempe-mendoan-banyumas', category: 'kuliner' as const },
-    { title: 'R.A. Kartini', href: '/tokoh/ra-kartini', category: 'tokoh' as const },
-    { title: 'Gatotkaca', href: '/wayangpedia/gatotkaca', category: 'wayang' as const },
-  ], []);
+  // Top popular suggestions formatted like YouTube recent / trending items
+  const popularSuggestions = useMemo(() => {
+    const topSlugs = [
+      'sakral-candi-borobudur',
+      'kuliner-lumpia-semarang',
+      'sakral-dataran-tinggi-dieng',
+      'tokoh-ra-kartini',
+      'kuliner-tempe-mendoan-banyumas',
+      'wayang-gatotkaca',
+      'sakral-candi-cetho',
+      'kuliner-nasi-liwet-solo',
+    ];
+    return topSlugs
+      .map((slug) => searchIndex.find((item) => item.id === slug))
+      .filter((item): item is SearchItem => Boolean(item));
+  }, [searchIndex]);
+
+  // Active items displayed in the dropdown
+  const displayedItems = useMemo(() => {
+    if (!query.trim()) {
+      return popularSuggestions;
+    }
+    return filteredResults.slice(0, 8);
+  }, [query, popularSuggestions, filteredResults]);
 
   // Handle outside click to close dropdown
   useEffect(() => {
@@ -216,10 +195,10 @@ export function NavbarSearchBar() {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, []);
 
-  // Reset selected index when results change
+  // Reset selected index when displayed items change
   useEffect(() => {
     setSelectedIndex(0);
-  }, [filteredResults]);
+  }, [displayedItems]);
 
   const handleSelect = useCallback(
     (href: string) => {
@@ -246,17 +225,17 @@ export function NavbarSearchBar() {
       return;
     }
 
-    if (filteredResults.length === 0) return;
+    if (displayedItems.length === 0) return;
 
     if (e.key === 'ArrowDown') {
       e.preventDefault();
-      setSelectedIndex((prev) => (prev + 1) % filteredResults.length);
+      setSelectedIndex((prev) => (prev + 1) % displayedItems.length);
     } else if (e.key === 'ArrowUp') {
       e.preventDefault();
-      setSelectedIndex((prev) => (prev - 1 + filteredResults.length) % filteredResults.length);
+      setSelectedIndex((prev) => (prev - 1 + displayedItems.length) % displayedItems.length);
     } else if (e.key === 'Enter') {
       e.preventDefault();
-      const target = filteredResults[selectedIndex];
+      const target = displayedItems[selectedIndex];
       if (target) {
         handleSelect(target.href);
       }
@@ -310,127 +289,86 @@ export function NavbarSearchBar() {
         )}
       </div>
 
-      {/* Floating Results Dropdown */}
+      {/* YouTube-Style Autocomplete Floating Dropdown */}
       {isOpen && (
-        <div className="absolute left-0 top-full mt-2 w-[calc(100vw-2.5rem)] sm:w-[380px] md:w-[420px] max-w-[440px] rounded-2xl bg-[#0F0B07]/98 backdrop-blur-2xl border border-[#C59B53]/50 shadow-[0_25px_60px_rgba(0,0,0,0.9),0_0_25px_rgba(197,155,83,0.2)] p-2.5 z-50 animate-in fade-in zoom-in-95 duration-200">
-          {/* Category Tabs */}
-          <div className="flex items-center gap-1 pb-2 border-b border-[#C59B53]/25 overflow-x-auto no-scrollbar">
-            {(
-              [
-                { id: 'all', label: 'Semua' },
-                { id: 'sakral', label: '🏛️ Sakral' },
-                { id: 'kuliner', label: '🍲 Kuliner' },
-                { id: 'tokoh', label: '👤 Tokoh' },
-                { id: 'wayang', label: '🎭 Wayang' },
-              ] as const
-            ).map((cat) => (
-              <button
-                key={cat.id}
-                type="button"
-                onClick={() => {
-                  setActiveCategory(cat.id);
-                  inputRef.current?.focus();
-                }}
-                className={`px-2 py-1 rounded-full text-[10px] font-mono transition-all whitespace-nowrap cursor-pointer ${
-                  activeCategory === cat.id
-                    ? 'bg-[#C59B53]/30 text-[#FFF2DC] border border-[#ECC47E]/60 font-semibold'
-                    : 'text-[#8C8275] hover:text-[#ECC47E] hover:bg-white/5 border border-transparent'
-                }`}
-              >
-                {cat.label}
-              </button>
-            ))}
-          </div>
-
-          {/* Quick Recommendations (When Query is Empty) */}
-          {!query.trim() && (
-            <div className="pt-2.5 pb-1">
-              <span className="text-[10px] font-mono text-[#8C8275] uppercase tracking-wider block px-1.5 mb-1.5 flex items-center gap-1">
-                <Sparkles className="w-3 h-3 text-[#ECC47E]" />
-                Pencarian Populer Jawa
-              </span>
-              <div className="flex flex-wrap gap-1.5 px-1">
-                {quickRecommendations.map((rec) => (
-                  <button
-                    key={rec.title}
-                    type="button"
-                    onClick={() => handleSelect(rec.href)}
-                    className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-[#19120C] hover:bg-[#251A10] border border-[#C59B53]/25 hover:border-[#ECC47E]/50 text-xs text-[#E8DFD3] hover:text-[#FFF2DC] transition-all cursor-pointer group"
-                  >
-                    {getCategoryIcon(rec.category)}
-                    <span>{rec.title}</span>
-                    <ArrowRight className="w-2.5 h-2.5 text-[#C59B53] opacity-0 group-hover:opacity-100 transition-opacity" />
-                  </button>
-                ))}
+        <div className="absolute left-0 top-full mt-2 w-[calc(100vw-2.5rem)] sm:w-[380px] md:w-[420px] max-w-[440px] rounded-2xl bg-[#110C08]/98 backdrop-blur-2xl border border-[#C59B53]/45 shadow-[0_20px_60px_rgba(0,0,0,0.95),0_0_20px_rgba(197,155,83,0.15)] py-2 z-50 animate-in fade-in zoom-in-95 duration-150 overflow-hidden">
+          {/* Results List */}
+          <div ref={listRef} className="max-h-[360px] overflow-y-auto space-y-0.5 custom-scrollbar px-1">
+            {query.trim() && displayedItems.length === 0 ? (
+              <div className="text-center py-7 px-4">
+                <p className="text-xs text-[#8C8275]">
+                  Tidak ditemukan hasil untuk &ldquo;<span className="text-[#ECC47E] font-medium">{query}</span>&rdquo;
+                </p>
+                <p className="text-[11px] text-[#6E665C] mt-1 font-serif italic">
+                  Coba kata kunci lain seperti Borobudur, Dieng, Lumpia, atau Kartini.
+                </p>
               </div>
-            </div>
-          )}
+            ) : (
+              displayedItems.map((item, idx) => {
+                const isSelected = idx === selectedIndex;
+                return (
+                  <button
+                    key={item.id}
+                    type="button"
+                    onClick={() => handleSelect(item.href)}
+                    onMouseEnter={() => setSelectedIndex(idx)}
+                    className={`w-full flex items-center justify-between gap-3 px-3 py-2 rounded-xl transition-colors text-left cursor-pointer group ${
+                      isSelected
+                        ? 'bg-[#251A10]'
+                        : 'hover:bg-[#1E140C]'
+                    }`}
+                  >
+                    {/* Left Icon & Text Content */}
+                    <div className="flex items-center gap-3 min-w-0 flex-1">
+                      {query.trim() ? (
+                        <Search
+                          className={`w-4 h-4 shrink-0 transition-colors ${
+                            isSelected ? 'text-[#ECC47E]' : 'text-[#8C8275] group-hover:text-[#ECC47E]'
+                          }`}
+                        />
+                      ) : (
+                        <History
+                          className={`w-4 h-4 shrink-0 transition-colors ${
+                            isSelected ? 'text-[#ECC47E]' : 'text-[#8C8275] group-hover:text-[#ECC47E]'
+                          }`}
+                        />
+                      )}
 
-          {/* Live Filtered Search Results */}
-          {query.trim() && (
-            <div ref={listRef} className="max-h-72 sm:max-h-80 overflow-y-auto space-y-1 pt-2 custom-scrollbar pr-0.5">
-              {filteredResults.length === 0 ? (
-                <div className="text-center py-6 px-3">
-                  <p className="text-xs text-[#8C8275]">
-                    Tidak ditemukan hasil untuk &ldquo;<span className="text-[#ECC47E] font-medium">{query}</span>&rdquo;
-                  </p>
-                  <p className="text-[11px] text-[#6E665C] mt-1 font-serif italic">
-                    Coba kata kunci lain seperti Borobudur, Lumpia, Dieng, atau Mendoan.
-                  </p>
-                </div>
-              ) : (
-                filteredResults.map((item, idx) => {
-                  const isSelected = idx === selectedIndex;
-                  return (
-                    <button
-                      key={item.id}
-                      type="button"
-                      onClick={() => handleSelect(item.href)}
-                      onMouseEnter={() => setSelectedIndex(idx)}
-                      className={`w-full flex items-center justify-between gap-2.5 p-2 rounded-xl transition-all text-left cursor-pointer group border ${
-                        isSelected
-                          ? 'bg-[#251A10] border-[#ECC47E]/50 shadow-sm'
-                          : 'bg-[#150F0A]/50 border-transparent hover:bg-[#1E150D] hover:border-[#C59B53]/30'
-                      }`}
-                    >
-                      <div className="flex items-center gap-2.5 min-w-0">
-                        <div className="w-7 h-7 rounded-lg bg-[#0F0B07] border border-[#C59B53]/30 flex items-center justify-center shrink-0">
-                          {getCategoryIcon(item.category)}
+                      <div className="min-w-0 flex-1">
+                        <div
+                          className={`text-sm font-medium truncate transition-colors ${
+                            isSelected ? 'text-[#FFF2DC]' : 'text-[#F5EFE6] group-hover:text-[#FFF2DC]'
+                          }`}
+                        >
+                          {item.title}
                         </div>
-                        <div className="min-w-0">
-                          <div className="flex items-center gap-1.5">
-                            <span className="text-xs font-medium text-[#F5EFE6] group-hover:text-[#FFF2DC] truncate">
-                              {item.title}
-                            </span>
-                            <span
-                              className={`text-[8.5px] font-mono px-1.5 py-0.2 rounded-full border shrink-0 ${getCategoryBadgeClass(
-                                item.category
-                              )}`}
-                            >
-                              {item.categoryLabel}
-                            </span>
-                          </div>
-                          <p className="text-[10px] text-[#9E9385] truncate font-sans">
-                            {item.subtitle}
-                          </p>
+                        <div className="text-[11px] text-[#8C8275] font-sans truncate">
+                          {item.subtitle}
                         </div>
                       </div>
+                    </div>
 
-                      <ArrowRight
-                        className={`w-3.5 h-3.5 text-[#ECC47E] shrink-0 transition-transform ${
-                          isSelected ? 'translate-x-0 opacity-100' : 'opacity-30 group-hover:opacity-100 group-hover:translate-x-0.5'
-                        }`}
-                      />
-                    </button>
-                  );
-                })
-              )}
-            </div>
-          )}
+                    {/* Right Preview Thumbnail (YouTube style) */}
+                    {item.image && (
+                      <div className="relative w-12 h-7.5 sm:w-13 sm:h-8 rounded-[4px] overflow-hidden bg-black/60 border border-[#C59B53]/20 group-hover:border-[#ECC47E]/45 shrink-0 transition-colors shadow-sm">
+                        <Image
+                          src={item.image}
+                          alt={item.title}
+                          fill
+                          sizes="52px"
+                          className="object-cover"
+                        />
+                      </div>
+                    )}
+                  </button>
+                );
+              })
+            )}
+          </div>
 
-          {/* Footer Navigation Tip */}
-          <div className="mt-2 pt-1.5 border-t border-[#C59B53]/20 flex items-center justify-between text-[9px] font-mono text-[#786E62] px-1">
-            <span>Tekan Enter untuk memilih</span>
+          {/* Minimalist Footer Tip */}
+          <div className="mt-1 pt-1.5 px-3 border-t border-[#C59B53]/20 flex items-center justify-between text-[9px] font-mono text-[#786E62]">
+            <span>Gunakan ↑ ↓ navigasi</span>
             <span>ESC untuk menutup</span>
           </div>
         </div>
@@ -440,7 +378,7 @@ export function NavbarSearchBar() {
 }
 
 /**
- * Mobile Search Modal (Triggered from mobile bottom pill navbar)
+ * YouTube-style Mobile Search Modal (Triggered from mobile bottom pill navbar)
  */
 export function MobileSearchModal({
   isOpen,
@@ -451,7 +389,6 @@ export function MobileSearchModal({
 }) {
   const router = useRouter();
   const [query, setQuery] = useState('');
-  const [activeCategory, setActiveCategory] = useState<SearchCategory>('all');
   const inputRef = useRef<HTMLInputElement>(null);
   const searchIndex = useSearchIndex();
 
@@ -478,11 +415,8 @@ export function MobileSearchModal({
 
   const filteredResults = useMemo(() => {
     const q = query.toLowerCase().trim();
+    if (!q) return [];
     return searchIndex.filter((item) => {
-      const matchesCategory = activeCategory === 'all' || item.category === activeCategory;
-      if (!matchesCategory) return false;
-      if (!q) return true;
-
       return (
         item.title.toLowerCase().includes(q) ||
         (item.city && item.city.toLowerCase().includes(q)) ||
@@ -490,7 +424,31 @@ export function MobileSearchModal({
         item.keywords.toLowerCase().includes(q)
       );
     });
-  }, [searchIndex, query, activeCategory]);
+  }, [searchIndex, query]);
+
+  // Top popular suggestions
+  const popularSuggestions = useMemo(() => {
+    const topSlugs = [
+      'sakral-candi-borobudur',
+      'kuliner-lumpia-semarang',
+      'sakral-dataran-tinggi-dieng',
+      'tokoh-ra-kartini',
+      'kuliner-tempe-mendoan-banyumas',
+      'wayang-gatotkaca',
+      'sakral-candi-cetho',
+      'kuliner-nasi-liwet-solo',
+    ];
+    return topSlugs
+      .map((slug) => searchIndex.find((item) => item.id === slug))
+      .filter((item): item is SearchItem => Boolean(item));
+  }, [searchIndex]);
+
+  const displayedItems = useMemo(() => {
+    if (!query.trim()) {
+      return popularSuggestions;
+    }
+    return filteredResults.slice(0, 10);
+  }, [query, popularSuggestions, filteredResults]);
 
   const handleSelect = (href: string) => {
     onClose();
@@ -501,10 +459,10 @@ export function MobileSearchModal({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex flex-col justify-end sm:justify-center p-3 sm:p-6 bg-black/80 backdrop-blur-md animate-in fade-in duration-200">
-      <div className="relative w-full max-w-lg mx-auto rounded-3xl bg-[#0F0B07] border border-[#C59B53]/50 shadow-[0_25px_60px_rgba(0,0,0,0.95)] p-4 flex flex-col max-h-[85vh] overflow-hidden">
+    <div className="fixed inset-0 z-50 flex flex-col justify-start sm:justify-center p-3 sm:p-6 bg-black/85 backdrop-blur-md animate-in fade-in duration-200">
+      <div className="relative w-full max-w-lg mx-auto rounded-3xl bg-[#0F0B07] border border-[#C59B53]/40 shadow-[0_25px_60px_rgba(0,0,0,0.95)] p-3 sm:p-4 flex flex-col max-h-[85vh] overflow-hidden">
         {/* Header with Search Input & Close button */}
-        <div className="flex items-center gap-2 pb-3 border-b border-[#C59B53]/30">
+        <div className="flex items-center gap-2 pb-3 border-b border-[#C59B53]/25">
           <div className="relative flex-1 flex items-center bg-[#17110C] rounded-full px-3 py-2 border border-[#C59B53]/40">
             <Search className="w-4 h-4 text-[#C59B53] mr-2 shrink-0" />
             <input
@@ -528,106 +486,62 @@ export function MobileSearchModal({
           <button
             type="button"
             onClick={onClose}
-            className="p-2 rounded-full bg-[#1A120B] text-[#A89F91] hover:text-white border border-[#C59B53]/30 shrink-0"
+            className="p-2 rounded-full bg-[#1A120B] text-[#A89F91] hover:text-white border border-[#C59B53]/30 shrink-0 cursor-pointer"
             title="Tutup"
           >
             <X className="w-4 h-4" />
           </button>
         </div>
 
-        {/* Category Filter Chips */}
-        <div className="flex items-center gap-1.5 py-2.5 overflow-x-auto no-scrollbar">
-          {(
-            [
-              { id: 'all', label: 'Semua' },
-              { id: 'sakral', label: '🏛️ Sakral' },
-              { id: 'kuliner', label: '🍲 Kuliner' },
-              { id: 'tokoh', label: '👤 Tokoh' },
-              { id: 'wayang', label: '🎭 Wayang' },
-            ] as const
-          ).map((cat) => (
-            <button
-              key={cat.id}
-              type="button"
-              onClick={() => setActiveCategory(cat.id)}
-              className={`px-3 py-1 rounded-full text-xs font-mono transition-all whitespace-nowrap ${
-                activeCategory === cat.id
-                  ? 'bg-[#C59B53]/30 text-[#FFF2DC] border border-[#ECC47E]/60 font-semibold'
-                  : 'text-[#8C8275] hover:text-[#ECC47E] bg-[#140E08] border border-[#C59B53]/20'
-              }`}
-            >
-              {cat.label}
-            </button>
-          ))}
-        </div>
-
-        {/* Results List */}
-        <div className="flex-1 overflow-y-auto space-y-1.5 py-2 custom-scrollbar">
-          {!query.trim() && (
-            <div className="py-2">
-              <span className="text-xs font-mono text-[#8C8275] uppercase tracking-wider block mb-2 flex items-center gap-1">
-                <Sparkles className="w-3.5 h-3.5 text-[#ECC47E]" />
-                Pencarian Populer
-              </span>
-              <div className="grid grid-cols-2 gap-2">
-                {[
-                  { title: 'Candi Borobudur', href: '/tempat-sakral/candi-borobudur', icon: Landmark, label: 'Sakral' },
-                  { title: 'Lumpia Semarang', href: '/kuliner/lumpia-semarang', icon: Utensils, label: 'Kuliner' },
-                  { title: 'Kompleks Dieng', href: '/tempat-sakral/dataran-tinggi-dieng', icon: Landmark, label: 'Sakral' },
-                  { title: 'Tempe Mendoan', href: '/kuliner/tempe-mendoan-banyumas', icon: Utensils, label: 'Kuliner' },
-                  { title: 'R.A. Kartini', href: '/tokoh/ra-kartini', icon: Users, label: 'Tokoh' },
-                  { title: 'Raden Gatotkaca', href: '/wayangpedia/gatotkaca', icon: Layers, label: 'Wayang' },
-                ].map((rec) => {
-                  const Icon = rec.icon;
-                  return (
-                    <button
-                      key={rec.title}
-                      type="button"
-                      onClick={() => handleSelect(rec.href)}
-                      className="flex items-center gap-2 p-2.5 rounded-xl bg-[#17100A] hover:bg-[#251A10] border border-[#C59B53]/30 text-left transition-all"
-                    >
-                      <Icon className="w-3.5 h-3.5 text-[#ECC47E] shrink-0" />
-                      <span className="text-xs text-[#E8DFD3] truncate">{rec.title}</span>
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
-          )}
-
-          {query.trim() && filteredResults.length === 0 && (
+        {/* YouTube-Style Suggestions List */}
+        <div className="flex-1 overflow-y-auto space-y-0.5 py-2 custom-scrollbar">
+          {query.trim() && displayedItems.length === 0 ? (
             <div className="text-center py-8">
               <p className="text-sm text-[#8C8275]">
-                Tidak ada hasil untuk &ldquo;<span className="text-[#ECC47E]">{query}</span>&rdquo;
+                Tidak ada hasil untuk &ldquo;<span className="text-[#ECC47E] font-medium">{query}</span>&rdquo;
+              </p>
+              <p className="text-xs text-[#6E665C] mt-1 font-serif italic">
+                Coba kata kunci lain seperti Borobudur, Lumpia, atau Kartini.
               </p>
             </div>
-          )}
-
-          {query.trim() &&
-            filteredResults.map((item) => (
+          ) : (
+            displayedItems.map((item) => (
               <button
                 key={item.id}
                 type="button"
                 onClick={() => handleSelect(item.href)}
-                className="w-full flex items-center justify-between gap-3 p-2.5 rounded-xl bg-[#140E08] hover:bg-[#22170E] border border-[#C59B53]/25 hover:border-[#ECC47E]/50 text-left transition-all"
+                className="w-full flex items-center justify-between gap-3 px-3 py-2.5 rounded-xl hover:bg-[#251A10] transition-colors text-left cursor-pointer group"
               >
-                <div className="flex items-center gap-3 min-w-0">
-                  <div className="w-8 h-8 rounded-lg bg-[#0D0804] border border-[#C59B53]/30 flex items-center justify-center shrink-0">
-                    <Sparkles className="w-4 h-4 text-[#ECC47E]" />
-                  </div>
-                  <div className="min-w-0">
-                    <div className="flex items-center gap-1.5">
-                      <span className="text-xs font-medium text-[#F5EFE6] truncate">{item.title}</span>
-                      <span className="text-[9px] font-mono px-1.5 py-0.5 rounded-full border border-[#C59B53]/40 bg-[#25180D] text-[#ECC47E] shrink-0">
-                        {item.categoryLabel}
-                      </span>
+                <div className="flex items-center gap-3 min-w-0 flex-1">
+                  {query.trim() ? (
+                    <Search className="w-4 h-4 text-[#8C8275] group-hover:text-[#ECC47E] shrink-0" />
+                  ) : (
+                    <History className="w-4 h-4 text-[#8C8275] group-hover:text-[#ECC47E] shrink-0" />
+                  )}
+                  <div className="min-w-0 flex-1">
+                    <div className="text-sm font-medium text-[#F5EFE6] group-hover:text-[#FFF2DC] truncate">
+                      {item.title}
                     </div>
-                    <p className="text-[11px] text-[#9E9385] truncate">{item.subtitle}</p>
+                    <div className="text-[11px] text-[#8C8275] font-sans truncate">
+                      {item.subtitle}
+                    </div>
                   </div>
                 </div>
-                <ArrowRight className="w-4 h-4 text-[#ECC47E] shrink-0 opacity-70" />
+
+                {item.image && (
+                  <div className="relative w-12 h-8 rounded-[4px] overflow-hidden bg-black/60 border border-[#C59B53]/25 group-hover:border-[#ECC47E]/45 shrink-0 shadow-sm">
+                    <Image
+                      src={item.image}
+                      alt={item.title}
+                      fill
+                      sizes="48px"
+                      className="object-cover"
+                    />
+                  </div>
+                )}
               </button>
-            ))}
+            ))
+          )}
         </div>
       </div>
     </div>
