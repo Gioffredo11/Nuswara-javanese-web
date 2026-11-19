@@ -19,6 +19,7 @@ import {
 } from 'lucide-react';
 import { ManifestationModal } from '@/components/ui/ManifestationModal';
 import { getTarotImagePath } from '@/components/ui/WayangVectors';
+import { NavbarSearchBar } from './NavbarSearchBar';
 
 interface DrawnManifestationState {
   characterSlug: string;
@@ -399,24 +400,30 @@ export function Navbar() {
               : 'bg-[#0D0C0A]/80 backdrop-blur-xl border border-[#C59B53]/25'
           }`}
         >
-          {/* Brand "NUSWARA" Official Logo */}
-          <Link
-            href="/"
-            onClick={handleLogoClick}
-            className="group relative flex items-center rounded-full py-0.5 px-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C59B53]"
-            aria-label="NUSWARA - Beranda"
-          >
-            <div className="relative h-7 sm:h-8 w-auto aspect-[870/250] transition-transform duration-300 group-hover:scale-105">
-              <Image
-                src="/images/logo/nuswara-logo.png"
-                alt="NUSWARA"
-                width={125}
-                height={36}
-                priority
-                className="h-full w-auto object-contain"
-              />
-            </div>
-          </Link>
+          {/* Brand Logo & Navbar Quick Search */}
+          <div className="flex items-center gap-2 sm:gap-3.5 flex-1 min-w-0 mr-2 sm:mr-3">
+            {/* Brand Logo - Gunungan Emblem Icon Only (No Text) */}
+            <Link
+              href="/"
+              onClick={handleLogoClick}
+              className="group relative flex items-center shrink-0 rounded-full p-0.5 sm:p-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C59B53]"
+              aria-label="NUSWARA - Beranda"
+            >
+              <div className="relative h-7.5 w-7.5 sm:h-8.5 sm:w-8.5 transition-transform duration-300 group-hover:scale-110">
+                <Image
+                  src="/images/logo/nuswara-emblem.png"
+                  alt="NUSWARA Emblem"
+                  width={36}
+                  height={36}
+                  priority
+                  className="h-full w-full object-contain drop-shadow-[0_0_12px_rgba(197,155,83,0.35)]"
+                />
+              </div>
+            </Link>
+
+            {/* Quick Search Bar */}
+            <NavbarSearchBar />
+          </div>
 
           {/* DESKTOP NAV: Pill Links & Daily Manifestation Tarot Card */}
           <div className="hidden lg:flex items-center gap-2 xl:gap-3">
