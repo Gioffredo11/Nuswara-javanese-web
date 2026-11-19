@@ -37,12 +37,6 @@ export function PhotoboothStripPreview({
     );
   }
 
-  const dateStr = new Date().toLocaleDateString('id-ID', {
-    day: 'numeric',
-    month: 'short',
-    year: 'numeric',
-  });
-
   const slots = [0, 1, 2, 3];
 
   return (
@@ -172,34 +166,34 @@ export function PhotoboothStripPreview({
       </div>
 
       {/* Bottom Footer with Signature */}
-      <div className="relative pt-3 pb-2 z-10 px-1 border-t border-dashed mt-2 border-stone-600/30">
-        <div className="space-y-0.5">
+      <div className="relative pt-3 pb-2 z-10 px-1 border-t border-dashed mt-2 border-stone-600/30 text-center">
+        {customText?.trim() || customSubtext?.trim() ? (
+          <div className="space-y-0.5 mb-1.5">
+            {customText?.trim() && (
+              <span
+                style={{ color: frame.palette.accentGold }}
+                className="text-[8.5px] font-mono uppercase tracking-wider block font-semibold"
+              >
+                {customText.trim()}
+              </span>
+            )}
+            {customSubtext?.trim() && (
+              <p
+                style={{ color: frame.palette.textSecondary }}
+                className="text-[9px] font-serif italic leading-snug"
+              >
+                {customSubtext.trim()}
+              </p>
+            )}
+          </div>
+        ) : null}
+        <div className="flex items-center justify-center gap-1.5 py-0.5">
           <span
             style={{ color: frame.palette.accentGold }}
-            className="text-[8.5px] font-mono uppercase tracking-wider block font-semibold"
+            className="text-[9.5px] font-mono tracking-widest uppercase font-bold"
           >
-            {customText || frame.javaneseName}
+            ✦ NUSWARA ✦
           </span>
-          <p
-            style={{ color: frame.palette.textSecondary }}
-            className="text-[9px] font-serif italic leading-snug"
-          >
-            {customSubtext || frame.philosophy}
-          </p>
-          <div className="flex items-center justify-between pt-0.5">
-            <span
-              style={{ color: frame.palette.accentGold }}
-              className="text-[8px] font-mono block opacity-75"
-            >
-              {dateStr}
-            </span>
-            <span
-              style={{ color: frame.palette.accentGold }}
-              className="text-[7.5px] font-mono tracking-widest uppercase opacity-65 font-bold"
-            >
-              NUSWARA
-            </span>
-          </div>
         </div>
       </div>
     </div>

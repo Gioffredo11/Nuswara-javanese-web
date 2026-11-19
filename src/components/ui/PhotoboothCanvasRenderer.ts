@@ -827,61 +827,48 @@ export async function renderPhotoboothStripCanvas(
     }
   }
 
-  // 6. FOOTER BRANDING, PHILOSOPHY, DATE & QR CODE
+  // 6. FOOTER BRANDING (Clean & Minimalist Photobooth Signature)
   const bottomY = startY + 4 * (photoHeight + gap) + 40;
-  const dateStr = new Date().toLocaleDateString('id-ID', {
-    day: 'numeric',
-    month: 'long',
-    year: 'numeric',
-  });
+  const footerAreaHeight = stripCanvas.height - 48 - bottomY;
+  const footerCenterY = bottomY + footerAreaHeight / 2;
 
-  // Left column information
-  ctx.textAlign = 'left';
-  ctx.fillStyle = frame.palette.accentGold;
-  ctx.font = 'bold 14px monospace';
-  ctx.fillText('NUSWARA • BILIK BUDAYA JAWA', 60, bottomY - 10);
+  if (customText?.trim() || customSubtext?.trim()) {
+    // If user provided custom personal text
+    ctx.textAlign = 'center';
+    let currentY = bottomY + 30;
 
-  ctx.fillStyle = frame.palette.textPrimary;
-  ctx.font = 'bold 26px serif';
-  const displayTitle = customText?.trim() ? customText : frame.javaneseName;
-  ctx.fillText(displayTitle, 60, bottomY + 26);
-
-  ctx.fillStyle = frame.palette.textSecondary;
-  ctx.font = 'italic 16px serif';
-  const displaySubtext = customSubtext?.trim()
-    ? customSubtext
-    : `"${frame.philosophy}"`;
-
-  // Wrap philosophy text if long (expanded full width without QR code box)
-  const maxPhilosophyWidth = 680;
-  const words = displaySubtext.split(' ');
-  let line = '';
-  let lineY = bottomY + 58;
-
-  for (let n = 0; n < words.length; n++) {
-    const testLine = line + words[n] + ' ';
-    const metrics = ctx.measureText(testLine);
-    if (metrics.width > maxPhilosophyWidth && n > 0) {
-      ctx.fillText(line, 60, lineY);
-      line = words[n] + ' ';
-      lineY += 22;
-      if (lineY > bottomY + 115) break; // Keep within footer bounds
-    } else {
-      line = testLine;
+    if (customText?.trim()) {
+      ctx.fillStyle = frame.palette.textPrimary;
+      ctx.font = 'bold 24px serif';
+      ctx.fillText(customText.trim(), 400, currentY);
+      currentY += 30;
     }
+
+    if (customSubtext?.trim()) {
+      ctx.fillStyle = frame.palette.textSecondary;
+      ctx.font = 'italic 16px serif';
+      ctx.fillText(customSubtext.trim(), 400, currentY);
+      currentY += 34;
+    }
+
+    ctx.fillStyle = frame.palette.accentGold;
+    ctx.font = 'bold 16px monospace';
+    ctx.fillText('✦ NUSWARA ✦', 400, currentY + 12);
+  } else {
+    // Elegant minimalist center brand mark
+    ctx.textAlign = 'center';
+    ctx.fillStyle = frame.palette.accentGold;
+    ctx.font = '14px monospace';
+    ctx.fillText('✦ ❖ ✦', 400, footerCenterY - 24);
+
+    ctx.fillStyle = frame.palette.accentGold;
+    ctx.font = 'bold 28px serif';
+    ctx.fillText('NUSWARA', 400, footerCenterY + 10);
+
+    ctx.fillStyle = frame.palette.accentGold;
+    ctx.font = '12px monospace';
+    ctx.fillText('BILIK BUDAYA JAWA', 400, footerCenterY + 34);
   }
-  ctx.fillText(line, 60, lineY);
-
-  // Date and Origin footer tags (Left)
-  ctx.fillStyle = frame.palette.accentGold;
-  ctx.font = '13px monospace';
-  ctx.fillText(`🗓️ ${dateStr}  •  📍 ${frame.origin}`, 60, bottomY + 150);
-
-  // NUSWARA Brand Signature (Right)
-  ctx.textAlign = 'right';
-  ctx.font = 'bold 13px monospace';
-  ctx.fillText('NUSWARA', 740, bottomY + 150);
-  ctx.textAlign = 'left';
 
   // 7. BOTTOM TUMPAL / GEOMETRIC BANNER
   drawTumpalBand(
