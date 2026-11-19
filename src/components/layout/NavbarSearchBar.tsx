@@ -33,19 +33,11 @@ export interface SearchItem {
   keywords: string;
 }
 
-export function NavbarSearchBar() {
-  const router = useRouter();
-  const [query, setQuery] = useState('');
-  const [isOpen, setIsOpen] = useState(false);
-  const [activeCategory, setActiveCategory] = useState<SearchCategory>('all');
-  const [selectedIndex, setSelectedIndex] = useState(0);
-
-  const containerRef = useRef<HTMLDivElement>(null);
-  const inputRef = useRef<HTMLInputElement>(null);
-  const listRef = useRef<HTMLDivElement>(null);
-
-  // Precompile unified search index from official static datasets
-  const searchIndex: SearchItem[] = useMemo(() => {
+/**
+ * Precompiled unified search index from official static datasets
+ */
+export function useSearchIndex(): SearchItem[] {
+  return useMemo(() => {
     const items: SearchItem[] = [];
 
     // 1. Tempat Sakral & Candi Jawa Tengah
@@ -58,7 +50,7 @@ export function NavbarSearchBar() {
         categoryLabel: 'Tempat Sakral',
         href: `/tempat-sakral/${art.slug}`,
         city: art.city,
-        keywords: `${art.name} ${art.city} ${art.region} ${art.categoryLabel} ${art.spiritualTheme} ${art.highlights.join(' ')} ${art.shortSummary}`,
+        keywords: `${art.name} ${art.city} ${art.region} ${art.categoryLabel} ${art.spiritualTheme} ${(art.highlights || []).join(' ')} ${art.shortSummary}`,
       });
     });
 
@@ -72,7 +64,7 @@ export function NavbarSearchBar() {
         categoryLabel: 'Kuliner',
         href: `/kuliner/${art.slug}`,
         city: art.city,
-        keywords: `${art.name} ${art.city} ${art.region} ${art.categoryLabel} ${art.culturalTheme} ${art.flavorProfile.join(' ')} ${art.shortSummary}`,
+        keywords: `${art.name} ${art.city} ${art.region} ${art.categoryLabel} ${art.culturalTheme} ${(art.flavorProfile || []).join(' ')} ${art.shortSummary}`,
       });
     });
 
@@ -118,6 +110,57 @@ export function NavbarSearchBar() {
 
     return items;
   }, []);
+}
+
+export function getCategoryIcon(category: string) {
+  switch (category) {
+    case 'sakral':
+      return <Landmark className="w-3.5 h-3.5 text-amber-400" />;
+    case 'kuliner':
+      return <Utensils className="w-3.5 h-3.5 text-orange-400" />;
+    case 'tokoh':
+      return <Users className="w-3.5 h-3.5 text-yellow-400" />;
+    case 'sejarah':
+      return <BookOpen className="w-3.5 h-3.5 text-stone-300" />;
+    case 'wayang':
+      return <Layers className="w-3.5 h-3.5 text-[#ECC47E]" />;
+    default:
+      return <Sparkles className="w-3.5 h-3.5 text-[#ECC47E]" />;
+  }
+}
+
+export function getCategoryBadgeClass(category: string) {
+  switch (category) {
+    case 'sakral':
+      return 'bg-amber-950/70 border-amber-600/50 text-amber-300';
+    case 'kuliner':
+      return 'bg-orange-950/70 border-orange-600/50 text-orange-300';
+    case 'tokoh':
+      return 'bg-yellow-950/70 border-yellow-600/50 text-yellow-300';
+    case 'sejarah':
+      return 'bg-stone-900/70 border-stone-600/50 text-stone-300';
+    case 'wayang':
+      return 'bg-[#2E1D10]/80 border-[#C59B53]/50 text-[#ECC47E]';
+    default:
+      return 'bg-amber-950/70 border-amber-500/40 text-amber-300';
+  }
+}
+
+/**
+ * Desktop Navbar Search Bar (with dropdown)
+ */
+export function NavbarSearchBar() {
+  const router = useRouter();
+  const [query, setQuery] = useState('');
+  const [isOpen, setIsOpen] = useState(false);
+  const [activeCategory, setActiveCategory] = useState<SearchCategory>('all');
+  const [selectedIndex, setSelectedIndex] = useState(0);
+
+  const containerRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
+  const listRef = useRef<HTMLDivElement>(null);
+
+  const searchIndex = useSearchIndex();
 
   // Filter items according to search query and active category
   const filteredResults = useMemo(() => {
@@ -138,12 +181,12 @@ export function NavbarSearchBar() {
 
   // Quick recommendations when query is empty
   const quickRecommendations = useMemo(() => [
-    { title: 'Candi Borobudur', href: '/tempat-sakral/candi-borobudur', category: 'sakral' as const, label: 'Tempat Sakral' },
-    { title: 'Lumpia Semarang', href: '/kuliner/lumpia-semarang', category: 'kuliner' as const, label: 'Kuliner' },
-    { title: 'Kompleks Dieng', href: '/tempat-sakral/dataran-tinggi-dieng', category: 'sakral' as const, label: 'Tempat Sakral' },
-    { title: 'Tempe Mendoan', href: '/kuliner/tempe-mendoan-banyumas', category: 'kuliner' as const, label: 'Kuliner' },
-    { title: 'R.A. Kartini', href: '/tokoh/ra-kartini', category: 'tokoh' as const, label: 'Tokoh' },
-    { title: 'Gatotkaca', href: '/wayangpedia/gatotkaca', category: 'wayang' as const, label: 'Wayang' },
+    { title: 'Candi Borobudur', href: '/tempat-sakral/candi-borobudur', category: 'sakral' as const },
+    { title: 'Lumpia Semarang', href: '/kuliner/lumpia-semarang', category: 'kuliner' as const },
+    { title: 'Kompleks Dieng', href: '/tempat-sakral/dataran-tinggi-dieng', category: 'sakral' as const },
+    { title: 'Tempe Mendoan', href: '/kuliner/tempe-mendoan-banyumas', category: 'kuliner' as const },
+    { title: 'R.A. Kartini', href: '/tokoh/ra-kartini', category: 'tokoh' as const },
+    { title: 'Gatotkaca', href: '/wayangpedia/gatotkaca', category: 'wayang' as const },
   ], []);
 
   // Handle outside click to close dropdown
@@ -217,40 +260,6 @@ export function NavbarSearchBar() {
       if (target) {
         handleSelect(target.href);
       }
-    }
-  };
-
-  const getCategoryIcon = (category: string) => {
-    switch (category) {
-      case 'sakral':
-        return <Landmark className="w-3.5 h-3.5 text-amber-400" />;
-      case 'kuliner':
-        return <Utensils className="w-3.5 h-3.5 text-orange-400" />;
-      case 'tokoh':
-        return <Users className="w-3.5 h-3.5 text-yellow-400" />;
-      case 'sejarah':
-        return <BookOpen className="w-3.5 h-3.5 text-stone-300" />;
-      case 'wayang':
-        return <Layers className="w-3.5 h-3.5 text-[#ECC47E]" />;
-      default:
-        return <Sparkles className="w-3.5 h-3.5 text-[#ECC47E]" />;
-    }
-  };
-
-  const getCategoryBadgeClass = (category: string) => {
-    switch (category) {
-      case 'sakral':
-        return 'bg-amber-950/70 border-amber-600/50 text-amber-300';
-      case 'kuliner':
-        return 'bg-orange-950/70 border-orange-600/50 text-orange-300';
-      case 'tokoh':
-        return 'bg-yellow-950/70 border-yellow-600/50 text-yellow-300';
-      case 'sejarah':
-        return 'bg-stone-900/70 border-stone-600/50 text-stone-300';
-      case 'wayang':
-        return 'bg-[#2E1D10]/80 border-[#C59B53]/50 text-[#ECC47E]';
-      default:
-        return 'bg-amber-950/70 border-amber-500/40 text-amber-300';
     }
   };
 
@@ -426,6 +435,201 @@ export function NavbarSearchBar() {
           </div>
         </div>
       )}
+    </div>
+  );
+}
+
+/**
+ * Mobile Search Modal (Triggered from mobile bottom pill navbar)
+ */
+export function MobileSearchModal({
+  isOpen,
+  onClose,
+}: {
+  isOpen: boolean;
+  onClose: () => void;
+}) {
+  const router = useRouter();
+  const [query, setQuery] = useState('');
+  const [activeCategory, setActiveCategory] = useState<SearchCategory>('all');
+  const inputRef = useRef<HTMLInputElement>(null);
+  const searchIndex = useSearchIndex();
+
+  useEffect(() => {
+    if (isOpen) {
+      setTimeout(() => {
+        inputRef.current?.focus();
+      }, 80);
+    } else {
+      setQuery('');
+    }
+  }, [isOpen]);
+
+  // Handle escape key
+  useEffect(() => {
+    function handleKeyDown(e: KeyboardEvent) {
+      if (e.key === 'Escape') onClose();
+    }
+    if (isOpen) {
+      window.addEventListener('keydown', handleKeyDown);
+      return () => window.removeEventListener('keydown', handleKeyDown);
+    }
+  }, [isOpen, onClose]);
+
+  const filteredResults = useMemo(() => {
+    const q = query.toLowerCase().trim();
+    return searchIndex.filter((item) => {
+      const matchesCategory = activeCategory === 'all' || item.category === activeCategory;
+      if (!matchesCategory) return false;
+      if (!q) return true;
+
+      return (
+        item.title.toLowerCase().includes(q) ||
+        (item.city && item.city.toLowerCase().includes(q)) ||
+        item.subtitle.toLowerCase().includes(q) ||
+        item.keywords.toLowerCase().includes(q)
+      );
+    });
+  }, [searchIndex, query, activeCategory]);
+
+  const handleSelect = (href: string) => {
+    onClose();
+    setQuery('');
+    router.push(href);
+  };
+
+  if (!isOpen) return null;
+
+  return (
+    <div className="fixed inset-0 z-50 flex flex-col justify-end sm:justify-center p-3 sm:p-6 bg-black/80 backdrop-blur-md animate-in fade-in duration-200">
+      <div className="relative w-full max-w-lg mx-auto rounded-3xl bg-[#0F0B07] border border-[#C59B53]/50 shadow-[0_25px_60px_rgba(0,0,0,0.95)] p-4 flex flex-col max-h-[85vh] overflow-hidden">
+        {/* Header with Search Input & Close button */}
+        <div className="flex items-center gap-2 pb-3 border-b border-[#C59B53]/30">
+          <div className="relative flex-1 flex items-center bg-[#17110C] rounded-full px-3 py-2 border border-[#C59B53]/40">
+            <Search className="w-4 h-4 text-[#C59B53] mr-2 shrink-0" />
+            <input
+              ref={inputRef}
+              type="text"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              placeholder="Cari tempat sakral, kuliner, tokoh..."
+              className="w-full bg-transparent text-sm text-[#F5EFE6] placeholder-[#8C8275] focus:outline-none"
+            />
+            {query && (
+              <button
+                type="button"
+                onClick={() => setQuery('')}
+                className="p-1 rounded-full text-[#8C8275] hover:text-[#ECC47E]"
+              >
+                <X className="w-3.5 h-3.5" />
+              </button>
+            )}
+          </div>
+          <button
+            type="button"
+            onClick={onClose}
+            className="p-2 rounded-full bg-[#1A120B] text-[#A89F91] hover:text-white border border-[#C59B53]/30 shrink-0"
+            title="Tutup"
+          >
+            <X className="w-4 h-4" />
+          </button>
+        </div>
+
+        {/* Category Filter Chips */}
+        <div className="flex items-center gap-1.5 py-2.5 overflow-x-auto no-scrollbar">
+          {(
+            [
+              { id: 'all', label: 'Semua' },
+              { id: 'sakral', label: '🏛️ Sakral' },
+              { id: 'kuliner', label: '🍲 Kuliner' },
+              { id: 'tokoh', label: '👤 Tokoh' },
+              { id: 'wayang', label: '🎭 Wayang' },
+            ] as const
+          ).map((cat) => (
+            <button
+              key={cat.id}
+              type="button"
+              onClick={() => setActiveCategory(cat.id)}
+              className={`px-3 py-1 rounded-full text-xs font-mono transition-all whitespace-nowrap ${
+                activeCategory === cat.id
+                  ? 'bg-[#C59B53]/30 text-[#FFF2DC] border border-[#ECC47E]/60 font-semibold'
+                  : 'text-[#8C8275] hover:text-[#ECC47E] bg-[#140E08] border border-[#C59B53]/20'
+              }`}
+            >
+              {cat.label}
+            </button>
+          ))}
+        </div>
+
+        {/* Results List */}
+        <div className="flex-1 overflow-y-auto space-y-1.5 py-2 custom-scrollbar">
+          {!query.trim() && (
+            <div className="py-2">
+              <span className="text-xs font-mono text-[#8C8275] uppercase tracking-wider block mb-2 flex items-center gap-1">
+                <Sparkles className="w-3.5 h-3.5 text-[#ECC47E]" />
+                Pencarian Populer
+              </span>
+              <div className="grid grid-cols-2 gap-2">
+                {[
+                  { title: 'Candi Borobudur', href: '/tempat-sakral/candi-borobudur', icon: Landmark, label: 'Sakral' },
+                  { title: 'Lumpia Semarang', href: '/kuliner/lumpia-semarang', icon: Utensils, label: 'Kuliner' },
+                  { title: 'Kompleks Dieng', href: '/tempat-sakral/dataran-tinggi-dieng', icon: Landmark, label: 'Sakral' },
+                  { title: 'Tempe Mendoan', href: '/kuliner/tempe-mendoan-banyumas', icon: Utensils, label: 'Kuliner' },
+                  { title: 'R.A. Kartini', href: '/tokoh/ra-kartini', icon: Users, label: 'Tokoh' },
+                  { title: 'Raden Gatotkaca', href: '/wayangpedia/gatotkaca', icon: Layers, label: 'Wayang' },
+                ].map((rec) => {
+                  const Icon = rec.icon;
+                  return (
+                    <button
+                      key={rec.title}
+                      type="button"
+                      onClick={() => handleSelect(rec.href)}
+                      className="flex items-center gap-2 p-2.5 rounded-xl bg-[#17100A] hover:bg-[#251A10] border border-[#C59B53]/30 text-left transition-all"
+                    >
+                      <Icon className="w-3.5 h-3.5 text-[#ECC47E] shrink-0" />
+                      <span className="text-xs text-[#E8DFD3] truncate">{rec.title}</span>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          )}
+
+          {query.trim() && filteredResults.length === 0 && (
+            <div className="text-center py-8">
+              <p className="text-sm text-[#8C8275]">
+                Tidak ada hasil untuk &ldquo;<span className="text-[#ECC47E]">{query}</span>&rdquo;
+              </p>
+            </div>
+          )}
+
+          {query.trim() &&
+            filteredResults.map((item) => (
+              <button
+                key={item.id}
+                type="button"
+                onClick={() => handleSelect(item.href)}
+                className="w-full flex items-center justify-between gap-3 p-2.5 rounded-xl bg-[#140E08] hover:bg-[#22170E] border border-[#C59B53]/25 hover:border-[#ECC47E]/50 text-left transition-all"
+              >
+                <div className="flex items-center gap-3 min-w-0">
+                  <div className="w-8 h-8 rounded-lg bg-[#0D0804] border border-[#C59B53]/30 flex items-center justify-center shrink-0">
+                    <Sparkles className="w-4 h-4 text-[#ECC47E]" />
+                  </div>
+                  <div className="min-w-0">
+                    <div className="flex items-center gap-1.5">
+                      <span className="text-xs font-medium text-[#F5EFE6] truncate">{item.title}</span>
+                      <span className="text-[9px] font-mono px-1.5 py-0.5 rounded-full border border-[#C59B53]/40 bg-[#25180D] text-[#ECC47E] shrink-0">
+                        {item.categoryLabel}
+                      </span>
+                    </div>
+                    <p className="text-[11px] text-[#9E9385] truncate">{item.subtitle}</p>
+                  </div>
+                </div>
+                <ArrowRight className="w-4 h-4 text-[#ECC47E] shrink-0 opacity-70" />
+              </button>
+            ))}
+        </div>
+      </div>
     </div>
   );
 }

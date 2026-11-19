@@ -16,10 +16,11 @@ import {
   Users,
   Utensils,
   Landmark,
+  Search,
 } from 'lucide-react';
 import { ManifestationModal } from '@/components/ui/ManifestationModal';
 import { getTarotImagePath } from '@/components/ui/WayangVectors';
-import { NavbarSearchBar } from './NavbarSearchBar';
+import { NavbarSearchBar, MobileSearchModal } from './NavbarSearchBar';
 
 interface DrawnManifestationState {
   characterSlug: string;
@@ -64,6 +65,7 @@ export function Navbar() {
   const [activeSection, setActiveSection] = useState<string>('beranda');
   const [isScrolled, setIsScrolled] = useState(false);
   const [manifestModalOpen, setManifestModalOpen] = useState(false);
+  const [mobileSearchOpen, setMobileSearchOpen] = useState(false);
   const [drawnManifestation, setDrawnManifestation] = useState<DrawnManifestationState | null>(null);
 
   // Lock scroll-triggered activeSection updates during programmatic click-to-scroll
@@ -308,9 +310,25 @@ export function Navbar() {
     [pathname, activeSection]
   );
 
-  const navRef = useRef<HTMLElement>(null);
-  const itemRefs = useRef<Record<string, HTMLButtonElement | null>>({});
-  const [indicator, setIndicator] = useState<{
+  const desktopNavRef = useRef<HTMLElement>(null);
+  const desktopItemRefs = useRef<Record<string, HTMLButtonElement | null>>({});
+  const [desktopIndicator, setDesktopIndicator] = useState<{
+    left: number;
+    width: number;
+    height: number;
+    opacity: number;
+    duration: number;
+  }>({
+    left: 0,
+    width: 0,
+    height: 0,
+    opacity: 0,
+    duration: 380,
+  });
+
+  const mobileNavRef = useRef<HTMLElement>(null);
+  const mobileItemRefs = useRef<Record<string, HTMLButtonElement | null>>({});
+  const [mobileIndicator, setMobileIndicator] = useState<{
     left: number;
     width: number;
     height: number;
@@ -325,51 +343,67 @@ export function Navbar() {
   });
 
   const updateIndicator = useCallback(() => {
-    const nav = navRef.current;
-    if (!nav) return;
-
     const activeItem = PRIMARY_NAV_LINKS.find((item) => isLinkActive(item.sectionId));
-    if (!activeItem) {
-      setIndicator((prev) => (prev.opacity === 0 ? prev : { ...prev, opacity: 0 }));
-      return;
-    }
 
-    const btn = itemRefs.current[activeItem.sectionId];
-    if (!btn) {
-      setIndicator((prev) => (prev.opacity === 0 ? prev : { ...prev, opacity: 0 }));
-      return;
-    }
+    // 1. Update Desktop Indicator
+    const dNav = desktopNavRef.current;
+    if (dNav && activeItem) {
+      const btn = desktopItemRefs.current[activeItem.sectionId];
+      if (btn) {
+        const navRect = dNav.getBoundingClientRect();
+        const btnRect = btn.getBoundingClientRect();
+        const nextLeft = btnRect.left - navRect.left;
+        const nextWidth = btnRect.width;
+        const nextHeight = btnRect.height;
 
-    const navRect = nav.getBoundingClientRect();
-    const btnRect = btn.getBoundingClientRect();
-    const nextLeft = btnRect.left - navRect.left;
-    const nextWidth = btnRect.width;
-    const nextHeight = btnRect.height;
-
-    setIndicator((prev) => {
-      if (
-        prev.opacity === 1 &&
-        Math.abs(prev.left - nextLeft) < 0.5 &&
-        Math.abs(prev.width - nextWidth) < 0.5 &&
-        Math.abs(prev.height - nextHeight) < 0.5
-      ) {
-        return prev;
+        setDesktopIndicator((prev) => {
+          if (
+            prev.opacity === 1 &&
+            Math.abs(prev.left - nextLeft) < 0.5 &&
+            Math.abs(prev.width - nextWidth) < 0.5 &&
+            Math.abs(prev.height - nextHeight) < 0.5
+          ) {
+            return prev;
+          }
+          const distance = prev.opacity === 0 ? 0 : Math.abs(nextLeft - prev.left);
+          const duration =
+            prev.opacity === 0 ? 0 : Math.min(620, Math.max(380, 320 + Math.round(distance * 0.75)));
+          return { left: nextLeft, width: nextWidth, height: nextHeight, opacity: 1, duration };
+        });
+      } else {
+        setDesktopIndicator((prev) => (prev.opacity === 0 ? prev : { ...prev, opacity: 0 }));
       }
+    }
 
-      const distance = prev.opacity === 0 ? 0 : Math.abs(nextLeft - prev.left);
-      // Dynamic duration based on travel distance across navbar:
-      // ~380ms for adjacent items up to ~620ms for skipping across multiple items (longkap-longkap)
-      const duration =
-        prev.opacity === 0 ? 0 : Math.min(620, Math.max(380, 320 + Math.round(distance * 0.75)));
+    // 2. Update Mobile Indicator
+    const mNav = mobileNavRef.current;
+    if (mNav && activeItem) {
+      const btn = mobileItemRefs.current[activeItem.sectionId];
+      if (btn) {
+        const navRect = mNav.getBoundingClientRect();
+        const btnRect = btn.getBoundingClientRect();
+        const nextLeft = btnRect.left - navRect.left;
+        const nextWidth = btnRect.width;
+        const nextHeight = btnRect.height;
 
-      return {
-        left: nextLeft,
-        width: nextWidth,
-        height: nextHeight,
-        opacity: 1,
-        duration,
-      };
-    });
+        setMobileIndicator((prev) => {
+          if (
+            prev.opacity === 1 &&
+            Math.abs(prev.left - nextLeft) < 0.5 &&
+            Math.abs(prev.width - nextWidth) < 0.5 &&
+            Math.abs(prev.height - nextHeight) < 0.5
+          ) {
+            return prev;
+          }
+          const distance = prev.opacity === 0 ? 0 : Math.abs(nextLeft - prev.left);
+          const duration =
+            prev.opacity === 0 ? 0 : Math.min(620, Math.max(380, 320 + Math.round(distance * 0.75)));
+          return { left: nextLeft, width: nextWidth, height: nextHeight, opacity: 1, duration };
+        });
+      } else {
+        setMobileIndicator((prev) => (prev.opacity === 0 ? prev : { ...prev, opacity: 0 }));
+      }
+    }
   }, [isLinkActive]);
 
   useEffect(() => {
@@ -388,10 +422,10 @@ export function Navbar() {
   return (
     <>
       {/* ============================================================ */}
-      {/* 1. TOP HEADER (Desktop Floating Pill & Mobile Minimal Header) */}
+      {/* 1. TOP HEADER (Desktop Floating Pill Only - Hidden on Mobile) */}
       {/* ============================================================ */}
       <header
-        className="fixed top-3 sm:top-5 inset-x-0 z-40 flex justify-center pointer-events-none px-3 sm:px-6 transition-all duration-300"
+        className="hidden lg:flex fixed top-3 sm:top-5 inset-x-0 z-40 justify-center pointer-events-none px-3 sm:px-6 transition-all duration-300"
       >
         <div
           className={`pointer-events-auto relative w-full max-w-5xl rounded-full transition-all duration-300 flex items-center justify-between px-3.5 sm:px-6 py-2 sm:py-2.5 ${
@@ -426,9 +460,9 @@ export function Navbar() {
           </div>
 
           {/* DESKTOP NAV: Pill Links & Daily Manifestation Tarot Card */}
-          <div className="hidden lg:flex items-center gap-2 xl:gap-3">
+          <div className="flex items-center gap-2 xl:gap-3">
             <nav
-              ref={navRef}
+              ref={desktopNavRef}
               className="relative flex items-center gap-1 xl:gap-1.5 p-0.5 rounded-full"
               aria-label="Navigasi Utama"
             >
@@ -436,12 +470,12 @@ export function Navbar() {
               <div
                 className="absolute top-0.5 left-0 rounded-full pointer-events-none will-change-transform z-0"
                 style={{
-                  transform: `translate3d(${indicator.left}px, 0, 0)`,
-                  width: `${indicator.width}px`,
-                  height: `${indicator.height}px`,
-                  opacity: indicator.opacity,
+                  transform: `translate3d(${desktopIndicator.left}px, 0, 0)`,
+                  width: `${desktopIndicator.width}px`,
+                  height: `${desktopIndicator.height}px`,
+                  opacity: desktopIndicator.opacity,
                   transitionProperty: 'transform, width, height, opacity',
-                  transitionDuration: `${indicator.duration}ms`,
+                  transitionDuration: `${desktopIndicator.duration}ms`,
                   transitionTimingFunction: 'cubic-bezier(0.22, 1, 0.36, 1)',
                 }}
               >
@@ -462,7 +496,7 @@ export function Navbar() {
                   <button
                     key={item.sectionId}
                     ref={(el) => {
-                      itemRefs.current[item.sectionId] = el;
+                      desktopItemRefs.current[item.sectionId] = el;
                     }}
                     type="button"
                     onClick={() => handleNavClick(item.sectionId)}
@@ -524,17 +558,96 @@ export function Navbar() {
               </button>
             </div>
           </div>
+        </div>
+      </header>
 
-          {/* MOBILE TOP CONTROLS: Manifestasi Tarot Card Only (No Hamburger) */}
-          <div className="lg:hidden flex items-center">
+      {/* ============================================================ */}
+      {/* 2. MOBILE BOTTOM FLOATING NAVBAR PILL (Unified Single Pill) */}
+      {/* ============================================================ */}
+      <div
+        className="lg:hidden fixed bottom-3 inset-x-2 sm:bottom-4 sm:inset-x-6 sm:max-w-lg sm:mx-auto z-50 pointer-events-auto transition-all duration-300"
+      >
+        <div className="relative w-full rounded-full bg-[#0D0C0A]/95 backdrop-blur-2xl border border-[#C59B53]/45 shadow-[0_12px_40px_rgba(0,0,0,0.85),0_0_20px_rgba(197,155,83,0.15)] px-1.5 sm:px-3 py-1 sm:py-1.5 flex items-center justify-between">
+          {/* Mobile Nav Links with Liquid Glass Sliding Active Pill */}
+          <nav
+            ref={mobileNavRef}
+            className="relative flex items-center justify-between flex-1 gap-0.5 p-0.5 rounded-full"
+            aria-label="Navigasi Utama Ponsel"
+          >
+            {/* Liquid Glass Sliding Active Pill Indicator for Mobile */}
+            <div
+              className="absolute top-0.5 left-0 rounded-full pointer-events-none will-change-transform z-0"
+              style={{
+                transform: `translate3d(${mobileIndicator.left}px, 0, 0)`,
+                width: `${mobileIndicator.width}px`,
+                height: `${mobileIndicator.height}px`,
+                opacity: mobileIndicator.opacity,
+                transitionProperty: 'transform, width, height, opacity',
+                transitionDuration: `${mobileIndicator.duration}ms`,
+                transitionTimingFunction: 'cubic-bezier(0.22, 1, 0.36, 1)',
+              }}
+            >
+              {/* Luminous Liquid Glass Core */}
+              <div className="relative w-full h-full rounded-full bg-gradient-to-b from-[#F5DE9B]/35 via-[#C59B53]/25 to-[#7E5718]/40 border border-[#ECC47E]/65 backdrop-blur-md shadow-[0_0_15px_rgba(236,196,126,0.45),inset_0_1px_1.5px_rgba(255,245,220,0.65)] overflow-hidden">
+                <div className="absolute inset-x-1.5 top-0.5 h-[40%] rounded-t-full bg-gradient-to-b from-white/35 to-transparent pointer-events-none" />
+                <div className="absolute inset-0 bg-radial from-[#ECC47E]/20 to-transparent pointer-events-none" />
+              </div>
+              <div className="absolute -inset-0.5 rounded-full bg-[#ECC47E]/20 blur-xs pointer-events-none -z-10" />
+            </div>
+
+            {PRIMARY_NAV_LINKS.map((item) => {
+              const active = isLinkActive(item.sectionId);
+              const Icon = item.icon;
+              return (
+                <button
+                  key={item.sectionId}
+                  ref={(el) => {
+                    mobileItemRefs.current[item.sectionId] = el;
+                  }}
+                  type="button"
+                  onClick={() => handleNavClick(item.sectionId)}
+                  className={`relative z-10 flex flex-col items-center justify-center flex-1 py-1 px-0.5 rounded-full text-center transition-colors duration-300 cursor-pointer select-none ${
+                    active
+                      ? 'text-[#FFF2DC] font-semibold drop-shadow-[0_1px_3px_rgba(0,0,0,0.7)]'
+                      : 'text-[#8C8275] hover:text-[#ECC47E]'
+                  }`}
+                  aria-label={item.label}
+                >
+                  <Icon
+                    className={`w-3.5 h-3.5 mb-0.5 transition-transform duration-300 ${
+                      active ? 'scale-110 text-[#ECC47E]' : 'text-[#8C8275]'
+                    }`}
+                  />
+                  <span className="text-[8.5px] sm:text-[9.5px] font-sans font-medium tracking-tight leading-none whitespace-nowrap">
+                    {item.shortLabel}
+                  </span>
+                </button>
+              );
+            })}
+          </nav>
+
+          {/* Mobile Utilities: Search & Tarot Card */}
+          <div className="flex items-center gap-1 sm:gap-1.5 pl-1 sm:pl-2 ml-0.5 sm:ml-1 border-l border-[#C59B53]/30 shrink-0">
+            {/* Search Trigger Button */}
+            <button
+              type="button"
+              onClick={() => setMobileSearchOpen(true)}
+              className="w-7 h-8 sm:w-7.5 sm:h-8.5 rounded-full bg-[#18110B] hover:bg-[#251A10] border border-[#C59B53]/40 flex items-center justify-center text-[#C59B53] hover:text-[#ECC47E] transition-colors cursor-pointer"
+              title="Cari tempat sakral, kuliner, dan tokoh"
+              aria-label="Cari"
+            >
+              <Search className="w-3.5 h-3.5" />
+            </button>
+
+            {/* Mobile Tarot Card Button */}
             <button
               type="button"
               onClick={() => setManifestModalOpen(true)}
-              className={`group relative w-7.5 h-9 rounded-[5px] border ${
+              className={`group relative w-6.5 h-8 sm:w-7 sm:h-8.5 rounded-[5px] border ${
                 drawnManifestation
                   ? 'border-[#ECC47E]'
                   : 'border-[#C59B53]/80 hover:border-[#ECC47E]'
-              } bg-gradient-to-b from-[#2E2014] via-[#1B130D] to-[#100A06] p-[2px] active:scale-95 cursor-pointer overflow-hidden`}
+              } bg-gradient-to-b from-[#2E2014] via-[#1B130D] to-[#100A06] p-[2px] active:scale-95 cursor-pointer overflow-hidden shrink-0`}
               title={
                 drawnManifestation
                   ? `Kartu Manifestasi: ${drawnManifestation.characterName}`
@@ -552,7 +665,7 @@ export function Navbar() {
                     src={getTarotImagePath(drawnManifestation.characterSlug)}
                     alt={drawnManifestation.characterName}
                     fill
-                    sizes="32px"
+                    sizes="28px"
                     className="object-cover object-top"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-black/20 pointer-events-none" />
@@ -568,53 +681,13 @@ export function Navbar() {
             </button>
           </div>
         </div>
-      </header>
+      </div>
 
-      {/* ============================================================ */}
-      {/* 2. MOBILE BOTTOM NAVIGATION DOCK (Spacious, Airy & Native) */}
-      {/* ============================================================ */}
-      <nav
-        aria-label="Navigasi Bawah Ponsel"
-        className="lg:hidden fixed bottom-0 inset-x-0 z-50 pointer-events-auto sm:bottom-3 sm:inset-x-4 sm:max-w-lg sm:mx-auto transition-all duration-300"
-      >
-        <div className="relative w-full sm:rounded-2xl bg-[#0D0C0A]/96 backdrop-blur-2xl border-t sm:border border-[#C59B53]/30 px-1.5 sm:px-3 pt-2 pb-[calc(0.6rem+env(safe-area-inset-bottom,0px))] sm:pb-2 flex items-center justify-between">
-          {PRIMARY_NAV_LINKS.map((item) => {
-            const active = isLinkActive(item.sectionId);
-            const Icon = item.icon;
-            return (
-              <button
-                key={item.sectionId}
-                type="button"
-                onClick={() => handleNavClick(item.sectionId)}
-                className={`relative flex flex-col items-center justify-center flex-1 py-1 px-1 rounded-xl transition-all duration-200 cursor-pointer select-none group ${
-                  active
-                    ? 'text-[#FFF2DC] bg-[#C59B53]/25 border border-[#ECC47E]/40'
-                    : 'text-[#8C8273] hover:text-[#ECC47E] hover:bg-white/[0.02] border border-transparent'
-                }`}
-                aria-current={active ? 'page' : undefined}
-                aria-label={item.label}
-              >
-                {/* Active Top Accent Bar */}
-                {active && (
-                  <span className="absolute top-0 inset-x-2 sm:inset-x-3 h-[2px] rounded-full bg-gradient-to-r from-[#C59B53] via-[#ECC47E] to-[#C59B53]" />
-                )}
-                <Icon
-                  className={`w-5 h-5 transition-transform duration-200 ${
-                    active ? 'scale-110 text-[#ECC47E]' : 'text-[#8C8273] group-hover:scale-105 group-hover:text-[#C59B53]'
-                  }`}
-                />
-                <span
-                  className={`text-[10px] sm:text-[10.5px] font-sans tracking-tight leading-none mt-1 truncate max-w-full ${
-                    active ? 'font-semibold text-[#ECC47E]' : 'font-medium text-[#8C8273] group-hover:text-[#C59B53]'
-                  }`}
-                >
-                  {item.shortLabel}
-                </span>
-              </button>
-            );
-          })}
-        </div>
-      </nav>
+      {/* Mobile Search Modal */}
+      <MobileSearchModal
+        isOpen={mobileSearchOpen}
+        onClose={() => setMobileSearchOpen(false)}
+      />
 
       {/* Manifestation Modal (Rendered outside header) */}
       <ManifestationModal
