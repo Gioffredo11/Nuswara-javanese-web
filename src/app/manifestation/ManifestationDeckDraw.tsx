@@ -33,8 +33,8 @@ export function ManifestationDeckDraw({
   drawnJavaneseQuote,
   onRevealComplete,
 }: ManifestationDeckDrawProps) {
-  // Animation state: 'idle' | 'pulling' | 'flipping' | 'done'
-  const [animStep, setAnimStep] = useState<'idle' | 'pulling' | 'flipping' | 'done'>('idle');
+  // Animation state: 'idle' | 'flipping' | 'done'
+  const [animStep, setAnimStep] = useState<'idle' | 'flipping' | 'done'>('idle');
   
   // Ceremonial entrance deck stage: 'fanning' | 'snapping' | 'ready'
   const [deckIntro, setDeckIntro] = useState<'fanning' | 'snapping' | 'ready'>('fanning');
@@ -90,32 +90,35 @@ export function ManifestationDeckDraw({
     setTilt({ x: 0, y: 0 });
   };
 
-  // Start Card Draw Ceremony
+  // Start Card Draw Ceremony - 3D Spin in place (no lift/keangkat)
   async function handleStartDraw() {
     if (drawing || animStep !== 'idle') return;
 
-    // Trigger golden shockwave ripple & sound
+    // Reset tilt and hover so card is centered
+    setIsHovered(false);
+    setTilt({ x: 0, y: 0 });
+
+    // Trigger golden shockwave ripple & draw sound
     setShockwave(true);
     playCardDrawSound();
 
-    // Phase 1: Pull card out of deck (Poker slide pull)
-    setAnimStep('pulling');
+    // Start 3D spin / flip in place immediately
+    setAnimStep('flipping');
+
+    // Play sacred Pelog chord halfway through rotation as card reveals
+    setTimeout(() => {
+      playCardRevealSound();
+    }, 350);
 
     // Trigger API call
     const drawPromise = onDraw();
 
-    // After 700ms (card has pulled out of deck), begin floating & 3D flip
-    setTimeout(async () => {
-      await drawPromise;
-      setAnimStep('flipping');
-      playCardRevealSound();
+    // Ensure smooth 3D rotation duration (850ms) and data readiness
+    const minAnimTime = new Promise((resolve) => setTimeout(resolve, 850));
+    await Promise.all([drawPromise, minAnimTime]);
 
-      // After 850ms (3D flip completes), transition to full reveal
-      setTimeout(() => {
-        setAnimStep('done');
-        onRevealComplete?.();
-      }, 850);
-    }, 700);
+    setAnimStep('done');
+    onRevealComplete?.();
   }
 
   // Floating background prana embers
@@ -214,8 +217,8 @@ export function ManifestationDeckDraw({
             }
           }}
           className={`relative w-[240px] sm:w-[260px] h-[340px] sm:h-[370px] rounded-2xl cursor-pointer card-preserve-3d transition-shadow duration-300 ${
-            animStep === 'pulling' ? 'animate-poker-pull z-30' : ''
-          } ${animStep === 'flipping' ? 'animate-poker-flip z-30 shadow-[0_0_50px_rgba(251,191,36,0.6)]' : ''} ${
+            animStep === 'flipping' ? 'animate-poker-flip z-30 shadow-[0_0_50px_rgba(251,191,36,0.6)]' : ''
+          } ${
             animStep === 'idle' ? 'z-20' : ''
           }`}
           style={{
@@ -307,10 +310,10 @@ export function ManifestationDeckDraw({
             {/* Bottom Call to Action / Hints */}
             <div className="relative z-10 text-center pt-1 border-t border-amber-500/25">
               <span className="text-[11px] font-sans text-amber-300/95 flex items-center justify-center gap-1.5 font-medium">
-                {animStep === 'pulling' ? (
+                {animStep === 'flipping' ? (
                   <>
                     <RefreshCw className="w-3 h-3 animate-spin text-amber-400" />
-                    <span>Menarik dari tumpukan...</span>
+                    <span>Membuka kartu...</span>
                   </>
                 ) : (
                   <>
@@ -423,10 +426,10 @@ export function ManifestationDeckDraw({
             disabled={drawing || animStep !== 'idle'}
             className="flex-1 py-3 px-6 bg-gradient-to-r from-amber-600 via-amber-500 to-amber-600 hover:from-amber-500 hover:to-amber-400 disabled:opacity-50 text-[#120702] font-bold text-xs uppercase tracking-widest rounded-xl transition-all shadow-xl hover:shadow-[0_0_25px_rgba(245,158,11,0.35)] flex items-center justify-center gap-2 cursor-pointer border border-amber-300/50 active:scale-95"
           >
-            {animStep === 'pulling' || animStep === 'flipping' ? (
+            {animStep === 'flipping' ? (
               <>
                 <RefreshCw className="w-4 h-4 animate-spin text-[#120702]" />
-                <span>Menarik Kartu...</span>
+                <span>Membuka Kartu...</span>
               </>
             ) : (
               <>

@@ -319,7 +319,7 @@ strong, b {
     transform: perspective(1200px) rotateY(0deg) scale(1);
   }
   50% {
-    transform: perspective(1200px) rotateY(90deg) scale(1.12);
+    transform: perspective(1200px) rotateY(90deg) scale(1.05);
   }
   100% {
     transform: perspective(1200px) rotateY(180deg) scale(1);
@@ -331,7 +331,7 @@ strong, b {
 }
 
 .animate-poker-flip {
-  animation: pokerCard3DFlip 0.75s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  animation: pokerCard3DFlip 0.85s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
 }
 
 @keyframes goldFoilShimmer {
