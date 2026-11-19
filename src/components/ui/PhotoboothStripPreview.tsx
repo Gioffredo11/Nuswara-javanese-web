@@ -1,5 +1,5 @@
 import React from 'react';
-import { Camera, Sparkles, QrCode } from 'lucide-react';
+import { Camera, Sparkles } from 'lucide-react';
 import { PhotoboothCulturalFrame } from '@/data/photoboothFrames';
 
 interface PhotoboothStripPreviewProps {
@@ -171,35 +171,32 @@ export function PhotoboothStripPreview({
         })}
       </div>
 
-      {/* Bottom Footer with Signature & QR Code */}
+      {/* Bottom Footer with Signature */}
       <div className="relative pt-3 pb-2 z-10 px-1 border-t border-dashed mt-2 border-stone-600/30">
-        <div className="flex items-end justify-between gap-2">
-          {/* Left Text Information */}
-          <div className="flex-1 min-w-0">
+        <div className="space-y-0.5">
+          <span
+            style={{ color: frame.palette.accentGold }}
+            className="text-[8.5px] font-mono uppercase tracking-wider block font-semibold"
+          >
+            {customText || frame.javaneseName}
+          </span>
+          <p
+            style={{ color: frame.palette.textSecondary }}
+            className="text-[9px] font-serif italic leading-snug"
+          >
+            {customSubtext || frame.philosophy}
+          </p>
+          <div className="flex items-center justify-between pt-0.5">
             <span
               style={{ color: frame.palette.accentGold }}
-              className="text-[8px] font-mono uppercase tracking-wider block font-semibold truncate"
-            >
-              {customText || frame.javaneseName}
-            </span>
-            <p
-              style={{ color: frame.palette.textSecondary }}
-              className="text-[9px] font-serif italic truncate leading-snug"
-            >
-              {customSubtext || frame.philosophy}
-            </p>
-            <span
-              style={{ color: frame.palette.accentGold }}
-              className="text-[8px] font-mono block opacity-75 mt-0.5"
+              className="text-[8px] font-mono block opacity-75"
             >
               {dateStr}
             </span>
-          </div>
-
-          {/* Right QR Code Stamp */}
-          <div className="w-10 h-10 bg-white rounded border border-amber-500/40 p-0.5 flex flex-col items-center justify-center shrink-0 shadow-xs">
-            <QrCode className="w-7 h-7 text-stone-900" />
-            <span className="text-[6px] font-mono text-stone-700 font-bold -mt-0.5">
+            <span
+              style={{ color: frame.palette.accentGold }}
+              className="text-[7.5px] font-mono tracking-widest uppercase opacity-65 font-bold"
+            >
               NUSWARA
             </span>
           </div>

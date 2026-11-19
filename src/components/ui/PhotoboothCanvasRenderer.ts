@@ -7,7 +7,6 @@
  */
 
 import { PhotoboothCulturalFrame, getFrameById } from '@/data/photoboothFrames';
-import QRCode from 'qrcode';
 
 export interface RenderStripOptions {
   photos: string[];
@@ -853,8 +852,8 @@ export async function renderPhotoboothStripCanvas(
     ? customSubtext
     : `"${frame.philosophy}"`;
 
-  // Wrap philosophy text if long
-  const maxPhilosophyWidth = 490;
+  // Wrap philosophy text if long (expanded full width without QR code box)
+  const maxPhilosophyWidth = 680;
   const words = displaySubtext.split(' ');
   let line = '';
   let lineY = bottomY + 58;
@@ -873,56 +872,16 @@ export async function renderPhotoboothStripCanvas(
   }
   ctx.fillText(line, 60, lineY);
 
-  // Date and Origin footer tags
+  // Date and Origin footer tags (Left)
   ctx.fillStyle = frame.palette.accentGold;
   ctx.font = '13px monospace';
   ctx.fillText(`🗓️ ${dateStr}  •  📍 ${frame.origin}`, 60, bottomY + 150);
 
-  // QR CODE BOX ON BOTTOM RIGHT
-  const qrBoxX = 595;
-  const qrBoxY = bottomY - 20;
-  const qrBoxW = 145;
-  const qrBoxH = 175;
-
-  // Dedicated QR card background so QR code is guaranteed high contrast
-  ctx.fillStyle = '#FFFFFF';
-  ctx.fillRect(qrBoxX, qrBoxY, qrBoxW, qrBoxH);
-  ctx.strokeStyle = frame.palette.borderOuter;
-  ctx.lineWidth = 2.5;
-  ctx.strokeRect(qrBoxX, qrBoxY, qrBoxW, qrBoxH);
-
-  // Generate QR code safely to dataURL
-  try {
-    const origin = typeof window !== 'undefined' ? window.location.origin : 'https://nuswara.id';
-    const qrDataUrl = await QRCode.toDataURL(`${origin}/photobooth`, {
-      width: 125,
-      margin: 1,
-      color: {
-        dark: '#1A110B',
-        light: '#FFFFFF',
-      },
-    });
-
-    const qrImg = new Image();
-    qrImg.src = qrDataUrl;
-    await new Promise((resolve) => {
-      qrImg.onload = resolve;
-      qrImg.onerror = resolve;
-    });
-
-    ctx.drawImage(qrImg, qrBoxX + 10, qrBoxY + 10, 125, 125);
-
-    // QR Caption
-    ctx.textAlign = 'center';
-    ctx.fillStyle = '#1A110B';
-    ctx.font = 'bold 9px monospace';
-    ctx.fillText('SCAN FOR PHOTO', qrBoxX + qrBoxW / 2, qrBoxY + 148);
-    ctx.fillStyle = '#78716C';
-    ctx.font = '8px monospace';
-    ctx.fillText('nuswara.id', qrBoxX + qrBoxW / 2, qrBoxY + 162);
-  } catch (err) {
-    console.warn('QR code generation fallback:', err);
-  }
+  // NUSWARA Brand Signature (Right)
+  ctx.textAlign = 'right';
+  ctx.font = 'bold 13px monospace';
+  ctx.fillText('NUSWARA', 740, bottomY + 150);
+  ctx.textAlign = 'left';
 
   // 7. BOTTOM TUMPAL / GEOMETRIC BANNER
   drawTumpalBand(
